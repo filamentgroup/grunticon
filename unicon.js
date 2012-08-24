@@ -53,7 +53,7 @@
 							svgcontent = frag.innerHTML;
 						}
 
-						svgdatauri += escape( svgcontent );
+						svgdatauri += encodeURI( svgcontent );
 
 						pngcssrules.push( ".icon-" + filenamenoext + " { background-image: url(" + pngout + filenamenoext + ".png); }" );
 						datacssrules.push( ".icon-" + filenamenoext + " { background-image: url(" + svgdatauri + "); }" );
