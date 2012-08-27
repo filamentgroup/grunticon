@@ -8,12 +8,7 @@
 		<image overflow="visible" opacity="0.33" enable-background="new    " width="26" height="26" xlink:href="52D24F0F.png"  transform="matrix(1.0002 0 0 1.0002 -7809.0029 -7899.0039)">
 	</image>
 	<g>
-		
-			<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="12.5996" y1="579.0996" x2="12.5996" y2="604.0977" gradientTransform="matrix(1 0 0 1 4 -575)">
-			<stop  offset="0" style="stop-color:#E6E6E6"/>
-			<stop  offset="1" style="stop-color:#CCCCCC"/>
-		</linearGradient>
-		<path fill="url(#SVGID_1_)" d="M28.046,18.865c0.468,0,0.901-0.379,0.966-0.842c0,0,0.088-0.649,0.088-1.422
+		<path fill="#ADACAC" d="M28.046,18.865c0.468,0,0.901-0.379,0.966-0.842c0,0,0.088-0.649,0.088-1.422
 			c0-0.773-0.088-1.425-0.088-1.425c-0.062-0.462-0.498-0.841-0.966-0.841h-2.411c-0.468,0-0.951-0.298-1.078-0.662
 			c-0.125-0.364-0.298-1.531,0.032-1.861l1.705-1.705c0.33-0.331,0.354-0.894,0.058-1.253L24.346,6.85
 			c-0.359-0.299-0.924-0.274-1.254,0.057l-1.705,1.705c-0.33,0.33-0.88,0.463-1.222,0.295s-1.302-0.874-1.302-1.341V5.154
