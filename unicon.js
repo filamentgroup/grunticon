@@ -118,6 +118,7 @@
 			fs.write( outputdir + fallbackcss, pngcssrules.join( "\n\n" ) );
 			fs.write( outputdir + pngdatacss, pngdatacssrules.join( "\n\n" ) );
 			fs.write( outputdir + datacss, datacssrules.join( "\n\n" ) );
+			fs.write( outputdir + "asyncCSS.js", asyncCSS );
 		}
 
 }());
