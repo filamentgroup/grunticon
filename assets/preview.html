@@ -1,0 +1,32 @@
+<!doctype HTML>
+<html>
+	<head>
+		<title>Icons Preview!</title>
+		<script>
+			/* Unicon. Asynchronous Stylesheet Loader Function */
+			(function( w ){
+				w.asyncCSS = function( href ){
+					var link = w.document.createElement( "link" ),
+						ref = w.document.getElementsByTagName( "script" );
+					link.rel = "stylesheet";
+					link.href = href;
+					ref[ 0 ].parentNode.insertBefore(link, ref[ 0 ] );
+				};
+			}( this ));
+			
+			// Load the stylesheets
+			asyncCSS("icons.fallback.css");
+			asyncCSS("icons.data.css");
+		</script>
+		<style>
+			/* Demo-only: icon preview divs */
+			div { 
+				width: 10em;
+				height: 10em;
+				background-size: 10em 10em;
+			}
+		</style>
+	</head>
+	<body>
+	</body>
+</html>

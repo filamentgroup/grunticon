@@ -16,6 +16,7 @@
 
 	var fs = require( "fs" ),
 		dir = "icons/",
+		assets = "assets/",
 		outputdir = "temp/",
 		pngout =  "png/"
 		files = fs.list( dir ),
@@ -89,17 +90,12 @@
 
 		function finishUp(){
 			// make the preview HTML file - omg so ghetto sorry
-			var asyncCSSJS = fs.read( "assets/asyncCSS.js" ),
-				htmldoc = "<!doctype HTML>\n<html>\n<head>\n<title>Icons Preview!</title>\n" +
-				'<style>div { width: 10em; height: 10em; background-size: 10em 10em; }</style>\n' +
-				'<script>\n' + asyncCSSJS + '\nasyncCSS("' + fallbackcss + '");\nasyncCSS("' + datacss + '");\n</script>' +
-				'</head>\n<body>\n' +
-				htmlpreviewbody.join( "\n" ) +
-				'\n</body>\n</html>';
+			var htmldoc = fs.read( assets + "preview.html" );
 
+			// add icons to the body
+			htmldoc = htmldoc.replace( /<\/body>/, htmlpreviewbody.join( "\n\t" ) + "\n</body>" );
 
 			fs.write( outputdir + "preview.html", htmldoc );
-
 
 			// write CSS file
 			fs.write( outputdir + fallbackcss, pngcssrules.join( "\n\n" ) );
