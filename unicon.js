@@ -56,6 +56,8 @@
 						if( svgcontent ){
 							frag.innerHTML = svgcontent;
 							svgcontent = frag.querySelector( "svg" );
+							var width = svgcontent.getAttribute( "width" );
+							var height = svgcontent.getAttribute( "height" );							
 							frag.innerHTML = "";
 							frag.appendChild( svgcontent );
 							svgcontent = frag.innerHTML;
@@ -64,19 +66,20 @@
 						svgdatauri += encodeURI( svgcontent );
 						
 
-						pngcssrules.push( ".icon-" + filenamenoext + " { background-image: url(" + pngout + filenamenoext + ".png" + "); }" );
-						datacssrules.push( ".icon-" + filenamenoext + " { background-image: url(" + svgdatauri + "); }" );
+						pngcssrules.push( ".icon-" + filenamenoext + " { background-image: url(" + pngout + filenamenoext + ".png" + "); background-repeat: no-repeat; }" );
+						datacssrules.push( ".icon-" + filenamenoext + " { background-image: url(" + svgdatauri + "); background-repeat: no-repeat; }" );
 
-						htmlpreviewbody.push( '<div class="icon-' + filenamenoext + '"></div>' );
+						htmlpreviewbody.push( '<div class="icon-' + filenamenoext + '" style="width: '+ width +'; height: '+ height +'"></div>' );
 
 
 						// open svg file in webkit to make a png
 						page.open( config.sourceDir + theFile, function( status ){
+
 							// create png file
 							page.render( outputdir + pngout + filenamenoext + ".png" );
 
 							// create png data URI
-							pngdatacssrules.push( ".icon-" + filenamenoext + " { background-image: url(" +  pngdatauri + page.renderBase64( "png" ) + "); }" );
+							pngdatacssrules.push( ".icon-" + filenamenoext + " { background-image: url(" +  pngdatauri + page.renderBase64( "png" ) + "); background-repeat: no-repeat; }" );
 
 							// process the next svg
 							nextFile();
