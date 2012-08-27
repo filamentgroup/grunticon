@@ -75,11 +75,10 @@
 							// create png file
 							page.render( outputdir + pngout + filenamenoext + ".png" );
 
+							// create png data URI
 							pngdatacssrules.push( ".icon-" + filenamenoext + " { background-image: url(" +  pngdatauri + page.renderBase64( "png" ) + "); }" );
 
-
-							//pngdatauri += fs.read( outputdir + pngout + filenamenoext + ".png" );
-							
+							// process the next svg
 							nextFile();
 						} );
 					}());
