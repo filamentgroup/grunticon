@@ -50,14 +50,15 @@
 							pngdatauri = "data:image/png;base64,",
 							filename = theFile,
 							filenamenoext = filename.replace( /\.svg$/i, "" ),
-							frag = document.createElement( "div" );
+							frag = document.createElement( "div" ),
+							height, width;
 
 						// get rid of anything outside of the svg element
 						if( svgcontent ){
 							frag.innerHTML = svgcontent;
 							svgcontent = frag.querySelector( "svg" );
-							var width = svgcontent.getAttribute( "width" );
-							var height = svgcontent.getAttribute( "height" );							
+							width = svgcontent.getAttribute( "width" );
+							height = svgcontent.getAttribute( "height" );							
 							frag.innerHTML = "";
 							frag.appendChild( svgcontent );
 							svgcontent = frag.innerHTML;
@@ -69,8 +70,7 @@
 						pngcssrules.push( ".icon-" + filenamenoext + " { background-image: url(" + pngout + filenamenoext + ".png" + "); background-repeat: no-repeat; }" );
 						datacssrules.push( ".icon-" + filenamenoext + " { background-image: url(" + svgdatauri + "); background-repeat: no-repeat; }" );
 
-						htmlpreviewbody.push( '<div class="icon-' + filenamenoext + '" style="width: '+ width +'; height: '+ height +'"></div>' );
-
+						htmlpreviewbody.push( '<pre><code>.icon-' + filenamenoext + ':</code></pre><div class="icon-' + filenamenoext + '" style="width: '+ width +'; height: '+ height +'"></div><hr/>' );
 
 						// open svg file in webkit to make a png
 						page.open( config.sourceDir + theFile, function( status ){
