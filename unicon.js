@@ -14,6 +14,11 @@
 */
 (function(){
 
+	//config
+	var config = {
+		sourceDir : "icons/"
+	};
+
 	var fs = require( "fs" ),
 		dir = "icons/",
 		assets = "assets/",
@@ -22,15 +27,16 @@
 		files = fs.list( dir ),
 		currfile = 0,
 		pngcssrules = [],
+		pngdatacssrules = [],
 		datacssrules = [],
 		htmlpreviewbody = [],
 		fallbackcss = "icons.fallback.css",
+		pngdatacss = "icons.data.png.css",
 		datacss = "icons.data.css";
 
 		// create new temp dir
 		fs.removeTree( outputdir );
 		fs.makeDirectory( outputdir );
-
 
 		function processFile(){
 			var theFile = files[ currfile ];
@@ -39,8 +45,9 @@
 				if( theFile.match( /\.svg$/i ) ){
 					(function(){
 						var page = require( "webpage" ).create(),
-							svgcontent = fs.read( dir + theFile );
+							svgcontent = fs.read( config.sourceDir + theFile ),
 							svgdatauri = "data:image/svg+xml,",
+							pngdatauri = "data:image/png;base64,",
 							filename = theFile,
 							filenamenoext = filename.replace( /\.svg$/i, "" ),
 							frag = document.createElement( "div" );
@@ -55,17 +62,24 @@
 						}
 
 						svgdatauri += encodeURI( svgcontent );
+						
 
-						pngcssrules.push( ".icon-" + filenamenoext + " { background-image: url(" + pngout + filenamenoext + ".png); }" );
+						pngcssrules.push( ".icon-" + filenamenoext + " { background-image: url(" + pngout + filenamenoext + ".png" + "); }" );
 						datacssrules.push( ".icon-" + filenamenoext + " { background-image: url(" + svgdatauri + "); }" );
 
 						htmlpreviewbody.push( '<div class="icon-' + filenamenoext + '"></div>' );
 
 
 						// open svg file in webkit to make a png
-						page.open( dir + theFile, function( status ){
+						page.open( config.sourceDir + theFile, function( status ){
 							// create png file
 							page.render( outputdir + pngout + filenamenoext + ".png" );
+
+							pngdatacssrules.push( ".icon-" + filenamenoext + " { background-image: url(" +  pngdatauri + page.renderBase64( "png" ) + "); }" );
+
+
+							//pngdatauri += fs.read( outputdir + pngout + filenamenoext + ".png" );
+							
 							nextFile();
 						} );
 					}());
@@ -90,7 +104,11 @@
 
 		function finishUp(){
 			// make the preview HTML file - omg so ghetto sorry
-			var htmldoc = fs.read( assets + "preview.html" );
+			var htmldoc = fs.read( assets + "preview.html" ),
+				asyncCSS = fs.read( assets + "asyncCSS.js" )
+
+			// add async loader to the top
+			htmldoc = htmldoc.replace( /<script>/, "<script>\n\t" + asyncCSS );
 
 			// add icons to the body
 			htmldoc = htmldoc.replace( /<\/body>/, htmlpreviewbody.join( "\n\t" ) + "\n</body>" );
@@ -99,6 +117,7 @@
 
 			// write CSS file
 			fs.write( outputdir + fallbackcss, pngcssrules.join( "\n\n" ) );
+			fs.write( outputdir + pngdatacss, pngdatacssrules.join( "\n\n" ) );
 			fs.write( outputdir + datacss, datacssrules.join( "\n\n" ) );
 		}
 
