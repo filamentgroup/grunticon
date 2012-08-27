@@ -14,7 +14,7 @@
 */
 (function(){
 
-	var fs = require('fs'),
+	var fs = require( "fs" ),
 		dir = "icons/",
 		outputdir = "temp/",
 		pngout =  "png/"
@@ -37,7 +37,7 @@
 			if( theFile ){
 				if( theFile.match( /\.svg$/i ) ){
 					(function(){
-						var page = require('webpage').create(),
+						var page = require( "webpage" ).create(),
 							svgcontent = fs.read( dir + theFile );
 							svgdatauri = "data:image/svg+xml,",
 							filename = theFile,
