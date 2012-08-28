@@ -18,15 +18,21 @@ To run, you'll need Node.js and Phantom.js installed.
 
 Browsers that render the SVG data uri:
 - IE9
-- Chrome 21
-- Firefox 15
-- iOS 4.3+ Safari and Chrome
-- Android Chrome (caveat: SVG icons do not scale in vector, but do appear to draw in high-resolution)
-- Android ICS Browser
+- Chrome 14+ (maybe older too?)
+- Safari 4+ (maybe older too?)
+- Firefox 5+ (maybe older too?)
+- iOS 3+ Safari and Chrome
+- Android 4.0 Chrome (caveat: SVG icons do not scale in vector, but do appear to draw in high-resolution)
+- Android 4.0 ICS Browser
 
 Browsers that render the PNG data uri:
 - IE8
-
+- Android 2.3 Browser
+- Android 2.2 Browser
+- Android 2.1 Browser
+- Android 1.6 Browser
+- Android 1.5 Browser
 
 Browsers that need the fallback png request:
 - IE7
+- IE6
