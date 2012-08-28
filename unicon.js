@@ -64,7 +64,7 @@
 							svgcontent = frag.innerHTML;
 						}
 
-						svgdatauri += encodeURI( svgcontent );
+						svgdatauri += escape( svgcontent );
 						
 
 						pngcssrules.push( ".icon-" + filenamenoext + " { background-image: url(" + pngout + filenamenoext + ".png" + "); background-repeat: no-repeat; }" );
