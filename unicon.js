@@ -69,6 +69,7 @@
 						htmlpreviewbody.push( '<pre><code>.icon-' + filenamenoext + ':</code></pre><div class="icon-' + filenamenoext + '" style="width: '+ width +'; height: '+ height +'"></div><hr/>' );
 
 						// open svg file in webkit to make a png
+						page.viewportSize = {  width: parseFloat(width), height: parseFloat(height) };
 						page.open( config.sourceDir + theFile, function( status ){
 
 							// create png file
