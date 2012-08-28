@@ -16,19 +16,22 @@
 		i = 0,
 		checkSupport = function(){
 			if( formats[ i ] ){
-				var img = new Image();
+				var img = new Image(),
+					onloaded = function(){
+						if( img.offsetWidth === 2 ){
+							loadCSS( css[ i ] );
+						}
+						else{
+							i++;
+							checkSupport();
+						}
+						dE.removeChild( img );
+						clearTimeout( timer );
+					},
+					timer = setTimeout( onloaded, 200 );
+				img.onload = onloaded;
 				img.src = formats[ i ];
 				dE.insertBefore( img, dE.firstChild );
-				img.onload = function(){
-					if( img.offsetWidth === 2 ){
-						loadCSS( css[ i ] );
-					}
-					else{
-						i++;
-						isSupported();
-					}
-					dE.removeChild( img );
-				}
 			}
 			else{
 				loadCSS( css[ i ] );
