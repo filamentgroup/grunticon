@@ -45,27 +45,23 @@
 				if( theFile.match( /\.svg$/i ) ){
 					(function(){
 						var page = require( "webpage" ).create(),
-							svgcontent = fs.read( config.sourceDir + theFile ),
-							svgdatauri = "data:image/svg+xml,",
+							svgdata = fs.read( config.sourceDir + theFile ),
+							svgdatauri = "data:image/svg+xml;base64,",
 							pngdatauri = "data:image/png;base64,",
 							filename = theFile,
 							filenamenoext = filename.replace( /\.svg$/i, "" ),
 							frag = document.createElement( "div" ),
-							height, width;
+							svgelem, height, width;
 
 						// get rid of anything outside of the svg element
-						if( svgcontent ){
-							frag.innerHTML = svgcontent;
-							svgcontent = frag.querySelector( "svg" );
-							width = svgcontent.getAttribute( "width" );
-							height = svgcontent.getAttribute( "height" );							
-							frag.innerHTML = "";
-							frag.appendChild( svgcontent );
-							svgcontent = frag.innerHTML;
+						if( svgdata ){
+							frag.innerHTML = svgdata;
+							svgelem = frag.querySelector( "svg" );
+							width = svgelem.getAttribute( "width" );
+							height = svgelem.getAttribute( "height" );
 						}
 
-						svgdatauri += escape( svgcontent );
-						
+						svgdatauri += btoa(svgdata);
 
 						pngcssrules.push( ".icon-" + filenamenoext + " { background-image: url(" + pngout + filenamenoext + ".png" + "); background-repeat: no-repeat; }" );
 						datacssrules.push( ".icon-" + filenamenoext + " { background-image: url(" + svgdatauri + "); background-repeat: no-repeat; }" );
