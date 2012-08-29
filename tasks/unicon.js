@@ -17,18 +17,20 @@ module.exports = function(grunt) {
 
   grunt.registerTask('unicon', 'A mystical CSS icon solution.', function() {
 
-    var config = grunt.config.get( "unicon" ) || {
-        inputdir: "icons/",
-        outputdir: "output/"
-      };
+    var config = grunt.config.get( "unicon" );
+
+    if( !config || !config.src || !config.dest ){
+      grunt.log.write( "Please specify src and dest in your grunt.js configuration" );
+      return;
+    }
 
     // Get a valid semver tag from `git describe --tags` if possible.
     grunt.utils.spawn({
       cmd: 'phantomjs',
       args: [
         grunt.task.getFile('unicon/phantom.js'),
-        config.inputdir,
-        config.outputdir
+        config.src,
+        config.dest
       ],
       fallback: ''
     }, function(err, result, code) {

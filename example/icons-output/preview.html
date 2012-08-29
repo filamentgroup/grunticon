@@ -1,0 +1,72 @@
+<!doctype HTML>
+<html>
+	<head>
+		<title>Icons Preview!</title>
+		<script>
+	/* Unicon. Asynchronous Stylesheet Loader Function */
+(function(w){
+	/* Unicon. Asynchronous Stylesheet Loader Function */
+	var loadCSS = function( href ){
+			var link = w.document.createElement( "link" ),
+				ref = w.document.getElementsByTagName( "script" );
+			link.rel = "stylesheet";
+			link.href = href;
+			ref[ 0 ].parentNode.insertBefore(link, ref[ 0 ] );
+		},
+		dE = w.document.documentElement,
+		css = [ "icons.data.css", "icons.data.png.css", "icons.fallback.css" ],
+		formats = [
+			"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIycHgiIGhlaWdodD0iMXB4Ij48cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSIyIi8+PC9zdmc+",
+			"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAABCAYAAAD0In+KAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAABFJREFUCJljYGBg+M/AwMAAAAUEAQCUPjtCAAAAAElFTkSuQmCC"],
+		i = 0,
+		checkSupport = function(){
+			if( formats[ i ] ){
+				var img = new Image(),
+					onloaded = function(){
+						if( img.offsetWidth === 2 ){
+							loadCSS( css[ i ] );
+						}
+						else{
+							i++;
+							checkSupport();
+						}
+						dE.removeChild( img );
+						clearTimeout( timer );
+					},
+					timer = setTimeout( onloaded, 200 );
+				img.onload = onloaded;
+				img.src = formats[ i ];
+				dE.insertBefore( img, dE.firstChild );
+			}
+			else{
+				loadCSS( css[ i ] );
+			}
+		};
+
+		checkSupport();
+}(this));
+		</script>
+	</head>
+	<body>
+	<pre><code>.icon-arrow-11:</code></pre><div class="icon-arrow-11" style="width: 30px; height: 30px"></div><hr/>
+	<pre><code>.icon-arrow-tiny:</code></pre><div class="icon-arrow-tiny" style="width: 30px; height: 30px"></div><hr/>
+	<pre><code>.icon-bear:</code></pre><div class="icon-bear" style="width: 100px; height: 62.905px"></div><hr/>
+	<pre><code>.icon-cat:</code></pre><div class="icon-cat" style="width: 100px; height: 100px"></div><hr/>
+	<pre><code>.icon-gear:</code></pre><div class="icon-gear" style="width: 30px; height: 30px"></div><hr/>
+	<pre><code>.icon-gradients-flat-opacity:</code></pre><div class="icon-gradients-flat-opacity" style="width: 84.501px; height: 42px"></div><hr/>
+	<pre><code>.icon-gradients-flat:</code></pre><div class="icon-gradients-flat" style="width: 84.501px; height: 42px"></div><hr/>
+	<pre><code>.icon-gradients:</code></pre><div class="icon-gradients" style="width: 30px; height: 30px"></div><hr/>
+	<pre><code>.icon-Home_Media:</code></pre><div class="icon-Home_Media" style="width: 44px; height: 44px"></div><hr/>
+	<pre><code>.icon-Image_Exchange:</code></pre><div class="icon-Image_Exchange" style="width: 44px; height: 44px"></div><hr/>
+	<pre><code>.icon-Internet:</code></pre><div class="icon-Internet" style="width: 44px; height: 44px"></div><hr/>
+	<pre><code>.icon-Internet_FP2:</code></pre><div class="icon-Internet_FP2" style="width: 44px; height: 44px"></div><hr/>
+	<pre><code>.icon-Internet_Radio:</code></pre><div class="icon-Internet_Radio" style="width: 44px; height: 44px"></div><hr/>
+	<pre><code>.icon-Internet_Tel:</code></pre><div class="icon-Internet_Tel" style="width: 44px; height: 44px"></div><hr/>
+	<pre><code>.icon-Intranet:</code></pre><div class="icon-Intranet" style="width: 44px; height: 44px"></div><hr/>
+	<pre><code>.icon-map:</code></pre><div class="icon-map" style="width: 24px; height: 34px"></div><hr/>
+	<pre><code>.icon-plus:</code></pre><div class="icon-plus" style="width: 30px; height: 30px"></div><hr/>
+	<pre><code>.icon-star:</code></pre><div class="icon-star" style="width: 42px; height: 42px"></div><hr/>
+	<pre><code>.icon-test-tiny:</code></pre><div class="icon-test-tiny" style="width: 84.501px; height: 42px"></div><hr/>
+	<pre><code>.icon-unicon:</code></pre><div class="icon-unicon" style="width: 100px; height: 100px"></div><hr/>
+</body>
+</html>

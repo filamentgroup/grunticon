@@ -27,7 +27,6 @@ var pngdatacss = "icons.data.png.css";
 var datacss = "icons.data.css";
 
 // remove old / create new output directory
-
 fs.removeTree( outputdir );
 fs.makeDirectory( outputdir );
 

@@ -32,7 +32,20 @@ grunt.loadNpmTasks('grunt-unicon');
 [getting_started]: https://github.com/cowboy/grunt/blob/master/docs/getting_started.md
 
 ## Documentation
-_(Coming soon)_
+
+Unicon has 2 configuration options: `src` and `dest`.
+
+- `src`: path to your folder of svg files
+- `dest`: path to the folder you'd like the 
+
+ ...which can be set in your grunt.js config file, under the name `unicon`, like so:
+
+```
+	unicon: {
+      src: "css/dist/icons/",
+      dest: "css/icons/"
+    }
+```
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].
@@ -42,7 +55,7 @@ _(Nothing yet)_
 
 
 
-## Browser Testing Results
+## Browser testing results for icon output
 
 The generated asynchronous CSS loader script delivers an appropriate icon stylesheet depending on a device/browser's capabilities.
 
