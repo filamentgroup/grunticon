@@ -21,7 +21,7 @@ module.exports = function(grunt) {
         curly: true,
         eqeqeq: true,
         immed: true,
-        latedef: true,
+        latedef: false,
         newcap: true,
         noarg: true,
         sub: true,
@@ -31,7 +31,9 @@ module.exports = function(grunt) {
         node: true,
         es5: true
       },
-      globals: {}
+      globals: { 
+        Image: {}
+      }
     }
   });
 
@@ -39,6 +41,6 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
 
   // Default task.
-  grunt.registerTask('default', 'unicon');
+  grunt.registerTask('default', 'lint unicon');
 
 };
