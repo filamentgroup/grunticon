@@ -18,8 +18,10 @@ module.exports = function(grunt) {
   grunt.registerTask('unicon', 'A mystical CSS icon solution.', function() {
     grunt.log.write(grunt.helper('unicon'));
 
-    var config = grunt.config.get( "unicon" ) || { inputdir: "../../icons", outputdir: "../../temp" };
-
+    var config = grunt.config.get( "unicon" ) || {
+      inputdir: "icons/",
+      outputdir: "output/"
+    };
 
 
     // Get a valid semver tag from `git describe --tags` if possible.

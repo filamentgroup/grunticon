@@ -4,8 +4,8 @@
 /*global btoa:true*/
 
 
- var  inputdir = phantom.args[1],
-      outputdir = phantom.args[2],
+ var  inputdir = "icons/",//phantom.args[1],
+      outputdir = "temp/",//phantom.args[2],
       fs = require( "fs" ),
       assets = "assets/",
       pngout =  "png/",
@@ -19,8 +19,10 @@
       pngdatacss = "icons.data.png.css",
       datacss = "icons.data.css";
 
+
+
     // create new temp dir
-    fs.removeTree( outputdir );
+    //fs.removeTree( outputdir );
     fs.makeDirectory( outputdir );
 
 

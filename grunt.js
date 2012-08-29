@@ -13,8 +13,8 @@ module.exports = function(grunt) {
       tasks: 'default'
     },
     unicon: {
-      inputdir: "icons",
-      outputdir: "temp"
+      inputdir: "icons/",
+      outputdir: "output/"
     },
     jshint: {
       options: {
