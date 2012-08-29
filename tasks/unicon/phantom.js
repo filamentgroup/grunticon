@@ -37,8 +37,8 @@ function nextFile(){
 
 function finishUp(){
   // make the preview HTML file - omg so ghetto sorry
-  var htmldoc = fs.read( assets + "preview.html" ),
-    asyncCSS = fs.read( assets + "asyncCSS.js" );
+  var htmldoc = phantom.args[2],
+    asyncCSS = phantom.args[3];
 
   // add async loader to the top
   htmldoc = htmldoc.replace( /<script>/, "<script>\n\t" + asyncCSS );
