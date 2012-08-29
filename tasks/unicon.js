@@ -16,32 +16,26 @@ module.exports = function(grunt) {
   // ==========================================================================
 
   grunt.registerTask('unicon', 'A mystical CSS icon solution.', function() {
-    grunt.log.write(grunt.helper('unicon'));
 
     var config = grunt.config.get( "unicon" ) || {
-      inputdir: "icons/",
-      outputdir: "output/"
-    };
-
+        inputdir: "icons/",
+        outputdir: "output/"
+      };
 
     // Get a valid semver tag from `git describe --tags` if possible.
     grunt.utils.spawn({
       cmd: 'phantomjs',
-      args: [ grunt.task.getFile('unicon/phantom.js'), config.inputdir, config.outputdir ],
+      args: [
+        grunt.task.getFile('unicon/phantom.js'),
+        config.inputdir,
+        config.outputdir
+      ],
       fallback: ''
     }, function(err, result, code) {
-      grunt.log.write("done!")
+      // TODO boost this up a bit.
+      grunt.log.write("done!");
     });
 
 
-});
-
-  // ==========================================================================
-  // HELPERS
-  // ==========================================================================
-
-  grunt.registerHelper('unicon', function() {
-    return 'unicon!!!';
   });
-
 };
