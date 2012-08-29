@@ -22,7 +22,6 @@
     }
   ],
   "main": "grunt.js",
-  "bin": "bin/unicon",
   "engines": {
     "node": "*"
   },
