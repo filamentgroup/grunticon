@@ -27,6 +27,7 @@ var pngdatacss = "icons.data.png.css";
 var datacss = "icons.data.css";
 
 // remove old / create new output directory
+
 fs.removeTree( outputdir );
 fs.makeDirectory( outputdir );
 
@@ -37,8 +38,8 @@ function nextFile(){
 
 function finishUp(){
   // make the preview HTML file - omg so ghetto sorry
-  var htmldoc = phantom.args[2],
-    asyncCSS = phantom.args[3];
+  var asyncCSS = fs.read( phantom.args[2] ),
+      htmldoc = fs.read( phantom.args[3]);
 
   // add async loader to the top
   htmldoc = htmldoc.replace( /<script>/, "<script>\n\t" + asyncCSS );
