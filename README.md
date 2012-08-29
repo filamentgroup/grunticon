@@ -13,32 +13,37 @@
 
 ```
 
-A mystical CSS icon solution
+A mystical CSS icon solution.
+
+Unicon takes a folder of SVG files (typically icons) and outputs them into CSS files in 3 formats: svg data urls, png data urls, and references to regular png images. It provides a small bit of JavaScript to asynchronously load the appropriate icon file depending on a browser's support for those formats. See the browser support section for how that breaks down.
 
 ## License
 Copyright (c) 2012 Scott Jehl, Filament Group, Inc.
 Licensed under the MIT license.
 
 ## Getting Started
-Install this grunt plugin next to your project's [grunt.js gruntfile][getting_started] with: `npm install grunt-unicon`
+
+First, you'll need to install [PhantomJS](http://phantomjs.org/), which you might already have if you have [Grunt](https://github.com/cowboy/grunt) installed (No? You'll need that too.).
+
+Once those are in...
+
+Install the module with: `npm install grunt-unicon`
 
 Then add this line to your project's `grunt.js` gruntfile:
 
 ```javascript
 grunt.loadNpmTasks('grunt-unicon');
 ```
-
-[grunt]: https://github.com/cowboy/grunt
-[getting_started]: https://github.com/cowboy/grunt/blob/master/docs/getting_started.md
+Add the configuration settings to your `grunt.js` file as mentioned below, and Unicon will batch your icons whenever you run grunt.
 
 ## Documentation
 
-Unicon has 2 configuration options: `src` and `dest`.
+Unicon has 2 configuration options: `src` and `dest`. Both need to be defined for Unicon to run.
 
 - `src`: path to your folder of svg files
 - `dest`: path to the folder you'd like the 
 
- ...which can be set in your grunt.js config file, under the name `unicon`, like so:
+These can be set in your grunt.js config file, under the name `unicon`, like so:
 
 ```
 	unicon: {
@@ -47,19 +52,21 @@ Unicon has 2 configuration options: `src` and `dest`.
     }
 ```
 
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].
+The `src` property refers to the directory in which your SVG icons are stored. The `dest` property refers to the directory you'd like Unicon to create, which will contain your output files. 
 
-## Release History
-_(Nothing yet)_
+**IMPORTANT NOTE:** Unicon will delete the `dest` folder if it already exists, so be sure not to specify a folder that already exists in your directories!!
 
+With these configuration properties set, you can add `unicon` to your default tasks list. That'll look something like this:
 
+    grunt.registerTask('default', 'lint qunit concat min **unicon**');
+
+Unicon will now batch your icons whenever you run grunt.
 
 ## Browser testing results for icon output
 
 The generated asynchronous CSS loader script delivers an appropriate icon stylesheet depending on a device/browser's capabilities.
 
-Browsers that render the SVG data uri:
+Browsers that render the SVG data url stylesheet:
 - IE9
 - Chrome 14+ (maybe older too?)
 - Safari 4+ (maybe older too?)
@@ -68,7 +75,7 @@ Browsers that render the SVG data uri:
 - Android 4.0 Chrome (caveat: SVG icons do not scale in vector, but do appear to draw in high-resolution)
 - Android 4.0 ICS Browser
 
-Browsers that render the PNG data uri:
+Browsers that receive the PNG data url stylesheet:
 - IE8
 - Android 2.3 Browser
 - Android 2.2 Browser
@@ -76,6 +83,6 @@ Browsers that render the PNG data uri:
 - Android 1.6 Browser
 - Android 1.5 Browser
 
-Browsers that need the fallback png request:
+Browsers that receive the fallback png request:
 - IE7
 - IE6
