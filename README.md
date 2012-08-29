@@ -1,20 +1,50 @@
-# Unicon
+# Unicon!
 
-A half-baked icon experiment
+```
+         /'
+        //
+    .  //
+    |\//7
+   /' " \     
+  .   . .      
+  | (    \     
+  |  '._  '        
+  /    \'-'
 
-[c]2012 @scottjehl, Filament Group, Inc.
+```
 
-This script outputs a folder of svgs to 2 CSS files: one containing svg data uris of the icons, and a second one containing fallback references to png files generated from the svgs. A preview.html document and async-loaded CSS files will be generated in the temp folder after running, along with the png files.
+A mystical CSS icon solution
 
-To run, you'll need Node.js and Phantom.js installed.
+## License
+Copyright (c) 2012 Scott Jehl, Filament Group, Inc.
+Licensed under the MIT license.
 
-1. `$ cd unicon`
-2. `phantomjs unicon.js`
-3. open the generated `temp/preview.html` in a browser.
+## Getting Started
+Install this grunt plugin next to your project's [grunt.js gruntfile][getting_started] with: `npm install grunt-unicon`
+
+Then add this line to your project's `grunt.js` gruntfile:
+
+```javascript
+grunt.loadNpmTasks('grunt-unicon');
+```
+
+[grunt]: https://github.com/cowboy/grunt
+[getting_started]: https://github.com/cowboy/grunt/blob/master/docs/getting_started.md
+
+## Documentation
+_(Coming soon)_
+
+## Contributing
+In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].
+
+## Release History
+_(Nothing yet)_
 
 
 
-## Results
+## Browser Testing Results
+
+The generated asynchronous CSS loader script delivers an appropriate icon stylesheet depending on a device/browser's capabilities.
 
 Browsers that render the SVG data uri:
 - IE9
