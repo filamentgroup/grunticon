@@ -13,28 +13,35 @@
 
 ```
 
-A mystical CSS icon solution.
+## A mystical CSS icon solution.
 
-Unicon takes a folder of SVG files (typically, icons) and outputs them into CSS files in 3 formats: svg data urls, png data urls, and references to regular png images, which are also generated and placed in a folder. It provides a small bit of JavaScript to asynchronously load the appropriate icon file depending on a browser's support for those formats. See the browser support section for how that breaks down.
+Unicon is a [Grunt.js](https://github.com/cowboy/grunt/) task that makes it easy to manage icons and background images for all devices, preferring HD (retina) SVG icons but also provides fallback support for standard definition browsers, and old browsers alike. From a CSS perspective, it's easy to use, as it generates a class referencing each icon, and doesn't use CSS sprites. 
+
+Unicon takes a [folder of SVG files](https://github.com/filamentgroup/unicon/tree/master/example/source) (typically, icons that you've drawn in an application like Adobe Illustrator), and [outputs them](https://github.com/filamentgroup/unicon/tree/master/example/output) to CSS in 3 formats: [svg data urls](https://github.com/filamentgroup/unicon/blob/master/example/output/icons.data.svg.css), [png data urls](https://github.com/filamentgroup/unicon/blob/master/example/output/icons.data.png.css), and [a third fallback CSS file with references to regular png images](https://github.com/filamentgroup/unicon/blob/master/example/output/icons.data.png.css), which are also automatically [generated and placed in a folder](https://github.com/filamentgroup/unicon/tree/master/example/output/png). 
+
+Unicon also generates [a small bit of JavaScript and CSS](https://github.com/filamentgroup/unicon/blob/master/example/output/unicon.loader.txt) to drop into your site, which asynchronously loads the appropriate icon CSS depending on a browser's capabilities, and a preview HTML file with that loader script in place. 
+
+You can see a demonstration of the output running here: 
 
 ## License
-Copyright (c) 2012 Scott Jehl, Filament Group, Inc.
+Copyright (c) 2012 Scott Jehl, [Filament Group, Inc.](http://filamentgroup.com)
 Licensed under the MIT license.
 
 ## Getting Started
 
 First, you'll need to install [PhantomJS](http://phantomjs.org/), which you might already have if you have [Grunt](https://github.com/cowboy/grunt) installed (No? You'll need that too.).
 
-Once those are in...
+Once those are installed...
 
-Install the module with: `npm install grunt-unicon`
+Install the Unicon module with: `npm install grunt-unicon`
 
 Then add this line to your project's `grunt.js` gruntfile:
 
 ```javascript
 grunt.loadNpmTasks('grunt-unicon');
 ```
-Add the configuration settings to your `grunt.js` file as mentioned below, and Unicon will batch your icons whenever you run grunt.
+Add the configuration settings to your `grunt.js` file as mentioned below, and Unicon will batch your icons whenever you run grunt and output the files listed above to your `dest` folder, which is documented below.
+
 
 ## Documentation
 
@@ -104,7 +111,12 @@ Browsers that receive the fallback png request:
 - IE6
 - Non-JavaScript environments
 
-## Creating SVG Artwork
+## Tips
+
+### Serving compressed CSS
+One of the great benefits to data uris is the ability to compress the images heavily via gzip. Be sure to do this, as it'll cut your icon transfer size greatly.
+
+### Creating SVG Artwork
 
 The workflow we've been using so far involves creating a new Illustrator file with the artboard set to the desired size of the icon you want set in the CSS. 
 
