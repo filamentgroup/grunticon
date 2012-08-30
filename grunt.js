@@ -13,8 +13,15 @@ module.exports = function(grunt) {
       tasks: 'default'
     },
     unicon: {
+      // required config
       src: "example/source-icons/",
-      dest: "example/icons-output/"
+      dest: "example/icons-output/",
+      // optional config
+      cssfiles: {
+        datasvg: "icons.data.svg.css",
+        datapng: "icons.data.png.css",
+        urlpng: "icons.fallback.css"
+      }
     },
     jshint: {
       options: {
@@ -32,7 +39,8 @@ module.exports = function(grunt) {
         es5: true
       },
       globals: { 
-        Image: {}
+        Image: true,
+        window: true
       }
     }
   });

@@ -16,7 +16,9 @@ phantom args sent from unicon.js:
   [1] - output directory path
   [2] - asyncCSS static javascript file source
   [3] - preview.html static file source
-  [4] - CSS filenames object
+  [4] - CSS filename for datasvg
+  [5] - CSS filename for datapng,
+  [6] - CSS filename for urlpng
 */
 
 var fs = require( "fs" );
@@ -30,15 +32,10 @@ var pngdatacssrules = [];
 var datacssrules = [];
 var htmlpreviewbody = [];
 
-var cssfiles = phantom.args[4];
-var fallbackcss = cssfiles.urlpng;
-var pngdatacss = cssfiles.datapng;
-var datacss = cssfiles.datasvg;
 
-// remove old / create new output directory
-
-fs.removeTree( outputdir );
-fs.makeDirectory( outputdir );
+var fallbackcss = phantom.args[6];
+var pngdatacss = phantom.args[5];
+var datacss = phantom.args[4];
 
 function nextFile(){
   currfile++;
@@ -46,12 +43,21 @@ function nextFile(){
 }
 
 function finishUp(){
-  // make the preview HTML file - omg so ghetto sorry
-  var asyncCSS = fs.read( phantom.args[2] ),
-      htmldoc = fs.read( phantom.args[3]);
+  // make the preview HTML file and asyncCSS loader file
+  var asyncCSS = fs.read( phantom.args[2] );
+  var asyncCSSpreview = asyncCSS;
+  var htmldoc = fs.read( phantom.args[3]);
+  var noscript = '<noscript><link href="/' + outputdir + fallbackcss + '" rel="stylesheet"></noscript>';
+  var noscriptpreview = '<noscript><link href="' + fallbackcss + '" rel="stylesheet"></noscript>';
+
+  // add custom function call to asyncCSS
+  asyncCSS += '\nunicon( [ "/'+ outputdir + datacss +'", "/'+ outputdir + pngdatacss +'", "/'+ outputdir + fallbackcss +'" ] );';
+  asyncCSSpreview += '\nunicon( [ "'+ datacss +'", "'+ pngdatacss +'", "'+ fallbackcss +'" ] );';
 
   // add async loader to the top
-  htmldoc = htmldoc.replace( /<script>/, "<script>\n\t" + asyncCSS );
+  htmldoc = htmldoc.replace( /<script>/, "<script>\n\t" + asyncCSSpreview );
+  //add noscript
+  htmldoc = htmldoc.replace( /<\/script>/, "</script>\n\t" + noscriptpreview );
 
   // add icons to the body
   htmldoc = htmldoc.replace( /<\/body>/, htmlpreviewbody.join( "\n\t" ) + "\n</body>" );
@@ -62,7 +68,7 @@ function finishUp(){
   fs.write( outputdir + fallbackcss, pngcssrules.join( "\n\n" ) );
   fs.write( outputdir + pngdatacss, pngdatacssrules.join( "\n\n" ) );
   fs.write( outputdir + datacss, datacssrules.join( "\n\n" ) );
-  fs.write( outputdir + "asyncCSS.js", asyncCSS );
+  fs.write( phantom.args[2], "<!-- Unicode CSS Loader: place this in the head of your page -->\n<script>\n" + asyncCSS + "</script>\n" + noscript );
 }
 
 function processFile(){
@@ -80,7 +86,7 @@ function processFile(){
           frag = window.document.createElement( "div" ),
           svgelem, height, width;
 
-        // get rid of anything outside of the svg element
+        // get svg element's dimensions
         if( svgdata ){
           frag.innerHTML = svgdata;
           svgelem = frag.querySelector( "svg" );
