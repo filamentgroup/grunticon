@@ -16,12 +16,25 @@ module.exports = function(grunt) {
       // required config
       src: "example/source-icons/",
       dest: "example/icons-output/",
-      // optional config
-      cssfiles: {
-        datasvg: "icons.data.svg.css",
-        datapng: "icons.data.png.css",
-        urlpng: "icons.fallback.css"
-      }
+
+      // optional unicon config properties
+
+      // CSS filenames
+      datasvgcss: "icons.data.svg.css",
+      datapngcss: "icons.data.png.css",
+      urlpngcss: "icons.fallback.css",
+
+      // preview HTML filename
+      previewhtml: "preview.html",
+
+      // Unicon loader code snippet filename
+      loadersnippet: "unicon.loader.txt",
+
+      // folder name (within dest) for png output
+      pngfolder: "png/",
+
+      // prefix for CSS classnames
+      cssprefix: "icon-wee-"
     },
     jshint: {
       options: {

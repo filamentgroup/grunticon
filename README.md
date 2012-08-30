@@ -38,7 +38,9 @@ Add the configuration settings to your `grunt.js` file as mentioned below, and U
 
 ## Documentation
 
-Unicon has 2 configuration options: `src` and `dest`. Both need to be defined for Unicon to run.
+### Required configuration properties
+
+Unicon has 2 required configuration properties: `src` and `dest`. Both need to be defined for Unicon to run.
 
 - `src`: path to your folder of svg files
 - `dest`: path to the folder you'd like the 
@@ -54,13 +56,26 @@ These can be set in your grunt.js config file, under the name `unicon`, like so:
 
 The `src` property refers to the directory in which your SVG icons are stored. The `dest` property refers to the directory you'd like Unicon to create, which will contain your output files. 
 
-**IMPORTANT NOTE:** Unicon will delete the `dest` folder if it already exists, so be sure not to specify a folder that already exists in your directories!!
+**IMPORTANT NOTE:** Unicon will overwrite any files in the `dest` directory if they are of the same name as a file that Unicon needs to create. For easiest results, you can set `dest` to a folder that does not yet exist in your directory and Unicon will create that folder, or set it to an existing folder and be sure to configure Unicon to create file names that do not already exist in that folder.
 
 With these configuration properties set, you can add `unicon` to your default tasks list. That'll look something like this:
 
     grunt.registerTask('default', 'lint qunit concat min **unicon**');
 
 Unicon will now batch your icons whenever you run grunt.
+
+### Optional configuration properties
+
+In addition to the required configuration properties above, Unicon's grunt configuration lets you configure the names of the files and the images folder it generates inside `dest`. 
+
+- `datasvgcss`: The name of the generated CSS file containing SVG data uris. Default: `"icons.data.svg.css"`
+- `datapngcss`: The name of the generated CSS file containing PNG data uris. Default: `"icons.data.png.css"`
+- `urlpngcss`: The name of the generated CSS file containing external png url references. Default: `"icons.fallback.css"`
+- `previewhtml`: The name of the generated HTML file containing PNG data uris. Default: `"preview.html"`
+- `loadersnippet`:  The name of the generated text file containing the Unicon loading snippet. Default: `"unicon.loader.txt"`
+- `pngfolder`:  The name of the generated folder containing the generated PNG images. Default: `"png/"`
+- `cssprefix`: a string to prefix all css classes with. Default: `"icon-"`
+
 
 ## Browser testing results for icon output
 
@@ -87,6 +102,7 @@ Browsers that receive the PNG data url stylesheet:
 Browsers that receive the fallback png request:
 - IE7
 - IE6
+- Non-JavaScript environments
 
 ## Creating SVG Artwork
 
