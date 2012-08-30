@@ -60,9 +60,9 @@ module.exports = function(grunt ) {
 
     // minify the source of the unicon loader and write that to the output
     grunt.log.write( "\nUnicon now minifying the stylesheet loader source." );
-    var src = grunt.file.read( asyncCSS );
+    var asyncsrc = grunt.file.read( asyncCSS );
     var banner = grunt.file.read( asyncCSSBanner );
-    var min = banner + "\n" + grunt.helper('uglify', src );
+    var min = banner + "\n" + grunt.helper('uglify', asyncsrc );
     var loaderCodeDest = config.dest + loadersnippet;
     grunt.file.write( loaderCodeDest, min );
     grunt.log.write( "\nUnicon loader file created." );
