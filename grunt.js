@@ -14,8 +14,8 @@ module.exports = function(grunt) {
     },
     unicon: {
       // required config
-      src: "example/source-icons/",
-      dest: "example/icons-output/",
+      src: "example/source/",
+      dest: "example/output/",
 
       // optional unicon config properties
 
