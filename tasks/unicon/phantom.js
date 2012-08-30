@@ -22,6 +22,7 @@ phantom args sent from unicon.js:
   [7] - filename for preview HTML file
   [8] - png folder name
   [9] - css classname prefix
+  [10] - css basepath prefix
 */
 
 var fs = require( "fs" );
@@ -38,6 +39,8 @@ var htmlpreviewbody = [];
 var fallbackcss = phantom.args[6];
 var pngdatacss = phantom.args[5];
 var datacss = phantom.args[4];
+var cssbasepath = phantom.args[10];
+
 
 // increment the current file index and process it
 function nextFile(){
@@ -58,13 +61,13 @@ function finishUp(){
   var htmldoc = fs.read( phantom.args[3]);
 
   // noscript for the snippet file
-  var noscript = '<noscript><link href="/' + outputdir + fallbackcss + '" rel="stylesheet"></noscript>';
+  var noscript = '<noscript><link href="' + cssbasepath + outputdir + fallbackcss + '" rel="stylesheet"></noscript>';
 
   // noscript for the preview file
   var noscriptpreview = '<noscript><link href="' + fallbackcss + '" rel="stylesheet"></noscript>';
 
   // add custom function call to asyncCSS
-  asyncCSS += '\nunicon( [ "/'+ outputdir + datacss +'", "/'+ outputdir + pngdatacss +'", "/'+ outputdir + fallbackcss +'" ] );';
+  asyncCSS += '\nunicon( [ "' + cssbasepath + outputdir + datacss +'", "' + cssbasepath + outputdir + pngdatacss +'", "' + cssbasepath + outputdir + fallbackcss +'" ] );';
   asyncCSSpreview += '\nunicon( [ "'+ datacss +'", "'+ pngdatacss +'", "'+ fallbackcss +'" ] );';
 
   // add async loader to the top

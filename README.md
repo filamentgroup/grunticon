@@ -69,7 +69,7 @@ The `src` property refers to the directory in which your SVG icons are stored. T
 
 With these configuration properties set, you can add `unicon` to your default tasks list. That'll look something like this:
 
-    grunt.registerTask('default', 'lint qunit concat min **unicon**');
+    grunt.registerTask('default', 'lint qunit concat min unicon');
 
 Unicon will now batch your icons whenever you run grunt.
 

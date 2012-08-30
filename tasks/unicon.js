@@ -45,6 +45,9 @@ module.exports = function(grunt ) {
     //filename for generated loader HTML snippet file
     var loadersnippet = config.loadersnippet || "unicon.loader.txt";
 
+    // css references base path for the loader
+    var cssbasepath = config.cssbasepath || "/";
+
     // folder name (within the output folder) for generated png files
     var pngfolder = config.pngfolder || "png/";
     // make sure pngfolder has / at the end
@@ -72,7 +75,7 @@ module.exports = function(grunt ) {
 
     // take it to phantomjs to do the rest
     grunt.log.write( "\nUnicon now spawning phantomjs..." );
-    
+
     grunt.utils.spawn({
       cmd: 'phantomjs',
       args: [
@@ -86,7 +89,8 @@ module.exports = function(grunt ) {
         urlpngcss,
         previewhtml,
         pngfolder,
-        cssprefix
+        cssprefix,
+        cssbasepath
       ],
       fallback: ''
     }, function(err, result, code) {
