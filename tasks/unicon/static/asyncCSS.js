@@ -1,42 +1,38 @@
-/* Unicon. Asynchronous Stylesheet Loader Function */
+/*
+ * Unicon - Asynchronous Stylesheet Loader Function
+ * https://github.com/filamentgroup/unicon
+ *
+ * Copyright (c) 2012 Scott Jehl
+ * Licensed under the MIT license.
+ */
 (function(w){
-	/* Unicon. Asynchronous Stylesheet Loader Function */
-	var loadCSS = function( href ){
+	var css = [
+			"icons.data.css",
+			"icons.data.png.css",
+			"icons.fallback.css"
+		],
+
+		// Thanks Modernizr & Erik Dahlstrom
+		svg = !!w.document.createElementNS && !!w.document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect,
+
+		loadCSS = function( data ){
 			var link = w.document.createElement( "link" ),
-				ref = w.document.getElementsByTagName( "script" );
+				ref = w.document.getElementsByTagName( "script" )[ 0 ];
 			link.rel = "stylesheet";
-			link.href = href;
-			ref[ 0 ].parentNode.insertBefore(link, ref[ 0 ] );
+			link.href = css[ data && svg ? 0 : data ? 1 : 2 ];
+			ref.parentNode.insertBefore( link, ref );
 		},
-		dE = w.document.documentElement,
-		css = [ "icons.data.css", "icons.data.png.css", "icons.fallback.css" ],
-		formats = [
-			"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIycHgiIGhlaWdodD0iMXB4Ij48cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSIyIi8+PC9zdmc+",
-			"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAABCAYAAAD0In+KAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAABFJREFUCJljYGBg+M/AwMAAAAUEAQCUPjtCAAAAAElFTkSuQmCC"],
-		i = 0,
-		checkSupport = function(){
-			if( formats[ i ] ){
-				var img = new Image(),
-					onloaded = function(){
-						if( img.offsetWidth === 2 ){
-							loadCSS( css[ i ] );
-						}
-						else{
-							i++;
-							checkSupport();
-						}
-						dE.removeChild( img );
-						clearTimeout( timer );
-					},
-					timer = setTimeout( onloaded, 200 );
-				img.onload = onloaded;
-				img.src = formats[ i ];
-				dE.insertBefore( img, dE.firstChild );
-			}
-			else{
-				loadCSS( css[ i ] );
-			}
+
+		// Thanks Modernizr
+		img = new w.Image();
+
+		img.onerror = function(){
+			loadCSS( false );
 		};
 
-		checkSupport();
-}(this));
+		img.onload = function(){
+			loadCSS( img.width === 1 && img.height === 1 );
+		};
+
+		img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+}( this ));
