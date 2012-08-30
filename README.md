@@ -21,7 +21,7 @@ Unicon takes a [folder of SVG files](https://github.com/filamentgroup/unicon/tre
 
 Unicon also generates [a small bit of JavaScript and CSS](https://github.com/filamentgroup/unicon/blob/master/example/output/unicon.loader.txt) to drop into your site, which asynchronously loads the appropriate icon CSS depending on a browser's capabilities, and a preview HTML file with that loader script in place. 
 
-You can see a demonstration of the output running here: 
+You can see [a demonstration of the output here](http://filamentgroup.com/examples/unicon-output/preview.html).
 
 ## License
 Copyright (c) 2012 Scott Jehl, [Filament Group, Inc.](http://filamentgroup.com)
@@ -32,6 +32,8 @@ Licensed under the MIT license.
 First, you'll need to install [PhantomJS](http://phantomjs.org/), which you might already have if you have [Grunt](https://github.com/cowboy/grunt) installed (No? You'll need that too.).
 
 Once those are installed...
+
+### HALT! THIS ISN'T UP ON NPM YET... TO INSTALL NOW, YOU'LL HAVE TO CLONE THIS REPO DOWN AND GRAB THE TASK FROM THERE
 
 Install the Unicon module with: `npm install grunt-unicon`
 
@@ -49,8 +51,8 @@ Add the configuration settings to your `grunt.js` file as mentioned below, and U
 
 Unicon has 2 required configuration properties: `src` and `dest`. Both need to be defined for Unicon to run.
 
-- `src`: path to your folder of svg files
-- `dest`: path to the folder you'd like the 
+- `src`: path to your folder of svg files, relative to the grunt.js file. Perhaps something like `images/icons-source/`.
+- `dest`: path to the folder that Unicon will write to, relative to the grunt.js file. Ideally, this would be a folder that does not yet exist in your directory. Perhaps something like `css/icons-dist/`.
 
 These can be set in your grunt.js config file, under the name `unicon`, like so:
 
@@ -97,6 +99,7 @@ Browsers that render the SVG data url stylesheet:
 - iOS 3+ Safari and Chrome
 - Android 4.0 Chrome (caveat: SVG icons do not scale in vector, but do appear to draw in high-resolution)
 - Android 4.0 ICS Browser
+- BlackBerry Playbook
 
 Browsers that receive the PNG data url stylesheet:
 - IE8
