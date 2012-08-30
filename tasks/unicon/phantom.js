@@ -14,11 +14,11 @@
 phantom args sent from unicon.js:
   [0] - input directory path
   [1] - output directory path
-  [2] - asyncCSS static javascript file source
-  [3] - preview.html static file source
-  [4] - CSS filename for datasvg
-  [5] - CSS filename for datapng,
-  [6] - CSS filename for urlpng
+  [2] - asyncCSS output file path
+  [3] - preview.html static file path
+  [4] - CSS filename for datasvg css
+  [5] - CSS filename for datapng css
+  [6] - CSS filename for urlpng css
   [7] - filename for preview HTML file
   [8] - png folder name
   [9] - css classname prefix
@@ -35,22 +35,32 @@ var pngcssrules = [];
 var pngdatacssrules = [];
 var datacssrules = [];
 var htmlpreviewbody = [];
-
 var fallbackcss = phantom.args[6];
 var pngdatacss = phantom.args[5];
 var datacss = phantom.args[4];
 
+// increment the current file index and process it
 function nextFile(){
   currfile++;
   processFile();
 }
 
+// files have all been processed. write the css and html files and return
 function finishUp(){
+
   // make the preview HTML file and asyncCSS loader file
   var asyncCSS = fs.read( phantom.args[2] );
+
+  // copy above for a slightly different output in the preview html file (different paths)
   var asyncCSSpreview = asyncCSS;
+
+  // open up the static html document
   var htmldoc = fs.read( phantom.args[3]);
+
+  // noscript for the snippet file
   var noscript = '<noscript><link href="/' + outputdir + fallbackcss + '" rel="stylesheet"></noscript>';
+
+  // noscript for the preview file
   var noscriptpreview = '<noscript><link href="' + fallbackcss + '" rel="stylesheet"></noscript>';
 
   // add custom function call to asyncCSS
@@ -59,52 +69,58 @@ function finishUp(){
 
   // add async loader to the top
   htmldoc = htmldoc.replace( /<script>/, "<script>\n\t" + asyncCSSpreview );
+
   //add noscript
   htmldoc = htmldoc.replace( /<\/script>/, "</script>\n\t" + noscriptpreview );
 
   // add icons to the body
   htmldoc = htmldoc.replace( /<\/body>/, htmlpreviewbody.join( "\n\t" ) + "\n</body>" );
 
+  // write the preview html file
   fs.write( outputdir + phantom.args[7], htmldoc );
 
-  // write CSS file
+  // write CSS files
   fs.write( outputdir + fallbackcss, pngcssrules.join( "\n\n" ) );
   fs.write( outputdir + pngdatacss, pngdatacssrules.join( "\n\n" ) );
   fs.write( outputdir + datacss, datacssrules.join( "\n\n" ) );
+
+  // overwrite the snippet HTML
   fs.write( phantom.args[2], "<!-- Unicode CSS Loader: place this in the head of your page -->\n<script>\n" + asyncCSS + "</script>\n" + noscript );
 }
 
+// process an svg file from the source directory
 function processFile(){
   var theFile = files[ currfile ];
 
   if( theFile ){
+    // only parse svg files
     if( theFile.match( /\.svg$/i ) ){
       (function(){
-        var page = require( "webpage" ).create(),
-          svgdata = fs.read(  inputdir + theFile ),
-          svgdatauri = "data:image/svg+xml;base64,",
-          pngdatauri = "data:image/png;base64,",
-          filename = theFile,
-          filenamenoext = filename.replace( /\.svg$/i, "" ),
-          frag = window.document.createElement( "div" ),
-          svgelem, height, width;
+        var page = require( "webpage" ).create();
+        var svgdata = fs.read(  inputdir + theFile ) || "";
+        var svgdatauri = "data:image/svg+xml;base64,";
+        var pngdatauri = "data:image/png;base64,";
 
-        // get svg element's dimensions
-        if( svgdata ){
-          frag.innerHTML = svgdata;
-          svgelem = frag.querySelector( "svg" );
-          width = svgelem.getAttribute( "width" );
-          height = svgelem.getAttribute( "height" );
-        }
+        // kill the ".svg" at the end of the filename
+        var filenamenoext = theFile.replace( /\.svg$/i, "" );
+
+        // get svg element's dimensions so we can set the viewport dims later
+        var frag = window.document.createElement( "div" );
+        frag.innerHTML = svgdata;
+        var svgelem = frag.querySelector( "svg" );
+        var width = svgelem.getAttribute( "width" );
+        var height = svgelem.getAttribute( "height" );
 
         // get base64 of svg file
         svgdatauri += btoa(svgdata);
 
-        // 
-        pngcssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" + pngout + filenamenoext + ".png" + "); background-repeat: no-repeat; }" );
-        
+        // add rules to svg data css file
         datacssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" + svgdatauri + "); background-repeat: no-repeat; }" );
 
+        // add rules to png url css file
+        pngcssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" + pngout + filenamenoext + ".png" + "); background-repeat: no-repeat; }" );
+        
+        // add markup to the preview html file
         htmlpreviewbody.push( '<pre><code>.' + cssprefix + filenamenoext + ':</code></pre><div class="' + cssprefix + filenamenoext + '" style="width: '+ width +'; height: '+ height +'"></div><hr/>' );
 
         // set page viewport size to svg dimensions
@@ -125,15 +141,16 @@ function processFile(){
       }());
     }
     else {
+      // process the next svg
       nextFile();
     }
   }
   else {
+    // fin
     finishUp();
     phantom.exit();
   }
 }
 
-
-
+// go ahead with the first file
 processFile();

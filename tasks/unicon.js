@@ -10,10 +10,13 @@ module.exports = function(grunt ) {
 
   grunt.registerTask( 'unicon', 'A mystical CSS icon solution.', function() {
 
-    grunt.log.write( "Look, it's a unicon." );
+    // just a quick starting message
+    grunt.log.write( "Look, it's a unicon!\n" );
 
+    // get the config
     var config = grunt.config.get( "unicon" );
 
+    // fail if config or no src or dest config
     if( !config || config.src === undefined || config.dest === undefined ){
       grunt.fatal( "Oops! Please provide unicon configuration for src and dest in your grunt.js file" );
       return;
@@ -69,6 +72,7 @@ module.exports = function(grunt ) {
 
     // take it to phantomjs to do the rest
     grunt.log.write( "\nUnicon now spawning phantomjs..." );
+    
     grunt.utils.spawn({
       cmd: 'phantomjs',
       args: [
