@@ -70,7 +70,8 @@ Browsers that render the SVG data url stylesheet:
 - IE9
 - Chrome 14+ (maybe older too?)
 - Safari 4+ (maybe older too?)
-- Firefox 5+ (maybe older too?)
+- Firefox 3.6+ (maybe older too?)
+- Opera 10+ (maybe older too?)
 - iOS 3+ Safari and Chrome
 - Android 4.0 Chrome (caveat: SVG icons do not scale in vector, but do appear to draw in high-resolution)
 - Android 4.0 ICS Browser
