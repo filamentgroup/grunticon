@@ -1,8 +1,8 @@
 /*
- * grunt-unicon
+ * Unicon
  * https://github.com/filamentgroup/unicon
  *
- * Copyright (c) 2012 Scott Jehl
+ * Copyright (c) 2012 Scott Jehl, Filament Group, Inc
  * Licensed under the MIT license.
  */
 
