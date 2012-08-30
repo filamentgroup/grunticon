@@ -15,7 +15,7 @@
 
 A mystical CSS icon solution.
 
-Unicon takes a folder of SVG files (typically icons) and outputs them into CSS files in 3 formats: svg data urls, png data urls, and references to regular png images. It provides a small bit of JavaScript to asynchronously load the appropriate icon file depending on a browser's support for those formats. See the browser support section for how that breaks down.
+Unicon takes a folder of SVG files (typically, icons) and outputs them into CSS files in 3 formats: svg data urls, png data urls, and references to regular png images, which are also generated and placed in a folder. It provides a small bit of JavaScript to asynchronously load the appropriate icon file depending on a browser's support for those formats. See the browser support section for how that breaks down.
 
 ## License
 Copyright (c) 2012 Scott Jehl, Filament Group, Inc.
