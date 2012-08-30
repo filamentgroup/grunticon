@@ -16,6 +16,14 @@ module.exports = function(grunt) {
     var asyncCSS = grunt.task.getFile( "unicon/static/asyncCSS.js" );
     var previewHTML = grunt.task.getFile( "unicon/static/preview.html" );
 
+    // CSS filenames with optional mixin from config
+    var cssfiles = grunt.utils._.extend({
+        datasvg: "icons.data.svg.css",
+        datapng: "icons.data.png.css",
+        urlpng: "icons.fallback.css"
+    }, config.cssfiles );
+
+
     if( !config || !config.src || !config.dest ){
       grunt.log.write( "Please specify src and dest in your grunt.js configuration" );
       return;
@@ -29,7 +37,8 @@ module.exports = function(grunt) {
         config.src,
         config.dest,
         asyncCSS,
-        previewHTML
+        previewHTML,
+        cssfiles
       ],
       fallback: ''
     }, function(err, result, code) {

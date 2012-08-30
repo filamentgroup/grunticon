@@ -10,11 +10,18 @@
 /*global window:true*/
 /*global btoa:true*/
 
+/*
+phantom args sent from unicon.js:
+  [0] - input directory path
+  [1] - output directory path
+  [2] - asyncCSS static javascript file source
+  [3] - preview.html static file source
+  [4] - CSS filenames object
+*/
+
 var fs = require( "fs" );
 var inputdir = phantom.args[0];
 var outputdir = phantom.args[1];
-
-var assets = "assets/";
 var pngout =  "png/";
 var files = fs.list( inputdir );
 var currfile = 0;
@@ -22,9 +29,11 @@ var pngcssrules = [];
 var pngdatacssrules = [];
 var datacssrules = [];
 var htmlpreviewbody = [];
-var fallbackcss = "icons.fallback.css";
-var pngdatacss = "icons.data.png.css";
-var datacss = "icons.data.css";
+
+var cssfiles = phantom.args[4];
+var fallbackcss = cssfiles.urlpng;
+var pngdatacss = cssfiles.datapng;
+var datacss = cssfiles.datasvg;
 
 // remove old / create new output directory
 
