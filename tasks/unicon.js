@@ -6,7 +6,7 @@
  * Licensed under the MIT license.
  */
 
-module.exports = function(grunt) {
+module.exports = function(grunt ) {
 
   grunt.registerTask( 'unicon', 'A mystical CSS icon solution.', function() {
 
@@ -14,8 +14,8 @@ module.exports = function(grunt) {
 
     var config = grunt.config.get( "unicon" );
 
-    if( !config || !config.src || !config.dest ){
-      grunt.log.writeIn( "Please provide unicon configuration for src and dest in your grunt.js file" );
+    if( !config || config.src === undefined || config.dest === undefined ){
+      grunt.fatal( "Oops! Please provide unicon configuration for src and dest in your grunt.js file" );
       return;
     }
 
