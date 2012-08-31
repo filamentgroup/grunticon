@@ -1,7 +1,7 @@
 {
   "name": "grunt-unicon",
   "description": "A mystical CSS icon solution",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/filamentgroup/unicon",
   "author": {
     "name": "Scott Jehl",
@@ -30,10 +30,6 @@
   },
   "dependencies": {
     "grunt": "~0.3.9"
-  },
-  "devDependencies": {
-    "grunt": "~0.3.9",
-    "phantomjs" "1.6"
   },
   "keywords": [
     "gruntplugin"
