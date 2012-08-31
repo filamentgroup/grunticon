@@ -21,7 +21,7 @@
       "url": "https://github.com/filamentgroup/unicon/blob/master/LICENSE-MIT"
     }
   ],
-  "main": "grunt.js",
+  "main": "tasks/unicon",
   "engines": {
     "node": "*"
   },
