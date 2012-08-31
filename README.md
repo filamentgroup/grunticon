@@ -132,3 +132,13 @@ In the Save SVG dialog that opens up, there are lots of options. SVG has a ton o
 - Subsetting: None, I usually convert all text to outlines ahead of time
 - Images: Embed
 - Don't check "Preserve Illustrator editing" to reduce file size
+
+### Copyright and licensing for the example SVG icons...
+
+The example SVG icons in the source folder are borrowed from a few places, with attribution noted below. 
+- [Unicorn icon by Andrew McKinley, The Noun Project](http://thenounproject.com/noun/unicorn/#icon-No3364)
+- [Bear icon by National Park Service](http://thenounproject.com/noun/bear/#icon-No499)
+- [Cat icon by  Marie Coons](http://thenounproject.com/noun/cat/#icon-No840)
+- All others are either from [this free set by Tehk Seven](http://www.tehkseven.net/blog/1/entry-1066-475-free-awesome-high-quality-icons-for-designers/) or drawn by @toddparker of Filament Group
+
+
