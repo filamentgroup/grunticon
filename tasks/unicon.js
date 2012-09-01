@@ -36,8 +36,8 @@ module.exports = function(grunt ) {
 
     // CSS filenames with optional mixin from config
     var datasvgcss = grunt.config.datasvgcss || "icons.data.svg.css";
-    var datapngcss = grunt.config.datasvgcss || "icons.data.png.css";
-    var urlpngcss = grunt.config.datasvgcss || "icons.fallback.css";
+    var datapngcss = grunt.config.datapngcss || "icons.data.png.css";
+    var urlpngcss = grunt.config.urlpngcss || "icons.fallback.css";
 
     //filename for generated output preview HTML file
     var previewhtml = config.previewhtml || "preview.html";
