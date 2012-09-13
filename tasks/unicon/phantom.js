@@ -40,7 +40,15 @@ var fallbackcss = phantom.args[6];
 var pngdatacss = phantom.args[5];
 var datacss = phantom.args[4];
 var cssbasepath = phantom.args[10];
-
+// hold the list of icons:
+var listiconsnames = [];
+var listiconsfile = phantom.args[12];
+var listiconscss = phantom.args[13];
+// now we add the require calls to each scss file
+// these will reference our custom list of selectors for each icon file
+datacssrules.push( "@import \"" + listiconscss +  "\";" );
+pngdatacssrules.push( "@import \"" + listiconscss +  "\";" );
+pngcssrules.push( "@import \"" + listiconscss +  "\";" );
 
 // increment the current file index and process it
 function nextFile(){
@@ -117,11 +125,14 @@ function processFile(){
         // get base64 of svg file
         svgdatauri += btoa(svgdata);
 
-        // add rules to svg data css file
-        datacssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" + svgdatauri + "); background-repeat: no-repeat; }" );
+        // add lines to list of icons file:
+        listiconsnames.push( "$" + cssprefix + filenamenoext + " : ." + filenamenoext + ";" );
 
-        // add rules to png url css file
-        pngcssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" + pngout + filenamenoext + ".png" + "); background-repeat: no-repeat; }" );
+        // add rules to svg data css file (changed from .icon-file format to #{$icon-file} format)
+        datacssrules.push( "#{$" + cssprefix + filenamenoext + "} { background-image: url(" + svgdatauri + "); background-repeat: no-repeat; }" );
+
+        // add rules to png url css file (changed from .icon-file format to #{$icon-file} format)
+        pngcssrules.push( "#{$" + cssprefix + filenamenoext + "} { background-image: url(" + pngout + filenamenoext + ".png" + "); background-repeat: no-repeat; }" );
         
         // add markup to the preview html file
         htmlpreviewbody.push( '<pre><code>.' + cssprefix + filenamenoext + ':</code></pre><div class="' + cssprefix + filenamenoext + '" style="width: '+ width +'; height: '+ height +'"></div><hr/>' );
@@ -135,8 +146,8 @@ function processFile(){
           // create png file
           page.render( outputdir + pngout + filenamenoext + ".png" );
 
-          // create png data URI
-          pngdatacssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" +  pngdatauri + page.renderBase64( "png" ) + "); background-repeat: no-repeat; }" );
+          // create png data URI (changed from .icon-file format to #{$icon-file} format)
+          pngdatacssrules.push( "#{$" + cssprefix + filenamenoext + "} { background-image: url(" +  pngdatauri + page.renderBase64( "png" ) + "); background-repeat: no-repeat; }" );
 
           // process the next svg
           nextFile();

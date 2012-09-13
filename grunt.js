@@ -19,10 +19,18 @@ module.exports = function(grunt) {
 
       // optional unicon config properties
 
-      // CSS filenames
-      datasvgcss: "icons.data.svg.css",
-      datapngcss: "icons.data.png.css",
-      urlpngcss: "icons.fallback.css",
+      // text file that will hold the original list of icons
+      // to be copy/pasted into a customizable scss file by editor
+      // that file must be requiered inside scss files
+      iconslistfile: "icons.list.txt",
+
+      // YOU create this file manually so that we dont overwrite content on icons change
+      iconslistcss: "icons.list.scss",
+
+      // CSS filenames (now sass powered in order to manage different selectors)
+      datasvgcss: "icons.data.svg.scss",
+      datapngcss: "icons.data.png.scss",
+      urlpngcss: "icons.fallback.scss",
 
       // preview HTML filename
       previewhtml: "preview.html",
@@ -61,6 +69,9 @@ module.exports = function(grunt) {
       }
     }
   });
+
+  // load npm tasks.
+  grunt.loadNpmTasks('grunt-unicon');
 
   // Load local tasks.
   grunt.loadTasks('tasks');

@@ -34,10 +34,18 @@ module.exports = function(grunt ) {
     var asyncCSSBanner = grunt.task.getFile( "unicon/static/unicon.loader.banner.js" );
     var previewHTMLsrc = grunt.task.getFile( "unicon/static/preview.html" );
 
-    // CSS filenames with optional mixin from config
-    var datasvgcss = grunt.config.datasvgcss || "icons.data.svg.css";
-    var datapngcss = grunt.config.datapngcss || "icons.data.png.css";
-    var urlpngcss = grunt.config.urlpngcss || "icons.fallback.css";
+    // text filename that will hold the original list of icons
+    var iconslistfile = grunt.config.iconslistfile || "icons.list.txt";
+
+    // scss filename that will be used to add our own selectors
+    // this file will need to be created manually to avoid overwrite!
+    // we list it here so we can add the require rules at beginning of the 3 scss files
+    var iconslistcss = grunt.config.iconslistcss || "icons.list.scss";
+
+    // CSS filenames (now sass powered) with optional mixin from config
+    var datasvgcss = grunt.config.datasvgcss || "icons.data.svg.scss";
+    var datapngcss = grunt.config.datapngcss || "icons.data.png.scss";
+    var urlpngcss = grunt.config.urlpngcss || "icons.fallback.scss";
 
     //filename for generated output preview HTML file
     var previewhtml = config.previewhtml || "preview.html";
@@ -90,7 +98,9 @@ module.exports = function(grunt ) {
         previewhtml,
         pngfolder,
         cssprefix,
-        cssbasepath
+        cssbasepath,
+        iconslistfile,
+        iconslistcss
       ],
       fallback: ''
     }, function(err, result, code) {
