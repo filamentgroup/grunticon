@@ -42,8 +42,8 @@ var datacss = phantom.args[4];
 var cssbasepath = phantom.args[10];
 // hold the list of icons:
 var listiconsnames = [];
-var listiconsfile = phantom.args[12];
-var listiconscss = phantom.args[13];
+var listiconsfile = phantom.args[11];
+var listiconscss = phantom.args[12];
 // now we add the require calls to each scss file
 // these will reference our custom list of selectors for each icon file
 datacssrules.push( "@import \"" + listiconscss +  "\";" );
@@ -90,6 +90,19 @@ function finishUp(){
   // write the preview html file
   fs.write( outputdir + phantom.args[7], htmldoc );
 
+  // write txt with list of files
+  fs.write( outputdir + listiconsfile, listiconsnames.join( "\n\n" ) );
+
+  /*
+  // TO FIX: using this check makes phantomjs fail silently (no files are written to disk)
+  // write scss to hold our custom selectors, but only if it does not exist:
+  if(!fs.exist(outputdir + listiconsfile)) {
+    fs.write( outputdir + listiconscss, listiconsnames.join( "\n\n" ) );
+  }
+  else {
+  }
+  */
+
   // write CSS files
   fs.write( outputdir + fallbackcss, pngcssrules.join( "\n\n" ) );
   fs.write( outputdir + pngdatacss, pngdatacssrules.join( "\n\n" ) );
@@ -126,7 +139,7 @@ function processFile(){
         svgdatauri += btoa(svgdata);
 
         // add lines to list of icons file:
-        listiconsnames.push( "$" + cssprefix + filenamenoext + " : ." + filenamenoext + ";" );
+        listiconsnames.push( "$" + cssprefix + filenamenoext + " : \"." + filenamenoext + "\";" );
 
         // add rules to svg data css file (changed from .icon-file format to #{$icon-file} format)
         datacssrules.push( "#{$" + cssprefix + filenamenoext + "} { background-image: url(" + svgdatauri + "); background-repeat: no-repeat; }" );

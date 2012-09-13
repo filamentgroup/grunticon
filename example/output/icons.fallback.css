@@ -1,35 +1,71 @@
-.icon-wee-arrow-11 { background-image: url(png/arrow-11.png); background-repeat: no-repeat; }
+.arrow-11:before, .arrow {
+  background-image: url(png/arrow-11.png);
+  background-repeat: no-repeat; }
 
-.icon-wee-arrow-tiny { background-image: url(png/arrow-tiny.png); background-repeat: no-repeat; }
+.arrow-tiny {
+  background-image: url(png/arrow-tiny.png);
+  background-repeat: no-repeat; }
 
-.icon-wee-bear { background-image: url(png/bear.png); background-repeat: no-repeat; }
+.bear, .withme {
+  background-image: url(png/bear.png);
+  background-repeat: no-repeat; }
 
-.icon-wee-cat { background-image: url(png/cat.png); background-repeat: no-repeat; }
+.cat {
+  background-image: url(png/cat.png);
+  background-repeat: no-repeat; }
 
-.icon-wee-gear { background-image: url(png/gear.png); background-repeat: no-repeat; }
+.gear {
+  background-image: url(png/gear.png);
+  background-repeat: no-repeat; }
 
-.icon-wee-gradients-flat-opacity { background-image: url(png/gradients-flat-opacity.png); background-repeat: no-repeat; }
+.gradients-flat-opacity {
+  background-image: url(png/gradients-flat-opacity.png);
+  background-repeat: no-repeat; }
 
-.icon-wee-gradients { background-image: url(png/gradients.png); background-repeat: no-repeat; }
+.gradients {
+  background-image: url(png/gradients.png);
+  background-repeat: no-repeat; }
 
-.icon-wee-Home_Media { background-image: url(png/Home_Media.png); background-repeat: no-repeat; }
+.Home_Media {
+  background-image: url(png/Home_Media.png);
+  background-repeat: no-repeat; }
 
-.icon-wee-Image_Exchange { background-image: url(png/Image_Exchange.png); background-repeat: no-repeat; }
+.Image_Exchange {
+  background-image: url(png/Image_Exchange.png);
+  background-repeat: no-repeat; }
 
-.icon-wee-Internet { background-image: url(png/Internet.png); background-repeat: no-repeat; }
+.Internet {
+  background-image: url(png/Internet.png);
+  background-repeat: no-repeat; }
 
-.icon-wee-Internet_FP2 { background-image: url(png/Internet_FP2.png); background-repeat: no-repeat; }
+.Internet_FP2 {
+  background-image: url(png/Internet_FP2.png);
+  background-repeat: no-repeat; }
 
-.icon-wee-Internet_Radio { background-image: url(png/Internet_Radio.png); background-repeat: no-repeat; }
+.Internet_Radio {
+  background-image: url(png/Internet_Radio.png);
+  background-repeat: no-repeat; }
 
-.icon-wee-Internet_Tel { background-image: url(png/Internet_Tel.png); background-repeat: no-repeat; }
+.Internet_Tel {
+  background-image: url(png/Internet_Tel.png);
+  background-repeat: no-repeat; }
 
-.icon-wee-Intranet { background-image: url(png/Intranet.png); background-repeat: no-repeat; }
+.Intranet {
+  background-image: url(png/Intranet.png);
+  background-repeat: no-repeat; }
 
-.icon-wee-map { background-image: url(png/map.png); background-repeat: no-repeat; }
+.map {
+  background-image: url(png/map.png);
+  background-repeat: no-repeat; }
 
-.icon-wee-plus { background-image: url(png/plus.png); background-repeat: no-repeat; }
+.plus, .doublegoodplusultra {
+  background-image: url(png/plus.png);
+  background-repeat: no-repeat; }
 
-.icon-wee-star { background-image: url(png/star.png); background-repeat: no-repeat; }
+.star {
+  background-image: url(png/star.png);
+  background-repeat: no-repeat; }
 
-.icon-wee-unicon { background-image: url(png/unicon.png); background-repeat: no-repeat; }
+.unicon, .uniconrocks {
+  background-image: url(png/unicon.png);
+  background-repeat: no-repeat; }
