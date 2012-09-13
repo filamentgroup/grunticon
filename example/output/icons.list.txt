@@ -1,0 +1,35 @@
+$icon-wee-arrow-11 : ".arrow-11";
+
+$icon-wee-arrow-tiny : ".arrow-tiny";
+
+$icon-wee-bear : ".bear";
+
+$icon-wee-cat : ".cat";
+
+$icon-wee-gear : ".gear";
+
+$icon-wee-gradients-flat-opacity : ".gradients-flat-opacity";
+
+$icon-wee-gradients : ".gradients";
+
+$icon-wee-Home_Media : ".Home_Media";
+
+$icon-wee-Image_Exchange : ".Image_Exchange";
+
+$icon-wee-Internet : ".Internet";
+
+$icon-wee-Internet_FP2 : ".Internet_FP2";
+
+$icon-wee-Internet_Radio : ".Internet_Radio";
+
+$icon-wee-Internet_Tel : ".Internet_Tel";
+
+$icon-wee-Intranet : ".Intranet";
+
+$icon-wee-map : ".map";
+
+$icon-wee-plus : ".plus";
+
+$icon-wee-star : ".star";
+
+$icon-wee-unicon : ".unicon";

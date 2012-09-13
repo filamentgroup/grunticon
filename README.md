@@ -19,6 +19,8 @@ Unicon is a [Grunt.js](https://github.com/cowboy/grunt/) task that makes it easy
 
 Unicon takes a [folder of SVG files](https://github.com/filamentgroup/unicon/tree/master/example/source) (typically, icons that you've drawn in an application like Adobe Illustrator), and [outputs them](https://github.com/filamentgroup/unicon/tree/master/example/output) to CSS in 3 formats: [svg data urls](https://github.com/filamentgroup/unicon/blob/master/example/output/icons.data.svg.css), [png data urls](https://github.com/filamentgroup/unicon/blob/master/example/output/icons.data.png.css), and [a third fallback CSS file with references to regular png images](https://github.com/filamentgroup/unicon/blob/master/example/output/icons.data.png.css), which are also automatically [generated and placed in a folder](https://github.com/filamentgroup/unicon/tree/master/example/output/png). 
 
+Actually, as of version 0.1.4 we are outputting 3 scss files and one txt that holds a list of selectors/original files. The purpose is to use sass to hold a file list with custom selectors for each icon, so we can import them into the 3 scss files and watch changes to build the final css files. The original filelist must be copy/pasted into a scss file that we will create and maintain separately (avoid overwrite). The name of the text and scss files can also be customized in grunt.js
+
 Unicon also generates [a small bit of JavaScript and CSS](https://github.com/filamentgroup/unicon/blob/master/example/output/unicon.loader.txt) to drop into your site, which asynchronously loads the appropriate icon CSS depending on a browser's capabilities, and a preview HTML file with that loader script in place. 
 
 You can see [a demonstration of the output here](http://filamentgroup.com/examples/unicon-output/preview.html).
@@ -76,14 +78,17 @@ Unicon will now batch your icons whenever you run grunt.
 
 In addition to the required configuration properties above, Unicon's grunt configuration lets you configure the names of the files and the images folder it generates inside `dest`. 
 
-- `datasvgcss`: The name of the generated CSS file containing SVG data uris. Default: `"icons.data.svg.css"`
-- `datapngcss`: The name of the generated CSS file containing PNG data uris. Default: `"icons.data.png.css"`
-- `urlpngcss`: The name of the generated CSS file containing external png url references. Default: `"icons.fallback.css"`
+- `iconslistfile`: text file that will hold the original list of icons. Default: `"icons.list.txt"`
+- `iconslistcss`:  scss file that will hold the customized selectors for each icon. YOU create this file manually. Default: `"icons.list.scss"`
+- `datasvgcss`: The name of the SCSS file containing SVG data uris. Default: `"icons.data.svg.scss"`
+- `datapngcss`: The name of the SCSS file containing PNG data uris. Default: `"icons.data.png.scss"`
+- `urlpngcss`: The name of the SCSS file containing external png url references. Default: `"icons.fallback.scss"`
 - `previewhtml`: The name of the generated HTML file containing PNG data uris. Default: `"preview.html"`
 - `loadersnippet`:  The name of the generated text file containing the Unicon loading snippet. Default: `"unicon.loader.txt"`
 - `pngfolder`:  The name of the generated folder containing the generated PNG images. Default: `"png/"`
 - `cssprefix`: a string to prefix all css classes with. Default: `"icon-"`
 
+A cinfig.ru has been added to build css files from previous scss filses. You will have to  watch the foler or build manually. eg. compas watch
 
 ## Browser testing results for icon output
 
