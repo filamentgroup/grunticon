@@ -1,6 +1,6 @@
 <!-- Unicode CSS Loader: place this in the head of your page -->
 <script>
-/* Unicon Stylesheet Loader | https://github.com/filamentgroup/unicon | (c) 2012 Scott Jehl, Filament Group, Inc. | MIT license. */
-window.unicon=function(a,b){if(!a||a.length!==3)return;var c=window,d=!!c.document.createElementNS&&!!c.document.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect,e=function(b){var e=c.document.createElement("link"),f=c.document.getElementsByTagName("script")[0];e.rel="stylesheet",e.href=a[b&&d?0:b?1:2],f.parentNode.insertBefore(e,f)},f=new c.Image;f.onerror=function(){e(!1)},f.onload=function(){e(f.width===1&&f.height===1)},f.src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="};
-unicon( [ "/example/output/icons.data.svg.css", "/example/output/icons.data.png.css", "/example/output/icons.fallback.css" ] );</script>
+/* grunticon Stylesheet Loader | https://github.com/filamentgroup/grunticon | (c) 2012 Scott Jehl, Filament Group, Inc. | MIT license. */
+window.grunticon=function(a,b){if(!a||a.length!==3)return;var c=window,d=!!c.document.createElementNS&&!!c.document.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect,e=function(b){var e=c.document.createElement("link"),f=c.document.getElementsByTagName("script")[0];e.rel="stylesheet",e.href=a[b&&d?0:b?1:2],f.parentNode.insertBefore(e,f)},f=new c.Image;f.onerror=function(){e(!1)},f.onload=function(){e(f.width===1&&f.height===1)},f.src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="};
+grunticon( [ "/example/output/icons.data.svg.css", "/example/output/icons.data.png.css", "/example/output/icons.fallback.css" ] );</script>
 <noscript><link href="/example/output/icons.fallback.css" rel="stylesheet"></noscript>

@@ -1,6 +1,6 @@
 /*
- * Unicon
- * https://github.com/filamentgroup/unicon
+ * grunticon
+ * https://github.com/filamentgroup/grunticon
  *
  * Copyright (c) 2012 Scott Jehl, Filament Group, Inc
  * Licensed under the MIT license.
@@ -11,7 +11,7 @@
 /*global btoa:true*/
 
 /*
-phantom args sent from unicon.js:
+phantom args sent from grunticon.js:
   [0] - input directory path
   [1] - output directory path
   [2] - asyncCSS output file path
@@ -67,8 +67,8 @@ function finishUp(){
   var noscriptpreview = '<noscript><link href="' + fallbackcss + '" rel="stylesheet"></noscript>';
 
   // add custom function call to asyncCSS
-  asyncCSS += '\nunicon( [ "' + cssbasepath + outputdir + datacss +'", "' + cssbasepath + outputdir + pngdatacss +'", "' + cssbasepath + outputdir + fallbackcss +'" ] );';
-  asyncCSSpreview += '\nunicon( [ "'+ datacss +'", "'+ pngdatacss +'", "'+ fallbackcss +'" ] );';
+  asyncCSS += '\ngrunticon( [ "' + cssbasepath + outputdir + datacss +'", "' + cssbasepath + outputdir + pngdatacss +'", "' + cssbasepath + outputdir + fallbackcss +'" ] );';
+  asyncCSSpreview += '\ngrunticon( [ "'+ datacss +'", "'+ pngdatacss +'", "'+ fallbackcss +'" ] );';
 
   // add async loader to the top
   htmldoc = htmldoc.replace( /<script>/, "<script>\n\t" + asyncCSSpreview );

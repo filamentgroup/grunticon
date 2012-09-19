@@ -12,12 +12,12 @@ module.exports = function(grunt) {
       files: '<config:lint.files>',
       tasks: 'default'
     },
-    unicon: {
+    grunticon: {
       // required config
       src: "example/source/",
       dest: "example/output/",
 
-      // optional unicon config properties
+      // optional grunticon config properties
 
       // CSS filenames
       datasvgcss: "icons.data.svg.css",
@@ -27,8 +27,8 @@ module.exports = function(grunt) {
       // preview HTML filename
       previewhtml: "preview.html",
 
-      // Unicon loader code snippet filename
-      loadersnippet: "unicon.loader.txt",
+      // grunticon loader code snippet filename
+      loadersnippet: "grunticon.loader.txt",
 
       // folder name (within dest) for png output
       pngfolder: "png/",
@@ -66,6 +66,6 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
 
   // Default task.
-  grunt.registerTask('default', 'lint unicon');
+  grunt.registerTask('default', 'lint grunticon');
 
 };

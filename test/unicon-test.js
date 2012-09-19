@@ -20,7 +20,7 @@ var grunt = require('grunt');
     test.ifError(value)
 */
 
-exports['unicon'] = {
+exports['grunticon'] = {
   setUp: function(done) {
     // setup here
     done();
@@ -28,7 +28,7 @@ exports['unicon'] = {
   'helper': function(test) {
     test.expect(1);
     // tests here
-    test.equal(grunt.helper('unicon'), 'unicon!!!', 'should return the correct value.');
+    test.equal(grunt.helper('grunticon'), 'grunticon!!!', 'should return the correct value.');
     test.done();
   }
 };

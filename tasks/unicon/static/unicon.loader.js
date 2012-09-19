@@ -1,4 +1,4 @@
-window.unicon = function( css, foo ){
+window.grunticon = function( css, foo ){
 	// expects a css array with 3 items representing CSS paths to datasvg, datapng, urlpng
 	if( !css || css.length !== 3 ){
 		return;
@@ -29,4 +29,4 @@ window.unicon = function( css, foo ){
 
 		img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
 };
-// Call unicon() here to load CSS:
+// Call grunticon() here to load CSS:

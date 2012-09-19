@@ -1,6 +1,6 @@
 /*
- * Unicon
- * https://github.com/filamentgroup/unicon
+ * grunticon
+ * https://github.com/filamentgroup/grunticon
  *
  * Copyright (c) 2012 Scott Jehl, Filament Group, Inc
  * Licensed under the MIT license.
@@ -8,17 +8,17 @@
 
 module.exports = function(grunt ) {
 
-  grunt.registerTask( 'unicon', 'A mystical CSS icon solution.', function() {
+  grunt.registerTask( 'grunticon', 'A mystical CSS icon solution.', function() {
 
     // just a quick starting message
-    grunt.log.write( "Look, it's a unicon!\n" );
+    grunt.log.write( "Look, it's a grunticon!\n" );
 
     // get the config
-    var config = grunt.config.get( "unicon" );
+    var config = grunt.config.get( "grunticon" );
 
     // fail if config or no src or dest config
     if( !config || config.src === undefined || config.dest === undefined ){
-      grunt.fatal( "Oops! Please provide unicon configuration for src and dest in your grunt.js file" );
+      grunt.fatal( "Oops! Please provide grunticon configuration for src and dest in your grunt.js file" );
       return;
     }
 
@@ -30,9 +30,9 @@ module.exports = function(grunt ) {
         config.dest += "/";
     }
 
-    var asyncCSS = grunt.task.getFile( "unicon/static/unicon.loader.js" );
-    var asyncCSSBanner = grunt.task.getFile( "unicon/static/unicon.loader.banner.js" );
-    var previewHTMLsrc = grunt.task.getFile( "unicon/static/preview.html" );
+    var asyncCSS = grunt.task.getFile( "grunticon/static/grunticon.loader.js" );
+    var asyncCSSBanner = grunt.task.getFile( "grunticon/static/grunticon.loader.banner.js" );
+    var previewHTMLsrc = grunt.task.getFile( "grunticon/static/preview.html" );
 
     // CSS filenames with optional mixin from config
     var datasvgcss = grunt.config.datasvgcss || "icons.data.svg.css";
@@ -43,7 +43,7 @@ module.exports = function(grunt ) {
     var previewhtml = config.previewhtml || "preview.html";
 
     //filename for generated loader HTML snippet file
-    var loadersnippet = config.loadersnippet || "unicon.loader.txt";
+    var loadersnippet = config.loadersnippet || "grunticon.loader.txt";
 
     // css references base path for the loader
     var cssbasepath = config.cssbasepath || "/";
@@ -64,22 +64,22 @@ module.exports = function(grunt ) {
     // create the output icons directory
     grunt.file.mkdir( config.dest + pngfolder );
 
-    // minify the source of the unicon loader and write that to the output
-    grunt.log.write( "\nUnicon now minifying the stylesheet loader source." );
+    // minify the source of the grunticon loader and write that to the output
+    grunt.log.write( "\ngrunticon now minifying the stylesheet loader source." );
     var asyncsrc = grunt.file.read( asyncCSS );
     var banner = grunt.file.read( asyncCSSBanner );
     var min = banner + "\n" + grunt.helper('uglify', asyncsrc );
     var loaderCodeDest = config.dest + loadersnippet;
     grunt.file.write( loaderCodeDest, min );
-    grunt.log.write( "\nUnicon loader file created." );
+    grunt.log.write( "\ngrunticon loader file created." );
 
     // take it to phantomjs to do the rest
-    grunt.log.write( "\nUnicon now spawning phantomjs..." );
+    grunt.log.write( "\ngrunticon now spawning phantomjs..." );
 
     grunt.utils.spawn({
       cmd: 'phantomjs',
       args: [
-        grunt.task.getFile('unicon/phantom.js'),
+        grunt.task.getFile('grunticon/phantom.js'),
         config.src,
         config.dest,
         loaderCodeDest,

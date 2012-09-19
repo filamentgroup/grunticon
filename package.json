@@ -1,8 +1,8 @@
 {
-  "name": "grunt-unicon",
+  "name": "grunt-grunticon",
   "description": "A mystical CSS icon solution",
   "version": "0.1.3",
-  "homepage": "https://github.com/filamentgroup/unicon",
+  "homepage": "https://github.com/filamentgroup/grunticon",
   "author": {
     "name": "Scott Jehl",
     "email": "scott@filamentgroup.com",
@@ -10,18 +10,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/filamentgroup/unicon.git"
+    "url": "https://github.com/filamentgroup/grunticon.git"
   },
   "bugs": {
-    "url": "https://github.com/filamentgroup/unicon/issues"
+    "url": "https://github.com/filamentgroup/grunticon/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/filamentgroup/unicon/blob/master/LICENSE-MIT"
+      "url": "https://github.com/filamentgroup/grunticon/blob/master/LICENSE-MIT"
     }
   ],
-  "main": "tasks/unicon",
+  "main": "tasks/grunticon",
   "engines": {
     "node": "*"
   },

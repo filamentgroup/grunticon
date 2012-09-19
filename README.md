@@ -1,4 +1,4 @@
-# Unicon!
+# grunticon!
 
 ```
          /'
@@ -15,13 +15,13 @@
 
 ## A mystical CSS icon solution.
 
-Unicon is a [Grunt.js](https://github.com/cowboy/grunt/) task that makes it easy to manage icons and background images for all devices, preferring HD (retina) SVG icons but also provides fallback support for standard definition browsers, and old browsers alike. From a CSS perspective, it's easy to use, as it generates a class referencing each icon, and doesn't use CSS sprites. 
+grunticon is a [Grunt.js](https://github.com/cowboy/grunt/) task that makes it easy to manage icons and background images for all devices, preferring HD (retina) SVG icons but also provides fallback support for standard definition browsers, and old browsers alike. From a CSS perspective, it's easy to use, as it generates a class referencing each icon, and doesn't use CSS sprites. 
 
-Unicon takes a [folder of SVG files](https://github.com/filamentgroup/unicon/tree/master/example/source) (typically, icons that you've drawn in an application like Adobe Illustrator), and [outputs them](https://github.com/filamentgroup/unicon/tree/master/example/output) to CSS in 3 formats: [svg data urls](https://github.com/filamentgroup/unicon/blob/master/example/output/icons.data.svg.css), [png data urls](https://github.com/filamentgroup/unicon/blob/master/example/output/icons.data.png.css), and [a third fallback CSS file with references to regular png images](https://github.com/filamentgroup/unicon/blob/master/example/output/icons.data.png.css), which are also automatically [generated and placed in a folder](https://github.com/filamentgroup/unicon/tree/master/example/output/png). 
+grunticon takes a [folder of SVG files](https://github.com/filamentgroup/grunticon/tree/master/example/source) (typically, icons that you've drawn in an application like Adobe Illustrator), and [outputs them](https://github.com/filamentgroup/grunticon/tree/master/example/output) to CSS in 3 formats: [svg data urls](https://github.com/filamentgroup/grunticon/blob/master/example/output/icons.data.svg.css), [png data urls](https://github.com/filamentgroup/grunticon/blob/master/example/output/icons.data.png.css), and [a third fallback CSS file with references to regular png images](https://github.com/filamentgroup/grunticon/blob/master/example/output/icons.data.png.css), which are also automatically [generated and placed in a folder](https://github.com/filamentgroup/grunticon/tree/master/example/output/png). 
 
-Unicon also generates [a small bit of JavaScript and CSS](https://github.com/filamentgroup/unicon/blob/master/example/output/unicon.loader.txt) to drop into your site, which asynchronously loads the appropriate icon CSS depending on a browser's capabilities, and a preview HTML file with that loader script in place. 
+grunticon also generates [a small bit of JavaScript and CSS](https://github.com/filamentgroup/grunticon/blob/master/example/output/grunticon.loader.txt) to drop into your site, which asynchronously loads the appropriate icon CSS depending on a browser's capabilities, and a preview HTML file with that loader script in place. 
 
-You can see [a demonstration of the output here](http://filamentgroup.com/examples/unicon-output/preview.html).
+You can see [a demonstration of the output here](http://filamentgroup.com/examples/grunticon-output/preview.html).
 
 ## License
 Copyright (c) 2012 Scott Jehl, [Filament Group, Inc.](http://filamentgroup.com)
@@ -33,54 +33,54 @@ First, you'll need to install [PhantomJS](http://phantomjs.org/), which you migh
 
 Once those are installed...
 
-Install the Unicon module with: `npm install grunt-unicon`
+Install the grunticon module with: `npm install grunt-grunticon`
 
 Then add this line to your project's `grunt.js` gruntfile:
 
 ```javascript
-grunt.loadNpmTasks('grunt-unicon');
+grunt.loadNpmTasks('grunt-grunticon');
 ```
 
-And lastly, add the configuration settings to your `grunt.js` file as mentioned below. Unicon will batch your icons whenever you run `$ grunt`, and output the files listed above to your `dest` folder, which is documented below.
+And lastly, add the configuration settings to your `grunt.js` file as mentioned below. grunticon will batch your icons whenever you run `$ grunt`, and output the files listed above to your `dest` folder, which is documented below.
 
 
 ## Documentation
 
 ### Required configuration properties
 
-Unicon has 2 required configuration properties: `src` and `dest`. Both need to be defined for Unicon to run.
+grunticon has 2 required configuration properties: `src` and `dest`. Both need to be defined for grunticon to run.
 
 - `src`: path to your folder of svg files, relative to the grunt.js file. Perhaps something like `images/icons-source/`.
-- `dest`: path to the folder that Unicon will write to, relative to the grunt.js file. Ideally, this would be a folder that does not yet exist in your directory. Perhaps something like `css/icons-dist/`.
+- `dest`: path to the folder that grunticon will write to, relative to the grunt.js file. Ideally, this would be a folder that does not yet exist in your directory. Perhaps something like `css/icons-dist/`.
 
-These can be set in your grunt.js config file, under the name `unicon`, like so:
+These can be set in your grunt.js config file, under the name `grunticon`, like so:
 
 ```
-	unicon: {
+	grunticon: {
       src: "css/dist/icons/",
       dest: "css/icons/"
     }
 ```
 
-The `src` property refers to the directory in which your SVG icons are stored. The `dest` property refers to the directory you'd like Unicon to create, which will contain your output files. 
+The `src` property refers to the directory in which your SVG icons are stored. The `dest` property refers to the directory you'd like grunticon to create, which will contain your output files. 
 
-**IMPORTANT NOTE:** Unicon will overwrite any files in the `dest` directory if they are of the same name as a file that Unicon needs to create. For easiest results, you can set `dest` to a folder that does not yet exist in your directory and Unicon will create that folder, or set it to an existing folder and be sure to configure Unicon to create file names that do not already exist in that folder.
+**IMPORTANT NOTE:** grunticon will overwrite any files in the `dest` directory if they are of the same name as a file that grunticon needs to create. For easiest results, you can set `dest` to a folder that does not yet exist in your directory and grunticon will create that folder, or set it to an existing folder and be sure to configure grunticon to create file names that do not already exist in that folder.
 
-With these configuration properties set, you can add `unicon` to your default tasks list. That'll look something like this:
+With these configuration properties set, you can add `grunticon` to your default tasks list. That'll look something like this:
 
-    grunt.registerTask('default', 'lint qunit concat min unicon');
+    grunt.registerTask('default', 'lint qunit concat min grunticon');
 
-Unicon will now batch your icons whenever you run grunt.
+grunticon will now batch your icons whenever you run grunt.
 
 ### Optional configuration properties
 
-In addition to the required configuration properties above, Unicon's grunt configuration lets you configure the names of the files and the images folder it generates inside `dest`. 
+In addition to the required configuration properties above, grunticon's grunt configuration lets you configure the names of the files and the images folder it generates inside `dest`. 
 
 - `datasvgcss`: The name of the generated CSS file containing SVG data uris. Default: `"icons.data.svg.css"`
 - `datapngcss`: The name of the generated CSS file containing PNG data uris. Default: `"icons.data.png.css"`
 - `urlpngcss`: The name of the generated CSS file containing external png url references. Default: `"icons.fallback.css"`
 - `previewhtml`: The name of the generated HTML file containing PNG data uris. Default: `"preview.html"`
-- `loadersnippet`:  The name of the generated text file containing the Unicon loading snippet. Default: `"unicon.loader.txt"`
+- `loadersnippet`:  The name of the generated text file containing the grunticon loading snippet. Default: `"grunticon.loader.txt"`
 - `pngfolder`:  The name of the generated folder containing the generated PNG images. Default: `"png/"`
 - `cssprefix`: a string to prefix all css classes with. Default: `"icon-"`
 
