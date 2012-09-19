@@ -21,7 +21,7 @@ grunticon takes a [folder of SVG files](https://github.com/filamentgroup/gruntic
 
 grunticon also generates [a small bit of JavaScript and CSS](https://github.com/filamentgroup/grunticon/blob/master/example/output/grunticon.loader.txt) to drop into your site, which asynchronously loads the appropriate icon CSS depending on a browser's capabilities, and a preview HTML file with that loader script in place. 
 
-You can see [a demonstration of the output here](http://filamentgroup.com/examples/grunticon-output/preview.html).
+You can see [a demonstration of the output here](http://filamentgroup.github.com/grunticon/example/output/preview.html).
 
 ## License
 Copyright (c) 2012 Scott Jehl, [Filament Group, Inc.](http://filamentgroup.com)
