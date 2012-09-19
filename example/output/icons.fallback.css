@@ -12,6 +12,8 @@
 
 .icon-wee-gradients { background-image: url(png/gradients.png); background-repeat: no-repeat; }
 
+.icon-wee-grunticon { background-image: url(png/grunticon.png); background-repeat: no-repeat; }
+
 .icon-wee-Home_Media { background-image: url(png/Home_Media.png); background-repeat: no-repeat; }
 
 .icon-wee-Image_Exchange { background-image: url(png/Image_Exchange.png); background-repeat: no-repeat; }
@@ -31,5 +33,3 @@
 .icon-wee-plus { background-image: url(png/plus.png); background-repeat: no-repeat; }
 
 .icon-wee-star { background-image: url(png/star.png); background-repeat: no-repeat; }
-
-.icon-wee-grunticon { background-image: url(png/grunticon.png); background-repeat: no-repeat; }
