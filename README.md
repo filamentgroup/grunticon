@@ -84,6 +84,10 @@ In addition to the required configuration properties above, grunticon's grunt co
 - `pngfolder`:  The name of the generated folder containing the generated PNG images. Default: `"png/"`
 - `cssprefix`: a string to prefix all css classes with. Default: `"icon-"`
 
+## Notable forks
+
+- Interested in a version of Unicon that incorporates SASS to give you tighter control over your icons' CSS selectors? Check out @zigotica's [Fork of Unicon](https://github.com/zigotica/unicon/) that does just that!
+
 
 ## Browser testing results for icon output
 
