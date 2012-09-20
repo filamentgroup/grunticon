@@ -86,7 +86,7 @@ In addition to the required configuration properties above, grunticon's grunt co
 
 ## Notable forks
 
-- Interested in a version of Grunticon that incorporates SASS to give you tighter control over your icons' CSS selectors? Check out @zigotica's [Fork of Grunticon](https://github.com/zigotica/unicon/) that does just that!
+- Interested in a version of Grunticon that incorporates SASS to give you tighter control over your icons' CSS selectors? Check out @zigotica's [Fork of Grunticon](https://github.com/zigotica/https://github.com/zigotica/grunticon/) that does just that!
 
 
 ## Browser testing results for icon output
