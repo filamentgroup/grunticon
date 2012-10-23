@@ -35,9 +35,9 @@ module.exports = function(grunt ) {
 		var previewHTMLsrc = grunt.task.getFile( "grunticon/static/preview.html" );
 
 		// CSS filenames with optional mixin from config
-		var datasvgcss = grunt.config.datasvgcss || "icons.data.svg.css";
-		var datapngcss = grunt.config.datapngcss || "icons.data.png.css";
-		var urlpngcss = grunt.config.urlpngcss || "icons.fallback.css";
+		var datasvgcss = config.datasvgcss || "icons.data.svg.css";
+		var datapngcss = config.datapngcss || "icons.data.png.css";
+		var urlpngcss = config.urlpngcss || "icons.fallback.css";
 
 		//filename for generated output preview HTML file
 		var previewhtml = config.previewhtml || "preview.html";
