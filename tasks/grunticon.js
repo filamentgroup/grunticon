@@ -56,7 +56,7 @@ module.exports = function(grunt ) {
 		}
 
 		// css class prefix
-		var cssprefix = config.cssprefix || "icon";
+		var cssprefix = config.cssprefix || "icon-";
 
 		// create the output directory
 		grunt.file.mkdir( config.dest );
