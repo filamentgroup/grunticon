@@ -55,7 +55,7 @@ module.exports = function(grunt) {
         node: true,
         es5: true
       },
-      globals: { 
+      globals: {
         Image: true,
         window: true
       }
