@@ -1,37 +1,37 @@
 {
-  "name": "grunt-grunticon",
-  "description": "A mystical CSS icon solution",
-  "version": "0.1.4",
-  "homepage": "https://github.com/filamentgroup/grunticon",
-  "author": {
-    "name": "Scott Jehl",
-    "email": "scott@filamentgroup.com",
-    "url": "http://filamentgroup.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/filamentgroup/grunticon.git"
-  },
-  "bugs": {
-    "url": "https://github.com/filamentgroup/grunticon/issues"
-  },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/filamentgroup/grunticon/blob/master/LICENSE-MIT"
-    }
-  ],
-  "main": "tasks/grunticon",
-  "engines": {
-    "node": "*"
-  },
-  "scripts": {
-    "test": "grunt test"
-  },
-  "dependencies": {
-    "grunt": "~0.3.9"
-  },
-  "keywords": [
-    "gruntplugin"
-  ]
+	"name": "grunt-grunticon",
+	"description": "A mystical CSS icon solution",
+	"version": "0.1.4",
+	"homepage": "https://github.com/filamentgroup/grunticon",
+	"author": {
+		"name": "Scott Jehl",
+		"email": "scott@filamentgroup.com",
+		"url": "http://filamentgroup.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/filamentgroup/grunticon.git"
+	},
+	"bugs": {
+		"url": "https://github.com/filamentgroup/grunticon/issues"
+	},
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "https://github.com/filamentgroup/grunticon/blob/master/LICENSE-MIT"
+		}
+	],
+	"main": "tasks/grunticon",
+	"engines": {
+		"node": "*"
+	},
+	"scripts": {
+		"test": "grunt test"
+	},
+	"dependencies": {
+		"grunt": "~0.3.9"
+	},
+	"keywords": [
+		"gruntplugin"
+	]
 }
