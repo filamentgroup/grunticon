@@ -118,10 +118,10 @@ function processFile(){
 				svgdatauri += btoa(svgdata);
 
 				// add rules to svg data css file
-				datacssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" + svgdatauri + "); background-repeat: no-repeat; }" );
+				datacssrules.push( "." + cssprefix + filenamenoext + " { background: url(" + svgdatauri + ") no-repeat; }" );
 
 				// add rules to png url css file
-				pngcssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" + pngout + filenamenoext + ".png" + "); background-repeat: no-repeat; }" );
+				pngcssrules.push( "." + cssprefix + filenamenoext + " { background: url(" + pngout + filenamenoext + ".png" + ") no-repeat; }" );
 
 				// add markup to the preview html file
 				htmlpreviewbody.push( '<pre><code>.' + cssprefix + filenamenoext + ':</code></pre><div class="' + cssprefix + filenamenoext + '" style="width: '+ width +'; height: '+ height +'"></div><hr/>' );
@@ -136,7 +136,7 @@ function processFile(){
 					page.render( outputdir + pngout + filenamenoext + ".png" );
 
 					// create png data URI
-					pngdatacssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" +  pngdatauri + page.renderBase64( "png" ) + "); background-repeat: no-repeat; }" );
+					pngdatacssrules.push( "." + cssprefix + filenamenoext + " { background: url(" +  pngdatauri + page.renderBase64( "png" ) + ") no-repeat; }" );
 
 					// process the next svg
 					nextFile();
