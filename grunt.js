@@ -3,14 +3,20 @@ module.exports = function(grunt) {
 	// Project configuration.
 	grunt.initConfig({
 		test: {
-			files: ['test/**/*.js']
+			all: {
+				src: ['test/**/*.js']
+			}
 		},
 		lint: {
-			files: ['grunt.js', 'tasks/**/*.js', 'test/**/*.js']
+			all: {
+				src: ['grunt.js', 'tasks/**/*.js', 'test/**/*.js']
+			}
 		},
 		watch: {
-			files: '<config:lint.files>',
-			tasks: 'default'
+			all: {
+				files: '<config:lint.files>',
+				tasks: 'default'
+			}
 		},
 		grunticon: {
 			// required config
@@ -42,6 +48,7 @@ module.exports = function(grunt) {
 		},
 		jshint: {
 			options: {
+				strict: false,
 				curly: true,
 				eqeqeq: true,
 				immed: true,
