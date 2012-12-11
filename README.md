@@ -31,22 +31,21 @@ Licensed under the MIT license.
 
 First, you'll need to install [PhantomJS](http://phantomjs.org/), which you might already have if you have [Grunt](https://github.com/cowboy/grunt) installed (No? You'll need that too.).
 
-Once those are installed...
+Next, install the grunticon module with: 
+`cd /path/to/your/website/root`
+`npm install grunt-grunticon`
 
-Install the grunticon module with: `npm install grunt-grunticon`
+If you are using grunticon for multiple projects it might be better to install grunticon in a global directory like `/usr/local/lib/node_modules` and using a symbolic link for each instance.
+```
+$ cd /path/to/your/website/root
+$ ln -s /usr/local/lib/node_modules
+``` 
 
 Then add this line to your project's `grunt.js` gruntfile:
 
 ```javascript
 grunt.loadNpmTasks('grunt-grunticon');
 ```
-
-When executing grunt you might get a message `Local Npm module "grunt-grunticon" not found. Is it installed?`
-When using plugins inside a project's gruntfile, npm module plugins loaded via grunt.loadNpmTasks must be installed locally (in `./node_modules/plugin_name` relative to the gruntfile). See [this issue](https://github.com/gruntjs/grunt/issues/232#issuecomment-6376905) for more details.
-You can work around this easily by creating a symbolic link to the global modules. Run something like this from your terminal pointing to the proper directory:
-```
-$ ln -s /usr/local/lib/node_modules
-``` 
 
 And lastly, add the configuration settings to your `grunt.js` file as mentioned below. grunticon will batch your icons whenever you run `$ grunt`, and output the files listed above to your `dest` folder, which is documented below.
 
