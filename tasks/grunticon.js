@@ -6,28 +6,24 @@
  * Licensed under the MIT license.
  */
 
-module.exports = function(grunt ) {
+module.exports = function(grunt) {
 
-	grunt.registerTask( 'grunticon', 'A mystical CSS icon solution.', function() {
+	grunt.registerMultiTask( 'grunticon', 'A mystical CSS icon solution.', function() {
 
 		// just a quick starting message
 		grunt.log.write( "Look, it's a grunticon!\n" );
 
 		// get the config
-		var config = grunt.config.get( "grunticon" );
-
-		// fail if config or no src or dest config
-		if( !config || config.src === undefined || config.dest === undefined ){
-			grunt.fatal( "Oops! Please provide grunticon configuration for src and dest in your grunt.js file" );
-			return;
-		}
+		var config = typeof( this.data ) === 'object' ? this.data : {};
 
 		// make sure src and dest have / at the end
-		if( !config.src.match( /\/$/ ) ){
-				config.src += "/";
+		var src = this.file.src;
+		if( !src.match( /\/$/ ) ){
+				src += "/";
 		}
-		if( !config.dest.match( /\/$/ ) ){
-				config.dest += "/";
+		var dest = this.file.dest;
+		if( !dest.match( /\/$/ ) ){
+				dest += "/";
 		}
 
 		var asyncCSS = grunt.task.getFile( "grunticon/static/grunticon.loader.js" );
@@ -59,17 +55,17 @@ module.exports = function(grunt ) {
 		var cssprefix = config.cssprefix || "icon-";
 
 		// create the output directory
-		grunt.file.mkdir( config.dest );
+		grunt.file.mkdir( dest );
 
 		// create the output icons directory
-		grunt.file.mkdir( config.dest + pngfolder );
+		grunt.file.mkdir( dest + pngfolder );
 
 		// minify the source of the grunticon loader and write that to the output
 		grunt.log.write( "\ngrunticon now minifying the stylesheet loader source." );
 		var asyncsrc = grunt.file.read( asyncCSS );
 		var banner = grunt.file.read( asyncCSSBanner );
 		var min = banner + "\n" + grunt.helper('uglify', asyncsrc );
-		var loaderCodeDest = config.dest + loadersnippet;
+		var loaderCodeDest = dest + loadersnippet;
 		grunt.file.write( loaderCodeDest, min );
 		grunt.log.write( "\ngrunticon loader file created." );
 
@@ -80,8 +76,8 @@ module.exports = function(grunt ) {
 			cmd: 'phantomjs',
 			args: [
 				grunt.task.getFile('grunticon/phantom.js'),
-				config.src,
-				config.dest,
+				src,
+				dest,
 				loaderCodeDest,
 				previewHTMLsrc,
 				datasvgcss,
@@ -97,5 +93,7 @@ module.exports = function(grunt ) {
 			// TODO boost this up a bit.
 			grunt.log.write("\nSomething went wrong with phantomjs...");
 		});
+
 	});
+
 };
