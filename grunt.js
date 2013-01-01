@@ -1,7 +1,11 @@
+(function(){
+'use strict';
+
 module.exports = function(grunt) {
 
 	// Project configuration.
 	grunt.initConfig({
+
 		test: {
 			files: ['test/**/*.js']
 		},
@@ -11,6 +15,7 @@ module.exports = function(grunt) {
 		watch: {
 			files: '<config:lint.files>',
 			tasks: 'default'
+
 		},
 		grunticon: {
 			// required config
@@ -69,3 +74,4 @@ module.exports = function(grunt) {
 	grunt.registerTask('default', 'lint grunticon');
 
 };
+})();
