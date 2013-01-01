@@ -45,9 +45,6 @@ var pngdatacss = phantom.args[5];
 var datacss = phantom.args[4];
 var cssbasepath = phantom.args[10];
 
-//debug
-var debugVar = [];
-
 
 // increment the current file index and process it
 function nextFile(){
@@ -95,8 +92,6 @@ function finishUp(){
 	fs.write( outputdir + fallbackcss.replace( /\.css$/i, "2x.css" ), pngcssrules20x.join( "\n\n" ) );	
 	fs.write( outputdir + pngdatacss, pngdatacssrules.join( "\n\n" ) );
 	fs.write( outputdir + datacss, datacssrules.join( "\n\n" ) );
-
-	fs.write( outputdir + 'debug.txt', debugVar.join( "\n" ) );
 
 	// overwrite the snippet HTML
 	fs.write( phantom.args[2], "<!-- Unicode CSS Loader: place this in the head of your page -->\n<script>\n" + asyncCSS + "</script>\n" + noscript );
