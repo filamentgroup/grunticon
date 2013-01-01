@@ -16,7 +16,6 @@ window.grunticon = function( css, foo ){
 				hrefVersion = data && svg ? 0 : data ? 1 : 2;
 			link.rel = "stylesheet";
 
-			//if(hrefVersion === 2 && window.devicePixelRatio){
 			if(hrefVersion === 2 && window.devicePixelRatio){
 				if(window.devicePixelRatio >= 2){
 					link.href = css[ 2 ].replace( /\.css$/i, "2x.css" );
