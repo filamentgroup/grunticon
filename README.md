@@ -82,6 +82,7 @@ In addition to the required configuration properties above, grunticon's grunt co
 - `previewhtml`: The name of the generated HTML file containing PNG data uris. Default: `"preview.html"`
 - `loadersnippet`:  The name of the generated text file containing the grunticon loading snippet. Default: `"grunticon.loader.txt"`
 - `pngfolder`:  The name of the generated folder containing the generated PNG images. Default: `"png/"`
+- `pngpixelratio`: Specify a list of pixel ratios to output for the data png and fallback png files. Example: `[1,1.5,2]`. Default: `[1]`
 - `cssprefix`: a string to prefix all css classes with. Default: `"icon-"`
 
 ## Notable forks

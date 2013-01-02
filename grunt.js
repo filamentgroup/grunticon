@@ -38,6 +38,9 @@ module.exports = function(grunt) {
 			// folder name (within dest) for png output
 			pngfolder: "png/",
 
+			//specify more png sizes
+			pngpixelratio: [1, 1.5, 2],
+
 			// prefix for CSS classnames
 			cssprefix: "icon-wee-",
 

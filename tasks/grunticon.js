@@ -56,6 +56,9 @@ module.exports = function(grunt ) {
 				pngfolder += "/";
 		}
 
+		// if we should generate high dpi fallback png icons and which resolutions
+		var pngpixelratio = config.pngpixelratio || [1]; // example for other densities [1,1.5,2]
+
 		// css class prefix
 		var cssprefix = config.cssprefix || "icon-";
 
@@ -75,7 +78,7 @@ module.exports = function(grunt ) {
 		grunt.log.write( "\ngrunticon loader file created." );
 
 		// take it to phantomjs to do the rest
-		grunt.log.write( "\ngrunticon now spawning phantomjs...!" );
+		grunt.log.write( "\ngrunticon now spawning phantomjs..." );
 
 		grunt.utils.spawn({
 			cmd: 'phantomjs',
@@ -91,23 +94,12 @@ module.exports = function(grunt ) {
 				previewhtml,
 				pngfolder,
 				cssprefix,
-				cssbasepath
+				cssbasepath,
+				pngpixelratio
 			],
 			fallback: ''
 		}, function(err, result, code) {
-			// TODO boost this up a bit.
-			if(err){
-				grunt.log.write("\nSomething went wrong with phantomjs... " + err);
-			}
-
-			if(result){
-				grunt.log.write("\nResult: " + result);
-			}
-
-			if(code){
-				grunt.log.write("\nCode: " + code);
-			}
-
+			grunt.log.write("\nSomething went wrong with phantomjs... ");			
 		});
 	});
 };
