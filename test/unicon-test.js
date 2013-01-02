@@ -1,3 +1,5 @@
+(function(){
+  "use strict";
 var grunt = require('grunt');
 
 /*
@@ -32,3 +34,4 @@ exports['grunticon'] = {
     test.done();
   }
 };
+})();

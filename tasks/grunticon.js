@@ -5,7 +5,8 @@
  * Copyright (c) 2012 Scott Jehl, Filament Group, Inc
  * Licensed under the MIT license.
  */
-
+(function(){
+	"use strict";
 module.exports = function(grunt ) {
 
 	grunt.registerTask( 'grunticon', 'A mystical CSS icon solution.', function() {
@@ -55,6 +56,9 @@ module.exports = function(grunt ) {
 				pngfolder += "/";
 		}
 
+		// if we should generate high dpi fallback png icons and which resolutions
+		var pngpixelratio = config.pngpixelratio || [1]; // example for other densities [1,1.5,2]
+
 		// css class prefix
 		var cssprefix = config.cssprefix || "icon-";
 
@@ -90,12 +94,13 @@ module.exports = function(grunt ) {
 				previewhtml,
 				pngfolder,
 				cssprefix,
-				cssbasepath
+				cssbasepath,
+				pngpixelratio
 			],
 			fallback: ''
 		}, function(err, result, code) {
-			// TODO boost this up a bit.
-			grunt.log.write("\nSomething went wrong with phantomjs...");
+			grunt.log.write("\nSomething went wrong with phantomjs... ");			
 		});
 	});
 };
+})();

@@ -1,7 +1,11 @@
+(function(){
+'use strict';
+
 module.exports = function(grunt) {
 
 	// Project configuration.
 	grunt.initConfig({
+
 		test: {
 			files: ['test/**/*.js']
 		},
@@ -11,6 +15,7 @@ module.exports = function(grunt) {
 		watch: {
 			files: '<config:lint.files>',
 			tasks: 'default'
+
 		},
 		grunticon: {
 			// required config
@@ -32,6 +37,9 @@ module.exports = function(grunt) {
 
 			// folder name (within dest) for png output
 			pngfolder: "png/",
+
+			//specify more png sizes
+			pngpixelratio: [1, 1.5, 2],
 
 			// prefix for CSS classnames
 			cssprefix: "icon-wee-",
@@ -69,3 +77,4 @@ module.exports = function(grunt) {
 	grunt.registerTask('default', 'lint grunticon');
 
 };
+})();
