@@ -23,6 +23,7 @@ phantom args sent from grunticon.js:
 	[8] - png folder name
 	[9] - css classname prefix
 	[10] - css basepath prefix
+	[11] - png pixel ratio
 */
 (function(){
 	"use strict";
@@ -34,10 +35,8 @@ var pngout =  phantom.args[8];
 var cssprefix = phantom.args[9];
 var files = fs.list( inputdir );
 var currfile = 0;
-var pngcssrules = [];
-var pngcssrules15x = [];
-var pngcssrules20x = [];
-var pngdatacssrules = [];
+
+
 var datacssrules = [];
 var htmlpreviewbody = [];
 var fallbackcss = phantom.args[6];
@@ -45,6 +44,10 @@ var pngdatacss = phantom.args[5];
 var datacss = phantom.args[4];
 var cssbasepath = phantom.args[10];
 
+// these three arrays are dependent on each other, the value of an index in pngpixelratio decides which pixel ratio to use 
+var pngpixelratio = phantom.args[11].split( "," ); // converted to string in the arglist, get it back to an array
+var pngpixelratiorules = [[]];
+var pngdatacssrules = [[]];
 
 // increment the current file index and process it
 function nextFile(){
@@ -71,8 +74,8 @@ function finishUp(){
 	var noscriptpreview = '<noscript><link href="' + fallbackcss + '" rel="stylesheet"></noscript>';
 
 	// add custom function call to asyncCSS
-	asyncCSS += '\ngrunticon( [ "' + cssbasepath + outputdir + datacss +'", "' + cssbasepath + outputdir + pngdatacss +'", "' + cssbasepath + outputdir + fallbackcss +'" ] );';
-	asyncCSSpreview += '\ngrunticon( [ "'+ datacss +'", "'+ pngdatacss +'", "'+ fallbackcss +'" ] );';
+	asyncCSS += '\ngrunticon( [ "' + cssbasepath + outputdir + datacss +'", "' + cssbasepath + outputdir + pngdatacss +'", "' + cssbasepath + outputdir + fallbackcss +'" ],[' + pngpixelratio + ']);';
+	asyncCSSpreview += '\ngrunticon( [ "'+ datacss +'", "'+ pngdatacss +'", "'+ fallbackcss +'" ],[' + pngpixelratio + ']);';
 
 	// add async loader to the top
 	htmldoc = htmldoc.replace( /<script>/, "<script>\n\t" + asyncCSSpreview );
@@ -86,11 +89,25 @@ function finishUp(){
 	// write the preview html file
 	fs.write( outputdir + phantom.args[7], htmldoc );
 
-	// write CSS files
-	fs.write( outputdir + fallbackcss, pngcssrules.join( "\n\n" ) );	
-	fs.write( outputdir + fallbackcss.replace( /\.css$/i, "1.5x.css" ), pngcssrules15x.join( "\n\n" ) );	
-	fs.write( outputdir + fallbackcss.replace( /\.css$/i, "2x.css" ), pngcssrules20x.join( "\n\n" ) );	
-	fs.write( outputdir + pngdatacss, pngdatacssrules.join( "\n\n" ) );
+	// write PNG CSS files
+	if ( pngpixelratiorules && pngpixelratio &&  pngpixelratiorules.length === pngpixelratio.length ) {
+		for ( var i = 0; i < pngpixelratiorules.length; i++ ) {
+			// print out CSS files and add pixelratio name to files that are not 1x
+			if ( pngpixelratio[i] === '1' || pngpixelratio.length === 1 ) {
+				fs.write( outputdir + fallbackcss, pngpixelratiorules[i].join( "\n\n" ) );	
+				fs.write( outputdir + pngdatacss, pngdatacssrules[0].join( "\n\n" ) );
+			} else {
+				fs.write( outputdir + fallbackcss.replace( /\.css$/i, '-' + pngpixelratio[i] + "x.css" ), pngpixelratiorules[i].join( "\n\n" ) );	
+				fs.write( outputdir + pngdatacss.replace( /\.css$/i, '-' + pngpixelratio[i] + "x.css" ), pngdatacssrules[i].join( "\n\n" ) );		
+			}		
+		}
+	} else {
+		//something is wrong with the pixel ratio, fallback to just print 1x
+		fs.write( outputdir + fallbackcss, pngpixelratiorules[0].join( "\n\n" ) );	
+		fs.write( outputdir + pngdatacss, pngdatacssrules[0].join( "\n\n" ) );
+	}
+	
+	// write the rest of the CSS files	
 	fs.write( outputdir + datacss, datacssrules.join( "\n\n" ) );
 
 	// overwrite the snippet HTML
@@ -126,34 +143,53 @@ function processFile(){
 				// add rules to svg data css file
 				datacssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" + svgdatauri + "); background-repeat: no-repeat; }" );
 
-				// add rules to png url css file
-				// Added background-size 100% and 2 more css files
-				pngcssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" + pngout + filenamenoext + ".png" + "); background-repeat: no-repeat;  }" );
-				pngcssrules15x.push( "." + cssprefix + filenamenoext + " { background-image: url(" + pngout + filenamenoext + "-1.5x.png" + "); background-repeat: no-repeat; background-size: 100%; }" );
-				pngcssrules20x.push( "." + cssprefix + filenamenoext + " { background-image: url(" + pngout + filenamenoext + "-2x.png" + "); background-repeat: no-repeat; background-size: 100%; }" );
-
 				// add markup to the preview html file
 				htmlpreviewbody.push( '<pre><code>.' + cssprefix + filenamenoext + ':</code></pre><div class="' + cssprefix + filenamenoext + '" style="width: '+ width +'; height: '+ height +'"></div><hr/>' );
 
 				// set page viewport size to svg dimensions
-				page.viewportSize = {  width: parseFloat(width), height: parseFloat(height)};
+				page.viewportSize = { width: parseFloat(width), height: parseFloat(height) };
 
 				// open svg file in webkit to make a png
 				page.open(  inputdir + theFile, function( status ){
 
-					// create png file
-					// also save 1.5x and 2x version
+				// create png data URI
+				page.zoomFactor = 1;
+				
+
+				// create fallback png files, data png and add css rules
+				if ( pngpixelratio &&  pngpixelratio.length > 0) {
+					// creating files with different pixel densities
+					var pxstring;
+					for ( var i = 0; i < pngpixelratio.length; i++ ) {
+						page.zoomFactor = pngpixelratio[i];						
+						// add pixel ratio to filename (if it is not 1 or there is only one ratio defined)
+						pxstring = ( ( pngpixelratio[i] === '1' || pngpixelratio.length === 1 ) ? '' : ('-' + pngpixelratio[i] + 'x' ) );
+						// save png 
+						page.render( outputdir + pngout + filenamenoext + pxstring + ".png" );		
+						
+						//make sure the array is defined
+						if( !pngpixelratiorules[i] ) {
+							pngpixelratiorules[i] = [];
+						}
+
+						if( !pngdatacssrules[i] ) {
+							pngdatacssrules[i] = [];
+						}
+
+						// link to the correct filename and in the correct CSS file and use background-size: 100%
+						pngpixelratiorules[i].push( "." + cssprefix + filenamenoext + " { background-image: url(" + pngout + filenamenoext + pxstring + ".png" + "); background-repeat: no-repeat; background-size: 100%; }" );
+						pngdatacssrules[i].push( "." + cssprefix + filenamenoext + " { background-image: url(" +  pngdatauri + page.renderBase64( "png" ) + "); background-repeat: no-repeat; background-size: 100%; }" );
+					}
+				} else {
+					// fallback to only creating 1 png version
 					page.zoomFactor = 1;
-					page.render( outputdir + pngout + filenamenoext + ".png" );
-					page.zoomFactor = 1.5;
-					page.render( outputdir + pngout + filenamenoext + "-1.5x.png" );
-					page.zoomFactor = 2;
-					page.render( outputdir + pngout + filenamenoext + "-2x.png" );
+					pngpixelratio = ['1']; // make sure we have pixelratio set to 1
+					pngpixelratiorules[0].push( "." + cssprefix + filenamenoext + " { background-image: url(" + pngout + filenamenoext + ".png" + "); background-repeat: no-repeat;  }" );
+					pngdatacssrules[0].push( "." + cssprefix + filenamenoext + " { background-image: url(" +  pngdatauri + page.renderBase64( "png" ) + "); background-repeat: no-repeat; }" );
+				}
 
-					// create png data URI
-					pngdatacssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" +  pngdatauri + page.renderBase64( "png" ) + "); background-repeat: no-repeat; }" );
 
-					nextFile();
+				nextFile();
 					
 					
 				} );
