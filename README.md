@@ -1,4 +1,6 @@
-# grunticon!
+# grunticon! 
+
+This versions supports outputting png's in many different pixel ratios. Why? Better support for Android 2.x.
 
 ```
          /'
