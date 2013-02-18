@@ -132,11 +132,18 @@ function processFile(){
 				// open svg file in webkit to make a png
 				page.open(  inputdir + theFile, function( status ){
 
+					var pngimgstring = pngdatauri + page.renderBase64( "png" );
+
 					// create png file
 					page.render( outputdir + pngout + filenamenoext + ".png" );
 
-					// create png data URI
-					pngdatacssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" +  pngdatauri + page.renderBase64( "png" ) + "); background-repeat: no-repeat; }" );
+					if (pngimgstring.length <= 32768) {
+						// create png data URI
+						pngdatacssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" +  pngimgstring + "); background-repeat: no-repeat; }" );
+					} else {
+						pngdatacssrules.push( "/* Using an external URL reference because this image would have a data URI of " + pngimgstring.length + " characters, which is greater than the maximum of 32768 allowed by IE8. */\n" +
+							"." + cssprefix + filenamenoext + " { background-image: url(" + pngout + filenamenoext + ".png" + "); background-repeat: no-repeat; }" );
+					}
 
 					// process the next svg
 					nextFile();
