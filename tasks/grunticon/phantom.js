@@ -44,12 +44,15 @@ var cssbasepath = phantom.args[10];
 
 // increment the current file index and process it
 function nextFile(){
+	"use strict";
+
 	currfile++;
 	processFile();
 }
 
 // files have all been processed. write the css and html files and return
 function finishUp(){
+	"use strict";
 
 	// make the preview HTML file and asyncCSS loader file
 	var asyncCSS = fs.read( phantom.args[2] );
@@ -93,6 +96,8 @@ function finishUp(){
 
 // process an svg file from the source directory
 function processFile(){
+	"use strict";
+
 	var theFile = files[ currfile ];
 
 	if( theFile ){

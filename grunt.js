@@ -1,4 +1,5 @@
 module.exports = function(grunt) {
+	"use strict";
 
 	// Project configuration.
 	grunt.initConfig({
@@ -54,7 +55,7 @@ module.exports = function(grunt) {
 				eqnull: true,
 				node: true,
 				es5: true,
-				strict: false
+				strict: true
 			},
 			globals: {
 				Image: true,

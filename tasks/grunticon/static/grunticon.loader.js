@@ -1,4 +1,6 @@
 window.grunticon = function( css, foo ){
+	"use strict";
+
 	// expects a css array with 3 items representing CSS paths to datasvg, datapng, urlpng
 	if( !css || css.length !== 3 ){
 		return;
