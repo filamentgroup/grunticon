@@ -101,8 +101,8 @@ function processFile(){
 			(function(){
 				var page = require( "webpage" ).create();
 				var svgdata = fs.read(  inputdir + theFile ) || "";
-				var svgdatauri = "data:image/svg+xml;base64,";
-				var pngdatauri = "data:image/png;base64,";
+				var svgdatauri = "'data:image/svg+xml;charset=US-ASCII,";
+				var pngdatauri = "'data:image/png;base64,";
 
 				// kill the ".svg" at the end of the filename
 				var filenamenoext = theFile.replace( /\.svg$/i, "" );
@@ -115,7 +115,16 @@ function processFile(){
 				var height = svgelem.getAttribute( "height" );
 
 				// get base64 of svg file
-				svgdatauri += btoa(svgdata);
+				svgdatauri += encodeURIComponent( svgdata
+					//strip newlines and tabs
+					.replace( /[\n\r]/gmi, "" )
+					.replace( /\t/gmi, " " )
+					//strip comments
+					.replace(/<\!\-\-(.*(?=\-\->))\-\->/gmi, "")
+					//replace 
+					.replace(/'/gmi, "\\i") )
+					// close string
+					+ "'";
 
 				// add rules to svg data css file
 				datacssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" + svgdatauri + "); background-repeat: no-repeat; }" );
