@@ -6,7 +6,7 @@
  * Licensed under the MIT license.
  */
 
-module.exports = function(grunt ) {
+module.exports = function(grunt, undefined ) {
 
 	grunt.registerTask( 'grunticon', 'A mystical CSS icon solution.', function() {
 
@@ -56,7 +56,10 @@ module.exports = function(grunt ) {
 		}
 
 		// css class prefix
-		var cssprefix = config.cssprefix || "icon-";
+		var cssprefix = config.cssprefix;
+		if( cssprefix === undefined ){
+			cssprefix = "icon-";
+		}
 
 		// create the output directory
 		grunt.file.mkdir( config.dest );
