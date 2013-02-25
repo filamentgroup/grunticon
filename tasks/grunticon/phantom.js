@@ -9,6 +9,7 @@
 /*global phantom:true*/
 /*global window:true*/
 /*global btoa:true*/
+/*global require:true*/
 
 /*
 phantom args sent from grunticon.js:
@@ -40,7 +41,6 @@ var fallbackcss = phantom.args[6];
 var pngdatacss = phantom.args[5];
 var datacss = phantom.args[4];
 var cssbasepath = phantom.args[10];
-
 
 // increment the current file index and process it
 function nextFile(){
@@ -127,9 +127,9 @@ function processFile(){
 					//strip comments
 					.replace(/<\!\-\-(.*(?=\-\->))\-\->/gmi, "")
 					//replace 
-					.replace(/'/gmi, "\\i") )
+					.replace(/'/gmi, "\\i") ) +
 					// close string
-					+ "'";
+					"'";
 
 				// add rules to svg data css file
 				datacssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" + svgdatauri + "); background-repeat: no-repeat; }" );

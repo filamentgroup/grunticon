@@ -53,6 +53,7 @@ module.exports = function(grunt) {
 				undef: true,
 				boss: true,
 				eqnull: true,
+				smarttabs: true,
 				node: true,
 				es5: true,
 				strict: true
