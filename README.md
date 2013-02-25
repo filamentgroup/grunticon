@@ -31,9 +31,15 @@ Licensed under the MIT license.
 
 First, you'll need to install [PhantomJS](http://phantomjs.org/), which you might already have if you have [Grunt](https://github.com/cowboy/grunt) installed (No? You'll need that too.).
 
-Once those are installed...
+Next, install the grunticon module with: 
+`cd /path/to/your/website/root`
+`npm install grunt-grunticon`
 
-Install the grunticon module with: `npm install grunt-grunticon`
+If you are using grunticon for multiple projects it might be better to install grunticon in a global directory like `/usr/local/lib/node_modules` and using a symbolic link for each instance.
+```
+$ cd /path/to/your/website/root
+$ ln -s /usr/local/lib/node_modules
+``` 
 
 Then add this line to your project's `grunt.js` gruntfile:
 
