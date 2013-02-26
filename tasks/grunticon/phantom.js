@@ -27,6 +27,7 @@ phantom args sent from grunticon.js:
 */
 
 var fs = require( "fs" );
+var img_stats = require('../../lib/img-stats.js');
 var inputdir = phantom.args[0];
 var outputdir = phantom.args[1];
 var pngout =  phantom.args[8];
@@ -101,67 +102,89 @@ function processFile(){
 	var theFile = files[ currfile ];
 
 	if( theFile ){
-		// only parse svg files
-		if( theFile.match( /\.svg$/i ) ){
+		var svgRegex = /\.svg$/i,
+			pngRegex = /\.png$/i,
+			isSvg = theFile.match( svgRegex ),
+			isPng = theFile.match( pngRegex );
+
+		if( isSvg || isPng ){
 			(function(){
 				var page = require( "webpage" ).create();
-				var svgdata = fs.read(  inputdir + theFile ) || "";
+				var imagedata = fs.read(  inputdir + theFile ) || "";
 				var svgdatauri = "'data:image/svg+xml;charset=US-ASCII,";
 				var pngdatauri = "'data:image/png;base64,";
 
-				// kill the ".svg" at the end of the filename
-				var filenamenoext = theFile.replace( /\.svg$/i, "" );
+				// kill the ".svg" or ".png" at the end of the filename
+				var filenamenoext = theFile.replace( isSvg ? svgRegex : pngRegex, "" );
+				var width;
+				var height;
 
-				// get svg element's dimensions so we can set the viewport dims later
-				var frag = window.document.createElement( "div" );
-				frag.innerHTML = svgdata;
-				var svgelem = frag.querySelector( "svg" );
-				var width = svgelem.getAttribute( "width" );
-				var height = svgelem.getAttribute( "height" );
+				if( isSvg ) {
+					// get svg element's dimensions so we can set the viewport dims later
+					var frag = window.document.createElement( "div" );
+					frag.innerHTML = imagedata;
+					var svgelem = frag.querySelector( "svg" );
+					width = svgelem.getAttribute( "width" );
+					height = svgelem.getAttribute( "height" );
 
-				// get base64 of svg file
-				svgdatauri += encodeURIComponent( svgdata
-					//strip newlines and tabs
-					.replace( /[\n\r]/gmi, "" )
-					.replace( /\t/gmi, " " )
-					//strip comments
-					.replace(/<\!\-\-(.*(?=\-\->))\-\->/gmi, "")
-					//replace 
-					.replace(/'/gmi, "\\i") ) +
-					// close string
-					"'";
+					render();
+				} else {
+					img_stats.stats( inputdir + theFile , function( data ){
+						width = data.width + 'px';
+						height = data.height + 'px';
+						render();
+					});
+				}
 
-				// add rules to svg data css file
-				datacssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" + svgdatauri + "); background-repeat: no-repeat; }" );
-
-				// add rules to png url css file
-				pngcssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" + pngout + filenamenoext + ".png" + "); background-repeat: no-repeat; }" );
-
-				// add markup to the preview html file
-				htmlpreviewbody.push( '<pre><code>.' + cssprefix + filenamenoext + ':</code></pre><div class="' + cssprefix + filenamenoext + '" style="width: '+ width +'; height: '+ height +'"></div><hr/>' );
-
-				// set page viewport size to svg dimensions
-				page.viewportSize = {  width: parseFloat(width), height: parseFloat(height) };
-
-				// open svg file in webkit to make a png
-				page.open(  inputdir + theFile, function( status ){
-
-					var pngimgstring = pngdatauri + page.renderBase64( "png" );
-
-					// create png file
-					page.render( outputdir + pngout + filenamenoext + ".png" );
-
-					if (pngimgstring.length <= 32768) {
-						// create png data URI
-						pngdatacssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" +  pngimgstring + "); background-repeat: no-repeat; }" );
-					} else {
-						pngdatacssrules.push( "/* Using an external URL reference because this image would have a data URI of " + pngimgstring.length + " characters, which is greater than the maximum of 32768 allowed by IE8. */\n" +
-							"." + cssprefix + filenamenoext + " { background-image: url(" + pngout + filenamenoext + ".png" + "); background-repeat: no-repeat; }" );
+				function render() {
+					if( isSvg ) {
+						// get base64 of svg file
+						svgdatauri += encodeURIComponent( imagedata
+							//strip newlines and tabs
+							.replace( /[\n\r]/gmi, "" )
+							.replace( /\t/gmi, " " )
+							//strip comments
+							.replace(/<\!\-\-(.*(?=\-\->))\-\->/gmi, "")
+							//replace 
+							.replace(/'/gmi, "\\i") ) +
+							// close string
+							"'";
 					}
 
-					// process the next svg
-					nextFile();
-				} );
+					// add rules to png url css file
+					pngcssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" + pngout + filenamenoext + ".png" + "); background-repeat: no-repeat; }" );
+
+					// add markup to the preview html file
+					htmlpreviewbody.push( '<pre><code>.' + cssprefix + filenamenoext + ':</code></pre><div class="' + cssprefix + filenamenoext + '" style="width: '+ width +'; height: '+ height +'"></div><hr/>' );
+
+					// set page viewport size to svg dimensions
+					page.viewportSize = {  width: parseFloat(width), height: parseFloat(height) };
+
+					// open svg file in webkit to make a png
+					page.open(  inputdir + theFile, function( status ){
+
+						var pngimgstring = page.renderBase64( "png" );
+
+						pngdatauri += pngimgstring + "'";
+
+						// create png file
+						page.render( outputdir + pngout + filenamenoext + ".png" );
+
+						// add rules to svg data css file
+						datacssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" + ( isSvg ? svgdatauri : pngdatauri ) + "); background-repeat: no-repeat; }" );
+
+						if (pngimgstring.length <= 32768) {
+							// create png data URI
+							pngdatacssrules.push( "." + cssprefix + filenamenoext + " { background-image: url(" +  pngdatauri + "); background-repeat: no-repeat; }" );
+						} else {
+							pngdatacssrules.push( "/* Using an external URL reference because this image would have a data URI of " + pngimgstring.length + " characters, which is greater than the maximum of 32768 allowed by IE8. */\n" +
+								"." + cssprefix + filenamenoext + " { background-image: url(" + pngout + filenamenoext + ".png" + "); background-repeat: no-repeat; }" );
+						}
+
+						// process the next svg
+						nextFile();
+					} );
+				} // render
 			}());
 		}
 		else {
