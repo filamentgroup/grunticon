@@ -56,7 +56,7 @@ module.exports = function(grunt) {
 				smarttabs: true,
 				node: true,
 				es5: true,
-				strict: true
+				strict: false
 			},
 			globals: {
 				Image: true,
