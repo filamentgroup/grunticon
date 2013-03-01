@@ -112,7 +112,9 @@ module.exports = function( grunt , undefined ) {
 			// TODO boost this up a bit.
 			if( err ){
 				grunt.log.write("\nSomething went wrong with phantomjs...");
+				grunt.log.write( result.stderr );
 			}
+				grunt.log.write( result.stdout );
 			done();
 		});
 	});

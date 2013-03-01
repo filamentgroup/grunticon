@@ -100,16 +100,16 @@ phantom args sent from grunticon.js:
 	};
 
 	// process an svg file from the source directory
-	var processFile = function( theFile , o ){
+	var processFile = function( filename , o ){
 		var promise = new RSVP.Promise();
 
 			var svgRegex = /\.svg$/i,
 				pngRegex = /\.png$/i,
-				isSvg = theFile.match( svgRegex ),
-				isPng = theFile.match( pngRegex );
+				isSvg = filename.match( svgRegex ),
+				isPng = filename.match( pngRegex );
 
 				(function(){
-					var imagedata = fs.read(  o.inputdir + theFile ) || "";
+					var imagedata = fs.read(  o.inputdir + filename ) || "";
 
 					// kill the ".svg" or ".png" at the end of the filename
 
@@ -121,10 +121,10 @@ phantom args sent from grunticon.js:
 
 						//TODO createPNG
 						// open svg file in webkit to make a png
-						page.open(  o.inputdir + theFile, function( status ){
+						page.open(  o.inputdir + filename, function( status ){
 							if( status === "success" ){
 								var res = {};
-								var filenamenoext = theFile.replace( isSvg ? svgRegex : pngRegex, "" );
+								var filenamenoext = filename.replace( isSvg ? svgRegex : pngRegex, "" );
 								var prefix = o.cssprefix + filenamenoext;
 								var pngdatauri = "'data:image/png;base64,";
 								var svgdatauri = "'data:image/svg+xml;charset=US-ASCII,";
@@ -192,7 +192,7 @@ phantom args sent from grunticon.js:
 							height = svgelem.getAttribute( "height" );
 							callback( width , height );
 						} else {
-							img_stats.stats( o.inputdir + theFile , function( data ){
+							img_stats.stats( o.inputdir + filename , function( data ){
 								width = data.width + 'px';
 								height = data.height + 'px';
 								callback( width , height );
