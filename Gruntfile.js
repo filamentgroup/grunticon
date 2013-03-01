@@ -40,14 +40,8 @@ module.exports = function(grunt) {
 
 				// css file path prefix - this defaults to "/" and will be placed before the "dest" path when stylesheets are loaded.
 				// This allows root-relative referencing of the CSS. If you don't want a prefix path, set to to ""
-				cssbasepath: "/",
+				cssbasepath: "/"
 
-				files: {
-					'loader': __dirname + "/tasks/grunticon/static/grunticon.loader.js",
-					'banner': __dirname + "/tasks/grunticon/static/grunticon.loader.banner.js",
-					'preview': __dirname + "/tasks/grunticon/static/preview.html",
-					'phantom': __dirname + "/tasks/grunticon/phantom.js"
-				}
 			}
 		},
 		jshint: {

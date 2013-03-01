@@ -19,6 +19,12 @@ module.exports = function( grunt , undefined ) {
 		// get the config
 		var config = this.options();
 
+		config.files = {
+			loader: __dirname + "/grunticon/static/grunticon.loader.js",
+			banner: __dirname + "/grunticon/static/grunticon.loader.banner.js",
+			preview: __dirname + "/grunticon/static/preview.html",
+			phantom: __dirname + "/grunticon/phantom.js"
+		};
 		// fail if config or no src or dest config
 		if( !config || config.src === undefined || config.dest === undefined ){
 			grunt.fatal( "Oops! Please provide grunticon configuration for src and dest in your grunt.js file" );
