@@ -113,7 +113,7 @@ phantom args sent from grunticon.js:
 
 					// kill the ".svg" or ".png" at the end of the filename
 
-					var render = function( width , height ) {
+					var render = function( width , height , type ) {
 						var page = require( "webpage" ).create();
 
 						// set page viewport size to svg dimensions
@@ -181,7 +181,7 @@ phantom args sent from grunticon.js:
 
 					//TODO add SVG support to img_stats
 					var getStats = function( imagedata , callback ){
-						var width, height;
+						var width, height, type;
 
 						if( isSvg ) {
 							// get svg element's dimensions so we can set the viewport dims later
@@ -195,14 +195,15 @@ phantom args sent from grunticon.js:
 							img_stats.stats( o.inputdir + filename , function( data ){
 								width = data.width + 'px';
 								height = data.height + 'px';
-								callback( width , height );
+								type = data.type;
+								callback( width , height , type );
 							});
 						}
 					}; //getStats
 
 					// Make the magic happen
-					getStats( imagedata , function( w , h ){
-						render( w, h );
+					getStats( imagedata , function( w , h , t ){
+						render( w, h , t );
 					});
 				}());
 			return promise;
