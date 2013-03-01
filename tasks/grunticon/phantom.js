@@ -101,52 +101,35 @@ phantom args sent from grunticon.js:
 				isSvg = theFile.match( svgRegex ),
 				isPng = theFile.match( pngRegex );
 
-			if( isSvg || isPng ){
 				(function(){
-					var page = require( "webpage" ).create();
 					var imagedata = fs.read(  o.inputdir + theFile ) || "";
-					var svgdatauri = "'data:image/svg+xml;charset=US-ASCII,";
 
 					// kill the ".svg" or ".png" at the end of the filename
-					var filenamenoext = theFile.replace( isSvg ? svgRegex : pngRegex, "" );
 
 					var render = function( width , height ) {
-						var buildSVGDataURI = function( imagedata ){
-							// get base64 of svg file
-							return encodeURIComponent( imagedata
-								//strip newlines and tabs
-								.replace( /[\n\r]/gmi, "" )
-								.replace( /\t/gmi, " " )
-								//strip comments
-								.replace(/<\!\-\-(.*(?=\-\->))\-\->/gmi, "")
-								//replace
-								.replace(/'/gmi, "\\i") ) +
-								// close string
-								"'";
-						}; //buildSVGDataURI
+						var page = require( "webpage" ).create();
+						var filenamenoext = theFile.replace( isSvg ? svgRegex : pngRegex, "" );
 
 						var prefix = o.cssprefix + filenamenoext;
-
-						if( isSvg ) {
-							svgdatauri += buildSVGDataURI( imagedata );
-						}
-
 						var pngrule = '.' + prefix + " { background-image: url(" + o.pngout + filenamenoext + ".png" + "); background-repeat: no-repeat; }";
+						var htmlmarkup = '<pre><code>.' + prefix + ':</code></pre><div class="' + prefix + '" style="width: '+ width +'; height: '+ height +'"></div><hr/>';
 
 
 						// add rules to png url css file
 						pngcssrules.push( pngrule );
 
 						// add markup to the preview html file
-						htmlpreviewbody.push( '<pre><code>.' + prefix + ':</code></pre><div class="' + prefix + '" style="width: '+ width +'; height: '+ height +'"></div><hr/>' );
+						htmlpreviewbody.push( htmlmarkup );
 
 						// set page viewport size to svg dimensions
 						page.viewportSize = {  width: parseFloat(width), height: parseFloat(height) };
 
+						//TODO createPNG
 						// open svg file in webkit to make a png
 						page.open(  o.inputdir + theFile, function( status ){
 							if( status === "success" ){
 								var pngdatauri = "'data:image/png;base64,";
+								var svgdatauri = "'data:image/svg+xml;charset=US-ASCII,";
 								var pngimgstring = page.renderBase64( "png" );
 								var getPNGDataCSSRule = function( prefix , pngimgstring ){
 									if (pngimgstring.length <= 32768) {
@@ -159,6 +142,23 @@ phantom args sent from grunticon.js:
 											"." + prefix + " { background-image: url(" + o.pngout + filenamenoext + ".png" + "); background-repeat: no-repeat; }";
 									}
 								}; //getPNGDataCSSRule
+								var buildSVGDataURI = function( imagedata ){
+									// get base64 of svg file
+									return encodeURIComponent( imagedata
+										//strip newlines and tabs
+										.replace( /[\n\r]/gmi, "" )
+										.replace( /\t/gmi, " " )
+										//strip comments
+										.replace(/<\!\-\-(.*(?=\-\->))\-\->/gmi, "")
+										//replace
+										.replace(/'/gmi, "\\i") ) +
+										// close string
+										"'";
+								}; //buildSVGDataURI
+
+								if( isSvg ) {
+									svgdatauri += buildSVGDataURI( imagedata );
+								}
 
 								pngdatauri += pngimgstring + "'";
 
@@ -205,9 +205,6 @@ phantom args sent from grunticon.js:
 						render( w, h );
 					});
 				}());
-			} else {// if isSVG || isPNG
-				promise.resolve();
-			}
 			return promise;
 	}; // end of processFile
 
@@ -219,6 +216,16 @@ phantom args sent from grunticon.js:
 	
 	var files = fs.list( options.inputdir );
 	var promises = [];
+
+	files = files.filter( function( file ){
+		var svgRegex = /\.svg$/i,
+			pngRegex = /\.png$/i,
+			isSvg = file.match( svgRegex ),
+			isPng = file.match( pngRegex );
+
+		return isSvg || isPng;
+	});
+
 	files.forEach( function( file ){
 		promises.push( processFile( file , options ) );
 	});
