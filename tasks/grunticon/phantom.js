@@ -43,14 +43,21 @@ phantom args sent from grunticon.js:
 		cssbasepath: phantom.args[10]
 	};
 
-	var pngcssrules = [],
-		pngdatacssrules = [],
-		datacssrules = [],
-		htmlpreviewbody = [];
 
 
 	// files have all been processed. write the css and html files and return
-	var finishUp = function( o ){
+	var finishUp = function( dataarr , o ){
+		var pngcssrules = [],
+			pngdatacssrules = [],
+			datacssrules = [],
+			htmlpreviewbody = [];
+
+		dataarr.forEach( function( dataset ){
+			pngcssrules.push( dataset.pngcssrule );
+			pngdatacssrules.push( dataset.pngdatacssrule );
+			datacssrules.push( dataset.datacssrule );
+			htmlpreviewbody.push( dataset.htmlmarkup );
+		});
 
 		// make the preview HTML file and asyncCSS loader file
 		var asyncCSS = fs.read( phantom.args[2] );
@@ -108,18 +115,6 @@ phantom args sent from grunticon.js:
 
 					var render = function( width , height ) {
 						var page = require( "webpage" ).create();
-						var filenamenoext = theFile.replace( isSvg ? svgRegex : pngRegex, "" );
-
-						var prefix = o.cssprefix + filenamenoext;
-						var pngrule = '.' + prefix + " { background-image: url(" + o.pngout + filenamenoext + ".png" + "); background-repeat: no-repeat; }";
-						var htmlmarkup = '<pre><code>.' + prefix + ':</code></pre><div class="' + prefix + '" style="width: '+ width +'; height: '+ height +'"></div><hr/>';
-
-
-						// add rules to png url css file
-						pngcssrules.push( pngrule );
-
-						// add markup to the preview html file
-						htmlpreviewbody.push( htmlmarkup );
 
 						// set page viewport size to svg dimensions
 						page.viewportSize = {  width: parseFloat(width), height: parseFloat(height) };
@@ -128,6 +123,9 @@ phantom args sent from grunticon.js:
 						// open svg file in webkit to make a png
 						page.open(  o.inputdir + theFile, function( status ){
 							if( status === "success" ){
+								var res = {};
+								var filenamenoext = theFile.replace( isSvg ? svgRegex : pngRegex, "" );
+								var prefix = o.cssprefix + filenamenoext;
 								var pngdatauri = "'data:image/png;base64,";
 								var svgdatauri = "'data:image/svg+xml;charset=US-ASCII,";
 								var pngimgstring = page.renderBase64( "png" );
@@ -166,12 +164,14 @@ phantom args sent from grunticon.js:
 								page.render( o.outputdir + o.pngout + filenamenoext + ".png" );
 
 								// add rules to svg data css file
-								datacssrules.push( "." + prefix + " { background-image: url(" + ( isSvg ? svgdatauri : pngdatauri ) + "); background-repeat: no-repeat; }" );
 
-								pngdatacssrules.push( getPNGDataCSSRule( prefix , pngimgstring ) );
+								res.pngcssrule = '.' + prefix + " { background-image: url(" + o.pngout + filenamenoext + ".png" + "); background-repeat: no-repeat; }";
+								res.htmlmarkup = '<pre><code>.' + prefix + ':</code></pre><div class="' + prefix + '" style="width: '+ width +'; height: '+ height +'"></div><hr/>';
+								res.datacssrule = "." + prefix + " { background-image: url(" + ( isSvg ? svgdatauri : pngdatauri ) + "); background-repeat: no-repeat; }";
+								res.pngdatacssrule = getPNGDataCSSRule( prefix , pngimgstring );
 
 								// process the next svg
-								promise.resolve();
+								promise.resolve( res );
 							} else {
 								promise.reject();
 							}
@@ -181,8 +181,8 @@ phantom args sent from grunticon.js:
 
 					//TODO add SVG support to img_stats
 					var getStats = function( imagedata , callback ){
-						var width;
-						var height;
+						var width, height;
+
 						if( isSvg ) {
 							// get svg element's dimensions so we can set the viewport dims later
 							var frag = window.document.createElement( "div" );
@@ -230,8 +230,8 @@ phantom args sent from grunticon.js:
 		promises.push( processFile( file , options ) );
 	});
 
-	RSVP.all( promises ).then( function(){
-		finishUp( options );
+	RSVP.all( promises ).then( function( dataarr ){
+		finishUp( dataarr , options );
 		phantom.exit();
 	});
 })();
