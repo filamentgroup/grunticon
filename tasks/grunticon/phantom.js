@@ -30,7 +30,9 @@ phantom args sent from grunticon.js:
 	"use strict";
 
 	var fs = require( "fs" );
-	var img_stats = require('../../lib/img-stats.js');
+	var img_stats = require('../../lib/img-stats');
+	var RSVP = require('../../lib/rsvp');
+
 	var inputdir = phantom.args[0];
 	var outputdir = phantom.args[1];
 	var pngout =  phantom.args[8];
@@ -90,18 +92,10 @@ phantom args sent from grunticon.js:
 		fs.write( phantom.args[2], "<!-- Unicode CSS Loader: place this in the head of your page -->\n<script>\n" + asyncCSS + "</script>\n" + noscript );
 	}
 
-	// increment the current file index and process it
-	function nextFile(){
-		currfile++;
-		processFile();
-	}
-
 	// process an svg file from the source directory
-	function processFile(){
+	var processFile = function( theFile ){
+		var promise = new RSVP.Promise();
 
-		var theFile = files[ currfile ];
-
-		if( theFile ){
 			var svgRegex = /\.svg$/i,
 				pngRegex = /\.png$/i,
 				isSvg = theFile.match( svgRegex ),
@@ -130,7 +124,7 @@ phantom args sent from grunticon.js:
 								.replace(/'/gmi, "\\i") ) +
 								// close string
 								"'";
-						};
+						}; //buildSVGDataURI
 
 						var prefix = cssprefix + filenamenoext;
 
@@ -150,7 +144,7 @@ phantom args sent from grunticon.js:
 									" characters, which is greater than the maximum of 32768 allowed by IE8. */\n" +
 									"." + prefix + " { background-image: url(" + pngout + filenamenoext + ".png" + "); background-repeat: no-repeat; }";
 							}
-						};
+						}; //getPNGDataCSSRule
 
 						// add rules to png url css file
 						pngcssrules.push( pngrule );
@@ -177,8 +171,8 @@ phantom args sent from grunticon.js:
 							pngdatacssrules.push( getPNGDataCSSRule( prefix , pngimgstring ) );
 
 							// process the next svg
-							nextFile();
-						} );
+							promise.resolve();
+						} ); //page.open
 					}; // render
 
 
@@ -200,27 +194,32 @@ phantom args sent from grunticon.js:
 								callback( width , height );
 							});
 						}
-					};
+					}; //getStats
 
 					// Make the magic happen
 					getStats( imagedata , function( w , h ){
 						render( w, h );
 					});
-
 				}());
+			} else {// if isSVG || isPNG
+				promise.resolve();
 			}
-			else {
-				// process the next svg
-				nextFile();
-			}
-		}
-		else {
-			// fin
-			finishUp();
-			phantom.exit();
-		}
-	}
+			return promise;
+	}; // end of processFile
 
-	// go ahead with the first file
-	processFile();
+	// Get list of files from input directory
+	// foreach in files
+		// create css and png rules
+		// render a png
+	// write files
+	//
+	var promises = [];
+	files.forEach( function( file ){
+		promises.push( processFile( file ) );
+	});
+
+	RSVP.all( promises ).then( function(){
+		finishUp();
+		phantom.exit();
+	});
 })();

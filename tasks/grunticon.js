@@ -15,6 +15,7 @@ module.exports = function( grunt , undefined ) {
 	var uglify = require( 'uglify-js' );
 
 	grunt.registerTask( 'grunticon', 'A mystical CSS icon solution.', function() {
+		var done = this.async();
 
 		// just a quick starting message
 		grunt.log.write( "Look, it's a grunticon!\n" );
@@ -109,7 +110,10 @@ module.exports = function( grunt , undefined ) {
 			fallback: ''
 		}, function(err, result, code) {
 			// TODO boost this up a bit.
-			grunt.log.write("\nSomething went wrong with phantomjs...");
+			if( err ){
+				grunt.log.write("\nSomething went wrong with phantomjs...");
+			}
+			done();
 		});
 	});
 };
