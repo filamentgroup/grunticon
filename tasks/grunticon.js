@@ -79,7 +79,6 @@ module.exports = function( grunt , undefined ) {
 		// minify the source of the grunticon loader and write that to the output
 		grunt.log.write( "\ngrunticon now minifying the stylesheet loader source." );
 		var banner = grunt.file.read( asyncCSSBanner );
-		var minified = uglify.minify( asyncCSS );
 		var min = banner + "\n" + uglify.minify( asyncCSS ).code;
 		var loaderCodeDest = config.dest + loadersnippet;
 		grunt.file.write( loaderCodeDest, min );
