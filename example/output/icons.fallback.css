@@ -4,7 +4,8 @@
 
 .icon-bear { background-image: url(png/bear.png); background-repeat: no-repeat; }
 
-.icon-cat,#el-gato { background-image: url(png/cat.png); background-repeat: no-repeat; }
+.icon-cat,
+#el-gato { background-image: url(png/cat.png); background-repeat: no-repeat; }
 
 .icon-flag { background-image: url(png/flag.png); background-repeat: no-repeat; }
 
@@ -18,7 +19,8 @@
 
 .icon-gummy-bears-1 { background-image: url(png/gummy-bears-1.png); background-repeat: no-repeat; }
 
-.icon-gummy-bears-2,nav li a.deadly-bears:before { background-image: url(png/gummy-bears-2.png); background-repeat: no-repeat; }
+.icon-gummy-bears-2,
+nav li a.deadly-bears:before { background-image: url(png/gummy-bears-2.png); background-repeat: no-repeat; }
 
 .icon-Home_Media { background-image: url(png/Home_Media.png); background-repeat: no-repeat; }
 

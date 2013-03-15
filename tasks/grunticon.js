@@ -61,7 +61,7 @@ module.exports = function( grunt , undefined ) {
 		// css references base path for the loader
 		var cssbasepath = config.cssbasepath || "/";
 
-		var customselectors = JSON.stringify( config.customselectors );
+		var customselectors = JSON.stringify( config.customselectors ) || "{}";
 
 		// folder name (within the output folder) for generated png files
 		var pngfolder = config.pngfolder || "png/";
@@ -92,6 +92,7 @@ module.exports = function( grunt , undefined ) {
 
 		// take it to phantomjs to do the rest
 		grunt.log.write( "\ngrunticon now spawning phantomjs..." );
+
 		grunt.util.spawn({
 			cmd: 'phantomjs',
 			args: [
