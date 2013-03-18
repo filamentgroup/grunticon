@@ -61,6 +61,9 @@ module.exports = function( grunt , undefined ) {
 		// css references base path for the loader
 		var cssbasepath = config.cssbasepath || "/";
 
+		// Whether to include the px height and width in the generated CSS files.
+		var cssdimensions = config.cssdimensions || false;
+
 		// folder name (within the output folder) for generated png files
 		var pngfolder = config.pngfolder || "png/";
 		// make sure pngfolder has / at the end
@@ -105,7 +108,8 @@ module.exports = function( grunt , undefined ) {
 				previewhtml,
 				pngfolder,
 				cssprefix,
-				cssbasepath
+				cssbasepath,
+				cssdimensions
 			],
 			fallback: ''
 		}, function(err, result, code) {

@@ -23,6 +23,7 @@ phantom args sent from grunticon.js:
 	[8] - png folder name
 	[9] - css classname prefix
 	[10] - css basepath prefix
+	[11] - put dimensions in css
 */
 
 (function(){
@@ -43,7 +44,8 @@ phantom args sent from grunticon.js:
 		cssbasepath: phantom.args[10],
 		asyncCSSpath: phantom.args[2],
 		previewFilePath: phantom.args[3],
-		previewHTMLFilePath: phantom.args[7]
+		previewHTMLFilePath: phantom.args[7],
+		cssdimensions: (phantom.args[11].toLowerCase() === 'true')
 	};
 
 	var files = fs.list( options.inputdir );
