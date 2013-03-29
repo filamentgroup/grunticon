@@ -23,11 +23,10 @@ phantom args sent from grunticon.js:
 	[8] - png folder name
 	[9] - css classname prefix
 	[10] - css basepath prefix
+	[11] - custom CSS selectors
 */
 
 (function(){
-	"use strict";
-
 	var fs = require( "fs" );
 	var RSVP = require('../../lib/rsvp');
 	var grunticoner = require('../../lib/grunticoner');
@@ -43,7 +42,8 @@ phantom args sent from grunticon.js:
 		cssbasepath: phantom.args[10],
 		asyncCSSpath: phantom.args[2],
 		previewFilePath: phantom.args[3],
-		previewHTMLFilePath: phantom.args[7]
+		previewHTMLFilePath: phantom.args[7],
+		customselectors: phantom.args[11]
 	};
 
 	var files = fs.list( options.inputdir );
