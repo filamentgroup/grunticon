@@ -14,34 +14,36 @@ module.exports = function(grunt) {
 			tasks: 'default'
 		},
 		grunticon: {
-			options: {
-				// required config
-				src: "example/source/",
-				dest: "example/output/",
+			foo: {
+				options: {
+					// required config
+					src: "example/source/",
+					dest: "example/output/",
 
-				// optional grunticon config properties
+					// optional grunticon config properties
 
-				// CSS filenames
-				datasvgcss: "icons.data.svg.css",
-				datapngcss: "icons.data.png.css",
-				urlpngcss: "icons.fallback.css",
+					// CSS filenames
+					datasvgcss: "icons.data.svg.css",
+					datapngcss: "icons.data.png.css",
+					urlpngcss: "icons.fallback.css",
 
-				// preview HTML filename
-				previewhtml: "preview.html",
+					// preview HTML filename
+					previewhtml: "preview.html",
 
-				// grunticon loader code snippet filename
-				loadersnippet: "grunticon.loader.txt",
+					// grunticon loader code snippet filename
+					loadersnippet: "grunticon.loader.txt",
 
-				// folder name (within dest) for png output
-				pngfolder: "png/",
+					// folder name (within dest) for png output
+					pngfolder: "png/",
 
-				// prefix for CSS classnames
-				cssprefix: "icon-",
+					// prefix for CSS classnames
+					cssprefix: "icon-",
 
-				// css file path prefix - this defaults to "/" and will be placed before the "dest" path when stylesheets are loaded.
-				// This allows root-relative referencing of the CSS. If you don't want a prefix path, set to to ""
-				cssbasepath: "/"
+					// css file path prefix - this defaults to "/" and will be placed before the "dest" path when stylesheets are loaded.
+					// This allows root-relative referencing of the CSS. If you don't want a prefix path, set to to ""
+					cssbasepath: "/"
 
+				}
 			}
 		},
 		jshint: {
@@ -74,6 +76,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
 
 	// Default task.
-	grunt.registerTask('default', ['jshint', 'grunticon']);
+	grunt.registerTask('default', ['jshint', 'grunticon:foo']);
 
 };

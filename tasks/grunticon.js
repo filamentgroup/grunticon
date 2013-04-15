@@ -14,7 +14,7 @@ module.exports = function( grunt , undefined ) {
 
 	var uglify = require( 'uglify-js' );
 
-	grunt.registerTask( 'grunticon', 'A mystical CSS icon solution.', function() {
+	grunt.registerMultiTask( 'grunticon', 'A mystical CSS icon solution.', function() {
 		var done = this.async();
 
 		// just a quick starting message
