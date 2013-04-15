@@ -61,6 +61,8 @@ module.exports = function( grunt , undefined ) {
 		// css references base path for the loader
 		var cssbasepath = config.cssbasepath || "/";
 
+		var customselectors = JSON.stringify( config.customselectors ) || "{}";
+
 		// folder name (within the output folder) for generated png files
 		var pngfolder = config.pngfolder || "png/";
 		// make sure pngfolder has / at the end
@@ -105,7 +107,8 @@ module.exports = function( grunt , undefined ) {
 				previewhtml,
 				pngfolder,
 				cssprefix,
-				cssbasepath
+				cssbasepath,
+				customselectors
 			],
 			fallback: ''
 		}, function(err, result, code) {
