@@ -17,11 +17,11 @@
 
 grunticon is a [Grunt.js](https://github.com/cowboy/grunt/) task that makes it easy to manage icons and background images for all devices, preferring HD (retina) SVG icons but also provides fallback support for standard definition browsers, and old browsers alike. From a CSS perspective, it's easy to use, as it generates a class referencing each icon, and doesn't use CSS sprites. 
 
-grunticon takes a [folder of SVG files](https://github.com/filamentgroup/grunticon/tree/master/example/source) (typically, icons that you've drawn in an application like Adobe Illustrator), and [outputs them](https://github.com/filamentgroup/grunticon/tree/master/example/output) to CSS in 3 formats: [svg data urls](https://github.com/filamentgroup/grunticon/blob/master/example/output/icons.data.svg.css), [png data urls](https://github.com/filamentgroup/grunticon/blob/master/example/output/icons.data.png.css), and [a third fallback CSS file with references to regular png images](https://github.com/filamentgroup/grunticon/blob/master/example/output/icons.data.png.css), which are also automatically [generated and placed in a folder](https://github.com/filamentgroup/grunticon/tree/master/example/output/png). 
+grunticon takes a [folder of SVG files](https://github.com/filamentgroup/grunticon/tree/master/example/source) (typically, icons that you've drawn in an application like Adobe Illustrator), and [outputs them](https://github.com/filamentgroup/grunticon/tree/master/example/output) to CSS in 3 formats: [svg data urls](https://github.com/filamentgroup/grunticon/blob/master/example/output/icons.data.svg.css), [png data urls](https://github.com/filamentgroup/grunticon/blob/master/example/output/icons.data.png.css), and [a third fallback CSS file with references to regular png images](https://github.com/filamentgroup/grunticon/blob/master/example/output/icons.fallback.css), which are also automatically [generated and placed in a folder](https://github.com/filamentgroup/grunticon/tree/master/example/output/png). 
 
 grunticon also generates [a small bit of JavaScript and CSS](https://github.com/filamentgroup/grunticon/blob/master/example/output/grunticon.loader.txt) to drop into your site, which asynchronously loads the appropriate icon CSS depending on a browser's capabilities, and a preview HTML file with that loader script in place. 
 
-You can see [a demonstration of the output here](http://filamentgroup.com/examples/grunticon-output/preview.html).
+You can see [a demonstration of the output here](http://filamentgroup.github.com/grunticon/example/output/preview.html).
 
 ## License
 Copyright (c) 2012 Scott Jehl, [Filament Group, Inc.](http://filamentgroup.com)
@@ -35,13 +35,13 @@ Once those are installed...
 
 Install the grunticon module with: `npm install grunt-grunticon`
 
-Then add this line to your project's `grunt.js` gruntfile:
+Then add this line to your project's `Gruntfile.js` gruntfile:
 
 ```javascript
 grunt.loadNpmTasks('grunt-grunticon');
 ```
 
-And lastly, add the configuration settings to your `grunt.js` file as mentioned below. grunticon will batch your icons whenever you run `$ grunt`, and output the files listed above to your `dest` folder, which is documented below.
+And lastly, add the configuration settings to your `Gruntfile.js` file as mentioned below. grunticon will batch your icons whenever you run `$ grunt`, and output the files listed above to your `dest` folder, which is documented below.
 
 
 ## Documentation
@@ -50,16 +50,18 @@ And lastly, add the configuration settings to your `grunt.js` file as mentioned 
 
 grunticon has 2 required configuration properties: `src` and `dest`. Both need to be defined for grunticon to run.
 
-- `src`: path to your folder of svg files, relative to the grunt.js file. Perhaps something like `images/icons-source/`.
-- `dest`: path to the folder that grunticon will write to, relative to the grunt.js file. Ideally, this would be a folder that does not yet exist in your directory. Perhaps something like `css/icons-dist/`.
+- `src`: path to your folder of svg files, relative to the Gruntfile.js file. Perhaps something like `images/icons-source/`.
+- `dest`: path to the folder that grunticon will write to, relative to the Gruntfile.js file. Ideally, this would be a folder that does not yet exist in your directory. Perhaps something like `css/icons-dist/`.
 
-These can be set in your grunt.js config file, under the name `grunticon`, like so:
+These can be set in your Gruntfile.js config file, under the name `grunticon`, like so:
 
 ```
 	grunticon: {
+		options: {
       src: "css/dist/icons/",
       dest: "css/icons/"
     }
+	}
 ```
 
 The `src` property refers to the directory in which your SVG icons are stored. The `dest` property refers to the directory you'd like grunticon to create, which will contain your output files. 
@@ -83,10 +85,11 @@ In addition to the required configuration properties above, grunticon's grunt co
 - `loadersnippet`:  The name of the generated text file containing the grunticon loading snippet. Default: `"grunticon.loader.txt"`
 - `pngfolder`:  The name of the generated folder containing the generated PNG images. Default: `"png/"`
 - `cssprefix`: a string to prefix all css classes with. Default: `"icon-"`
+- `customselectors`: Allows you to specify custom selectors (in addition to the generated `cssprefix + filename - extension` class) for individual files. 
 
 ## Notable forks
 
-- Interested in a version of Grunticon that incorporates SASS to give you tighter control over your icons' CSS selectors? Check out @zigotica's [Fork of Grunticon](https://github.com/zigotica/unicon/) that does just that!
+- Interested in a version of Grunticon that incorporates SASS to give you tighter control over your icons' CSS selectors? Check out @zigotica's [Fork of Grunticon](https://github.com/zigotica/grunticon/) that does just that!
 
 
 ## Browser testing results for icon output

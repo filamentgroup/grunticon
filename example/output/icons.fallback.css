@@ -1,35 +1,43 @@
-.icon-wee-arrow-11 { background-image: url(png/arrow-11.png); background-repeat: no-repeat; }
+.icon-arrow-11 { background-image: url(png/arrow-11.png); background-repeat: no-repeat; }
 
-.icon-wee-arrow-tiny { background-image: url(png/arrow-tiny.png); background-repeat: no-repeat; }
+.icon-arrow-tiny { background-image: url(png/arrow-tiny.png); background-repeat: no-repeat; }
 
-.icon-wee-bear { background-image: url(png/bear.png); background-repeat: no-repeat; }
+.icon-bear { background-image: url(png/bear.png); background-repeat: no-repeat; }
 
-.icon-wee-cat { background-image: url(png/cat.png); background-repeat: no-repeat; }
+.icon-cat,
+#el-gato { background-image: url(png/cat.png); background-repeat: no-repeat; }
 
-.icon-wee-gear { background-image: url(png/gear.png); background-repeat: no-repeat; }
+.icon-flag { background-image: url(png/flag.png); background-repeat: no-repeat; }
 
-.icon-wee-gradients-flat-opacity { background-image: url(png/gradients-flat-opacity.png); background-repeat: no-repeat; }
+.icon-gear { background-image: url(png/gear.png); background-repeat: no-repeat; }
 
-.icon-wee-gradients { background-image: url(png/gradients.png); background-repeat: no-repeat; }
+.icon-gradients-flat-opacity { background-image: url(png/gradients-flat-opacity.png); background-repeat: no-repeat; }
 
-.icon-wee-grunticon { background-image: url(png/grunticon.png); background-repeat: no-repeat; }
+.icon-gradients { background-image: url(png/gradients.png); background-repeat: no-repeat; }
 
-.icon-wee-Home_Media { background-image: url(png/Home_Media.png); background-repeat: no-repeat; }
+.icon-grunticon { background-image: url(png/grunticon.png); background-repeat: no-repeat; }
 
-.icon-wee-Image_Exchange { background-image: url(png/Image_Exchange.png); background-repeat: no-repeat; }
+.icon-gummy-bears-1 { background-image: url(png/gummy-bears-1.png); background-repeat: no-repeat; }
 
-.icon-wee-Internet { background-image: url(png/Internet.png); background-repeat: no-repeat; }
+.icon-gummy-bears-2,
+nav li a.deadly-bears:before { background-image: url(png/gummy-bears-2.png); background-repeat: no-repeat; }
 
-.icon-wee-Internet_FP2 { background-image: url(png/Internet_FP2.png); background-repeat: no-repeat; }
+.icon-Home_Media { background-image: url(png/Home_Media.png); background-repeat: no-repeat; }
 
-.icon-wee-Internet_Radio { background-image: url(png/Internet_Radio.png); background-repeat: no-repeat; }
+.icon-Image_Exchange { background-image: url(png/Image_Exchange.png); background-repeat: no-repeat; }
 
-.icon-wee-Internet_Tel { background-image: url(png/Internet_Tel.png); background-repeat: no-repeat; }
+.icon-Internet { background-image: url(png/Internet.png); background-repeat: no-repeat; }
 
-.icon-wee-Intranet { background-image: url(png/Intranet.png); background-repeat: no-repeat; }
+.icon-Internet_FP2 { background-image: url(png/Internet_FP2.png); background-repeat: no-repeat; }
 
-.icon-wee-map { background-image: url(png/map.png); background-repeat: no-repeat; }
+.icon-Internet_Radio { background-image: url(png/Internet_Radio.png); background-repeat: no-repeat; }
 
-.icon-wee-plus { background-image: url(png/plus.png); background-repeat: no-repeat; }
+.icon-Internet_Tel { background-image: url(png/Internet_Tel.png); background-repeat: no-repeat; }
 
-.icon-wee-star { background-image: url(png/star.png); background-repeat: no-repeat; }
+.icon-Intranet { background-image: url(png/Intranet.png); background-repeat: no-repeat; }
+
+.icon-map { background-image: url(png/map.png); background-repeat: no-repeat; }
+
+.icon-plus { background-image: url(png/plus.png); background-repeat: no-repeat; }
+
+.icon-star { background-image: url(png/star.png); background-repeat: no-repeat; }

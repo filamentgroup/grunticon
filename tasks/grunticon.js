@@ -6,96 +6,119 @@
  * Licensed under the MIT license.
  */
 
-module.exports = function(grunt ) {
+/*global __dirname:true*/
+/*global require:true*/
 
-  grunt.registerTask( 'grunticon', 'A mystical CSS icon solution.', function() {
+module.exports = function( grunt , undefined ) {
+	"use strict";
 
-    // just a quick starting message
-    grunt.log.write( "Look, it's a grunticon!\n" );
+	var uglify = require( 'uglify-js' );
 
-    // get the config
-    var config = grunt.config.get( "grunticon" );
+	grunt.registerMultiTask( 'grunticon', 'A mystical CSS icon solution.', function() {
+		var done = this.async();
 
-    // fail if config or no src or dest config
-    if( !config || config.src === undefined || config.dest === undefined ){
-      grunt.fatal( "Oops! Please provide grunticon configuration for src and dest in your grunt.js file" );
-      return;
-    }
+		// just a quick starting message
+		grunt.log.write( "Look, it's a grunticon!\n" );
 
-    // make sure src and dest have / at the end
-    if( !config.src.match( /\/$/ ) ){
-        config.src += "/";
-    }
-    if( !config.dest.match( /\/$/ ) ){
-        config.dest += "/";
-    }
+		// get the config
+		var config = this.options();
 
-    var asyncCSS = grunt.task.getFile( "grunticon/static/grunticon.loader.js" );
-    var asyncCSSBanner = grunt.task.getFile( "grunticon/static/grunticon.loader.banner.js" );
-    var previewHTMLsrc = grunt.task.getFile( "grunticon/static/preview.html" );
+		config.files = {
+			loader: __dirname + "/grunticon/static/grunticon.loader.js",
+			banner: __dirname + "/grunticon/static/grunticon.loader.banner.js",
+			preview: __dirname + "/grunticon/static/preview.html",
+			phantom: __dirname + "/grunticon/phantom.js"
+		};
+		// fail if config or no src or dest config
+		if( !config || config.src === undefined || config.dest === undefined ){
+			grunt.fatal( "Oops! Please provide grunticon configuration for src and dest in your grunt.js file" );
+			return;
+		}
 
-    // CSS filenames with optional mixin from config
-    var datasvgcss = grunt.config.datasvgcss || "icons.data.svg.css";
-    var datapngcss = grunt.config.datapngcss || "icons.data.png.css";
-    var urlpngcss = grunt.config.urlpngcss || "icons.fallback.css";
+		// make sure src and dest have / at the end
+		if( !config.src.match( /\/$/ ) ){
+				config.src += "/";
+		}
+		if( !config.dest.match( /\/$/ ) ){
+				config.dest += "/";
+		}
 
-    //filename for generated output preview HTML file
-    var previewhtml = config.previewhtml || "preview.html";
+		var asyncCSS = config.files.loader;
+		var asyncCSSBanner = config.files.banner;
+		var previewHTMLsrc = config.files.preview;
 
-    //filename for generated loader HTML snippet file
-    var loadersnippet = config.loadersnippet || "grunticon.loader.txt";
+		// CSS filenames with optional mixin from config
+		var datasvgcss = config.datasvgcss || "icons.data.svg.css";
+		var datapngcss = config.datapngcss || "icons.data.png.css";
+		var urlpngcss = config.urlpngcss || "icons.fallback.css";
 
-    // css references base path for the loader
-    var cssbasepath = config.cssbasepath || "/";
+		//filename for generated output preview HTML file
+		var previewhtml = config.previewhtml || "preview.html";
 
-    // folder name (within the output folder) for generated png files
-    var pngfolder = config.pngfolder || "png/";
-    // make sure pngfolder has / at the end
-    if( !pngfolder.match( /\/$/ ) ){
-        pngfolder += "/";
-    }
+		//filename for generated loader HTML snippet file
+		var loadersnippet = config.loadersnippet || "grunticon.loader.txt";
 
-    // css class prefix
-    var cssprefix = config.cssprefix || "icon";
-    
-    // create the output directory
-    grunt.file.mkdir( config.dest );
+		// css references base path for the loader
+		var cssbasepath = config.cssbasepath || "/";
 
-    // create the output icons directory
-    grunt.file.mkdir( config.dest + pngfolder );
+		var customselectors = JSON.stringify( config.customselectors ) || "{}";
 
-    // minify the source of the grunticon loader and write that to the output
-    grunt.log.write( "\ngrunticon now minifying the stylesheet loader source." );
-    var asyncsrc = grunt.file.read( asyncCSS );
-    var banner = grunt.file.read( asyncCSSBanner );
-    var min = banner + "\n" + grunt.helper('uglify', asyncsrc );
-    var loaderCodeDest = config.dest + loadersnippet;
-    grunt.file.write( loaderCodeDest, min );
-    grunt.log.write( "\ngrunticon loader file created." );
+		// folder name (within the output folder) for generated png files
+		var pngfolder = config.pngfolder || "png/";
+		// make sure pngfolder has / at the end
+		if( !pngfolder.match( /\/$/ ) ){
+				pngfolder += "/";
+		}
 
-    // take it to phantomjs to do the rest
-    grunt.log.write( "\ngrunticon now spawning phantomjs..." );
+		// css class prefix
+		var cssprefix = config.cssprefix;
+		if( cssprefix === undefined ){
+			cssprefix = "icon-";
+		}
 
-    grunt.utils.spawn({
-      cmd: 'phantomjs',
-      args: [
-        grunt.task.getFile('grunticon/phantom.js'),
-        config.src,
-        config.dest,
-        loaderCodeDest,
-        previewHTMLsrc,
-        datasvgcss,
-        datapngcss,
-        urlpngcss,
-        previewhtml,
-        pngfolder,
-        cssprefix,
-        cssbasepath
-      ],
-      fallback: ''
-    }, function(err, result, code) {
-      // TODO boost this up a bit.
-      grunt.log.write("\nSomething went wrong with phantomjs...");
-    });
-  });
+		// create the output directory
+		grunt.file.mkdir( config.dest );
+
+		// create the output icons directory
+		grunt.file.mkdir( config.dest + pngfolder );
+
+		// minify the source of the grunticon loader and write that to the output
+		grunt.log.write( "\ngrunticon now minifying the stylesheet loader source." );
+		var banner = grunt.file.read( asyncCSSBanner );
+		var min = banner + "\n" + uglify.minify( asyncCSS ).code;
+		var loaderCodeDest = config.dest + loadersnippet;
+		grunt.file.write( loaderCodeDest, min );
+		grunt.log.write( "\ngrunticon loader file created." );
+
+		// take it to phantomjs to do the rest
+		grunt.log.write( "\ngrunticon now spawning phantomjs..." );
+
+		grunt.util.spawn({
+			cmd: 'phantomjs',
+			args: [
+				config.files.phantom,
+				config.src,
+				config.dest,
+				loaderCodeDest,
+				previewHTMLsrc,
+				datasvgcss,
+				datapngcss,
+				urlpngcss,
+				previewhtml,
+				pngfolder,
+				cssprefix,
+				cssbasepath,
+				customselectors
+			],
+			fallback: ''
+		}, function(err, result, code) {
+			// TODO boost this up a bit.
+			if( err ){
+				grunt.log.write("\nSomething went wrong with phantomjs...");
+				grunt.log.write( result.stderr );
+			}
+				grunt.log.write( result.stdout );
+			done();
+		});
+	});
 };
