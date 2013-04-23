@@ -53,18 +53,20 @@ grunticon has 2 required configuration properties: `src` and `dest`. Both need t
 - `src`: path to your folder of svg files, relative to the Gruntfile.js file. Perhaps something like `images/icons-source/`.
 - `dest`: path to the folder that grunticon will write to, relative to the Gruntfile.js file. Ideally, this would be a folder that does not yet exist in your directory. Perhaps something like `css/icons-dist/`.
 
-These can be set in your Gruntfile.js config file, under the name `grunticon`, like so:
+These can be set in your Gruntfile.js config file. Grunticon is a multitask, making it easy to create as many export batches as you'd like. Just create one or more custom named objects within the `grunticon` object, and configure Grunticon `options` within it, like so:
 
 ```
 	grunticon: {
-		options: {
-      src: "css/dist/icons/",
-      dest: "css/icons/"
+    myIcons: {
+  		options: {
+        src: "css/dist/icons/",
+        dest: "css/icons/"
+      }
     }
 	}
 ```
 
-The `src` property refers to the directory in which your SVG icons are stored. The `dest` property refers to the directory you'd like grunticon to create, which will contain your output files. 
+Within the `options` object, the `src` property refers to the directory in which your SVG icons are stored. The `dest` property refers to the directory you'd like grunticon to create, which will contain your output files. 
 
 **IMPORTANT NOTE:** grunticon will overwrite any files in the `dest` directory if they are of the same name as a file that grunticon needs to create. For easiest results, you can set `dest` to a folder that does not yet exist in your directory and grunticon will create that folder, or set it to an existing folder and be sure to configure grunticon to create file names that do not already exist in that folder.
 
