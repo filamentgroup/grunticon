@@ -92,8 +92,8 @@ module.exports = function( grunt , undefined ) {
 
 		// take it to phantomjs to do the rest
 		grunt.log.write( "\ngrunticon now spawning phantomjs..." );
-        var phantomJsPath = require('phantomjs').path;
-        grunt.log.write('(using path: ' + phantomJsPath + ')');
+		var phantomJsPath = require('phantomjs').path;
+		grunt.log.write('(using path: ' + phantomJsPath + ')');
 
 		grunt.util.spawn({
 			cmd: phantomJsPath,
