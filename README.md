@@ -29,9 +29,7 @@ Licensed under the MIT license.
 
 ## Getting Started
 
-First, you'll need to have [Grunt](https://github.com/cowboy/grunt) installed.
-
-Once those are installed...
+You'll need to have [Grunt](https://github.com/cowboy/grunt) installed.
 
 Install the grunticon module with: `npm install grunt-grunticon`
 
