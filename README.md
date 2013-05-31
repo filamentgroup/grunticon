@@ -94,7 +94,7 @@ In addition to the required configuration properties above, grunticon's grunt co
 
 ## Browser testing results for icon output
 
-The generated asynchronous CSS loader script delivers an appropriate icon stylesheet depending on a device/browser's capabilities.
+The generated asynchronous CSS loader script delivers an appropriate icon stylesheet depending on a device/browser's capabilities. Grunticon is supported in cases where icon fonts fail.
 
 Browsers that render the SVG data url stylesheet:
 - IE9
@@ -119,6 +119,10 @@ Browsers that receive the fallback png request:
 - IE7
 - IE6
 - Non-JavaScript environments
+
+View the full support spreadsheet [here](https://docs.google.com/spreadsheet/ccc?key=0Ag5_yGvxpINRdHFYeUJPNnZMWUZKR2ItMEpRTXZPdUE#gid=0). Feel free to edit it if you find anything new.
+
+The test page can be found [here](http://filamentgroup.com/examples/grunticon-icon-test/).
 
 ## Tips
 
