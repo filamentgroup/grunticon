@@ -43,7 +43,9 @@ phantom args sent from grunticon.js:
 		asyncCSSpath: phantom.args[2],
 		previewFilePath: phantom.args[3],
 		previewHTMLFilePath: phantom.args[7],
-		customselectors: phantom.args[11]
+		customselectors: phantom.args[11],
+		defaultWidth: phantom.args[12],
+		defaultHeight: phantom.args[13]
 	};
 
 	var files = fs.list( options.inputdir );

@@ -39,6 +39,9 @@ module.exports = function(grunt) {
 					// prefix for CSS classnames
 					cssprefix: "icon-",
 
+					defaultWidth: "300px",
+					defaultHeight: "200px",
+
 					// css file path prefix - this defaults to "/" and will be placed before the "dest" path when stylesheets are loaded.
 					// This allows root-relative referencing of the CSS. If you don't want a prefix path, set to to ""
 					cssbasepath: "/",

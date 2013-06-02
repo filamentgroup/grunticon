@@ -76,6 +76,16 @@ module.exports = function( grunt , undefined ) {
 			cssprefix = "icon-";
 		}
 
+
+		var width = config.defaultWidth;
+		if( !width ){
+			width = "400px";
+		}
+		var height = config.defaultHeight;
+		if( !height ){
+			height = "300px";
+		}
+
 		// create the output directory
 		grunt.file.mkdir( config.dest );
 
@@ -110,7 +120,9 @@ module.exports = function( grunt , undefined ) {
 				pngfolder,
 				cssprefix,
 				cssbasepath,
-				customselectors
+				customselectors,
+				width,
+				height
 			],
 			fallback: ''
 		}, function(err, result, code) {
