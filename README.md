@@ -92,11 +92,6 @@ Example: `defaultWidth: "300px";` Default: `"400px"`
 - `defaultHeight`: similar to defaultWidth, but for height
 Example: `defaultHeight: "200px";` Default: `"300px"`
 
-## Notable forks
-
-- Interested in a version of Grunticon that incorporates SASS to give you tighter control over your icons' CSS selectors? Check out @zigotica's [Fork of Grunticon](https://github.com/zigotica/grunticon/) that does just that!
-
-
 ## Browser testing results for icon output
 
 The generated asynchronous CSS loader script delivers an appropriate icon stylesheet depending on a device/browser's capabilities. Grunticon is supported in cases where icon fonts fail.
