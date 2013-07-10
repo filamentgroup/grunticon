@@ -7,6 +7,8 @@
 .icon-cat,
 #el-gato { background-image: url(png/cat.png); background-repeat: no-repeat; }
 
+.icon-fishing-hook { background-image: url(png/fishing-hook.png); background-repeat: no-repeat; }
+
 .icon-flag { background-image: url(png/flag.png); background-repeat: no-repeat; }
 
 .icon-gear { background-image: url(png/gear.png); background-repeat: no-repeat; }
