@@ -2,7 +2,11 @@
 
 .icon-arrow-tiny { background-image: url(png/arrow-tiny.png); background-repeat: no-repeat; }
 
-.icon-bear { background-image: url(png/bear.png); background-repeat: no-repeat; }
+.icon-bear-1 { background-image: url(png/bear-1.png); background-repeat: no-repeat; }
+
+.icon-bear-2 { background-image: url(png/bear-2.png); background-repeat: no-repeat; }
+
+.icon-bear-3 { background-image: url(png/bear-3.png); background-repeat: no-repeat; }
 
 .icon-cat,
 #el-gato { background-image: url(png/cat.png); background-repeat: no-repeat; }

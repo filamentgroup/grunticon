@@ -51,6 +51,30 @@ phantom args sent from grunticon.js:
 	var files = fs.list( options.inputdir );
 	var promises = [];
 
+	// get colors from filename, if present
+	var colorsRegx = /\.colors\-([^\.]+)/i;
+	var tempFiles = [];
+
+	var getColorConfig = function( str ){
+		var colors = str.match( colorsRegx );
+		if( colors ){
+			return colors[ 1 ].split( "-" );
+		}
+		else {
+			return [];
+		}
+	}; //getColorConfig
+
+	var deleteTempFiles = function(){
+		tempFiles.forEach( function( file ){
+			fs.remove( file );
+		});
+	};
+
+
+
+
+
 	files = files.filter( function( file ){
 		var svgRegex = /\.svg$/i,
 			pngRegex = /\.png$/i,
@@ -61,11 +85,33 @@ phantom args sent from grunticon.js:
 	});
 
 	files.forEach( function( file ){
-		promises.push( grunticoner.processFile( file , options ) );
+		var colorConfig = getColorConfig( file );
+
+		if( colorConfig.length ){
+			var fileContents = fs.read( options.inputdir + "/" + file );
+
+			colorConfig.forEach( function( color, i ){
+				var newFileName = file.replace( colorsRegx, "-" + ( i + 1 ) ) ,
+					newFileContents = fileContents.replace( "<svg", '<svg fill="' + color + '" ' ),
+					newFilePath = options.inputdir + "/" + newFileName;
+
+				tempFiles.push( newFilePath );
+
+				fs.write( newFilePath, newFileContents, 'w' );
+
+				promises.push( grunticoner.processFile( newFileName , options ) );
+			});
+		}
+		else{
+			promises.push( grunticoner.processFile( file , options ) );
+		}
 	});
+
+
 
 	RSVP.all( promises ).then( function( dataarr ){
 		grunticoner.writeCSS( dataarr , options );
+		deleteTempFiles();
 		phantom.exit();
 	});
 })();
