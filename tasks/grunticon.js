@@ -86,6 +86,9 @@ module.exports = function( grunt , undefined ) {
 			height = "300px";
 		}
 
+		// get color variables from config
+		var colors = JSON.stringify( config.colors || {} );
+
 		// create the output directory
 		grunt.file.mkdir( config.dest );
 
@@ -122,7 +125,8 @@ module.exports = function( grunt , undefined ) {
 				cssbasepath,
 				customselectors,
 				width,
-				height
+				height,
+				colors
 			],
 			fallback: ''
 		}, function(err, result, code) {

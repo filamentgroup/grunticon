@@ -45,7 +45,8 @@ phantom args sent from grunticon.js:
 		previewHTMLFilePath: phantom.args[7],
 		customselectors: phantom.args[11],
 		defaultWidth: phantom.args[12],
-		defaultHeight: phantom.args[13]
+		defaultHeight: phantom.args[13],
+		colors: phantom.args[14]
 	};
 
 	var files = fs.list( options.inputdir );
@@ -76,6 +77,8 @@ phantom args sent from grunticon.js:
 		return /^[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test( val );
 	};
 
+	var colors = JSON.parse( options.colors );
+
 	var deleteTempFiles = function(){
 		tempFiles.forEach( function( file ){
 			fs.remove( file );
@@ -102,8 +105,9 @@ phantom args sent from grunticon.js:
 			var fileContents = fs.read( options.inputdir + "/" + file );
 
 			colorConfig.forEach( function( color, i ){
-				var newFileName = file.replace( colorsRegx, "-" + ( i + 1 ) ) ,
-					newFileContents = fileContents.replace( "<svg", '<svg fill="' + color + '" ' ),
+				var colorVar = colors[ color ],
+					newFileName = file.replace( colorsRegx, "-" + ( colorVar ? color : i + 1 ) ) ,
+					newFileContents = fileContents.replace( "<svg", '<svg fill="' + colorVar + '" ' ),
 					newFilePath = options.inputdir + "/" + newFileName;
 
 				tempFiles.push( newFilePath );
