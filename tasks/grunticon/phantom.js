@@ -58,12 +58,23 @@ phantom args sent from grunticon.js:
 	var getColorConfig = function( str ){
 		var colors = str.match( colorsRegx );
 		if( colors ){
-			return colors[ 1 ].split( "-" );
+			colors = colors[ 1 ].split( "-" );
+			colors.forEach( function( color, i ){
+				if( isHex( color ) ){
+					colors[ i ] = "#" + color;
+				}
+			});
+			return colors;
 		}
 		else {
 			return [];
 		}
 	}; //getColorConfig
+
+	// test if value is a valid hex
+	var isHex = function( val ){
+		return /^[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test( val );
+	};
 
 	var deleteTempFiles = function(){
 		tempFiles.forEach( function( file ){
