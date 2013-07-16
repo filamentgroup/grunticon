@@ -4,6 +4,8 @@
 
 .icon-bear-primary { background-image: url(png/bear-primary.png); background-repeat: no-repeat; }
 
+.icon-bear { background-image: url(png/bear.png); background-repeat: no-repeat; }
+
 .icon-cat,
 #el-gato { background-image: url(png/cat.png); background-repeat: no-repeat; }
 

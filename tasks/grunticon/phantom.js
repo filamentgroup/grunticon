@@ -99,10 +99,17 @@ phantom args sent from grunticon.js:
 	});
 
 	files.forEach( function( file ){
-		var colorConfig = getColorConfig( file );
+		var colorConfig = getColorConfig( file ),
+			fileName = file;
 
 		if( colorConfig.length ){
-			var fileContents = fs.read( options.inputdir + "/" + file );
+			var fileContents = fs.read( options.inputdir + "/" + file ),
+				path = options.inputdir + "/";
+
+			// base file is used as default icon color - no qualifications in its name, tho.
+			fileName = file.replace( colorsRegx, "" );
+			tempFiles.push( path + fileName );
+			fs.write( path + fileName, fileContents, 'w' );
 
 			colorConfig.forEach( function( color, i ){
 				var colorVar = colors[ color ],
@@ -117,9 +124,10 @@ phantom args sent from grunticon.js:
 				promises.push( grunticoner.processFile( newFileName , options ) );
 			});
 		}
-		else{
-			promises.push( grunticoner.processFile( file , options ) );
-		}
+
+		// write the default too
+		promises.push( grunticoner.processFile( fileName, options ) );
+
 	});
 
 
