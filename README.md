@@ -91,6 +91,11 @@ In addition to the required configuration properties above, grunticon's grunt co
 Example: `defaultWidth: "300px";` Default: `"400px"`
 - `defaultHeight`: similar to defaultWidth, but for height
 Example: `defaultHeight: "200px";` Default: `"300px"`
+- `colors`: Allows you to predefine colors as variables that can be used in filename color configuration.
+
+#### Automating color variations
+
+Grunticon allows you to output any icon in different colors simply by changing its filename to the following syntax: `myfile.colors-red-aa0000-gray.svg`. In this example, any color names or hexidecimal values that follow `colors-` and are separated by a dash will be used to generate additional icons of that color. By default, each icon will be assigned a numbered class name for CSS use. You can improve the class naming conventions by defining color variables in your gruntfile's `colors` option shown above. When defined, you can reference a color variable in place of a color in your file names, and the generated classes will use that variable name as well. See the `gruntfile.js`'s `colors` option and the sample bear svg for an example of color automation.
 
 ## Browser testing results for icon output
 
