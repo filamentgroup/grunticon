@@ -95,7 +95,9 @@ Example: `defaultHeight: "200px";` Default: `"300px"`
 
 #### Automating color variations
 
-Grunticon allows you to output any icon in different colors simply by changing its filename to the following syntax: `myfile.colors-red-aa0000-gray.svg`. In this example, any color names or hexidecimal values that follow `colors-` and are separated by a dash will be used to generate additional icons of that color. By default, each icon will be assigned a numbered class name for CSS use. You can improve the class naming conventions by defining color variables in your gruntfile's `colors` option shown above. When defined, you can reference a color variable in place of a color in your file names, and the generated classes will use that variable name as well. See the `gruntfile.js`'s `colors` option and the sample bear svg for an example of color automation.
+Grunticon allows you to output any icon in different colors simply by changing its filename to the following syntax: `myfilename.colors-red-aa0000-gray.svg`. In this example, any color names or hexidecimal values that follow `colors-` and are separated by a dash will be used to generate additional icons of that color. By default, each icon will be assigned a numbered class name for CSS use. You can improve the class naming conventions by defining color variables in your gruntfile's `colors` option shown above. When defined, you can reference a color variable in place of a color in your file names, and the generated classes will use that variable name as well. See the `gruntfile.js`'s `colors` option and the sample bear svg for an example of color automation.
+
+*A note on filesize impact:* Adding color variations of an icon involves creating duplicates of that icon's SVG source in the CSS, so unfortunately, each color variation will cause an increase in filesize. However, transferring CSS with gzip compression can negate much of this filesize increase, and we highly recommend always transferring with gzip. In testing, we found that creating a color variation of every icon in our example set increased overall size by 25%, rather than 100% as a raw text duplicate would increase. That said, size increases for non-SVG-supporting browsers will be more dramatic, as the fallback PNGs will not have the heavy transfer compression as SVG enjoys. We advise using this feature on a case-by-case basis to ensure overhead is kept to a minimum.
 
 ## Browser testing results for icon output
 
@@ -106,7 +108,7 @@ Browsers that render the SVG data url stylesheet:
 - Chrome 14+ (maybe older too?)
 - Safari 4+ (maybe older too?)
 - Firefox 3.6+ (maybe older too?)
-- Opera 10+ (maybe older too?)
+- Opera 15+ 
 - iOS 3+ Safari and Chrome
 - Android 4.0 Chrome (caveat: SVG icons do not scale in vector, but do appear to draw in high-resolution)
 - Android 4.0 ICS Browser
@@ -114,6 +116,7 @@ Browsers that render the SVG data url stylesheet:
 
 Browsers that receive the PNG data url stylesheet:
 - IE8
+- All versions of Opera, Opera Mini, and Opera Mobile before Chrome integration (v 15)
 - Android 2.3 Browser
 - Android 2.2 Browser
 - Android 2.1 Browser
@@ -132,7 +135,7 @@ The test page can be found [here](http://filamentgroup.com/examples/grunticon-ic
 ## Tips
 
 ### Serving compressed CSS
-One of the great benefits to data uris is the ability to compress the images heavily via gzip. Be sure to do this, as it'll cut your icon transfer size greatly.
+One of the great benefits to data uris is the ability to compress the images heavily via gzip compression. Be sure to enable gzip of CSS on your server, as it'll cut your icon transfer size greatly.
 
 ### Creating SVG Artwork
 
