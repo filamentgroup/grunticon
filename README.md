@@ -29,9 +29,7 @@ Licensed under the MIT license.
 
 ## Getting Started
 
-First, you'll need to install [PhantomJS](http://phantomjs.org/), which you might already have if you have [Grunt](https://github.com/cowboy/grunt) installed (No? You'll need that too.).
-
-Once those are installed...
+You'll need to have [Grunt](https://github.com/cowboy/grunt) installed.
 
 Install the grunticon module with: `npm install grunt-grunticon`
 
@@ -53,18 +51,20 @@ grunticon has 2 required configuration properties: `src` and `dest`. Both need t
 - `src`: path to your folder of svg files, relative to the Gruntfile.js file. Perhaps something like `images/icons-source/`.
 - `dest`: path to the folder that grunticon will write to, relative to the Gruntfile.js file. Ideally, this would be a folder that does not yet exist in your directory. Perhaps something like `css/icons-dist/`.
 
-These can be set in your Gruntfile.js config file, under the name `grunticon`, like so:
+These can be set in your Gruntfile.js config file. Grunticon is a multitask, making it easy to create as many export batches as you'd like. Just create one or more custom named objects within the `grunticon` object, and configure Grunticon `options` within it, like so:
 
 ```
 	grunticon: {
-		options: {
-      src: "css/dist/icons/",
-      dest: "css/icons/"
+    myIcons: {
+  		options: {
+        src: "css/dist/icons/",
+        dest: "css/icons/"
+      }
     }
 	}
 ```
 
-The `src` property refers to the directory in which your SVG icons are stored. The `dest` property refers to the directory you'd like grunticon to create, which will contain your output files. 
+Within the `options` object, the `src` property refers to the directory in which your SVG icons are stored. The `dest` property refers to the directory you'd like grunticon to create, which will contain your output files. 
 
 **IMPORTANT NOTE:** grunticon will overwrite any files in the `dest` directory if they are of the same name as a file that grunticon needs to create. For easiest results, you can set `dest` to a folder that does not yet exist in your directory and grunticon will create that folder, or set it to an existing folder and be sure to configure grunticon to create file names that do not already exist in that folder.
 
@@ -86,15 +86,20 @@ In addition to the required configuration properties above, grunticon's grunt co
 - `pngfolder`:  The name of the generated folder containing the generated PNG images. Default: `"png/"`
 - `cssprefix`: a string to prefix all css classes with. Default: `"icon-"`
 - `customselectors`: Allows you to specify custom selectors (in addition to the generated `cssprefix + filename - extension` class) for individual files. 
+- `defaultWidth`: a string that MUST be defined in px that will be the
+  size of the PNG if there is no width given in the SVG element.
+Example: `defaultWidth: "300px";` Default: `"400px"`
+- `defaultHeight`: similar to defaultWidth, but for height
+Example: `defaultHeight: "200px";` Default: `"300px"`
+- `colors`: Allows you to predefine colors as variables that can be used in filename color configuration.
 
-## Notable forks
+#### Automating color variations
 
-- Interested in a version of Grunticon that incorporates SASS to give you tighter control over your icons' CSS selectors? Check out @zigotica's [Fork of Grunticon](https://github.com/zigotica/grunticon/) that does just that!
-
+Grunticon allows you to output any icon in different colors simply by changing its filename to the following syntax: `myfile.colors-red-aa0000-gray.svg`. In this example, any color names or hexidecimal values that follow `colors-` and are separated by a dash will be used to generate additional icons of that color. By default, each icon will be assigned a numbered class name for CSS use. You can improve the class naming conventions by defining color variables in your gruntfile's `colors` option shown above. When defined, you can reference a color variable in place of a color in your file names, and the generated classes will use that variable name as well. See the `gruntfile.js`'s `colors` option and the sample bear svg for an example of color automation.
 
 ## Browser testing results for icon output
 
-The generated asynchronous CSS loader script delivers an appropriate icon stylesheet depending on a device/browser's capabilities.
+The generated asynchronous CSS loader script delivers an appropriate icon stylesheet depending on a device/browser's capabilities. Grunticon is supported in cases where icon fonts fail.
 
 Browsers that render the SVG data url stylesheet:
 - IE9
@@ -119,6 +124,10 @@ Browsers that receive the fallback png request:
 - IE7
 - IE6
 - Non-JavaScript environments
+
+View the full support spreadsheet [here](https://docs.google.com/spreadsheet/ccc?key=0Ag5_yGvxpINRdHFYeUJPNnZMWUZKR2ItMEpRTXZPdUE#gid=0). Feel free to edit it if you find anything new.
+
+The test page can be found [here](http://filamentgroup.com/examples/grunticon-icon-test/).
 
 ## Tips
 

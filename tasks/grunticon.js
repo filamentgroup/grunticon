@@ -76,6 +76,19 @@ module.exports = function( grunt , undefined ) {
 			cssprefix = "icon-";
 		}
 
+
+		var width = config.defaultWidth;
+		if( !width ){
+			width = "400px";
+		}
+		var height = config.defaultHeight;
+		if( !height ){
+			height = "300px";
+		}
+
+		// get color variables from config
+		var colors = JSON.stringify( config.colors || {} );
+
 		// create the output directory
 		grunt.file.mkdir( config.dest );
 
@@ -92,9 +105,11 @@ module.exports = function( grunt , undefined ) {
 
 		// take it to phantomjs to do the rest
 		grunt.log.write( "\ngrunticon now spawning phantomjs..." );
+		var phantomJsPath = require('phantomjs').path;
+		grunt.log.write('(using path: ' + phantomJsPath + ')');
 
 		grunt.util.spawn({
-			cmd: 'phantomjs',
+			cmd: phantomJsPath,
 			args: [
 				config.files.phantom,
 				config.src,
@@ -108,7 +123,10 @@ module.exports = function( grunt , undefined ) {
 				pngfolder,
 				cssprefix,
 				cssbasepath,
-				customselectors
+				customselectors,
+				width,
+				height,
+				colors
 			],
 			fallback: ''
 		}, function(err, result, code) {

@@ -43,11 +43,51 @@ phantom args sent from grunticon.js:
 		asyncCSSpath: phantom.args[2],
 		previewFilePath: phantom.args[3],
 		previewHTMLFilePath: phantom.args[7],
-		customselectors: phantom.args[11]
+		customselectors: phantom.args[11],
+		defaultWidth: phantom.args[12],
+		defaultHeight: phantom.args[13],
+		colors: phantom.args[14]
 	};
 
 	var files = fs.list( options.inputdir );
 	var promises = [];
+
+	// get colors from filename, if present
+	var colorsRegx = /\.colors\-([^\.]+)/i;
+	var tempFiles = [];
+
+	var getColorConfig = function( str ){
+		var colors = str.match( colorsRegx );
+		if( colors ){
+			colors = colors[ 1 ].split( "-" );
+			colors.forEach( function( color, i ){
+				if( isHex( color ) ){
+					colors[ i ] = "#" + color;
+				}
+			});
+			return colors;
+		}
+		else {
+			return [];
+		}
+	}; //getColorConfig
+
+	// test if value is a valid hex
+	var isHex = function( val ){
+		return /^[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test( val );
+	};
+
+	var colors = JSON.parse( options.colors );
+
+	var deleteTempFiles = function(){
+		tempFiles.forEach( function( file ){
+			fs.remove( file );
+		});
+	};
+
+
+
+
 
 	files = files.filter( function( file ){
 		var svgRegex = /\.svg$/i,
@@ -59,11 +99,42 @@ phantom args sent from grunticon.js:
 	});
 
 	files.forEach( function( file ){
-		promises.push( grunticoner.processFile( file , options ) );
+		var colorConfig = getColorConfig( file ),
+			fileName = file;
+
+		if( colorConfig.length ){
+			var fileContents = fs.read( options.inputdir + "/" + file ),
+				path = options.inputdir + "/";
+
+			// base file is used as default icon color - no qualifications in its name, tho.
+			fileName = file.replace( colorsRegx, "" );
+			tempFiles.push( path + fileName );
+			fs.write( path + fileName, fileContents, 'w' );
+
+			colorConfig.forEach( function( color, i ){
+				var colorVar = colors[ color ],
+					newFileName = file.replace( colorsRegx, "-" + ( colorVar ? color : i + 1 ) ) ,
+					newFileContents = fileContents.replace( /(<svg[^>]+)/im, '$1><style type="text/css">path { fill: ' + (colorVar || color) + ' !important; }</style>' ),
+					newFilePath = options.inputdir + "/" + newFileName;
+
+				tempFiles.push( newFilePath );
+
+				fs.write( newFilePath, newFileContents, 'w' );
+
+				promises.push( grunticoner.processFile( newFileName , options ) );
+			});
+		}
+
+		// write the default too
+		promises.push( grunticoner.processFile( fileName, options ) );
+
 	});
+
+
 
 	RSVP.all( promises ).then( function( dataarr ){
 		grunticoner.writeCSS( dataarr , options );
+		deleteTempFiles();
 		phantom.exit();
 	});
 })();
