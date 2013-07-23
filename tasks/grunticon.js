@@ -44,10 +44,10 @@ module.exports = function( grunt , undefined ) {
 		return promise;
 	};
 
-	var optimize = function( file , data ){
+	var optimize = function( file , data , opt ){
 		var promise = new RSVP.Promise();
 		try{
-			if( file.match( /png/ ) ){
+			if( file.match( /png/ ) || !opt ){
 				promise.resolve( data );
 			} else {
 				svgo.optimize( data.toString() , function( result ){
@@ -178,7 +178,7 @@ module.exports = function( grunt , undefined ) {
 							grunt.fatal( err );
 							done( false );
 						}
-						return optimize( file , data );
+						return optimize( file , data , config.svgo );
 					})
 					.then( function( result , err ){
 						if( err ){

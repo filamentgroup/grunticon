@@ -21,6 +21,8 @@ module.exports = function(grunt) {
 					dest: "example/output/",
 
 					// optional grunticon config properties
+					// SVGO compression, true is the default, false will skip it
+					svgo: true,
 
 					// CSS filenames
 					datasvgcss: "icons.data.svg.css",
