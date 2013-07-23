@@ -172,7 +172,6 @@ In the Save SVG dialog that opens up, there are lots of options. SVG has a ton o
 - Version 0.2.1: Custom selectors feature added
 - Version 0.2.0: Compatibility rewrite for Grunt 0.4x
 - Version 0.1.6: Switched from base64 encoding to escaping raw SVG text in data uris. Fixes to cssprefix setting. If fallback png data uri is > 32768 chars, link to ext png instead for IE issues.
-- 
 
 
 ## Copyright and licensing for the example SVG icons...
