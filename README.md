@@ -163,6 +163,7 @@ In the Save SVG dialog that opens up, there are lots of options. SVG has a ton o
 
 ## Changelog
 
+- Version 0.5.0: Grunticon now comes with SVGO. This cleans up your SVGs, greatly reducing the size of your CSS file.
 - Version 0.4.1: Opera browsers prior to version 15 are given fallback PNG due to SVG scaling troubles.
 - Version 0.4.0: Automated filename-driven color variations were added, along with the `colors` option
 - Version 0.3.4: SVGs without width and height can be used
