@@ -24,9 +24,15 @@ phantom args sent from grunticon.js:
 	[9] - css classname prefix
 	[10] - css basepath prefix
 	[11] - custom CSS selectors
+	[12] - default width
+	[13] - default height
+	[14] - colors
+	[15] - if we should render files
+	[16] - if we should write CSS
 */
 
 (function(){
+	"use strict";
 	var fs = require( "fs" );
 	var RSVP = require('../../lib/rsvp');
 	var grunticoner = require('../../lib/grunticoner');
@@ -46,7 +52,9 @@ phantom args sent from grunticon.js:
 		customselectors: phantom.args[11],
 		defaultWidth: phantom.args[12],
 		defaultHeight: phantom.args[13],
-		colors: phantom.args[14]
+		colors: phantom.args[14],
+		render: phantom.args[15],
+		writeCSS: phantom.args[16]
 	};
 
 	var files = fs.list( options.inputdir );
@@ -55,6 +63,11 @@ phantom args sent from grunticon.js:
 	// get colors from filename, if present
 	var colorsRegx = /\.colors\-([^\.]+)/i;
 	var tempFiles = [];
+
+	// test if value is a valid hex
+	var isHex = function( val ){
+		return (/^[0-9a-f]{3}(?:[0-9a-f]{3})?$/i).test( val );
+	};
 
 	var getColorConfig = function( str ){
 		var colors = str.match( colorsRegx );
@@ -72,10 +85,6 @@ phantom args sent from grunticon.js:
 		}
 	}; //getColorConfig
 
-	// test if value is a valid hex
-	var isHex = function( val ){
-		return /^[0-9a-f]{3}(?:[0-9a-f]{3})?$/i.test( val );
-	};
 
 	var colors = JSON.parse( options.colors );
 
@@ -84,10 +93,6 @@ phantom args sent from grunticon.js:
 			fs.remove( file );
 		});
 	};
-
-
-
-
 
 	files = files.filter( function( file ){
 		var svgRegex = /\.svg$/i,
@@ -133,7 +138,9 @@ phantom args sent from grunticon.js:
 
 
 	RSVP.all( promises ).then( function( dataarr ){
-		grunticoner.writeCSS( dataarr , options );
+		if( options.writeCSS !== "false" ){
+			grunticoner.writeCSS( dataarr , options );
+		}
 		deleteTempFiles();
 		phantom.exit();
 	});
