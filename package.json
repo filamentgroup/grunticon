@@ -1,7 +1,7 @@
 {
 	"name": "grunt-grunticon",
 	"description": "A mystical CSS icon solution",
-	"version": "0.6.3",
+	"version": "0.6.5",
 	"homepage": "https://github.com/filamentgroup/grunticon",
 	"author": {
 		"name": "Scott Jehl",
@@ -34,8 +34,9 @@
 		"uglify-js": "~2.2.5",
 		"phantomjs": "1.9.1-0",
 		"svgo":"~0.3.7",
-		"pngcrush-installer": "1.7.66-10",
-		"fs-extra": "0.6.3"
+		"pngcrush-installer": "1.7.66-11",
+		"fs-extra": "0.6.3",
+		"xmldom": "0.1.16"
 	},
 	"keywords": [
 		"gruntplugin"
