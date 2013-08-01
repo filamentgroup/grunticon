@@ -39,7 +39,7 @@ module.exports = function(grunt) {
 					loadersnippet: "grunticon.loader.txt",
 
 					// folder name (within dest) for png output
-					pngfolder: "png/",
+					pngfolder: "png",
 
 					// prefix for CSS classnames
 					cssprefix: "icon-",

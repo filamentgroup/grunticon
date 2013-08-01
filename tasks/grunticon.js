@@ -133,7 +133,9 @@ module.exports = function( grunt , undefined ) {
 		var customselectors = JSON.stringify( config.customselectors ) || "{}";
 
 		// folder name (within the output folder) for generated png files
-		var pngfolder = config.pngfolder || "png" + path.sep;
+		var pngfolder = config.pngfolder || "png";
+		pngfolder = path.join.apply( null, pngfolder.split( path.sep ) );
+
 		// make sure pngfolder has / at the end
 		if( !pngfolder.match( path.sep + '$' ) ){
 				pngfolder += path.sep;
@@ -196,7 +198,7 @@ module.exports = function( grunt , undefined ) {
 							grunt.fatal( err );
 							done( false );
 						}
-						return writeFile( tmp + file , result );
+						return writeFile( path.join( tmp , file) , result );
 					})
 					.then( function( _null , err ){
 						if( err ){
@@ -272,13 +274,14 @@ module.exports = function( grunt , undefined ) {
 				grunt.log.write('(using path: ' + crushPath + ')');
 				var render = false;
 				var writeCSS = true;
+				var tmpPngfolder = path.join( tmp, pngfolder );
 
 				if( grunt.file.exists( path.join( config.dest , pngfolder ) ) ){
 					grunt.file.delete( path.join( config.dest, pngfolder ) );
 				}
 				crusher.crush({
-					input: tmp + pngfolder,
-					outputDir:  config.dest + pngfolder,
+					input: tmpPngfolder,
+					outputDir:  path.join( config.dest , pngfolder ),
 					crushPath: crushPath
 				}, function( stdout , stderr ){
 					grunt.verbose.write( stdout );
@@ -291,6 +294,7 @@ module.exports = function( grunt , undefined ) {
 							done( false );
 						} else {
 							grunt.log.write( result.stdout );
+							grunt.file.delete( tmpPngfolder );
 							grunt.file.delete( tmp );
 							done();
 						}
@@ -311,7 +315,7 @@ module.exports = function( grunt , undefined ) {
 			if( render && writeCSS ){
 				pngpath = pngfolder;
 			} else {
-				pngpath = path.join( "tmp", "png", path.sep );
+				pngpath = path.join( "tmp", pngfolder , path.sep );
 			}
 			callPhantom( pngpath, render, writeCSS, function(err, result, code) {
 				// TODO boost this up a bit.
