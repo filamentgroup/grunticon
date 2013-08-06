@@ -35,7 +35,8 @@
 		"phantomjs": "1.9.1-0",
 		"svgo":"~0.3.7",
 		"pngcrush-installer": "1.7.66-11",
-		"fs-extra": "0.6.3"
+		"fs-extra": "0.6.3",
+		"xmldom": "0.1.16"
 	},
 	"keywords": [
 		"gruntplugin"

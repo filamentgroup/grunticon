@@ -1,16 +1,24 @@
+.icon-Home_Media { background-image: url(png/Home_Media.png); background-repeat: no-repeat; }
+
+.icon-Image_Exchange { background-image: url(png/Image_Exchange.png); background-repeat: no-repeat; }
+
+.icon-Internet-no-width-no-height { background-image: url(png/Internet-no-width-no-height.png); background-repeat: no-repeat; }
+
+.icon-Internet { background-image: url(png/Internet.png); background-repeat: no-repeat; }
+
+.icon-Internet_FP2 { background-image: url(png/Internet_FP2.png); background-repeat: no-repeat; }
+
+.icon-Internet_Radio { background-image: url(png/Internet_Radio.png); background-repeat: no-repeat; }
+
+.icon-Internet_Tel { background-image: url(png/Internet_Tel.png); background-repeat: no-repeat; }
+
+.icon-Intranet { background-image: url(png/Intranet.png); background-repeat: no-repeat; }
+
 .icon-arrow-11 { background-image: url(png/arrow-11.png); background-repeat: no-repeat; }
 
 .icon-arrow-btn { background-image: url(png/arrow-btn.png); background-repeat: no-repeat; }
 
 .icon-arrow-tiny { background-image: url(png/arrow-tiny.png); background-repeat: no-repeat; }
-
-.icon-bear-primary { background-image: url(png/bear-primary.png); background-repeat: no-repeat; }
-
-.icon-bear-2 { background-image: url(png/bear-2.png); background-repeat: no-repeat; }
-
-.icon-bear-3 { background-image: url(png/bear-3.png); background-repeat: no-repeat; }
-
-.icon-bear { background-image: url(png/bear.png); background-repeat: no-repeat; }
 
 .icon-cat,
 #el-gato { background-image: url(png/cat.png); background-repeat: no-repeat; }
@@ -34,24 +42,16 @@
 .icon-gummy-bears-2,
 nav li a.deadly-bears:before { background-image: url(png/gummy-bears-2.png); background-repeat: no-repeat; }
 
-.icon-Home_Media { background-image: url(png/Home_Media.png); background-repeat: no-repeat; }
-
-.icon-Image_Exchange { background-image: url(png/Image_Exchange.png); background-repeat: no-repeat; }
-
-.icon-Internet-no-width-no-height { background-image: url(png/Internet-no-width-no-height.png); background-repeat: no-repeat; }
-
-.icon-Internet { background-image: url(png/Internet.png); background-repeat: no-repeat; }
-
-.icon-Internet_FP2 { background-image: url(png/Internet_FP2.png); background-repeat: no-repeat; }
-
-.icon-Internet_Radio { background-image: url(png/Internet_Radio.png); background-repeat: no-repeat; }
-
-.icon-Internet_Tel { background-image: url(png/Internet_Tel.png); background-repeat: no-repeat; }
-
-.icon-Intranet { background-image: url(png/Intranet.png); background-repeat: no-repeat; }
-
 .icon-map { background-image: url(png/map.png); background-repeat: no-repeat; }
 
 .icon-plus { background-image: url(png/plus.png); background-repeat: no-repeat; }
 
 .icon-star { background-image: url(png/star.png); background-repeat: no-repeat; }
+
+.icon-bear { background-image: url(png/bear.png); background-repeat: no-repeat; }
+
+.icon-bear-primary { background-image: url(png/bear-primary.png); background-repeat: no-repeat; }
+
+.icon-bear-2 { background-image: url(png/bear-2.png); background-repeat: no-repeat; }
+
+.icon-bear-3 { background-image: url(png/bear-3.png); background-repeat: no-repeat; }
