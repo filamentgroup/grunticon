@@ -63,6 +63,7 @@ module.exports = function( grunt , undefined ) {
 				});
 			}
 		} catch(e) {
+			grunt.log.error( e + ": File - " + file);
 			promise.reject( e );
 		}
 		return promise;

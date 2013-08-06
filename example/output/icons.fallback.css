@@ -1,5 +1,7 @@
 .icon-arrow-11 { background-image: url(png/arrow-11.png); background-repeat: no-repeat; }
 
+.icon-arrow-btn { background-image: url(png/arrow-btn.png); background-repeat: no-repeat; }
+
 .icon-arrow-tiny { background-image: url(png/arrow-tiny.png); background-repeat: no-repeat; }
 
 .icon-bear-primary { background-image: url(png/bear-primary.png); background-repeat: no-repeat; }
@@ -12,6 +14,8 @@
 
 .icon-cat,
 #el-gato { background-image: url(png/cat.png); background-repeat: no-repeat; }
+
+.icon-cyrillic { background-image: url(png/cyrillic.png); background-repeat: no-repeat; }
 
 .icon-fishing-hook { background-image: url(png/fishing-hook.png); background-repeat: no-repeat; }
 
