@@ -276,8 +276,6 @@ module.exports = function( grunt , undefined ) {
 			var crush = function( pngfolder ){
 				grunt.log.write( "\ngrunticon now spawning pngcrush..." );
 				grunt.log.writeln('(using path: ' + crushPath + ')');
-				var render = false;
-				var writeCSS = true;
 				var tmpPngfolder = path.join( tmp, pngfolder );
 
 				if( grunt.file.exists( path.join( config.dest , pngfolder ) ) ){
@@ -295,6 +293,16 @@ module.exports = function( grunt , undefined ) {
 					readDir( tmp )
 					.then( function( files , err ){
 						var dataarr = [];
+						var o = {
+							previewHTMLFilePath: previewHTMLsrc,
+							previewFilePath: previewhtml,
+							pngdatacss: datapngcss,
+							asyncCSSpath: path.join( config.dest, loadersnippet),
+							datacss: datasvgcss,
+							outputdir: config.dest,
+							fallbackcss: urlpngcss,
+							cssbasepath: cssbasepath
+						};
 						files = files.filter( function( file ){
 							var stats = fs.lstatSync( path.resolve( path.join( tmp , file ) ) );
 							if( !stats.isDirectory() ){
@@ -307,7 +315,6 @@ module.exports = function( grunt , undefined ) {
 						});
 						files.push.apply( files , newFiles );
 						files.forEach( function( file, idx ){
-							var res = {};
 							var gFile = new GruntiFile( file );
 							var imgLoc = gFile.isSvg ? tmp : path.resolve( path.join( tmp , pngfolder ) );
 							gFile.setImageData( imgLoc );
@@ -321,40 +328,9 @@ module.exports = function( grunt , undefined ) {
 								defaultHeight: config.defaultHeight
 							})
 							.then( function( stats , err ){
-								var cssselectors = config.customselectors || {};
-								var prefix = cssprefix + gFile.filenamenoext;
-								var iconclass = "." + prefix;
-								var iconsel = cssselectors[ gFile.filenamenoext ] !== undefined ? iconclass + ",\n" + cssselectors[ gFile.filenamenoext ] : iconclass;
-
-								var getPNGDataCSSRule = function( prefix , pngdatauri ){
-									if (pngdatauri.length <= 32768) {
-										// create png data URI
-										return iconsel + " { background-image: url('" +  pngdatauri + "'); background-repeat: no-repeat; }";
-									} else {
-										return "/* Using an external URL reference because this image would have a data URI of " +
-											pngdatauri.length +
-											" characters, which is greater than the maximum of 32768 allowed by IE8. */\n" +
-											iconsel + " { background-image: url('" + gFile.relPngLocation + "'); background-repeat: no-repeat; }";
-
-									}
-								}; //getPNGDataCSSRule
-
-								res.pngcssrule = iconsel + " { background-image: url(" + pngfolder + gFile.filenamenoext + ".png" + "); background-repeat: no-repeat; }";
-								res.htmlmarkup = '<pre><code>.' + prefix + ':</code></pre><div class="' + prefix + '" style="width: '+ stats.width +'; height: '+ stats.height +'"></div><hr/>';
-								res.datacssrule = iconsel + " { background-image: url('" + ( gFile.isSvg ? gFile.svgdatauri() : gFile.pngdatauri() ) + "'); background-repeat: no-repeat; }";
-								res.pngdatacssrule = getPNGDataCSSRule( prefix , gFile.pngdatauri() );
+								var res = gFile.getCSSRules( stats, pngfolder, cssprefix, config );
 								dataarr.push( res );
 								if( idx +1 === files.length ){
-									var o = {
-										previewHTMLFilePath: previewHTMLsrc,
-										previewFilePath: previewhtml,
-										pngdatacss: datapngcss,
-										asyncCSSpath: path.join( config.dest, loadersnippet),
-										datacss: datasvgcss,
-										outputdir: config.dest,
-										fallbackcss: urlpngcss,
-										cssbasepath: cssbasepath
-									};
 									GruntiFile.writeCSS( dataarr, o );
 									grunt.file.delete( tmp );
 									done();
