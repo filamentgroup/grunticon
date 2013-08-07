@@ -305,7 +305,8 @@ module.exports = function( grunt , undefined ) {
 						};
 						files = files.filter( function( file ){
 							var stats = fs.lstatSync( path.resolve( path.join( tmp , file ) ) );
-							if( !stats.isDirectory() ){
+							if( !stats.isDirectory() &&
+								( path.extname( file ) === ".svg" || path.extname( file ) === ".png" ) ){
 								return file;
 							}
 						});
