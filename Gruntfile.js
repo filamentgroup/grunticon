@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 					dest: "example/output/",
 
 					// optional grunticon config properties
-					// SVGO compression, true is the default, false will skip it
+					// SVGO compression, false is the default, true will make it so
 					svgo: true,
 
 					// PNG compression, true is the default, false will skip it

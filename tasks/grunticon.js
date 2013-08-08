@@ -178,12 +178,14 @@ module.exports = function( grunt , undefined ) {
 		}
 		grunt.file.mkdir( tmp );
 
-		grunt.log.write( "\nUsing SVGO to optimize.\n" );
 
 		readDir( svgosrc )
 		.then( function( files ){
 			var promise = new RSVP.Promise();
 			var promises = [];
+			if( config.svgo ){
+				grunt.log.write( "\nUsing SVGO to optimize.\n" );
+			}
 			files.forEach( function( file ){
 				var p;
 				if( file.match( /svg|png/ ) ){
