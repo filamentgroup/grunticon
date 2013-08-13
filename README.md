@@ -1,4 +1,5 @@
 # grunticon!
+[![Build Status](https://travis-ci.org/filamentgroup/grunticon.png?branch=master)](https://travis-ci.org/filamentgroup/grunticon)
 
 ```
          /'
