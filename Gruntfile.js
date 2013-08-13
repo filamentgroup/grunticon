@@ -95,5 +95,6 @@ module.exports = function(grunt) {
 
 	// Default task.
 	grunt.registerTask('default', ['jshint', 'grunticon:foo']);
+	grunt.registerTask('travis', ['jshint', 'grunticon:foo']);
 
 };

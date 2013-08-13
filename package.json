@@ -26,7 +26,7 @@
 		"node": "~0.8.0"
 	},
 	"scripts": {
-		"test": "grunt test"
+		"test": "grunt travis"
 	},
 	"dependencies": {
 		"grunt": "~0.4.0",
