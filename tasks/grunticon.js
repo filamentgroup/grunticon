@@ -115,6 +115,11 @@ module.exports = function( grunt , undefined ) {
 				config.dest += path.sep;
 		}
 
+		var f = fs.readdirSync( config.src );
+		if( f.length === 0 ){
+			grunt.log.writeln( "Grunticon has no files to read!" );
+			done();
+		}
 
 		var asyncCSS = config.files.loader;
 		var asyncCSSBanner = config.files.banner;
@@ -283,6 +288,7 @@ module.exports = function( grunt , undefined ) {
 				if( grunt.file.exists( path.join( config.dest , pngfolder ) ) ){
 					grunt.file.delete( path.join( config.dest, pngfolder ) );
 				}
+
 				crusher.crush({
 					input: tmpPngfolder,
 					outputDir:  path.join( config.dest , pngfolder ),
