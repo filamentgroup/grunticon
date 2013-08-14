@@ -116,6 +116,9 @@ module.exports = function( grunt , undefined ) {
 		}
 
 		var f = fs.readdirSync( config.src );
+		f = f.filter( function( file ){
+			return file.match( /png|svg/ );
+		});
 		if( f.length === 0 ){
 			grunt.log.writeln( "Grunticon has no files to read!" );
 			done();
