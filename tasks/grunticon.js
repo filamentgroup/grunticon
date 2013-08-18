@@ -295,7 +295,8 @@ module.exports = function( grunt , undefined ) {
 				crusher.crush({
 					input: tmpPngfolder,
 					outputDir:  path.join( config.dest , pngfolder ),
-					crushPath: crushPath
+					crushPath: crushPath,
+                    maxBuffer: 250
 				}, function( stdout , stderr ){
 					grunt.verbose.write( stdout );
 					grunt.verbose.write( stderr );
