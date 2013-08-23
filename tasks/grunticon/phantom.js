@@ -119,7 +119,7 @@ phantom args sent from grunticon.js:
 			colorConfig.forEach( function( color, i ){
 				var colorVar = colors[ color ],
 					newFileName = file.replace( colorsRegx, "-" + ( colorVar ? color : i + 1 ) ) ,
-					newFileContents = fileContents.replace( /(<svg[^>]+)/im, '$1><style type="text/css">path { fill: ' + (colorVar || color) + ' !important; }</style>' ),
+					newFileContents = fileContents.replace( /(<svg[^>]+>)/im, '$1<style type="text/css">circle, ellipse, line, path, polygon, polyline, rect, text { fill: ' + (colorVar || color) + ' !important; }</style>' ),
 					newFilePath = options.inputdir + "/" + newFileName;
 
 				tempFiles.push( newFilePath );
