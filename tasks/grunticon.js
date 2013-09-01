@@ -159,6 +159,8 @@ module.exports = function( grunt , undefined ) {
 			cssprefix = "icon-";
 		}
 
+        // Whether to include the height and width properties in the generated CSS files.
+        var cssdimensions = config.cssdimensions || false;
 
 		var width = config.defaultWidth;
 		if( !width ){
@@ -277,7 +279,8 @@ module.exports = function( grunt , undefined ) {
 						height,
 						colors,
 						temp,
-						writeCSS
+						writeCSS,
+                        cssdimensions
 					],
 					fallback: ''
 				}, callback );
