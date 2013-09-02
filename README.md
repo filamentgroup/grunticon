@@ -97,7 +97,7 @@ In addition to the required configuration properties above, grunticon's grunt co
 - `loadersnippet`:  The name of the generated text file containing the grunticon loading snippet. Default: `"grunticon.loader.txt"`
 - `pngfolder`:  The name of the generated folder containing the generated PNG images. Default: `"png/"`
 - `cssprefix`: a string to prefix all css classes with. Default: `"icon-"`
-- `customselectors`: Allows you to specify custom selectors (in addition to the generated `cssprefix + filename - extension` class) for individual files. 
+- `customselectors`: Allows you to specify custom selectors (in addition to the generated `cssprefix + filename - extension` class) for individual files. Use '*' to specify additional selectors for all icons.
 - `defaultWidth`: a string that MUST be defined in px that will be the
   size of the PNG if there is no width given in the SVG element.
 Example: `defaultWidth: "300px";` Default: `"400px"`
