@@ -67,7 +67,7 @@ module.exports = function( grunt , undefined ) {
 
 
 		// just a quick starting message
-		grunt.log.write( "Look, it's a grunticon!\n" );
+		grunt.log.subhead( "Look, it’s a grunticon!" );
 
 		// get the config
 		var config = this.options();
@@ -76,7 +76,7 @@ module.exports = function( grunt , undefined ) {
 			loader: path.join( __dirname, 'grunticon', 'static', 'grunticon.loader.js'),
 			banner: path.join( __dirname, 'grunticon', 'static', 'grunticon.loader.banner.js'),
 			preview: path.join( __dirname, 'grunticon', 'static', 'preview.html'),
-			phantom: path.join( __dirname,  'grunticon', 'phantom.js')
+			phantom: path.join( __dirname,  'grunticon', 'phantom.js'),
 		};
 		// fail if config or no src or dest config
 		if( !config || config.src === undefined || config.dest === undefined ){
@@ -161,13 +161,13 @@ module.exports = function( grunt , undefined ) {
 		var compressPNG = config.pngcrush,
 			render, writeCSS;
 
-
 		// create temp directory
-		grunt.log.write( "creating temp directory at:" + tmp );
 		if( grunt.file.exists( tmp ) ){
 			grunt.file.delete( tmp );
+			grunt.log.debug( "Deleted existing temp directory" );
 		}
 		grunt.file.mkdir( tmp );
+		grunt.log.ok( "Temp directory: " + tmp );
 
 		readDir( srcdir )
 		.then( function( files ){
@@ -177,8 +177,12 @@ module.exports = function( grunt , undefined ) {
 				if ( path.extname(file) === ".svg" || path.extname(file) === ".png" ){
 					grunt.file.copy( path.join( srcdir, file ), path.join( tmp, file ) );
 					return file;
+				} else {
+					grunt.log.debug("Skipped " + path.join( srcdir, file ));
 				}
 			});
+
+			grunt.log.ok( "Copied "+files.length+" file"+( files.length == 1 ? '' : 's' )+" from "+srcdir+" to "+tmp );
 
 			promise.resolve();
 
@@ -191,24 +195,22 @@ module.exports = function( grunt , undefined ) {
 			// create the tmp output icons directory
 			if( grunt.file.exists( path.join( tmp , pngfolder ))){
 				grunt.file.delete( path.join( tmp, pngfolder ));
+				grunt.log.debug( "Deleted existing temp directory at "+path.join( tmp, pngfolder ) );
 			}
 			grunt.file.mkdir( path.join( tmp , pngfolder ));
 
-
-			// minify the source of the grunticon loader and write that to the output
-			grunt.log.write( "\ngrunticon now minifying the stylesheet loader source." );
 			var banner = grunt.file.read( asyncCSSBanner );
 			var min = banner + "\n" + uglify.minify( asyncCSS ).code;
 			var loaderCodeDest = config.dest + loadersnippet;
+
 			grunt.file.write( loaderCodeDest, min );
-			grunt.log.write( "\ngrunticon loader file created." );
-
-
+			grunt.log.ok( "Grunticon loader file: "+loaderCodeDest );
 
 			var callPhantom = function( pngf, temp, writeCSS , callback){
 				// take it to phantomjs to do the rest
 
 				var phantomJsPath;
+				var underlineLength = 67
 
 				if( config.phantomjs && config.phantomjs !== true ){
 					phantomJsPath = config.phantomjs;
@@ -224,11 +226,13 @@ module.exports = function( grunt , undefined ) {
 					}
 				}
 
-				grunt.log.ok('Spawning phantomjs (' + phantomJsPath + ')');
+				grunt.log.ok('Spawning phantomjs (' + phantomJsPath + '). PREPARE YOURSELF.');
+				grunt.log.writeln( Array(underlineLength+1).join("=") );
 
-				grunt.util.spawn({
+				var phantom = grunt.util.spawn({
 					cmd: phantomJsPath,
 					args: [
+						'--debug=true',
 						config.files.phantom,
 						path.join(tmp,path.sep),
 						config.dest,
@@ -238,7 +242,7 @@ module.exports = function( grunt , undefined ) {
 						datapngcss,
 						urlpngcss,
 						previewhtml,
-						pngf, //path.join( "tmp","png", path.sep),
+						pngf,
 						cssprefix,
 						cssbasepath,
 						customselectors,
@@ -249,12 +253,20 @@ module.exports = function( grunt , undefined ) {
 						writeCSS
 					],
 					fallback: ''
-				}, callback );
+				}, function(e,r,c){
+					grunt.log.writeln( Array(underlineLength+1).join("=") );
+					callback(e,r,c);
+				}
+				);
+
+				// Print everything to the screen
+				phantom.stdout.pipe(process.stdout);
+				phantom.stderr.pipe(process.stderr);
+
 			};
 
 			var crush = function( pngfolder ){
-				grunt.log.write( "\ngrunticon now spawning pngcrush..." );
-				grunt.log.writeln('(using path: ' + crushPath + ')');
+				grunt.log.ok( "CRUSHING IT ("+crushPath+")");
 				var tmpPngfolder = path.join( tmp, pngfolder );
 
 				if( grunt.file.exists( path.join( config.dest , pngfolder ) ) ){
@@ -270,9 +282,8 @@ module.exports = function( grunt , undefined ) {
 					grunt.verbose.write( stdout );
 					grunt.verbose.write( stderr );
 
-					grunt.log.writeln( "Writing CSS" );
-					readDir( tmp )
-					.then( function( files , err ){
+					readDir( tmp ).then( function( files , err ){
+
 						var dataarr = [];
 						var o = {
 							previewHTMLFilePath: previewHTMLsrc,
@@ -284,6 +295,7 @@ module.exports = function( grunt , undefined ) {
 							fallbackcss: urlpngcss,
 							cssbasepath: cssbasepath
 						};
+
 						files = files.filter( function( file ){
 							var stats = fs.lstatSync( path.resolve( path.join( tmp , file ) ) );
 							if( !stats.isDirectory() &&
@@ -291,35 +303,39 @@ module.exports = function( grunt , undefined ) {
 								return file;
 							}
 						});
+
 						var newFiles = GruntiFile.colorConfig( files , {
 							inputDir: path.resolve( tmp ),
 							colors: JSON.parse( colors )
 						});
+
 						files.push.apply( files , newFiles );
+
 						files.forEach( function( file, idx ){
 							var gFile = new GruntiFile( file );
 							var imgLoc = gFile.isSvg ? tmp : path.resolve( path.join( tmp , pngfolder ) );
+
 							gFile.setImageData( imgLoc );
+
 							gFile.setPngLocation({
 								relative: pngfolder,
 								absolute: path.resolve( path.join( config.dest, pngfolder ) )
 							});
+
 							gFile.stats({
 								inputDir: imgLoc,
 								defaultWidth: config.defaultWidth,
 								defaultHeight: config.defaultHeight
-							})
-							.then( function( stats , err ){
+							}).then( function( stats , err ){
 								var res = gFile.getCSSRules( stats, pngfolder, cssprefix, config );
 								dataarr.push( res );
 								if( idx +1 === files.length ){
 									GruntiFile.writeCSS( dataarr, o );
-									grunt.file.delete( tmp );
-									done();
 								}
 							});
 						});
 					});
+
 				});
 			};
 
@@ -341,17 +357,18 @@ module.exports = function( grunt , undefined ) {
 			callPhantom( pngpath, render, writeCSS, function(err, result, code) {
 				// TODO boost this up a bit.
 				if( err ){
-					grunt.log.write("\nSomething went wrong with phantomjs...");
+					grunt.log.writeln("Something went wrong with phantomjs");
 					grunt.fatal( result.stderr );
 					done( false );
 				} else {
 					grunt.log.write( result.stdout );
-					if( render && writeCSS ){
-						grunt.file.delete( tmp );
-						done();
-					} else {
+					if( !render || !writeCSS ){
 						crush( pngfolder );
+					} else {
+						grunt.log.println('NOT DOING IT ('+pngpath+')');
 					}
+					done();
+
 				}
 			});
 
