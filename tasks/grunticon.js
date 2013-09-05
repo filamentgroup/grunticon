@@ -77,6 +77,7 @@ module.exports = function( grunt , undefined ) {
 			banner: path.join( __dirname, 'grunticon', 'static', 'grunticon.loader.banner.js'),
 			preview: path.join( __dirname, 'grunticon', 'static', 'preview.html'),
 			phantom: path.join( __dirname,  'grunticon', 'phantom.js'),
+			mascot: path.join( __dirname, 'grunticon', 'static', 'excessive.txt')
 		};
 		// fail if config or no src or dest config
 		if( !config || config.src === undefined || config.dest === undefined ){
@@ -367,6 +368,13 @@ module.exports = function( grunt , undefined ) {
 					} else {
 						grunt.log.println('NOT DOING IT ('+pngpath+')');
 					}
+
+					// TODO: Handle cleanup with grunt-cleanup
+					grunt.file.delete( tmp );
+					// Brought to you by toilet: http://caca.zoy.org/wiki/toilet
+					// TODO: Does it work on Windows?
+					// dot + backspace hack is so grunt.log.ok respects dat whitespace
+					grunt.log.ok( ".\b"+grunt.file.read( config.files.mascot ) );
 					done();
 
 				}
