@@ -107,14 +107,6 @@ module.exports = function( grunt , undefined ) {
 			done( false );
 		}
 
-		// make sure src and dest have / at the end
-		if( !config.src.match( path.sep + '$' ) ){
-				config.src += path.sep;
-		}
-		if( !config.dest.match( path.sep + '$' ) ){
-				config.dest += path.sep;
-		}
-
 		var f = fs.readdirSync( config.src );
 		f = f.filter( function( file ){
 			return file.match( /png|svg/ );
@@ -199,7 +191,7 @@ module.exports = function( grunt , undefined ) {
 				if( file.match( /svg|png/ ) ){
 					p = new RSVP.Promise();
 
-					readFile( svgosrc + file )
+					readFile( path.join( svgosrc, file ) )
 					.then( function( data , err ){
 						if( err ){
 							grunt.fatal( err );
