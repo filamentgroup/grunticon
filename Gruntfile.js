@@ -41,7 +41,7 @@ module.exports = function(grunt) {
 					previewhtml: "preview.html",
 
 					// grunticon loader code snippet filename
-					loadersnippet: "grunticon.loader.txt",
+					loadersnippet: "grunticon.loader.html",
 
 					// folder name (within dest) for png output
 					pngfolder: "png",
