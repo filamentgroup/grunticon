@@ -20,14 +20,17 @@ module.exports = function(grunt) {
 					src: "example/source/",
 					dest: "example/output/",
 
-					// optional grunticon config properties
-
-					// If true, grunticon will expect pngcrush to be installed.
-					// You can do that with `npm install pngcrush-installer`
-					// If you've already got pngcrush installed with homebrew or macports,
-					// specify a path to the pngcrush binary like so:
+					// pngcrush and phantomjs can be installed several ways:
+					//   1. Install through npm:
+					//      npm install pngcrush-installer
+					//      npm install phantomjs
+					//   2. Install through homebrew
+					//      brew install pngcrush phantomjs
+					// If you pick option 2, specify a path to the binaries like so:
 					// pngcrush: '/usr/local/bin/pngcrush'
+					// phantomjs: '/usr/local/bin/phantomjs'
 					pngcrush: true,
+					phantomjs: false, // Requires user action.
 
 					// CSS filenames
 					datasvgcss: "icons.data.svg.css",

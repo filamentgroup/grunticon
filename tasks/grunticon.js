@@ -207,15 +207,30 @@ module.exports = function( grunt , undefined ) {
 
 			var callPhantom = function( pngf, temp, writeCSS , callback){
 				// take it to phantomjs to do the rest
-				grunt.log.write( "\ngrunticon now spawning phantomjs..." );
-				var phantomJsPath = require('phantomjs').path;
-				grunt.log.write('(using path: ' + phantomJsPath + ')');
+
+				var phantomJsPath;
+
+				if( config.phantomjs && config.phantomjs !== true ){
+					phantomJsPath = config.phantomjs;
+				} else {
+					try {
+						phantomJsPath = require('phantomjs').path;
+					} catch(err) {
+						grunt.fatal("phantomjs is not installed. Your options:\n"+
+						"  1. Install phantomjs with `npm install phantomjs`\n"+
+						"  2. Install phantomjs with homebrew and set `phantomjs` to\n"+
+						"     `/usr/local/bin/phantomjs` in your Gruntfile");
+						done(false);
+					}
+				}
+
+				grunt.log.ok('Spawning phantomjs (' + phantomJsPath + ')');
 
 				grunt.util.spawn({
 					cmd: phantomJsPath,
 					args: [
 						config.files.phantom,
-						tmp,
+						path.join(tmp,path.sep),
 						config.dest,
 						loaderCodeDest,
 						previewHTMLsrc,
