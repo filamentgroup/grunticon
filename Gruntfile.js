@@ -21,10 +21,12 @@ module.exports = function(grunt) {
 					dest: "example/output/",
 
 					// optional grunticon config properties
-					// SVGO compression, false is the default, true will make it so
-					svgo: true,
 
-					// PNG compression, true is the default, false will skip it
+					// If true, grunticon will expect pngcrush to be installed.
+					// You can do that with `npm install pngcrush-installer`
+					// If you've already got pngcrush installed with homebrew or macports,
+					// specify a path to the pngcrush binary like so:
+					// pngcrush: '/usr/local/bin/pngcrush'
 					pngcrush: true,
 
 					// CSS filenames

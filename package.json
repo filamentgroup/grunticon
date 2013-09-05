@@ -33,8 +33,6 @@
 		"grunt-contrib-jshint": "~0.2.0",
 		"uglify-js": "~2.2.5",
 		"phantomjs": "1.9.1-0",
-		"svgo":"~0.3.7",
-		"pngcrush-installer": "1.7.66-13",
 		"fs-extra": "0.6.3",
 		"xmldom": "0.1.16"
 	},

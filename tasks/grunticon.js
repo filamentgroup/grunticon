@@ -13,12 +13,11 @@ module.exports = function( grunt , undefined ) {
 	"use strict";
 
 	var uglify = require( 'uglify-js' );
-	var svgo = new (require( 'svgo' ))();
 	var fs = require( 'fs' );
 	var path = require( 'path' );
 
 	var RSVP = require( path.join( '..', 'lib', 'rsvp' ) );
-	var crushPath = require( 'pngcrush-installer' ).getBinPath();
+	var crushPath; // defined in grunt.registerMultiTask
 	var crusher = require( path.join( '..', 'lib', 'pngcrusher' ) );
 	var grunticoner = require( path.join( '..', 'lib', 'grunticoner' ) );
 
@@ -47,28 +46,6 @@ module.exports = function( grunt , undefined ) {
 				promise.resolve( data );
 			}
 		});
-		return promise;
-	};
-
-	var optimize = function( file , data , opt ){
-		var promise = new RSVP.Promise();
-		try{
-			if( file.match( /png/ ) || !opt ){
-				promise.resolve( data );
-			} else {
-				svgo.optimize( data.toString() , function( result ){
-					if( result.error ){
-						grunt.log.error( result.error );
-						promise.reject( result.error );
-					} else {
-						promise.resolve( result.data );
-					}
-				});
-			}
-		} catch(e) {
-			grunt.log.error( e + ": File - " + file);
-			promise.reject( e );
-		}
 		return promise;
 	};
 
@@ -140,11 +117,6 @@ module.exports = function( grunt , undefined ) {
 		var pngfolder = config.pngfolder || "png";
 		pngfolder = path.join.apply( null, pngfolder.split( path.sep ) );
 
-		// make sure pngfolder has / at the end
-		if( !pngfolder.match( path.sep + '$' ) ){
-				pngfolder += path.sep;
-		}
-
 		// css class prefix
 		var cssprefix = config.cssprefix;
 		if( cssprefix === undefined ){
@@ -164,8 +136,27 @@ module.exports = function( grunt , undefined ) {
 		// get color variables from config
 		var colors = JSON.stringify( config.colors || {} );
 
-		var svgosrc = config.src;
-		var tmp = path.join( config.dest , 'tmp' , path.sep );
+		var srcdir = config.src;
+		var tmp = path.join( config.dest , 'tmp' );
+
+		var compressPNG = true;
+		var pngCrushPath = false;
+
+		// config.pngcrush is set but is not "true". Assume it's a path to pngcrush.
+		if( config.pngcrush && config.pngcrush !== true ){
+			crushPath = config.pngcrush;
+			config.pngcrush = true;
+		} else {
+			try {
+				crushPath = require( 'pngcrush-installer' ).getBinPath();
+			} catch (err){
+				grunt.fatal("pngcrush is not installed. Your options:\n"+
+				"  1. Install pngcrush with `npm install pngcrush-installer`\n"+
+				"  2. Install pngcrush with homebrew and set `pngcrush` to\n"+
+				"     `/usr/local/bin/pngcrush` in your Gruntfile");
+				done(false);
+			}
+		}
 
 		var compressPNG = config.pngcrush,
 			render, writeCSS;
@@ -178,48 +169,19 @@ module.exports = function( grunt , undefined ) {
 		}
 		grunt.file.mkdir( tmp );
 
-
-		readDir( svgosrc )
+		readDir( srcdir )
 		.then( function( files ){
 			var promise = new RSVP.Promise();
-			var promises = [];
-			if( config.svgo ){
-				grunt.log.write( "\nUsing SVGO to optimize.\n" );
-			}
-			files.forEach( function( file ){
-				var p;
-				if( file.match( /svg|png/ ) ){
-					p = new RSVP.Promise();
 
-					readFile( path.join( svgosrc, file ) )
-					.then( function( data , err ){
-						if( err ){
-							grunt.fatal( err );
-							done( false );
-						}
-						return optimize( file , data , config.svgo );
-					})
-					.then( function( result , err ){
-						if( err ){
-							grunt.fatal( err );
-							done( false );
-						}
-						return writeFile( path.join( tmp , file) , result );
-					})
-					.then( function( _null , err ){
-						if( err ){
-							grunt.fatal( err );
-							done( false );
-						} else {
-							p.resolve();
-						}
-					});
-					promises.push( p );
+			files = files.filter( function( file ){
+				if ( path.extname(file) === ".svg" || path.extname(file) === ".png" ){
+					grunt.file.copy( path.join( srcdir, file ), path.join( tmp, file ) );
+					return file;
 				}
 			});
-			RSVP.all( promises ).then( function(){
-				promise.resolve();
-			});
+
+			promise.resolve();
+
 			return promise;
 		})
 		.then( function(){
@@ -359,7 +321,7 @@ module.exports = function( grunt , undefined ) {
 			if( render && writeCSS ){
 				pngpath = pngfolder;
 			} else {
-				pngpath = path.join( "tmp", pngfolder , path.sep );
+				pngpath = path.join( "tmp", pngfolder );
 			}
 			callPhantom( pngpath, render, writeCSS, function(err, result, code) {
 				// TODO boost this up a bit.
