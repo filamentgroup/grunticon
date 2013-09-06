@@ -113,7 +113,7 @@ phantom args sent from grunticon.js:
 		} else {
 			clog('Not writing CSS (options.writeCSS == '+options.writeCSS+')');
 		}
+		phantom.exit();
 	});
 
-	phantom.exit();
 })();

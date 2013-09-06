@@ -184,8 +184,8 @@ module.exports = function( grunt , undefined ) {
 			grunt.log.ok('Resetting '+key+' ('+resetDirs[key]+')');
 			// TODO: switch grunt.log.ok back to grunt.verbose.or.ok
 			if( grunt.file.exists( resetDirs[key] ) ){
-				// grunt.file.delete( resetDirs[key] );
-				// grunt.log.ok( '.\b - Deleting '+key+' directory' );
+				grunt.file.delete( resetDirs[key] );
+				grunt.log.ok( '.\b - Deleting '+key+' directory' );
 			} else {
 				grunt.log.ok( '.\b - '+key+' directory doesn’t exist and will be created' );
 			}
@@ -210,184 +210,187 @@ module.exports = function( grunt , undefined ) {
 		grunt.log.ok( 'Writing grunticon loader file: ('+loaderCodeDest+')' );
 		grunt.file.write( loaderCodeDest, min );
 
-		var callPhantom = function( phantomPNGFolder, callback){
-			var phantomJsPath;
-			var temp = true;
-			var writeCSS = true;
+		// Formerly callPhantom
+		var phantomJsPath;
+		var temp = true;
+		var writeCSS = true;
 
-			if( config.phantomjs && config.phantomjs !== true ){
-				phantomJsPath = config.phantomjs;
-			} else {
-				try {
-					phantomJsPath = require('phantomjs').path;
-				} catch(err) {
-					grunt.fatal("phantomjs is not installed. Your options:\n"+
-					"  1. Install phantomjs with `npm install phantomjs`\n"+
-					"  2. Install phantomjs with homebrew and set `phantomjs` to\n"+
-					"     `/usr/local/bin/phantomjs` in your Gruntfile");
-					done(false);
-				}
-			}
-
-			grunt.log.ok('Converting '+svgFiles.length+' SVG'+( svgFiles.length == 1 ? '' : 's' )+' to PNG format with phantomjs ('+phantomJsPath+')');
-			grunt.log.writeln( '\n'+Array(underlineLength+1).join("=")+'\n' );
-
-			// TODO: set debug to true only if grunt is run with --verbose flag
-			var phantom = grunt.util.spawn({
-				cmd: phantomJsPath,
-				args: [
-					(grunt.option('verbose') ? '--debug=true' : '--debug=false'),
-					config.files.phantom,
-					path.join(srcDir,path.sep),
-					path.join(pngSrcDir,path.sep),
-					loaderCodeDest,
-					previewHTMLsrc,
-					dataSvgCSS,
-					dataPngCSS,
-					urlPngCSS,
-					previewHTML,
-					path.join(phantomPNGFolder,path.sep), // destination
-					cssClassPrefix,
-					cssBasePath,
-					customSelectors,
-					width,
-					height,
-					temp,
-					writeCSS,
-					grunt.option('verbose'),
-				],
-				fallback: ''
-			}, function(e,r,c){
-				// grunt.log.ok('PHANTOMJS OUT');
-				callback(e,r,c);
-			});
-
-			// Print everything to the screen
-			phantom.stdout.pipe(process.stdout);
-			phantom.stderr.pipe(process.stderr);
-
-		};
-
-		var processPNGs = function( crushSrc, crushDest ){
-
-			if( crushingIt ) {
-				grunt.log.ok('CRUSHING IT');
-
-				// pngcrush
-				crusher.crush({
-					inputDir: crushSrc,
-					outputDir:  crushDest,
-					crushPath: pngcrushBinPath,
-					maxBuffer: 250,
-					verboseMode: grunt.option('verbose')
-				},
-
-					function( stdout , stderr, d ){
-						// List the directory of crushed files
-						readDir( crushDest )
-
-						// Filter out non-PNGs, build dataArray
-						.then( function( files , err ){
-							var dataArray = [];
-
-							// PNGs only
-							files = files.filter( function( file ){
-								var stats = fs.lstatSync( path.resolve( path.join( tmpDir , file ) ) );
-								if( !stats.isDirectory() && path.extname( file ) !== ".png" ){
-									return file;
-								} else {
-									grunt.log.ok('Rejected: '+file);
-								}
-							});
-
-							grunt.log.writeln(files.length+' crushed PNG file'+(files.length == 1 ? '' : 's'));
-
-							// Loop through each file, build an array of GruntiFile instances
-							files.forEach( function( file, idx ){
-								var gFile = new GruntiFile( file );
-								var imgLoc = path.resolve( path.join( tmpDir , pngDestDirName ) );
-
-								gFile.setImageData( imgLoc );
-
-								// At this point we’ve only got PNGs, so we can make assumptions.
-								gFile.setPngLocation({
-									relative: pngDestDirName,
-									absolute: path.resolve( path.join( pngDestDir, pngDestDirName ) )
-								});
-
-								gFile.stats({
-									inputDir: imgLoc,
-									defaultWidth: config.defaultWidth,
-									defaultHeight: config.defaultHeight
-								}).then( function( stats , err ){
-
-									var res = gFile.getCSSRules( stats, pngDestDirName, cssClassPrefix, config );
-									dataArray.push( res );
-
-									if( idx + 1 == files.length ){
-										grunt.log.ok('My work here is done. Write the CSS.');
-
-										// Write GruntiFiles to CSS
-										GruntiFile.writeCSS( dataArray, {
-											previewHTMLFilePath: previewHTMLsrc,
-											previewFilePath: previewHTML,
-											pngdatacss: dataPngCSS,
-											asyncCSSpath: path.join( destDir, loaderSnippet),
-											datacss: dataSvgCSS,
-											outputDir: pngDestDir,
-											fallbackcss: urlPngCss,
-											cssbasepath: cssBasePath
-										});
-									}
-								});
-							});
-						});
-					}
-				); // wowow
-			} else {
-				grunt.log.ok('NOT CRUSHING IT :C');
-
-				readDir( pngSrcDir ).then(function( files, err ){
-					files = files.filter( function( file ){
-						var stats = fs.lstatSync(path.resolve( path.join( tmpDir, file )));
-						if( !stats.isDirectory() && path.extname( file ) !== ".png" ){
-							return file;
-						}
-					});
-
-					grunt.file.ok('Copy '+file.length+
-						' PNG file'+(file.length == 1 ? '' : 's')+
-						' from '+pngSrcDir+
-						' to '+pngDestDir);
-
-					files.forEach(function(pngFileName, idx){
-						grunt.file.ok('Copying '+pngFileName+' (file '+(idx+1)+' of '+file.length+')');
-						grunt.file.copy(
-							path.join(pngSrcDir, pngFileName),
-							path.join(pngDestDir, pngFileName)
-						)
-					});
-				});
+		if( config.phantomjs && config.phantomjs !== true ){
+			phantomJsPath = config.phantomjs;
+		} else {
+			try {
+				phantomJsPath = require('phantomjs').path;
+			} catch(err) {
+				grunt.fatal("phantomjs is not installed. Your options:\n"+
+				"  1. Install phantomjs with `npm install phantomjs`\n"+
+				"  2. Install phantomjs with homebrew and set `phantomjs` to\n"+
+				"     `/usr/local/bin/phantomjs` in your Gruntfile");
+				done(false);
 			}
 		}
 
+		var processPNGs = function(){
+
+			if( crushingIt ) {
+				grunt.log.ok('CRUSHING IT: '+pngSrcDir+' --> '+pngDestDir);
+			} else {
+				grunt.log.ok('COPYING IT: '+pngSrcDir+' --> '+pngDestDir);
+			}
+
+			// List the directory of crushed files
+			readDir( pngSrcDir )
+
+			// Filter out non-PNGs, build dataArray
+			.then( function( files , err ){
+				var dataArray = [];
+
+				if( err ){
+					grunt.log.ok('readDir error: '+err);
+				} else {
+					grunt.log.ok('Looks like about '+files.length+' files you’ve got here.');
+
+					files.forEach(function(pngFileName, idx ){
+						// Crush or copy
+						if( path.extname( pngFileName ) == '.png' ){
+							if( crushingIt ) {
+								crusher.crush({
+
+									inputFilePath: path.join(pngSrcDir, pngFileName),
+									outputFilePath: path.join(pngDestDir, pngFileName),
+
+									crushPath: pngcrushBinPath,
+									maxBuffer: 250,
+									verboseMode: grunt.option('verbose')
+
+								}, function(p){
+									console.log( 'processPNGCallback' );
+									processPNGCallback(p);
+								});
+							} else {
+								grunt.log.ok('['+(idx+1)+'/'+files.length+'] Copying '+pngFileName);
+								grunt.file.copy(
+									path.join(pngSrcDir, pngFileName),
+									path.join(pngDestDir, pngFileName)
+								);
+								processPNGCallback(pngFileName);
+							}
+						} else {
+							grunt.log.ok('['+(idx+1)+'/'+files.length+'] Ignoring '+pngFileName);
+						}
+
+					});
+				}
+			})
+			.then( function(){
+				declareVictory();
+			});
+		}
+
+		var processPNGCallback = function( pngFileName ){
+
+			grunt.log.ok('PROCESSING '+pngFileName);
+
+			var gFile = new GruntiFile( pngFileName );
+			var imgLoc = path.resolve( path.join( pngFileName ) );
+
+			grunt.log.ok('TEST1: '+imgLoc);
+
+			gFile.setImageData( imgLoc );
+
+			// At this point we’ve only got PNGs, so we can make assumptions.
+			gFile.setPngLocation({
+				relative: pngDestDirName,
+				absolute: path.resolve( pngDestDirName )
+			});
+
+			grunt.log.ok('TEST2');
+
+			gFile.stats({
+				inputDir: imgLoc,
+				defaultWidth: config.defaultWidth,
+				defaultHeight: config.defaultHeight
+			}).then( function( stats , err ){
+
+				var res = gFile.getCSSRules( stats, pngDestDirName, cssClassPrefix, config );
+				dataArray.push( res );
+
+				if( idx + 1 == files.length ){
+					grunt.log.ok('My work here is done. Write the CSS.');
+
+					// Write GruntiFiles to CSS
+					GruntiFile.writeCSS( dataArray, {
+						previewHTMLFilePath: previewHTMLsrc,
+						previewFilePath: previewHTML,
+						pngdatacss: dataPngCSS,
+						asyncCSSpath: path.join( destDir, loaderSnippet),
+						datacss: dataSvgCSS,
+						outputDir: destDir,
+						fallbackcss: urlPngCss,
+						cssbasepath: cssBasePath
+					});
+				}
+			});
+
+		}
+
+		var declareVictory = function(){
+			grunt.log.ok('All done!');
+
+			// Brought to you by unicornsay.
+			// TODO: Does it work on Windows?
+			// dot + backspace hack is so grunt.log.ok respects dat whitespace
+			grunt.log.ok( ".\b"+grunt.file.read( config.files.mascot ) );
+			done();
+		}
+
+		/*
+		Convert SVGs to PNGs
+		*/
+
 		grunt.log.ok('Setting a phantomjs upon '+srcDir+' forthwith');
+		grunt.log.ok('Converting '+svgFiles.length+' SVG'+( svgFiles.length == 1 ? '' : 's' )+' to PNG format with phantomjs ('+phantomJsPath+')');
+		grunt.log.writeln( '\n'+Array(underlineLength+1).join("=")+'\n' );
 
-		callPhantom( srcDir, function(err, result, code) {
-			if( !err ){
-				grunt.log.writeln( '\n'+Array(underlineLength+1).join("=")+'\n' );
+		var phantom = grunt.util.spawn({
+			cmd: phantomJsPath,
+			args: [
+				(grunt.option('verbose') ? '--debug=true' : '--debug=false'),
+				config.files.phantom,
+				path.join(srcDir,path.sep),
+				path.join(pngSrcDir,path.sep),
+				loaderCodeDest,
+				previewHTMLsrc,
+				dataSvgCSS,
+				dataPngCSS,
+				urlPngCSS,
+				previewHTML,
+				path.join(pngDestDir,path.sep), // destination
+				cssClassPrefix,
+				cssBasePath,
+				customSelectors,
+				width,
+				height,
+				temp,
+				writeCSS,
+				grunt.option('verbose'),
+			],
+			fallback: ''
+		}, function(err, result, code){
+			grunt.log.ok('PHANTOMJS OUT');
 
-				processPNGs( pngSrcDir, pngDestDir );
-
-				grunt.log.ok('All done!');
-
-				// Brought to you by unicornsay.
-				// TODO: Does it work on Windows?
-				// dot + backspace hack is so grunt.log.ok respects dat whitespace
-				grunt.log.ok( ".\b"+grunt.file.read( config.files.mascot ) );
-				done();
+				if( !err ){
+					grunt.log.writeln( '\n'+Array(underlineLength+1).join("=")+'\n' );
+					processPNGs( pngSrcDir, pngDestDir );
+				} else {
+					grunt.log.ok('ERROR ENCOUNTERED');
+				}
 
 			}
-		});
+		);
+
+		// Print everything to the screen
+		phantom.stdout.pipe(process.stdout);
+		phantom.stderr.pipe(process.stderr);
+
 	});
 };
