@@ -28,6 +28,7 @@ phantom args sent from grunticon.js:
 	[13] - default height
 	[14] - if we should render files
 	[15] - if we should write CSS
+	[16] - verbose?
 */
 
 (function(){
@@ -35,11 +36,24 @@ phantom args sent from grunticon.js:
 	var fs = require( "fs" );
 	var RSVP = require('../../lib/rsvp');
 	var grunticoner = require('../../lib/grunticoner');
+	var isVerbose = phantom.args[16];
+
+	var clog = function(what){
+		// Note the escape characters.
+		console.log("[32m[phantom.js][39m "+what);
+	}
+
+	var vlog = function(what){
+		if( isVerbose !== 'undefined' ){
+			// Note the escape characters.
+			clog(what);
+		}
+	}
 
 	var options = {
-		inputdir: phantom.args[0],
-		outputdir: phantom.args[1],
-		pngout:  phantom.args[8],
+		inputDir: phantom.args[0],
+		outputDir: phantom.args[1],
+		pngDestDirName: phantom.args[8],
 		cssprefix: phantom.args[9],
 		fallbackcss: phantom.args[6],
 		pngdatacss: phantom.args[5],
@@ -55,22 +69,51 @@ phantom args sent from grunticon.js:
 		writeCSS: phantom.args[15]
 	};
 
-	var files = fs.list( options.inputdir );
+	var files = fs.list( options.inputDir );
 	var promises = [];
 
+	var title = 'SVG files in '+options.inputDir+':';
+
+	vlog(title);
+	vlog(Array(title.length+1).join('-'));
+
+	// TODO: Don't list directories
 	files = files.filter( function( file ){
-			if( file.match( /\.svg$/i ) || file.match( /\.png$/i )){
-				promises.push( grunticoner.processFile( file, options ) );
-				return file;
-			} else {
-				console.log('Rejected '+file);
-			}
+		if( file.match( /\.svg$/i ) ){
+			vlog('[x] '+file);
+			return file;
+		} else {
+			vlog('[ ] '+file);
+		}
 	});
 
-	RSVP.all( promises ).then( function( dataarr ){
-		if( options.writeCSS !== "false" ){
-			grunticoner.writeCSS( dataarr , options );
-		}
-		phantom.exit();
+	vlog(Array(title.length+1).join('-'));
+
+	files.forEach(function(file, idx){
+		clog(
+			'Processing '+
+
+			// Space-padded numbers. SORRY IT’S GROSS.
+			Array(
+				(files.length+'').length - // total number string length
+				((idx+1)+'').length // current number string length
+				+ 1 // padding size
+			).join(' ')+
+
+			(idx+1) + ' of ' + files.length + ' ---> ' + file
+		)
+
+		promises.push( grunticoner.processFile( file, options ) );
 	});
+
+	RSVP.all( promises ).then( function( dataArray ){
+		if( options.writeCSS !== "false" ){
+			clog('Writing CSS with grunticoner.writeCSS');
+			grunticoner.writeCSS( dataArray , options );
+		} else {
+			clog('Not writing CSS (options.writeCSS == '+options.writeCSS+')');
+		}
+	});
+
+	phantom.exit();
 })();
