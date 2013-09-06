@@ -108,13 +108,14 @@ phantom args sent from grunticon.js:
 			fileName = file;
 
 		if( colorConfig.length ){
+			console.log('Generate alternate colors for '+file);
 			var fileContents = fs.read( options.inputdir + "/" + file ),
-				path = options.inputdir + "/";
+				filePath = options.inputdir + "/";
 
 			// base file is used as default icon color - no qualifications in its name, tho.
 			fileName = file.replace( colorsRegx, "" );
-			tempFiles.push( path + fileName );
-			fs.write( path + fileName, fileContents, 'w' );
+			tempFiles.push( filePath + fileName );
+			fs.write( filePath + fileName, fileContents, 'w' );
 
 			colorConfig.forEach( function( color, i ){
 				var colorVar = colors[ color ],
@@ -141,7 +142,8 @@ phantom args sent from grunticon.js:
 		if( options.writeCSS !== "false" ){
 			grunticoner.writeCSS( dataarr , options );
 		}
-		deleteTempFiles();
+		// FIXME
+		// deleteTempFiles();
 		phantom.exit();
 	});
 })();

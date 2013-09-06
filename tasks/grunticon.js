@@ -20,7 +20,7 @@ module.exports = function( grunt , undefined ) {
 	var crushPath; // defined in grunt.registerMultiTask
 	var crusher = require( path.join( '..', 'lib', 'pngcrusher' ) );
 	var grunticoner = require( path.join( '..', 'lib', 'grunticoner' ) );
-
+	var underlineLength = 77;
 	var GruntiFile = require( path.join( '..', 'lib', 'grunticon-file') ).grunticonFile;
 
 	var readDir = function( path ){
@@ -107,7 +107,7 @@ module.exports = function( grunt , undefined ) {
 		var previewhtml = config.previewhtml || "preview.html";
 
 		//filename for generated loader HTML snippet file
-		var loadersnippet = config.loadersnippet || "grunticon.loader.txt";
+		var loadersnippet = config.loadersnippet || "grunticon.loader.html";
 
 		// css references base path for the loader
 		var cssbasepath = config.cssbasepath || path.sep;
@@ -183,7 +183,7 @@ module.exports = function( grunt , undefined ) {
 				}
 			});
 
-			grunt.log.ok( "Copied "+files.length+" file"+( files.length == 1 ? '' : 's' )+" from "+srcdir+" to "+tmp );
+			grunt.log.ok( "Copied "+files.length+" SVG/PNG file"+( files.length == 1 ? '' : 's' )+" from "+srcdir+" to "+tmp );
 
 			promise.resolve();
 
@@ -202,7 +202,7 @@ module.exports = function( grunt , undefined ) {
 
 			var banner = grunt.file.read( asyncCSSBanner );
 			var min = banner + "\n" + uglify.minify( asyncCSS ).code;
-			var loaderCodeDest = config.dest + loadersnippet;
+			var loaderCodeDest = path.join(config.dest, loadersnippet);
 
 			grunt.file.write( loaderCodeDest, min );
 			grunt.log.ok( "Grunticon loader file: "+loaderCodeDest );
@@ -211,7 +211,6 @@ module.exports = function( grunt , undefined ) {
 				// take it to phantomjs to do the rest
 
 				var phantomJsPath;
-				var underlineLength = 67
 
 				if( config.phantomjs && config.phantomjs !== true ){
 					phantomJsPath = config.phantomjs;
@@ -230,20 +229,21 @@ module.exports = function( grunt , undefined ) {
 				grunt.log.ok('Spawning phantomjs (' + phantomJsPath + '). PREPARE YOURSELF.');
 				grunt.log.writeln( Array(underlineLength+1).join("=") );
 
+				// TODO: set debug to true only if grunt is run with --verbose flag
 				var phantom = grunt.util.spawn({
 					cmd: phantomJsPath,
 					args: [
 						'--debug=true',
 						config.files.phantom,
 						path.join(tmp,path.sep),
-						config.dest,
+						path.join(config.dest,path.sep),
 						loaderCodeDest,
 						previewHTMLsrc,
 						datasvgcss,
 						datapngcss,
 						urlpngcss,
 						previewhtml,
-						pngf,
+						path.join(pngf,path.sep),
 						cssprefix,
 						cssbasepath,
 						customselectors,
@@ -255,7 +255,6 @@ module.exports = function( grunt , undefined ) {
 					],
 					fallback: ''
 				}, function(e,r,c){
-					grunt.log.writeln( Array(underlineLength+1).join("=") );
 					callback(e,r,c);
 				}
 				);
@@ -267,18 +266,25 @@ module.exports = function( grunt , undefined ) {
 			};
 
 			var crush = function( pngfolder ){
-				grunt.log.ok( "CRUSHING IT ("+crushPath+")");
 				var tmpPngfolder = path.join( tmp, pngfolder );
 
-				if( grunt.file.exists( path.join( config.dest , pngfolder ) ) ){
-					grunt.file.delete( path.join( config.dest, pngfolder ) );
+				grunt.log.writeln( Array(underlineLength+1).join("=") );
+
+				// Delete temp folder
+				if( grunt.file.exists( tmpPngfolder ) ){
+					grunt.log.ok('Deleting existing temp folder at '+tmpPngfolder)
+					grunt.file.delete( tmpPngfolder );
 				}
+
+				grunt.file.mkdir(tmpPngfolder);
+
+				grunt.log.ok( "CRUSHING IT (sponsored by "+crushPath+")");
 
 				crusher.crush({
 					input: tmpPngfolder,
 					outputDir:  path.join( config.dest , pngfolder ),
 					crushPath: crushPath,
-                    maxBuffer: 250
+					maxBuffer: 250
 				}, function( stdout , stderr ){
 					grunt.verbose.write( stdout );
 					grunt.verbose.write( stderr );
@@ -297,6 +303,8 @@ module.exports = function( grunt , undefined ) {
 							cssbasepath: cssbasepath
 						};
 
+						grunt.log.writeln('Before: '+files.length+' files');
+
 						files = files.filter( function( file ){
 							var stats = fs.lstatSync( path.resolve( path.join( tmp , file ) ) );
 							if( !stats.isDirectory() &&
@@ -304,6 +312,8 @@ module.exports = function( grunt , undefined ) {
 								return file;
 							}
 						});
+
+						grunt.log.writeln('After: '+files.length+' files');
 
 						var newFiles = GruntiFile.colorConfig( files , {
 							inputDir: path.resolve( tmp ),
@@ -350,10 +360,13 @@ module.exports = function( grunt , undefined ) {
 			}
 
 			var pngpath;
+			// FIXME
 			if( render && writeCSS ){
 				pngpath = pngfolder;
 			} else {
-				pngpath = path.join( "tmp", pngfolder );
+				pngpath = pngfolder;
+				grunt.log.writeln(' x  FIXME: render='+render+', writeCSS='+writeCSS);
+				// pngpath = path.join( "tmp", pngfolder );
 			}
 			callPhantom( pngpath, render, writeCSS, function(err, result, code) {
 				// TODO boost this up a bit.
@@ -362,16 +375,19 @@ module.exports = function( grunt , undefined ) {
 					grunt.fatal( result.stderr );
 					done( false );
 				} else {
-					grunt.log.write( result.stdout );
+					grunt.log.writeln( result.stdout );
 					if( !render || !writeCSS ){
 						crush( pngfolder );
 					} else {
-						grunt.log.println('NOT DOING IT ('+pngpath+')');
+						grunt.log.writeln('NOT DOING IT ('+pngpath+')');
 					}
 
 					// TODO: Handle cleanup with grunt-cleanup
 					grunt.file.delete( tmp );
-					// Brought to you by toilet: http://caca.zoy.org/wiki/toilet
+
+					grunt.log.ok('All done!');
+
+					// Brought to you by unicornsay.
 					// TODO: Does it work on Windows?
 					// dot + backspace hack is so grunt.log.ok respects dat whitespace
 					grunt.log.ok( ".\b"+grunt.file.read( config.files.mascot ) );
