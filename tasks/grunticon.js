@@ -250,21 +250,28 @@ module.exports = function( grunt , undefined ) {
 					grunt.log.ok('Looks like about '+files.length+' files you’ve got here.');
 
 					files.forEach(function(pngFileName, idx ){
+						grunt.log.ok(pngFileName+' ahoy!!!!!');
+
 						// Crush or copy
 						if( path.extname( pngFileName ) == '.png' ){
 							if( crushingIt ) {
 								crusher.crush({
 
+									input: pngSrcDir,
+									output: pngDestDir,
+
 									inputFilePath: path.join(pngSrcDir, pngFileName),
 									outputFilePath: path.join(pngDestDir, pngFileName),
+
+									pngFileName: pngFileName,
 
 									crushPath: pngcrushBinPath,
 									maxBuffer: 250,
 									verboseMode: grunt.option('verbose')
 
-								}, function(p){
-									console.log( 'processPNGCallback' );
-									processPNGCallback(p);
+								}, function(outputFileName, outputDir){
+									console.log( 'processPNGCallback: '+outputFileName+', '+outputDir);
+									processPNGCallback(outputFileName, outputDir);
 								});
 							} else {
 								grunt.log.ok('['+(idx+1)+'/'+files.length+'] Copying '+pngFileName);
@@ -286,21 +293,22 @@ module.exports = function( grunt , undefined ) {
 			});
 		}
 
-		var processPNGCallback = function( pngFileName ){
+		var processPNGCallback = function( outputFileName, outputDir ){
 
-			grunt.log.ok('PROCESSING '+pngFileName);
+			grunt.log.ok('PROCESSING '+outputFileName);
 
-			var gFile = new GruntiFile( pngFileName );
-			var imgLoc = path.resolve( path.join( pngFileName ) );
+			var gFile = new GruntiFile( outputFileName );
+			var imgLoc = path.resolve( path.join( outputDir, outputFileName ) );
 
 			grunt.log.ok('TEST1: '+imgLoc);
 
 			gFile.setImageData( imgLoc );
+			grunt.log.ok(gFile.imagedata);
 
 			// At this point we’ve only got PNGs, so we can make assumptions.
 			gFile.setPngLocation({
-				relative: pngDestDirName,
-				absolute: path.resolve( pngDestDirName )
+				relative: outputDir,
+				absolute: path.resolve( outputDir )
 			});
 
 			grunt.log.ok('TEST2');
@@ -311,7 +319,7 @@ module.exports = function( grunt , undefined ) {
 				defaultHeight: config.defaultHeight
 			}).then( function( stats , err ){
 
-				var res = gFile.getCSSRules( stats, pngDestDirName, cssClassPrefix, config );
+				var res = gFile.getCSSRules( stats, outputDir, cssClassPrefix, config );
 				dataArray.push( res );
 
 				if( idx + 1 == files.length ){
