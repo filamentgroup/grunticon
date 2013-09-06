@@ -134,9 +134,6 @@ module.exports = function( grunt , undefined ) {
 			height = "300px";
 		}
 
-		// get color variables from config
-		var colors = JSON.stringify( config.colors || {} );
-
 		var srcdir = config.src;
 		var tmp = path.join( config.dest , 'tmp' );
 
@@ -249,7 +246,6 @@ module.exports = function( grunt , undefined ) {
 						customselectors,
 						width,
 						height,
-						colors,
 						temp,
 						writeCSS
 					],
@@ -314,13 +310,6 @@ module.exports = function( grunt , undefined ) {
 						});
 
 						grunt.log.writeln('After: '+files.length+' files');
-
-						var newFiles = GruntiFile.colorConfig( files , {
-							inputDir: path.resolve( tmp ),
-							colors: JSON.parse( colors )
-						});
-
-						files.push.apply( files , newFiles );
 
 						files.forEach( function( file, idx ){
 							var gFile = new GruntiFile( file );

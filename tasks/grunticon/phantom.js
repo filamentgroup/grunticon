@@ -26,9 +26,8 @@ phantom args sent from grunticon.js:
 	[11] - custom CSS selectors
 	[12] - default width
 	[13] - default height
-	[14] - colors
-	[15] - if we should render files
-	[16] - if we should write CSS
+	[14] - if we should render files
+	[15] - if we should write CSS
 */
 
 (function(){
@@ -52,98 +51,26 @@ phantom args sent from grunticon.js:
 		customselectors: phantom.args[11],
 		defaultWidth: phantom.args[12],
 		defaultHeight: phantom.args[13],
-		colors: phantom.args[14],
-		render: phantom.args[15],
-		writeCSS: phantom.args[16]
+		render: phantom.args[14],
+		writeCSS: phantom.args[15]
 	};
 
 	var files = fs.list( options.inputdir );
 	var promises = [];
 
-	// get colors from filename, if present
-	var colorsRegx = /\.colors\-([^\.]+)/i;
-	var tempFiles = [];
-
-	// test if value is a valid hex
-	var isHex = function( val ){
-		return (/^[0-9a-f]{3}(?:[0-9a-f]{3})?$/i).test( val );
-	};
-
-	var getColorConfig = function( str ){
-		var colors = str.match( colorsRegx );
-		if( colors ){
-			colors = colors[ 1 ].split( "-" );
-			colors.forEach( function( color, i ){
-				if( isHex( color ) ){
-					colors[ i ] = "#" + color;
-				}
-			});
-			return colors;
-		}
-		else {
-			return [];
-		}
-	}; //getColorConfig
-
-
-	var colors = JSON.parse( options.colors );
-
-	var deleteTempFiles = function(){
-		tempFiles.forEach( function( file ){
-			fs.remove( file );
-		});
-	};
-
 	files = files.filter( function( file ){
-		var svgRegex = /\.svg$/i,
-			pngRegex = /\.png$/i,
-			isSvg = file.match( svgRegex ),
-			isPng = file.match( pngRegex );
-
-		return isSvg || isPng;
+			if( file.match( /\.svg$/i ) || file.match( /\.png$/i )){
+				promises.push( grunticoner.processFile( file, options ) );
+				return file;
+			} else {
+				console.log('Rejected '+file);
+			}
 	});
-
-	files.forEach( function( file ){
-		var colorConfig = getColorConfig( file ),
-			fileName = file;
-
-		if( colorConfig.length ){
-			console.log('Generate alternate colors for '+file);
-			var fileContents = fs.read( options.inputdir + "/" + file ),
-				filePath = options.inputdir + "/";
-
-			// base file is used as default icon color - no qualifications in its name, tho.
-			fileName = file.replace( colorsRegx, "" );
-			tempFiles.push( filePath + fileName );
-			fs.write( filePath + fileName, fileContents, 'w' );
-
-			colorConfig.forEach( function( color, i ){
-				var colorVar = colors[ color ],
-					newFileName = file.replace( colorsRegx, "-" + ( colorVar ? color : i + 1 ) ) ,
-					newFileContents = fileContents.replace( /(<svg[^>]+>)/im, '$1<style type="text/css">circle, ellipse, line, path, polygon, polyline, rect, text { fill: ' + (colorVar || color) + ' !important; }</style>' ),
-					newFilePath = options.inputdir + "/" + newFileName;
-
-				tempFiles.push( newFilePath );
-
-				fs.write( newFilePath, newFileContents, 'w' );
-
-				promises.push( grunticoner.processFile( newFileName , options ) );
-			});
-		}
-
-		// write the default too
-		promises.push( grunticoner.processFile( fileName, options ) );
-
-	});
-
-
 
 	RSVP.all( promises ).then( function( dataarr ){
 		if( options.writeCSS !== "false" ){
 			grunticoner.writeCSS( dataarr , options );
 		}
-		// FIXME
-		// deleteTempFiles();
 		phantom.exit();
 	});
 })();
