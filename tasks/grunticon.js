@@ -249,64 +249,64 @@ module.exports = function( grunt , undefined ) {
 				* STEP 3: Compress/copy PNGs from pngSrcDir to pngDestDir
 				*/
 
-				readDir(pngSrcDir)
-				.then(function(files, err){
-					var dataArray = [];
+				var promises = [];
 
-					grunt.log.subhead('Processing PNGs in '+pngSrcDir);
+				files = fs.readdirSync(pngSrcDir);
 
-					if( err ){
-						grunt.log.ok('readDir error: '+err);
+				grunt.log.subhead('Processing PNGs in '+pngSrcDir);
+				grunt.log.ok('Looks like '+files.length+'-ish files you’ve got here.');
+
+				files.forEach(function(pngFileName, idx){
+					var promise = new RSVP.Promise();
+
+					// Crush or copy
+					if(path.extname(pngFileName) !== '.png'){
+						grunt.log.ok('['+(idx+1)+'/'+files.length+'] Ignoring '+pngFileName);
+						promise.resolve();
 					} else {
-						grunt.log.ok('Looks like '+files.length+'-ish files you’ve got here.');
 
-						files.forEach(function(pngFileName, idx){
-							// Crush or copy
-							if(path.extname(pngFileName) !== '.png'){
-								grunt.log.ok('['+(idx+1)+'/'+files.length+'] Ignoring '+pngFileName);
-							} else {
+						if(crushingIt){
+							// grunt.log.ok('['+(idx+1)+'/'+files.length+'] Crushing '+pngFileName);
 
-								if(crushingIt){
-									grunt.log.ok('['+(idx+1)+'/'+files.length+'] Crushing '+pngFileName);
+							var pngcrushArgs = [
+								path.join(pngSrcDir, pngFileName),
+								path.join(pngDestDir, pngFileName)
+							];
 
-									var pngcrushArgs = [
-										path.join(pngSrcDir, pngFileName),
-										path.join(pngDestDir, pngFileName)
-									];
-
-									// Spawn pngcrush
-									var pngcrush = grunt.util.spawn({
-										cmd: pngcrushPath,
-										args: pngcrushArgs,
-										fallback: '',
-										opts: {
-											maxBuffer: 250 * 1024
-										}
-									},
-									function(err, result, code){
-										if(!err){
-											grunt.log.writeln( '\n'+Array(78).join("=")+'\n' );
-											processPNGCallback(pngFileName);
-										}
-									});
-
-									pngcrush.stdout.pipe(process.stdout);
-									pngcrush.stderr.pipe(process.stderr);
-
-								} else {
-									grunt.log.ok('['+(idx+1)+'/'+files.length+'] Copying '+pngFileName);
-									grunt.file.copy(
-										path.join(pngSrcDir, pngFileName),
-										path.join(pngDestDir, pngFileName)
-									);
-									processPNGCallback(pngFileName);
+							// Spawn pngcrush
+							var pngcrush = grunt.util.spawn({
+								cmd: pngcrushPath,
+								args: pngcrushArgs,
+								fallback: '',
+								opts: {
+									maxBuffer: 250 * 1024
 								}
-							}
+							},
+							function(err, result, code){
+								if(!err){
+									grunt.log.ok(pngFileName);
+									promise.resolve();
+								} else {
+									promise.reject(err);
+								}
+							});
 
-						});
+							// pngcrush.stdout.pipe(process.stdout);
+							// pngcrush.stderr.pipe(process.stderr);
+
+						} else {
+							grunt.log.ok('['+(idx+1)+'/'+files.length+'] Copying '+pngFileName);
+							grunt.file.copy(
+								path.join(pngSrcDir, pngFileName),
+								path.join(pngDestDir, pngFileName)
+							);
+							promise.resolve();
+						}
 					}
-				})
-				.then(function(){
+					promises.push(promise);
+				});
+
+				RSVP.all(promises).then(function(){
 					grunt.log.writeln('');
 					grunt.log.subhead('Building CSS');
 
@@ -389,8 +389,6 @@ module.exports = function( grunt , undefined ) {
 						'</noscript>'
 					].join(newline);
 
-					console.log('filesnippet:\n\n'+filesnippet);
-
 					grunt.log.ok('Writing preview CSS files');
 					grunt.file.write(path.join(destDir, pngFileCSS), pngFileRules.join("\n"));
 					grunt.file.write(path.join(destDir, pngDataCSS), pngDataRules.join("\n"));
@@ -414,10 +412,6 @@ module.exports = function( grunt , undefined ) {
 		// Print everything to the screen
 		phantomjs.stdout.pipe(process.stdout);
 		phantomjs.stderr.pipe(process.stderr);
-
-		var processPNGCallback = function(f){
-			// grunt.log.ok('Processed: '+f);
-		}
 
 	});
 };
