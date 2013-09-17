@@ -21,45 +21,6 @@ module.exports = function( grunt , undefined ) {
 	var path = require('path');
 	var RSVP = require(path.join('..', 'lib', 'rsvp'));
 
-	var readDir = function( path ){
-		var promise = new RSVP.Promise();
-		fs.readdir(path , function(err, files){
-			if(err){
-				grunt.log.error(err);
-				promise.reject(err);
-			} else {
-				promise.resolve(files);
-			}
-		});
-		return promise;
-	};
-
-	var readFile = function( filepath ){
-		var promise = new RSVP.Promise();
-		fs.readFile(filepath, function(err, data){
-			if(err){
-				grunt.log.error(err);
-				promise.reject(err);
-			} else {
-				promise.resolve(data);
-			}
-		});
-		return promise;
-	};
-
-	var writeFile = function( filepath , result ){
-		var promise = new RSVP.Promise();
-		fs.writeFile(filepath, result, function(err){
-			if(err){
-				grunt.log.error(err);
-				promise.reject(err);
-			} else {
-				promise.resolve();
-			}
-		});
-		return promise;
-	};
-
 	grunt.registerMultiTask('grunticon', 'A mystical CSS icon solution.', function(){
 		grunt.log.subhead('Look, it’s a grunticon!');
 		var config = this.options();
