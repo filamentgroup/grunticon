@@ -88,18 +88,15 @@ phantom args sent from grunticon.js:
 
 	vlog(Array(title.length+1).join('-'));
 
+	// Convert SVGs to PNGs
 	files.forEach(function(file, idx){
 		clog('[' + (idx+1) + '/' + files.length + '] -- ' + file);
 		promises.push(grunticoner.processSVGFile(file, options));
 	});
 
 	RSVP.all(promises).then(function(dataArray){
-		if(options.writeCSS !== "false"){
-			clog('Writing CSS with grunticoner.writeCSS');
-			grunticoner.writeCSS( dataArray , options );
-		} else {
-			clog('Not writing CSS (options.writeCSS == '+options.writeCSS+')');
-		}
+		clog('Writing CSS with grunticoner.writeCSS');
+		grunticoner.writeCSS(dataArray, options);
 		phantom.exit();
 	});
 
