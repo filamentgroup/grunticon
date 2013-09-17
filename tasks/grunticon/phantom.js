@@ -51,22 +51,22 @@ phantom args sent from grunticon.js:
 	}
 
 	var options = {
-		inputDir: phantom.args[0],
-		outputDir: phantom.args[1],
-		pngDestDirName: phantom.args[8],
-		cssprefix: phantom.args[9],
-		fallbackcss: phantom.args[6],
-		pngdatacss: phantom.args[5],
-		datacss: phantom.args[4],
-		cssbasepath: phantom.args[10],
-		asyncCSSpath: phantom.args[2],
-		previewFilePath: phantom.args[3],
+		inputDir:            phantom.args[0],
+		outputDir:           phantom.args[1],
+		asyncCSSpath:        phantom.args[2],
+		previewFilePath:     phantom.args[3],
+		datacss:             phantom.args[4],
+		pngdatacss:          phantom.args[5],
+		fallbackcss:         phantom.args[6],
 		previewHTMLFilePath: phantom.args[7],
-		customselectors: phantom.args[11],
-		defaultWidth: phantom.args[12],
-		defaultHeight: phantom.args[13],
-		render: phantom.args[14],
-		writeCSS: phantom.args[15]
+		pngDestDirName:      phantom.args[8],
+		cssprefix:           phantom.args[9],
+		cssbasepath:         phantom.args[10],
+		customselectors:     phantom.args[11],
+		defaultWidth:        phantom.args[12],
+		defaultHeight:       phantom.args[13],
+		render:              phantom.args[14],
+		writeCSS:            phantom.args[15]
 	};
 
 	var files = fs.list( options.inputDir );
@@ -77,7 +77,6 @@ phantom args sent from grunticon.js:
 	vlog(title);
 	vlog(Array(title.length+1).join('-'));
 
-	// TODO: Don't list directories
 	files = files.filter( function( file ){
 		if( file.match( /\.svg$/i ) ){
 			vlog('[x] '+file);
@@ -90,24 +89,12 @@ phantom args sent from grunticon.js:
 	vlog(Array(title.length+1).join('-'));
 
 	files.forEach(function(file, idx){
-		clog(
-			'Processing '+
-
-			// Space-padded numbers. SORRY IT’S GROSS.
-			Array(
-				(files.length+'').length - // total number string length
-				((idx+1)+'').length // current number string length
-				+ 1 // padding size
-			).join(' ')+
-
-			(idx+1) + ' of ' + files.length + ' ---> ' + file
-		)
-
-		promises.push( grunticoner.processFile( file, options ) );
+		clog('[' + (idx+1) + '/' + files.length + '] -- ' + file);
+		promises.push(grunticoner.processSVGFile(file, options));
 	});
 
-	RSVP.all( promises ).then( function( dataArray ){
-		if( options.writeCSS !== "false" ){
+	RSVP.all(promises).then(function(dataArray){
+		if(options.writeCSS !== "false"){
 			clog('Writing CSS with grunticoner.writeCSS');
 			grunticoner.writeCSS( dataArray , options );
 		} else {

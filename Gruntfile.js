@@ -29,8 +29,9 @@ module.exports = function(grunt) {
 					// If you pick option 2, specify a path to the binaries like so:
 					// pngcrush: '/usr/local/bin/pngcrush'
 					// phantomjs: '/usr/local/bin/phantomjs'
-					pngcrush: true,
-					phantomjs: false, // Requires user action.
+					pngcrush: false,
+					// phantomjs: false, // Requires user action.
+					phantomjs: '/usr/local/bin/phantomjs',
 
 					// CSS filenames
 					datasvgcss: "icons.data.svg.css",

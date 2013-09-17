@@ -12,25 +12,27 @@
 module.exports = function( grunt , undefined ) {
 	"use strict";
 
-	var uglify = require( 'uglify-js' );
-	var fs = require( 'fs' );
-	var path = require( 'path' );
+	// grunt.config.requires('options.src','options.dest');
 
-	var RSVP = require( path.join( '..', 'lib', 'rsvp' ) );
-	var pngcrushBinPath; // defined in grunt.registerMultiTask
-	var crusher = require( path.join( '..', 'lib', 'pngcrusher' ) );
-	var grunticoner = require( path.join( '..', 'lib', 'grunticoner' ) );
-	var underlineLength = 77;
-	var GruntiFile = require( path.join( '..', 'lib', 'grunticon-file') ).grunticonFile;
+	var isVerbose = grunt.option('verbose');
+
+	var uglify = require('uglify-js');
+	var fs = require('fs');
+	var path = require('path');
+
+	var RSVP = require(path.join('..', 'lib', 'rsvp'));
+	var pngcrushPath; // defined in grunt.registerMultiTask
+	var grunticoner = require(path.join('..', 'lib', 'grunticoner'));
+	var GruntiFile = require(path.join('..', 'lib', 'grunticon-file')).grunticonFile;
 
 	var readDir = function( path ){
 		var promise = new RSVP.Promise();
-		fs.readdir( path , function( err , files ){
-			if( err ){
-				grunt.log.error( err );
-				promise.reject( err );
+		fs.readdir(path , function(err, files){
+			if(err){
+				grunt.log.error(err);
+				promise.reject(err);
 			} else {
-				promise.resolve( files );
+				promise.resolve(files);
 			}
 		});
 		return promise;
@@ -38,12 +40,12 @@ module.exports = function( grunt , undefined ) {
 
 	var readFile = function( filepath ){
 		var promise = new RSVP.Promise();
-		fs.readFile( filepath , function( err , data ){
-			if( err ){
-				grunt.log.error( err );
-				promise.reject( err );
+		fs.readFile(filepath, function(err, data){
+			if(err){
+				grunt.log.error(err);
+				promise.reject(err);
 			} else {
-				promise.resolve( data );
+				promise.resolve(data);
 			}
 		});
 		return promise;
@@ -51,10 +53,10 @@ module.exports = function( grunt , undefined ) {
 
 	var writeFile = function( filepath , result ){
 		var promise = new RSVP.Promise();
-		fs.writeFile( filepath , result , function( err ){
-			if( err ){
-				grunt.log.error( err );
-				promise.reject( err );
+		fs.writeFile(filepath, result, function(err){
+			if(err){
+				grunt.log.error(err);
+				promise.reject(err);
 			} else {
 				promise.resolve();
 			}
@@ -62,22 +64,17 @@ module.exports = function( grunt , undefined ) {
 		return promise;
 	};
 
-	grunt.registerMultiTask( 'grunticon', 'A mystical CSS icon solution.', function() {
-		grunt.log.subhead( "Look, it’s a grunticon!" );
+	grunt.registerMultiTask('grunticon', 'A mystical CSS icon solution.', function(){
+		grunt.log.subhead('Look, it’s a grunticon!');
 		var config = this.options();
 
 		config.files = {
-			loader: path.join( __dirname, 'grunticon', 'static', 'grunticon.loader.js'),
-			banner: path.join( __dirname, 'grunticon', 'static', 'grunticon.loader.banner.js'),
-			preview: path.join( __dirname, 'grunticon', 'static', 'preview.html'),
-			phantom: path.join( __dirname,  'grunticon', 'phantom.js'),
-			mascot: path.join( __dirname, 'grunticon', 'static', 'excessive.txt')
+			loader:  path.join(__dirname, 'grunticon', 'static', 'grunticon.loader.js'),
+			banner:  path.join(__dirname, 'grunticon', 'static', 'grunticon.loader.banner.js'),
+			preview: path.join(__dirname, 'grunticon', 'static', 'preview.html'),
+			phantom: path.join(__dirname, 'grunticon', 'phantom.js'),
+			mascot:  path.join(__dirname, 'grunticon', 'static', 'excessive.txt')
 		};
-
-		if( !config || config.src === undefined || config.dest === undefined ){
-			grunt.fatal( "Oops! Please provide grunticon configuration for src and dest in your grunt.js file" );
-			done( false );
-		}
 
 		// Load ’er up
 		var asyncCSS = config.files.loader;
@@ -134,6 +131,7 @@ module.exports = function( grunt , undefined ) {
 		var pngFiles = [];
 		var files = fs.readdirSync( srcDir );
 
+		// Filter out non SVG/PNG files
 		files = files.filter( function( file ){
 			if ( path.extname(file) === ".svg" ) {
 				svgFiles.push(file);
@@ -158,7 +156,7 @@ module.exports = function( grunt , undefined ) {
 		if( config.pngcrush ) {
 			if( config.pngcrush === true ){
 				try {
-					pngcrushBinPath = require( 'pngcrush-installer' ).getBinPath();
+					pngcrushPath = require('pngcrush-installer').getBinPath();
 					crushingIt = true;
 				} catch (err){
 					grunt.fatal("pngcrush is not installed. Your options:\n"+
@@ -168,7 +166,7 @@ module.exports = function( grunt , undefined ) {
 					done(false);
 				}
 			} else {
-				pngcrushBinPath = config.pngcrush;
+				pngcrushPath = config.pngcrush;
 				crushingIt = true;
 			}
 		}
@@ -180,16 +178,17 @@ module.exports = function( grunt , undefined ) {
 			'PNG destination': pngDestDir
 		}
 
-		for( var key in resetDirs ){
+		for(var key in resetDirs){
 			grunt.log.ok('Resetting '+key+' ('+resetDirs[key]+')');
-			// TODO: switch grunt.log.ok back to grunt.verbose.or.ok
+
 			if( grunt.file.exists( resetDirs[key] ) ){
 				grunt.file.delete( resetDirs[key] );
-				grunt.log.ok( '.\b - Deleting '+key+' directory' );
+				grunt.log.ok('.\b - Deleting '+key+' directory');
 			} else {
-				grunt.log.ok( '.\b - '+key+' directory doesn’t exist and will be created' );
+				grunt.log.ok('.\b - '+key+' directory doesn’t exist and will be created');
 			}
-			grunt.log.ok( '.\b - Creating '+key+' directory');
+
+			grunt.log.ok('.\b - Creating '+key+' directory');
 			grunt.file.mkdir( resetDirs[key] );
 		}
 
@@ -210,7 +209,6 @@ module.exports = function( grunt , undefined ) {
 		grunt.log.ok( 'Writing grunticon loader file: ('+loaderCodeDest+')' );
 		grunt.file.write( loaderCodeDest, min );
 
-		// Formerly callPhantom
 		var phantomJsPath;
 		var temp = true;
 		var writeCSS = true;
@@ -250,36 +248,50 @@ module.exports = function( grunt , undefined ) {
 					grunt.log.ok('Looks like about '+files.length+' files you’ve got here.');
 
 					files.forEach(function(pngFileName, idx ){
-						grunt.log.ok(pngFileName+' ahoy!!!!!');
-
 						// Crush or copy
 						if( path.extname( pngFileName ) == '.png' ){
 							if( crushingIt ) {
-								crusher.crush({
+								grunt.log.ok('['+(idx+1)+'/'+files.length+'] Crushing '+pngFileName);
 
-									input: pngSrcDir,
-									output: pngDestDir,
+								var pngcrushArgs = [
+									path.join(pngSrcDir, pngFileName),
+									path.join(pngDestDir, pngFileName)
+								];
 
-									inputFilePath: path.join(pngSrcDir, pngFileName),
-									outputFilePath: path.join(pngDestDir, pngFileName),
+								// Spawn pngcrush
+								var pngcrush = grunt.util.spawn({
+									cmd: pngcrushPath,
+									args: [],//pngcrushArgs,
+									opts: {
+										maxBuffer: 250 * 1024
+									},
+									fallback: ''
+								},
+								function(err, result, code){
 
-									pngFileName: pngFileName,
+									console.log('FUCK');
 
-									crushPath: pngcrushBinPath,
-									maxBuffer: 250,
-									verboseMode: grunt.option('verbose')
+									if( !err ){
+										grunt.log.writeln( '\n'+Array(78).join("=")+'\n' );
 
-								}, function(outputFileName, outputDir){
-									console.log( 'processPNGCallback: '+outputFileName+', '+outputDir);
-									processPNGCallback(outputFileName, outputDir);
+										console.log( 'processPNGCallback: '+pngFileName+', '+pngDestDir);
+										processPNGCallback(pngFileName, pngDestDir);
+
+									} else {
+										grunt.log.ok('PNGCRUSH ERROR ENCOUNTERED');
+									}
 								});
+
+								pngcrush.stdout.pipe(process.stdout);
+								pngcrush.stderr.pipe(process.stderr);
+
 							} else {
 								grunt.log.ok('['+(idx+1)+'/'+files.length+'] Copying '+pngFileName);
 								grunt.file.copy(
 									path.join(pngSrcDir, pngFileName),
 									path.join(pngDestDir, pngFileName)
 								);
-								processPNGCallback(pngFileName);
+								processPNGCallback(pngFileName, pngDestDir);
 							}
 						} else {
 							grunt.log.ok('['+(idx+1)+'/'+files.length+'] Ignoring '+pngFileName);
@@ -289,7 +301,15 @@ module.exports = function( grunt , undefined ) {
 				}
 			})
 			.then( function(){
-				declareVictory();
+
+				grunt.log.ok('All done!');
+
+				// Brought to you by unicornsay.
+				// TODO: Does it work on Windows?
+				// dot + backspace hack is so grunt.log.ok respects dat whitespace
+				grunt.log.ok(".\b"+grunt.file.read(config.files.mascot));
+				done();
+
 			});
 		}
 
@@ -297,18 +317,19 @@ module.exports = function( grunt , undefined ) {
 
 			grunt.log.ok('PROCESSING '+outputFileName);
 
-			var gFile = new GruntiFile( outputFileName );
-			var imgLoc = path.resolve( path.join( outputDir, outputFileName ) );
+			var gFile = new GruntiFile(outputFileName);
+			grunt.log.ok('WE HAVE A GRUNTIFILE');
+			console.log(outputDir +' -- '+ outputFileName);
+			var imgLoc = path.resolve(path.join(outputDir, outputFileName));
 
 			grunt.log.ok('TEST1: '+imgLoc);
 
-			gFile.setImageData( imgLoc );
+			gFile.setImageData(imgLoc);
 			grunt.log.ok(gFile.imagedata);
 
-			// At this point we’ve only got PNGs, so we can make assumptions.
-			gFile.setPngLocation({
+			gFile.setPNGLocation({
 				relative: outputDir,
-				absolute: path.resolve( outputDir )
+				absolute: path.resolve(outputDir)
 			});
 
 			grunt.log.ok('TEST2');
@@ -341,64 +362,57 @@ module.exports = function( grunt , undefined ) {
 
 		}
 
-		var declareVictory = function(){
-			grunt.log.ok('All done!');
-
-			// Brought to you by unicornsay.
-			// TODO: Does it work on Windows?
-			// dot + backspace hack is so grunt.log.ok respects dat whitespace
-			grunt.log.ok( ".\b"+grunt.file.read( config.files.mascot ) );
-			done();
-		}
-
 		/*
 		Convert SVGs to PNGs
 		*/
 
-		grunt.log.ok('Setting a phantomjs upon '+srcDir+' forthwith');
+		grunt.log.ok('Setting a phantomjs upon "'+srcDir+'" forthwith');
 		grunt.log.ok('Converting '+svgFiles.length+' SVG'+( svgFiles.length == 1 ? '' : 's' )+' to PNG format with phantomjs ('+phantomJsPath+')');
-		grunt.log.writeln( '\n'+Array(underlineLength+1).join("=")+'\n' );
+		grunt.log.writeln( '\n'+Array(78).join("=")+'\n' );
 
-		var phantom = grunt.util.spawn({
+		var phantomJsArgs = [
+			config.files.phantom,
+			path.join(srcDir,path.sep),
+			path.join(pngSrcDir,path.sep),
+			loaderCodeDest,
+			previewHTMLsrc,
+			dataSvgCSS,
+			dataPngCSS,
+			urlPngCSS,
+			previewHTML,
+			path.join(pngDestDir,path.sep), // destination
+			cssClassPrefix,
+			cssBasePath,
+			customSelectors,
+			width,
+			height,
+			temp,
+			writeCSS,
+			grunt.option('verbose'),
+		]
+
+		if( isVerbose ){
+			phantomJsArgs.unshift('--debug=true');
+		}
+
+		var phantomjs = grunt.util.spawn({
 			cmd: phantomJsPath,
-			args: [
-				(grunt.option('verbose') ? '--debug=true' : '--debug=false'),
-				config.files.phantom,
-				path.join(srcDir,path.sep),
-				path.join(pngSrcDir,path.sep),
-				loaderCodeDest,
-				previewHTMLsrc,
-				dataSvgCSS,
-				dataPngCSS,
-				urlPngCSS,
-				previewHTML,
-				path.join(pngDestDir,path.sep), // destination
-				cssClassPrefix,
-				cssBasePath,
-				customSelectors,
-				width,
-				height,
-				temp,
-				writeCSS,
-				grunt.option('verbose'),
-			],
+			args: phantomJsArgs,
 			fallback: ''
-		}, function(err, result, code){
+		},
+		function(err, result, code){
 			grunt.log.ok('PHANTOMJS OUT');
-
-				if( !err ){
-					grunt.log.writeln( '\n'+Array(underlineLength+1).join("=")+'\n' );
-					processPNGs( pngSrcDir, pngDestDir );
-				} else {
-					grunt.log.ok('ERROR ENCOUNTERED');
-				}
-
+			if( !err ){
+				grunt.log.writeln( '\n'+Array(78).join("=")+'\n' );
+				processPNGs(pngSrcDir, pngDestDir);
+			} else {
+				grunt.log.ok('ERROR ENCOUNTERED');
 			}
-		);
+		});
 
 		// Print everything to the screen
-		phantom.stdout.pipe(process.stdout);
-		phantom.stderr.pipe(process.stderr);
+		phantomjs.stdout.pipe(process.stdout);
+		phantomjs.stderr.pipe(process.stderr);
 
 	});
 };
