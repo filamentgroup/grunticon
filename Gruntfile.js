@@ -34,8 +34,8 @@ module.exports = function(grunt) {
 					phantomjs: '/usr/local/bin/phantomjs',
 
 					// CSS filenames
-					datasvgcss: "icons.data.svg.css",
-					datapngcss: "icons.data.png.css",
+					svgDataCSS: "icons.data.svg.css",
+					pngDataCSS: "icons.data.png.css",
 					urlpngcss: "icons.fallback.css",
 
 					// preview HTML filename

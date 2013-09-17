@@ -19,11 +19,7 @@ module.exports = function( grunt , undefined ) {
 	var uglify = require('uglify-js');
 	var fs = require('fs');
 	var path = require('path');
-
 	var RSVP = require(path.join('..', 'lib', 'rsvp'));
-	var pngcrushPath; // defined in grunt.registerMultiTask
-	var grunticoner = require(path.join('..', 'lib', 'grunticoner'));
-	var GruntiFile = require(path.join('..', 'lib', 'grunticon-file')).grunticonFile;
 
 	var readDir = function( path ){
 		var promise = new RSVP.Promise();
@@ -81,9 +77,9 @@ module.exports = function( grunt , undefined ) {
 		var asyncCSSBanner = config.files.banner;
 		var previewHTMLsrc = config.files.preview;
 
-		var dataSvgCSS = config.datasvgcss || "icons.data.svg.css";
-		var dataPngCSS = config.datapngcss || "icons.data.png.css";
-		var urlPngCSS = config.urlpngcss || "icons.fallback.css";
+		var svgDataCSS = config.svgDataCSS || "icons.data.svg.css";
+		var pngDataCSS = config.pngDataCSS || "icons.data.png.css";
+		var pngFileCSS = config.urlpngcss || "icons.fallback.css";
 
 		var previewHTML = config.previewhtml || "preview.html";
 		var loaderSnippet = config.loadersnippet || "grunticon.loader.html";
@@ -93,6 +89,8 @@ module.exports = function( grunt , undefined ) {
 		var pngDestDirName = config.pngfolder || "png";
 		var pngSrcDirName = pngDestDirName;
 		var cssClassPrefix = config.cssprefix || "icon-";
+
+		var pngcrushPath;
 
 		var width = config.defaultWidth || 400;
 		var height = config.defaultHeight || 300;
@@ -122,6 +120,29 @@ module.exports = function( grunt , undefined ) {
 		and linked in the PNG reference CSS file.
 		*/
 		var pngDestDir = path.join(destDir, pngDestDirName);
+
+		// Reset generated directories
+		var resetDirs = {
+			'grunticon destination': destDir,
+			'PNG source': pngSrcDir,
+			'PNG destination': pngDestDir
+		}
+
+		for(var key in resetDirs){
+			grunt.log.ok('Resetting '+key+' ('+resetDirs[key]+')');
+
+			if( grunt.file.exists( resetDirs[key] ) ){
+				grunt.file.delete( resetDirs[key] );
+				grunt.log.ok('.\b - Deleting '+key+' directory');
+			} else {
+				grunt.log.ok('.\b - '+key+' directory doesn’t exist and will be created');
+			}
+
+			grunt.log.ok('.\b - Creating '+key+' directory');
+			grunt.file.mkdir(resetDirs[key]);
+		}
+
+		grunt.log.writeln('');
 
 		/*
 		Files to process.
@@ -163,44 +184,13 @@ module.exports = function( grunt , undefined ) {
 			crushingIt = true;
 		}
 
-		// Reset generated directories
-		var resetDirs = {
-			'grunticon destination': destDir,
-			'PNG source': pngSrcDir,
-			'PNG destination': pngDestDir
-		}
-
-		for(var key in resetDirs){
-			grunt.log.ok('Resetting '+key+' ('+resetDirs[key]+')');
-
-			if( grunt.file.exists( resetDirs[key] ) ){
-				grunt.file.delete( resetDirs[key] );
-				grunt.log.ok('.\b - Deleting '+key+' directory');
-			} else {
-				grunt.log.ok('.\b - '+key+' directory doesn’t exist and will be created');
-			}
-
-			grunt.log.ok('.\b - Creating '+key+' directory');
-			grunt.file.mkdir(resetDirs[key]);
-		}
-
-		grunt.log.writeln('');
-
 		// Nice li’l message
-		grunt.log.ok(
-			"Processing "+
+		grunt.log.subhead(
 			svgFiles.length+" SVG file"+( svgFiles.length == 1 ? '' : 's' )+
 			" and "+
 			pngFiles.length+" PNG file"+( pngFiles.length == 1 ? '' : 's' )+
-			" from "+srcDir
+			" in "+srcDir
 		);
-
-		var banner = grunt.file.read( asyncCSSBanner );
-		var min = banner + "\n" + uglify.minify( asyncCSS ).code;
-		var loaderCodeDest = path.join(destDir, loaderSnippet);
-
-		grunt.log.ok('Writing grunticon loader file: ('+loaderCodeDest+')');
-		grunt.file.write(loaderCodeDest, min);
 
 		var phantomJsPath = config.phantomjs;
 		var temp = true;
@@ -214,21 +204,7 @@ module.exports = function( grunt , undefined ) {
 			config.files.phantom,
 			path.join(srcDir, path.sep),
 			path.join(pngSrcDir, path.sep),
-			loaderCodeDest,
-			previewHTMLsrc,
-			dataSvgCSS,
-			dataPngCSS,
-			urlPngCSS,
-			previewHTML,
-			path.join(pngDestDir,path.sep), // destination
-			cssClassPrefix,
-			cssBasePath,
-			customSelectors,
-			width,
-			height,
-			temp,
-			writeCSS,
-			grunt.option('verbose'),
+			isVerbose
 		]
 
 		if( isVerbose ){
@@ -246,44 +222,51 @@ module.exports = function( grunt , undefined ) {
 		},
 		function(err, result, code){
 			if(err){
-				grunt.log.ok('ERROR ENCOUNTERED');
+				grunt.log.ok('PHANTOMJS ERROR ENCOUNTERED');
 			} else {
 				grunt.log.writeln( '\n'+Array(78).join("=")+'\n' );
 
 				/*
-				* STEP 2: Compress/copy PNGs to pngDestDir
+				* STEP 2: Copy PNGs to from srcDir to pngSrcDir
 				*/
 
-				if(crushingIt){
-					grunt.log.ok('CRUSHING IT: '+pngSrcDir+' --> '+pngDestDir);
+				if( pngFiles.length > 0 ){
+					grunt.log.subhead('Copying PNG files from '+srcDir+' to '+pngSrcDir);
+					pngFiles.forEach(function(b){
+						grunt.log.ok(b+'.png');
+						grunt.file.copy(
+							path.join(srcDir, b+'.png'),
+							path.join(pngSrcDir, b+'.png')
+						);
+					})
 				} else {
-					grunt.log.ok('COPYING IT: '+pngSrcDir+' --> '+pngDestDir);
+					grunt.log.ok('No PNG files found in '+srcDir);
 				}
 
-				// List the directory of crushed files
-				readDir(pngSrcDir)
+				grunt.log.writeln('');
 
-				// Filter out non-PNGs, build dataArray
+				/*
+				* STEP 3: Compress/copy PNGs from pngSrcDir to pngDestDir
+				*/
+
+				readDir(pngSrcDir)
 				.then(function(files, err){
 					var dataArray = [];
+
+					grunt.log.subhead('Processing PNGs in '+pngSrcDir);
 
 					if( err ){
 						grunt.log.ok('readDir error: '+err);
 					} else {
-						grunt.log.ok('Looks like about '+files.length+' files you’ve got here.');
+						grunt.log.ok('Looks like '+files.length+'-ish files you’ve got here.');
 
 						files.forEach(function(pngFileName, idx){
-
-
-
 							// Crush or copy
-							if( path.extname( pngFileName ) == '.png' ){
+							if(path.extname(pngFileName) !== '.png'){
+								grunt.log.ok('['+(idx+1)+'/'+files.length+'] Ignoring '+pngFileName);
+							} else {
 
-								var processPNG = function(filename, callback){
-
-								}
-
-								if( crushingIt ) {
+								if(crushingIt){
 									grunt.log.ok('['+(idx+1)+'/'+files.length+'] Crushing '+pngFileName);
 
 									var pngcrushArgs = [
@@ -303,8 +286,7 @@ module.exports = function( grunt , undefined ) {
 									function(err, result, code){
 										if(!err){
 											grunt.log.writeln( '\n'+Array(78).join("=")+'\n' );
-											console.log( 'processPNGCallback: '+pngFileName+', '+pngDestDir);
-											processPNGCallback(pngFileName, pngDestDir);
+											processPNGCallback(pngFileName);
 										}
 									});
 
@@ -317,23 +299,113 @@ module.exports = function( grunt , undefined ) {
 										path.join(pngSrcDir, pngFileName),
 										path.join(pngDestDir, pngFileName)
 									);
-									processPNGCallback(pngFileName, pngDestDir);
+									processPNGCallback(pngFileName);
 								}
-							} else {
-								grunt.log.ok('['+(idx+1)+'/'+files.length+'] Ignoring '+pngFileName);
 							}
 
 						});
 					}
 				})
 				.then(function(){
+					grunt.log.writeln('');
+					grunt.log.subhead('Building CSS');
 
+					var buildCSSRule = function(s,i){
+						return '.'+s+'{\n\tbackground-image: url('+i+');'+'\n}\n';
+					}
+
+					var pngFileRules = [];
+					var pngDataRules = [];
+					var svgDataRules = [];
+					var htmlPreviewBody = [];
+
+					var svgHeader = "data:image/svg+xml;charset=US-ASCII,";
+					var pngHeader = "data:image/png;base64,";
+
+					// Load data arrays for writing
+					allFiles.forEach(function(f){
+						var pngFileURL, pngData, pngDataURI, svgData, svgDataURI;
+						//
+						pngFileURL = path.join(pngDestDirName, f+'.png');
+						pngData = new Buffer(fs.readFileSync(path.join(pngDestDir, f+'.png'))).toString('base64');
+
+						// IE8
+						if(pngData.length >= 32768){
+							pngDataURI = pngFileURL;
+						} else {
+							pngDataURI = pngHeader+pngData;
+						}
+
+						//
+						if( ~svgFiles.indexOf(f) ){
+							svgData = fs.readFileSync(path.join(srcDir, f+'.svg')).toString()
+								.replace(/[\n\r]/gmi, "")
+								.replace(/[\t\s]+/gmi, " ")
+								.replace(/<\!\-\-(.*(?=\-\->))\-\->/gmi, "")
+								.replace(/'/gmi, "\\i");
+
+							// svgData = encodeURIComponent(svgData);
+
+							svgDataURI = svgHeader+svgData;
+						} else {
+							svgDataURI = pngDataURI;
+						}
+
+						var sel = cssClassPrefix+f;
+
+						sel = sel.replace(/[^\w]+/gmi, '-');
+
+						// // CSS Files
+						pngFileRules.push(buildCSSRule(sel, pngFileURL));
+						pngDataRules.push(buildCSSRule(sel, pngDataURI));
+						svgDataRules.push(buildCSSRule(sel, svgDataURI));
+
+					});
+
+					// Output formatting
+					var pretty = true;
+					var tab = "";
+					var newline = "";
+
+					if (pretty){
+						tab = "\t";
+						newline = "\n";
+					}
+
+					var loader = grunt.file.read(asyncCSSBanner) + "\n" + uglify.minify(asyncCSS).code;
+					var cssFilePrefix = '{{ STATIC_URL }}/';
+
+					var filesnippet = [
+						'<script>',
+						loader,
+						'grunticon([',
+						tab + '"' + cssFilePrefix + svgDataCSS +'",',
+						tab + '"' + cssFilePrefix + pngDataCSS +'",',
+						tab + '"' + cssFilePrefix + pngFileCSS +'"',
+						']);',
+						"</script>\n",
+						'<noscript>',
+						tab + '<link href="' + cssFilePrefix + pngFileCSS + '" rel="stylesheet">',
+						'</noscript>'
+					].join(newline);
+
+					console.log('filesnippet:\n\n'+filesnippet);
+
+					grunt.log.ok('Writing preview CSS files');
+					grunt.file.write(path.join(destDir, pngFileCSS), pngFileRules.join("\n"));
+					grunt.file.write(path.join(destDir, pngDataCSS), pngDataRules.join("\n"));
+					grunt.file.write(path.join(destDir, svgDataCSS), svgDataRules.join("\n"));
+
+					grunt.log.ok('Updating snippet HTML file (' + loaderSnippet + ')');
+					grunt.file.write(path.join(destDir, loaderSnippet), filesnippet);
+				})
+				.then(function(){
+					grunt.log.writeln('');
 					// Brought to you by unicornsay.
 					// TODO: Does it work on Windows?
 					// dot + backspace hack is so grunt.log.ok respects dat whitespace
 					grunt.log.ok(".\b"+grunt.file.read(config.files.mascot));
 					done();
-
 				});
 
 			}
@@ -343,53 +415,8 @@ module.exports = function( grunt , undefined ) {
 		phantomjs.stdout.pipe(process.stdout);
 		phantomjs.stderr.pipe(process.stderr);
 
-		var processPNGCallback = function( outputFileName, outputDir ){
-
-			grunt.log.ok('PROCESSING '+outputFileName);
-
-			var gFile = new GruntiFile(outputFileName);
-			grunt.log.ok('WE HAVE A GRUNTIFILE');
-			console.log(outputDir +' -- '+ outputFileName);
-			var imgLoc = path.resolve(path.join(outputDir, outputFileName));
-
-			grunt.log.ok('TEST1: '+imgLoc);
-
-			gFile.setImageData(imgLoc);
-			grunt.log.ok(gFile.imagedata);
-
-			gFile.setPNGLocation({
-				relative: outputDir,
-				absolute: path.resolve(outputDir)
-			});
-
-			grunt.log.ok('TEST2');
-
-			gFile.stats({
-				inputDir: imgLoc,
-				defaultWidth: config.defaultWidth,
-				defaultHeight: config.defaultHeight
-			}).then( function( stats , err ){
-
-				var res = gFile.getCSSRules( stats, outputDir, cssClassPrefix, config );
-				dataArray.push( res );
-
-				if( idx + 1 == files.length ){
-					grunt.log.ok('My work here is done. Write the CSS.');
-
-					// Write GruntiFiles to CSS
-					GruntiFile.writeCSS( dataArray, {
-						previewHTMLFilePath: previewHTMLsrc,
-						previewFilePath: previewHTML,
-						pngdatacss: dataPngCSS,
-						asyncCSSpath: path.join( destDir, loaderSnippet),
-						datacss: dataSvgCSS,
-						outputDir: destDir,
-						fallbackcss: urlPngCss,
-						cssbasepath: cssBasePath
-					});
-				}
-			});
-
+		var processPNGCallback = function(f){
+			// grunt.log.ok('Processed: '+f);
 		}
 
 	});

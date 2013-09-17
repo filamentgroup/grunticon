@@ -10,94 +10,86 @@
 /*global window:true*/
 /*global require:true*/
 
-/*
-phantom args sent from grunticon.js:
-	[0] - input directory path
-	[1] - output directory path
-	[2] - asyncCSS output file path
-	[3] - preview.html static file path
-	[4] - CSS filename for datasvg css
-	[5] - CSS filename for datapng css
-	[6] - CSS filename for urlpng css
-	[7] - filename for preview HTML file
-	[8] - png folder name
-	[9] - css classname prefix
-	[10] - css basepath prefix
-	[11] - custom CSS selectors
-	[12] - default width
-	[13] - default height
-	[14] - if we should render files
-	[15] - if we should write CSS
-	[16] - verbose?
-*/
+"use strict";
+var fs = require('fs');
+var RSVP = require('../../lib/rsvp')
 
-(function(){
-	"use strict";
-	var fs = require( "fs" );
-	var RSVP = require('../../lib/rsvp');
-	var grunticoner = require('../../lib/grunticoner');
-	var isVerbose = phantom.args[16];
+var inputDir = phantom.args[0];
+var outputDir = phantom.args[1];
+var isVerbose = phantom.args[2];
 
-	var clog = function(what){
+var clog = function(what){
+	console.log("[32m[phantom.js][39m "+what);
+}
+
+var vlog = function(what){
+	if( isVerbose !== 'undefined' ){
 		// Note the escape characters.
-		console.log("[32m[phantom.js][39m "+what);
+		clog(what);
+	}
+}
+
+var files = fs.list(inputDir);
+var promises = [];
+
+var title = 'SVG files in '+inputDir+':';
+
+vlog(title);
+vlog(Array(title.length+1).join('-'));
+
+files = files.filter( function( file ){
+	if( file.match( /\.svg$/i ) ){
+		vlog('[x] '+file);
+		return file;
+	} else {
+		vlog('[ ] '+file);
+	}
+});
+
+vlog(Array(title.length+1).join('-'));
+
+// Convert SVGs to PNGs
+files.forEach(function(file, idx){
+	clog('[' + (idx+1) + '/' + files.length + '] -- ' + file);
+
+	var promise = new RSVP.Promise();
+	var filename = file.split('/').pop();
+	var ext = filename.split('.').pop();
+	var basename = filename.substr(0, filename.length - ext.length - 1);
+
+	// Check extension
+	if(ext !== 'svg'){
+		promise.reject();
+	} else {
+		var svgSrcFile = inputDir + basename + '.svg';
+		var pngDestFile = outputDir + basename + '.png';
+		var page = require('webpage').create();
+
+		// Minimum viewport size
+		page.viewportSize = {
+			width: 1,
+			height: 1
+		};
+
+		page.open(svgSrcFile, function(status){
+			clog(svgSrcFile+' [32m=>[39m '+ pngDestFile);
+
+			// global.imageSizes[basename] = [document.body.clientWidth, document.body.clientHeight];
+
+			if(status !== 'success'){
+				promise.reject();
+			} else {
+				page.render(pngDestFile);
+				promise.resolve();
+			}
+		});
 	}
 
-	var vlog = function(what){
-		if( isVerbose !== 'undefined' ){
-			// Note the escape characters.
-			clog(what);
-		}
-	}
+	// Add promise to promise list
+	promises.push(promise);
+});
 
-	var options = {
-		inputDir:            phantom.args[0],
-		outputDir:           phantom.args[1],
-		asyncCSSpath:        phantom.args[2],
-		previewFilePath:     phantom.args[3],
-		datacss:             phantom.args[4],
-		pngdatacss:          phantom.args[5],
-		fallbackcss:         phantom.args[6],
-		previewHTMLFilePath: phantom.args[7],
-		pngDestDirName:      phantom.args[8],
-		cssprefix:           phantom.args[9],
-		cssbasepath:         phantom.args[10],
-		customselectors:     phantom.args[11],
-		defaultWidth:        phantom.args[12],
-		defaultHeight:       phantom.args[13],
-		render:              phantom.args[14],
-		writeCSS:            phantom.args[15]
-	};
-
-	var files = fs.list( options.inputDir );
-	var promises = [];
-
-	var title = 'SVG files in '+options.inputDir+':';
-
-	vlog(title);
-	vlog(Array(title.length+1).join('-'));
-
-	files = files.filter( function( file ){
-		if( file.match( /\.svg$/i ) ){
-			vlog('[x] '+file);
-			return file;
-		} else {
-			vlog('[ ] '+file);
-		}
-	});
-
-	vlog(Array(title.length+1).join('-'));
-
-	// Convert SVGs to PNGs
-	files.forEach(function(file, idx){
-		clog('[' + (idx+1) + '/' + files.length + '] -- ' + file);
-		promises.push(grunticoner.processSVGFile(file, options));
-	});
-
-	RSVP.all(promises).then(function(dataArray){
-		clog('Writing CSS with grunticoner.writeCSS');
-		grunticoner.writeCSS(dataArray, options);
-		phantom.exit();
-	});
-
-})();
+// Kill phantom once promises are fulfilled
+RSVP.all(promises).then(function(){
+	phantom.exit();
+});

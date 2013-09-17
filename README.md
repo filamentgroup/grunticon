@@ -89,8 +89,8 @@ grunticon will now batch your icons whenever you run grunt.
 
 In addition to the required configuration properties above, grunticon's grunt configuration lets you configure the names of the files and the images folder it generates inside `dest`.
 
-- `datasvgcss`: The name of the generated CSS file containing SVG data uris. Default: `"icons.data.svg.css"`
-- `datapngcss`: The name of the generated CSS file containing PNG data uris. Default: `"icons.data.png.css"`
+- `svgDataCSS`: The name of the generated CSS file containing SVG data uris. Default: `"icons.data.svg.css"`
+- `pngDataCSS`: The name of the generated CSS file containing PNG data uris. Default: `"icons.data.png.css"`
 - `urlpngcss`: The name of the generated CSS file containing external png url references. Default: `"icons.fallback.css"`
 - `previewhtml`: The name of the generated HTML file containing PNG data uris. Default: `"preview.html"`
 - `loadersnippet`:  The name of the generated text file containing the grunticon loading snippet. Default: `"grunticon.loader.html"`
