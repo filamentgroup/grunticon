@@ -74,8 +74,6 @@ files.forEach(function(file, idx){
 		page.open(svgSrcFile, function(status){
 			clog(svgSrcFile+' [32m=>[39m '+ pngDestFile);
 
-			// global.imageSizes[basename] = [document.body.clientWidth, document.body.clientHeight];
-
 			if(status !== 'success'){
 				promise.reject();
 			} else {

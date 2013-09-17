@@ -79,16 +79,15 @@ module.exports = function( grunt , undefined ) {
 
 		var svgDataCSS = config.svgDataCSS || "icons.data.svg.css";
 		var pngDataCSS = config.pngDataCSS || "icons.data.png.css";
-		var pngFileCSS = config.urlpngcss || "icons.fallback.css";
+		var pngFileCSS = config.pngFileCSS || "icons.fallback.css";
 
-		var previewHTML = config.previewhtml || "preview.html";
-		var loaderSnippet = config.loadersnippet || "grunticon.loader.html";
-		var cssBasePath = config.cssbasepath || path.sep;
-		var customSelectors = JSON.stringify( config.customselectors ) || "{}";
+		var previewHTML = config.previewHTML || "preview.html";
+		var loaderSnippet = config.loaderSnippet || "grunticon.loader.html";
+		var cssBasePath = config.cssBasePath || '';
+		var customSelectors = JSON.stringify( config.customSelectors ) || "{}";
 
-		var pngDestDirName = config.pngfolder || "png";
-		var pngSrcDirName = pngDestDirName;
-		var cssClassPrefix = config.cssprefix || "icon-";
+		var pngDestDirName = config.pngFolderName || "png";
+		var cssClassPrefix = config.cssPrefix || "icon-";
 
 		var pngcrushPath;
 
@@ -344,7 +343,8 @@ module.exports = function( grunt , undefined ) {
 								.replace(/<\!\-\-(.*(?=\-\->))\-\->/gmi, "")
 								.replace(/'/gmi, "\\i");
 
-							// svgData = encodeURIComponent(svgData);
+							// Is this necessary?
+							svgData = encodeURIComponent(svgData);
 
 							svgDataURI = svgHeader+svgData;
 						} else {
@@ -373,19 +373,18 @@ module.exports = function( grunt , undefined ) {
 					}
 
 					var loader = grunt.file.read(asyncCSSBanner) + "\n" + uglify.minify(asyncCSS).code;
-					var cssFilePrefix = '{{ STATIC_URL }}/';
 
 					var filesnippet = [
 						'<script>',
 						loader,
 						'grunticon([',
-						tab + '"' + cssFilePrefix + svgDataCSS +'",',
-						tab + '"' + cssFilePrefix + pngDataCSS +'",',
-						tab + '"' + cssFilePrefix + pngFileCSS +'"',
+						tab + '"' + path.join(cssBasePath, svgDataCSS) +'",',
+						tab + '"' + path.join(cssBasePath, pngDataCSS) +'",',
+						tab + '"' + path.join(cssBasePath, pngFileCSS) +'"',
 						']);',
 						"</script>\n",
 						'<noscript>',
-						tab + '<link href="' + cssFilePrefix + pngFileCSS + '" rel="stylesheet">',
+						tab + '<link href="' + path.join(cssBasePath, pngFileCSS) + '" rel="stylesheet">',
 						'</noscript>'
 					].join(newline);
 

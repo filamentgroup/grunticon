@@ -91,12 +91,12 @@ In addition to the required configuration properties above, grunticon's grunt co
 
 - `svgDataCSS`: The name of the generated CSS file containing SVG data uris. Default: `"icons.data.svg.css"`
 - `pngDataCSS`: The name of the generated CSS file containing PNG data uris. Default: `"icons.data.png.css"`
-- `urlpngcss`: The name of the generated CSS file containing external png url references. Default: `"icons.fallback.css"`
-- `previewhtml`: The name of the generated HTML file containing PNG data uris. Default: `"preview.html"`
-- `loadersnippet`:  The name of the generated text file containing the grunticon loading snippet. Default: `"grunticon.loader.html"`
-- `pngfolder`:  The name of the generated folder containing the generated PNG images. Default: `"png/"`
-- `cssprefix`: a string to prefix all css classes with. Default: `"icon-"`
-- `customselectors`: Allows you to specify custom selectors (in addition to the generated `cssprefix + filename - extension` class) for individual files.
+- `pngFileCSS`: The name of the generated CSS file containing external png url references. Default: `"icons.fallback.css"`
+- `previewHTML`: The name of the generated HTML file containing PNG data uris. Default: `"preview.html"`
+- `loaderSnippet`:  The name of the generated text file containing the grunticon loading snippet. Default: `"grunticon.loader.html"`
+- `pngFolderName`:  The name of the generated folder containing the generated PNG images. Default: `"png/"`
+- `cssPrefix`: a string to prefix all css classes with. Default: `"icon-"`
+- `customSelectors`: Allows you to specify custom selectors (in addition to the generated `cssPrefix + filename - extension` class) for individual files.
 - `defaultWidth`: a string that MUST be defined in px that will be the
   size of the PNG if there is no width given in the SVG element.
 Example: `defaultWidth: "300px";` Default: `"400px"`
@@ -168,7 +168,7 @@ In the Save SVG dialog that opens up, there are lots of options. SVG has a ton o
 - Version 0.3.0: Grunticon becomes a multitask - syntax change involved in gruntfile
 - Version 0.2.1: Custom selectors feature added
 - Version 0.2.0: Compatibility rewrite for Grunt 0.4x
-- Version 0.1.6: Switched from base64 encoding to escaping raw SVG text in data uris. Fixes to cssprefix setting. If fallback png data uri is > 32768 chars, link to ext png instead for IE issues.
+- Version 0.1.6: Switched from base64 encoding to escaping raw SVG text in data uris. Fixes to cssPrefix setting. If fallback png data uri is > 32768 chars, link to ext png instead for IE issues.
 
 
 ## Copyright and licensing for the example SVG icons...

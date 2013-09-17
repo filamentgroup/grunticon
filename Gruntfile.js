@@ -36,27 +36,27 @@ module.exports = function(grunt) {
 					// CSS filenames
 					svgDataCSS: "icons.data.svg.css",
 					pngDataCSS: "icons.data.png.css",
-					urlpngcss: "icons.fallback.css",
+					pngFileCSS: "icons.fallback.css",
 
 					// preview HTML filename
-					previewhtml: "preview.html",
+					previewHTML: "preview.html",
 
 					// grunticon loader code snippet filename
-					loadersnippet: "grunticon.loader.html",
+					loaderSnippet: "grunticon.loader.html",
 
 					// folder name (within dest) for png output
-					pngfolder: "png",
+					pngFolderName: "png",
 
 					// prefix for CSS classnames
-					cssprefix: "icon-",
+					cssPrefix: "icon-",
 
 					defaultWidth: 300,
 					defaultHeight: 200,
 
 					// css file path prefix - this defaults to "/" and will be placed before the "dest" path when stylesheets are loaded.
 					// This allows root-relative referencing of the CSS. If you don't want a prefix path, set to to ""
-					cssbasepath: "/",
-					customselectors: {
+					cssBasePath: "{{ STATIC_URL }}/output",
+					customSelectors: {
 						"cat" : "#el-gato",
 						"gummy-bears-2" : "nav li a.deadly-bears:before"
 					}
