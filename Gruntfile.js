@@ -15,10 +15,16 @@ module.exports = function(grunt) {
 		},
 		grunticon: {
 			foo: {
+				files: [{
+					cwd:  'example/',
+					src:  'source/*.{svg,png}',
+					dest: 'output',
+					ext:  '.png'
+				}],
 				options: {
 					// required config
-					src: "example/source/",
-					dest: "example/output/",
+					src: "example/source",
+					dest: "example/output",
 
 					// pngcrush and phantomjs can be installed several ways:
 					//   1. Install through npm:
@@ -29,8 +35,8 @@ module.exports = function(grunt) {
 					// If you pick option 2, specify a path to the binaries like so:
 					// pngcrush: '/usr/local/bin/pngcrush'
 					// phantomjs: '/usr/local/bin/phantomjs'
+
 					pngcrush: '/usr/local/bin/pngcrush',
-					// phantomjs: false, // Requires user action.
 					phantomjs: '/usr/local/bin/phantomjs',
 
 					// CSS filenames
