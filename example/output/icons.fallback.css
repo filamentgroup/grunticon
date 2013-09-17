@@ -46,7 +46,7 @@
 	background-image: url(png/bear.colors-primary-blue-aa0000.png);
 }
 
-.icon-cat{
+.icon-cat, #el-gato{
 	background-image: url(png/cat.png);
 }
 
@@ -86,7 +86,7 @@
 	background-image: url(png/gummy-bears-1.png);
 }
 
-.icon-gummy-bears-2{
+.icon-gummy-bears-2, nav li a.deadly-bears:before{
 	background-image: url(png/gummy-bears-2.png);
 }
 

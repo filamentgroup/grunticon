@@ -84,7 +84,7 @@ module.exports = function( grunt , undefined ) {
 		var previewHTML = config.previewHTML || "preview.html";
 		var loaderSnippet = config.loaderSnippet || "grunticon.loader.html";
 		var cssBasePath = config.cssBasePath || '';
-		var customSelectors = JSON.stringify( config.customSelectors ) || "{}";
+		var customSelectors =config.customSelectors || {};
 
 		var pngDestDirName = config.pngFolderName || "png";
 		var cssClassPrefix = config.cssPrefix || "icon-";
@@ -354,6 +354,10 @@ module.exports = function( grunt , undefined ) {
 						var sel = cssClassPrefix+f;
 
 						sel = sel.replace(/[^\w]+/gmi, '-');
+
+						if( f in customSelectors ){
+							sel += ', '+customSelectors[f];
+						}
 
 						// // CSS Files
 						pngFileRules.push(buildCSSRule(sel, pngFileURL));
