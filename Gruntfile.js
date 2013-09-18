@@ -15,16 +15,14 @@ module.exports = function(grunt) {
 		},
 		grunticon: {
 			foo: {
-				files: [{
-					cwd:  'example/',
-					src:  'source/*.{svg,png}',
-					dest: 'output',
-					ext:  '.png'
-				}],
+				files: [
+					{
+						src: 'example/source/*.{svg,png}',
+						filter: 'isFile'
+					}
+				],
 				options: {
-					// required config
-					src: "example/source",
-					dest: "example/output",
+					dest: 'example/output',
 
 					// pngcrush and phantomjs can be installed several ways:
 					//   1. Install through npm:
@@ -47,11 +45,11 @@ module.exports = function(grunt) {
 					// preview HTML filename
 					previewHTML: "preview.html",
 
-					// grunticon loader code snippet filename
+					// Grunticon loader code snippet filename
 					loaderSnippet: "grunticon.loader.html",
 
-					// folder name (within dest) for png output
-					pngFolderName: "png",
+					// subfolder in dest for PNG output
+					pngDestDir: "png",
 
 					// prefix for CSS classnames
 					cssPrefix: "icon-",
@@ -62,9 +60,10 @@ module.exports = function(grunt) {
 					// css file path prefix - this defaults to "/" and will be placed before the "dest" path when stylesheets are loaded.
 					// This allows root-relative referencing of the CSS. If you don't want a prefix path, set to to ""
 					cssBasePath: "{{ STATIC_URL }}/output",
+
 					customSelectors: {
-						"cat" : "#el-gato",
-						"gummy-bears-2" : "nav li a.deadly-bears:before"
+						'cat' : '#el-gato',
+						'gummy-bears-2' : 'nav li a.deadly-bears:before'
 					}
 
 				}

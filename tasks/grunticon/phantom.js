@@ -11,81 +11,55 @@
 /*global require:true*/
 
 "use strict";
-var fs = require('fs');
-var RSVP = require('../../lib/rsvp')
 
-var inputDir = phantom.args[0];
-var outputDir = phantom.args[1];
-var isVerbose = phantom.args[2];
+var fs = require('fs');
+var RSVP = require('../../lib/rsvp');
+
+var files = JSON.parse(phantom.args[1]);
 
 var clog = function(what){
 	console.log("[32m[phantom.js][39m "+what);
 }
 
 var vlog = function(what){
-	if( isVerbose !== 'undefined' ){
-		// Note the escape characters.
+	if(phantom.args[0] == '--debug=true'){
 		clog(what);
 	}
 }
 
-var files = fs.list(inputDir);
 var promises = [];
+var idx = 0;
+var filesLength = Object.keys(files).length;
 
-var title = 'SVG files in '+inputDir+':';
+var crunchSVG = function(fileObj){
+	var promise = new RSVP.Promise();
+	var page = require('webpage').create();
 
-vlog(title);
-vlog(Array(title.length+1).join('-'));
+	// Minimum viewport size
+	page.viewportSize = {
+		width: 1,
+		height: 1
+	};
 
-files = files.filter( function( file ){
-	if( file.match( /\.svg$/i ) ){
-		vlog('[x] '+file);
-		return file;
-	} else {
-		vlog('[ ] '+file);
-	}
-});
+	// DO IT
+	page.open(fileObj.src, function(status){
+		vlog(fileObj.src+' [32m=>[39m '+ fileObj.temp);
 
-vlog(Array(title.length+1).join('-'));
+		if(status !== 'success'){
+			promise.reject();
+		} else {
+			page.render(fileObj.temp);
+			promise.resolve();
+		}
+	});
+	return promise;
+}
 
 // Convert SVGs to PNGs
-files.forEach(function(file, idx){
-	clog('[' + (idx+1) + '/' + files.length + '] -- ' + file);
-
-	var promise = new RSVP.Promise();
-	var filename = file.split('/').pop();
-	var ext = filename.split('.').pop();
-	var basename = filename.substr(0, filename.length - ext.length - 1);
-
-	// Check extension
-	if(ext !== 'svg'){
-		promise.reject();
-	} else {
-		var svgSrcFile = inputDir + basename + '.svg';
-		var pngDestFile = outputDir + basename + '.png';
-		var page = require('webpage').create();
-
-		// Minimum viewport size
-		page.viewportSize = {
-			width: 1,
-			height: 1
-		};
-
-		page.open(svgSrcFile, function(status){
-			clog(svgSrcFile+' [32m=>[39m '+ pngDestFile);
-
-			if(status !== 'success'){
-				promise.reject();
-			} else {
-				page.render(pngDestFile);
-				promise.resolve();
-			}
-		});
-	}
-
-	// Add promise to promise list
-	promises.push(promise);
-});
+// FIXME: Key gets overwritten
+for(var f in files){
+	promises.push( crunchSVG(files[f]) );
+}
 
 // Kill phantom once promises are fulfilled
 RSVP.all(promises).then(function(){
