@@ -23,6 +23,8 @@ module.exports = function(grunt, undefined) {
 	var path = require('path');
 	// TODO: Load official RSVP module?
 	var RSVP = require(path.join('..', 'lib', 'rsvp'));
+	var imgstats = require(path.join('..', 'lib', 'img-stats'))
+	var imgdata = {};
 
 	grunt.registerMultiTask('grunticon', 'A mystical CSS icon solution.', function(){
 		grunt.log.subhead('Look, it’s a grunticon!');
@@ -129,9 +131,9 @@ module.exports = function(grunt, undefined) {
 				// Nice message about PNGs
 				if(pngCount > 0){
 					if(crushingIt){
-						grunt.log.ok(pngCount+' PNG file'+(pngCount===1?'':'s')+' => pngcrush => "'+pngDestDir+'"');
+						grunt.log.ok('PNG'+(pngCount===1?'':'s')+' => pngcrush => "'+pngDestDir+'"');
 					} else {
-						grunt.log.ok(pngCount+' PNG file'+(pngCount===1?'':'s')+' => "'+pngDestDir+'"');
+						grunt.log.ok('PNG'+(pngCount===1?'':'s')+' => "'+pngDestDir+'"');
 					}
 				} else {
 					grunt.log.warn('No PNG files were found.');
@@ -140,9 +142,9 @@ module.exports = function(grunt, undefined) {
 				// Nice message about SVGs
 				if(svgCount > 0){
 					if(crushingIt){
-						grunt.log.ok(svgCount+' SVG file'+(svgCount===1?'':'s')+' => phantomjs => "'+pngTempDir+'" => pngcrush => "'+pngDestDir+'"');
+						grunt.log.ok('SVG'+(svgCount===1?'':'s')+' => phantomjs => "'+pngTempDir+'" => pngcrush => "'+pngDestDir+'"');
 					} else {
-						grunt.log.ok(svgCount+' SVG file'+(svgCount===1?'':'s')+' => phantomjs => "'+pngTempDir+'" => "'+pngDestDir+'"');
+						grunt.log.ok('SVG'+(svgCount===1?'':'s')+' => phantomjs => "'+pngTempDir+'" => "'+pngDestDir+'"');
 					}
 
 				} else {
@@ -157,15 +159,26 @@ module.exports = function(grunt, undefined) {
 			return p;
 		}
 
-		var processSVGs = function(){
-			sep('Processing SVGs');
+		var processImages = function(){
+			var sepText = [];
+			if(pngCount > 0){ sepText.push(pngCount+' PNG'+(pngCount===1?'':'s')); }
+			if(svgCount > 0){ sepText.push(svgCount+' SVG'+(svgCount===1?'':'s')); }
+			sep('Processing source images: '+sepText.join(' and '));
 			var p = new RSVP.Promise();
 
+			// Copy PNGs
+			if(pngCount > 0){
+				for(var b in pngFiles){
+					var f = pngFiles[b];
+					grunt.file.copy(
+						path.join(f.src),
+						path.join(f.temp)
+					);
+				}
+			}
+
 			// Process SVGs
-			if(svgCount === 0){
-				p.resolve();
-				grunt.verbose.or.ok('Done!');
-			} else {
+			if(svgCount > 0){
 				phantomJsArgs = [
 					grunticonFiles.phantom,
 					'--debug='+isVerbose,
@@ -195,38 +208,32 @@ module.exports = function(grunt, undefined) {
 		}
 
 		var processPNGs = function(){
-			sep('Processing PNGs');
 			var p = new RSVP.Promise();
-
-			if(pngCount > 0){
-				// Copy non-rendered PNGs
-				for(var b in pngFiles){
-					var f = pngFiles[b];
-					grunt.file.copy(
-						path.join(f.src),
-						path.join(f.temp)
-					);
-				}
-			}
-
 			var promises = [];
 
 			// Compress all PNGs
 			var files = fs.readdirSync(pngTempDir);
 
 			if(crushingIt){
-				grunt.verbose.ok('Crunching '+files.length+' PNG file'+(files.length===1?'':'s')+' from '+pngTempDir+' to '+pngDestDir);
+				sep('Compressing '+files.length+' PNG'+(files.length===1?'':'s')+' with pngcrush');
 			} else {
-				grunt.verbose.ok('Copying '+files.length+' PNG file'+(files.length===1?'':'s')+' from '+pngTempDir+' to '+pngDestDir);
+				sep('Copying '+files.length+' PNG'+(files.length===1?'':'s')+' to '+pngDestDir);
 			}
 
-			files.forEach(function(pngFileName, idx){
+			var idx = 0;
+			files.forEach(function(pngFileName){
 				var promise = new RSVP.Promise();
+				var wait_for_imgstats = new RSVP.Promise();
 
 				if(path.extname(pngFileName) !== '.png'){
 					grunt.log.ok('['+(idx+1)+'/'+files.length+'] Ignoring '+pngFileName);
 					promise.resolve();
 				} else {
+
+					imgstats.stats(path.join(pngTempDir, pngFileName), function(data){
+						imgdata[path.basename(pngFileName,'.png')] = data;
+						wait_for_imgstats.resolve();
+					});
 
 					if(crushingIt){
 						var pngcrushArgs = [
@@ -245,7 +252,8 @@ module.exports = function(grunt, undefined) {
 						},
 						function(err, result, code){
 							if(!err){
-								grunt.verbose.ok('Crushed '+pngFileName);
+								idx++;
+								grunt.verbose.ok(grunt.log.table([5,65],[idx+'.', pngFileName]));
 								promise.resolve();
 							} else {
 								promise.reject(err);
@@ -264,6 +272,7 @@ module.exports = function(grunt, undefined) {
 					}
 				}
 				promises.push(promise);
+				promises.push(wait_for_imgstats);
 			});
 
 			RSVP.all(promises).then(function(){
@@ -293,8 +302,18 @@ module.exports = function(grunt, undefined) {
 
 				// Load data arrays for writing
 				for(var b in allFiles){
+					idx++;
 					var pngFileURL, pngData, pngDataURI, svgData, svgDataURI;
 					var f = allFiles[b];
+					var width = 100;
+					var height = 100;
+
+					if(f.basename in imgdata){
+						width = imgdata[f.basename].width;
+						height = imgdata[f.basename].height;
+					} else {
+						grunt.log.warn('No dimensions for '+f.basename);
+					}
 
 					pngFileURL = path.join(options.pngDestDir, f.basename+'.png');
 					pngData = new Buffer(fs.readFileSync(f.dest)).toString('base64');
@@ -326,8 +345,8 @@ module.exports = function(grunt, undefined) {
 
 					// TODO: Calculate width/height
 					cssFiles.push({
-						width: 100,
-						height: 100,
+						width: width,
+						height: height,
 						selector: sel
 					});
 
@@ -335,13 +354,12 @@ module.exports = function(grunt, undefined) {
 						sel += ', '+options.customSelectors[f.basename];
 					}
 
-					// grunt.verbose.ok((++idx)+'/'+(svgCount+pngCount)+' -- '+sel);
-					grunt.verbose.ok('.'+sel);
+					grunt.verbose.ok( grunt.log.table([5,11,64],[idx+'.', width+'x'+height+'px','.'+sel]) );
 
 					// CSS Files
-					pngFileRules.push({selector: sel, url: pngFileURL});
-					pngDataRules.push({selector: sel, url: pngDataURI});
-					svgDataRules.push({selector: sel, url: svgDataURI});
+					pngFileRules.push({selector: sel, url: pngFileURL, size: {w:width, h:height}});
+					pngDataRules.push({selector: sel, url: pngDataURI, size: {w:width, h:height}});
+					svgDataRules.push({selector: sel, url: svgDataURI, size: {w:width, h:height}});
 
 				};
 				grunt.verbose.or.ok('Done!');
@@ -429,7 +447,7 @@ module.exports = function(grunt, undefined) {
 
 		// DO IT
 		preflight()
-			.then(processSVGs)
+			.then(processImages)
 			.then(processPNGs)
 			.then(buildCSS)
 			.then(cleanup)
