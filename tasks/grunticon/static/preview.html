@@ -6,6 +6,11 @@
 <%= snippet %>
 
 <style type="text/css" media="screen">
+
+	*{
+		background-repeat: no-repeat;
+		background-position: center center;
+	}
 <% cssFiles.forEach(function(file){ %>
 	.<%= file.selector %>{
 		width: <%= file.width %>px;

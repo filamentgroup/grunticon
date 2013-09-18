@@ -1,0 +1,6 @@
+/* <%= banner %> */
+<% icons.forEach(function(icon){ %>
+.<%= icon.selector %>{
+	background-image: url("<%= icon.url %>");
+}
+<% }); %>

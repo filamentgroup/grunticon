@@ -14,6 +14,34 @@ module.exports = function(grunt) {
 			tasks: 'default'
 		},
 		grunticon: {
+			options: {
+				dest: 'example/output',
+				// css file path prefix, written to the loader snippet
+				// If you don’t want a prefix path, set to to ""
+				cssBasePath: "{{ STATIC_URL }}/output",
+
+				// pngcrush and phantomjs need to be installed with homebrew:
+				// brew install pngcrush phantomjs
+				// TODO: preflight check to ensure that files exist and are executable.
+				pngcrush: '/usr/local/bin/pngcrush',
+				phantomjs: '/usr/local/bin/phantomjs',
+
+				// Core Grunticon files that’ll be dumped in options.dest
+				svgDataCSS: "icons.data.svg.css",
+				pngDataCSS: "icons.data.png.css",
+				pngFileCSS: "icons.fallback.css",
+				loaderSnippet: "grunticon.loader.html",
+
+				// Icon preview file
+				previewHTML: "preview.html",
+
+				// subfolder in options.dest for PNG output
+				pngDestDir: "png",
+
+				// prefix for CSS classnames
+				cssPrefix: "overwritten-by-child-task-",
+			},
+
 			foo: {
 				files: [
 					{
@@ -22,47 +50,11 @@ module.exports = function(grunt) {
 					}
 				],
 				options: {
-					dest: 'example/output',
-
-					// pngcrush and phantomjs can be installed several ways:
-					//   1. Install through npm:
-					//      npm install pngcrush-installer
-					//      npm install phantomjs
-					//   2. Install through homebrew
-					//      brew install pngcrush phantomjs
-					// If you pick option 2, specify a path to the binaries like so:
-					// pngcrush: '/usr/local/bin/pngcrush'
-					// phantomjs: '/usr/local/bin/phantomjs'
-
-					pngcrush: '/usr/local/bin/pngcrush',
-					phantomjs: '/usr/local/bin/phantomjs',
-
-					// CSS filenames
-					svgDataCSS: "icons.data.svg.css",
-					pngDataCSS: "icons.data.png.css",
-					pngFileCSS: "icons.fallback.css",
-
-					// preview HTML filename
-					previewHTML: "preview.html",
-
-					// Grunticon loader code snippet filename
-					loaderSnippet: "grunticon.loader.html",
-
-					// subfolder in dest for PNG output
-					pngDestDir: "png",
-
-					// prefix for CSS classnames
-					cssPrefix: "icon-",
-
-					// css file path prefix - this defaults to "/" and will be placed before the "dest" path when stylesheets are loaded.
-					// This allows root-relative referencing of the CSS. If you don't want a prefix path, set to to ""
-					cssBasePath: "{{ STATIC_URL }}/output",
-
+					cssPrefix: 'icon-',
 					customSelectors: {
 						'cat' : '#el-gato',
 						'gummy-bears-2' : 'nav li a.deadly-bears:before'
 					}
-
 				}
 			}
 		},

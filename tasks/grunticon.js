@@ -36,16 +36,19 @@ module.exports = function(grunt, undefined) {
 			previewHTML:     'preview.html',
 			loaderSnippet:   'grunticon.loader.html',
 			pngDestDir:      'png',
-			pngTempDir:     'grunticon-temp',
+			pngTempDir:      'grunticon-temp',
 			cssPrefix:       'icon-',
 			customSelectors: {},
-			cssBasePath:     ''
+			cssBasePath:     '',
+			cssBanner:       'Last generated <%= grunt.template.today() %>',
+			generatePreview: true
 		});
 
 		// Grunticon templates and assorted what-not
 		var grunticonFiles = {
 			snippet: path.join(__dirname, 'grunticon', 'static', 'snippet.html'),
 			loader:  path.join(__dirname, 'grunticon', 'static', 'grunticon.loader.js'),
+			css:     path.join(__dirname, 'grunticon', 'static', 'icons.css'),
 			preview: path.join(__dirname, 'grunticon', 'static', 'preview.html'),
 			mascot:  path.join(__dirname, 'grunticon', 'static', 'excessive.txt'),
 			phantom: path.join(__dirname, 'grunticon', 'phantom.js')
@@ -278,16 +281,10 @@ module.exports = function(grunt, undefined) {
 			if(pngCount + svgCount === 0){
 				p.reject();
 			} else {
-				var buildCSSRule = function(s,i){
-					i = i.replace(/\"/g,'\\"');
-					return '.'+s+'{\n\tbackground-image: url("'+i+'");'+'\n}\n';
-				}
-
 				var pngFileRules = [];
 				var pngDataRules = [];
 				var svgDataRules = [];
 				var cssFiles = [];
-				var htmlPreviewBody = [];
 
 				var svgHeader = "data:image/svg+xml;charset=US-ASCII,";
 				var pngHeader = "data:image/png;base64,";
@@ -342,35 +339,17 @@ module.exports = function(grunt, undefined) {
 					grunt.verbose.ok('.'+sel);
 
 					// CSS Files
-					pngFileRules.push(buildCSSRule(sel, pngFileURL));
-					pngDataRules.push(buildCSSRule(sel, pngDataURI));
-					svgDataRules.push(buildCSSRule(sel, svgDataURI));
+					pngFileRules.push({selector: sel, url: pngFileURL});
+					pngDataRules.push({selector: sel, url: pngDataURI});
+					svgDataRules.push({selector: sel, url: svgDataURI});
 
 				};
 				grunt.verbose.or.ok('Done!');
 
 				sep('Writing HTML/CSS files');
 				var snippetTemplate = grunt.file.read(grunticonFiles.snippet);
-				var previewTemplate = grunt.file.read(grunticonFiles.preview);
 				var loaderJS = uglify.minify(grunticonFiles.loader).code;
-
-				// Preview Grunticon snippet
-				var previewSnippet = grunt.template.process(snippetTemplate, {
-					data: {
-						loader: loaderJS,
-						svgDataPath: options.svgDataCSS,
-						pngDataPath: options.pngDataCSS,
-						pngFilePath: options.pngFileCSS
-					}
-				});
-
-				// Preview HTML
-				var previewHTML = grunt.template.process(previewTemplate, {
-					data: {
-						snippet: previewSnippet,
-						cssFiles: cssFiles
-					}
-				});
+				var iconCSS = grunt.file.read(grunticonFiles.css);
 
 				// Production Grunticon snippet
 				var loaderSnippet = grunt.template.process(snippetTemplate, {
@@ -382,11 +361,47 @@ module.exports = function(grunt, undefined) {
 					}
 				});
 
-				grunt.file.write(path.join(options.dest, options.previewHTML), previewHTML);
 				grunt.file.write(path.join(options.dest, options.loaderSnippet), loaderSnippet);
-				grunt.file.write(path.join(options.dest, options.pngFileCSS), pngFileRules.join("\n"));
-				grunt.file.write(path.join(options.dest, options.pngDataCSS), pngDataRules.join("\n"));
-				grunt.file.write(path.join(options.dest, options.svgDataCSS), svgDataRules.join("\n"));
+
+				// Grunticon CSS
+				var pngFileCSS = grunt.template.process(iconCSS, {data: {
+					icons: pngFileRules,
+					banner: options.cssBanner
+				}});
+				var pngDataCSS = grunt.template.process(iconCSS, {data: {
+					icons: pngDataRules,
+					banner: options.cssBanner
+				}});
+				var svgDataCSS = grunt.template.process(iconCSS, {data: {
+					icons: svgDataRules,
+					banner: options.cssBanner
+				}});
+
+				grunt.file.write(path.join(options.dest, options.pngFileCSS), pngFileCSS);
+				grunt.file.write(path.join(options.dest, options.pngDataCSS), pngDataCSS);
+				grunt.file.write(path.join(options.dest, options.svgDataCSS), svgDataCSS);
+
+				// Preview HTML file
+				if(options.generatePreview){
+					var previewTemplate = grunt.file.read(grunticonFiles.preview);
+					var previewSnippet = grunt.template.process(snippetTemplate, {
+						data: {
+							loader: loaderJS,
+							svgDataPath: options.svgDataCSS,
+							pngDataPath: options.pngDataCSS,
+							pngFilePath: options.pngFileCSS
+						}
+					});
+
+					var previewHTML = grunt.template.process(previewTemplate, {
+						data: {
+							snippet: previewSnippet,
+							cssFiles: cssFiles
+						}
+					});
+
+					grunt.file.write(path.join(options.dest, options.previewHTML), previewHTML);
+				}
 
 				p.resolve();
 				grunt.verbose.or.ok('Done!');
