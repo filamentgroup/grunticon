@@ -1,14 +1,29 @@
-<!doctype HTML>
+<!DOCTYPE HTML>
 <html>
 <head>
 <title>Icons Preview!</title>
 
-<script>
-</script>
+<%= snippet %>
+
+<style type="text/css" media="screen">
+<% cssFiles.forEach(function(file){ %>
+	.<%= file.selector %>{
+		width: <%= file.width %>px;
+		height: <%= file.height %>px;
+	}
+<% }); %>
+</style>
 
 </head>
-
 <body>
+<ul>
+<% cssFiles.forEach(function(file){ %>
+	<li>
+		<pre><code>.<%= file.selector %></code></pre>
+		<div class="<%= file.selector %>"></div>
+		<hr>
+	</li>
+<% }); %>
+</ul>
 </body>
-
 </html>

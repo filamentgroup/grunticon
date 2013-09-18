@@ -1,1 +1,0 @@
-/* grunticon Stylesheet Loader | https://github.com/filamentgroup/grunticon | (c) 2013 Scott Jehl, Filament Group, Inc. | MIT license. */

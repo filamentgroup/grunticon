@@ -39,18 +39,16 @@ module.exports = function(grunt, undefined) {
 			pngTempDir:     'grunticon-temp',
 			cssPrefix:       'icon-',
 			customSelectors: {},
-			cssBasePath:     '',
-			defaultWidth:    400,
-			defaultHeight:   300
+			cssBasePath:     ''
 		});
 
 		// Grunticon templates and assorted what-not
 		var grunticonFiles = {
+			snippet: path.join(__dirname, 'grunticon', 'static', 'snippet.html'),
 			loader:  path.join(__dirname, 'grunticon', 'static', 'grunticon.loader.js'),
-			banner:  path.join(__dirname, 'grunticon', 'static', 'grunticon.loader.banner.js'),
 			preview: path.join(__dirname, 'grunticon', 'static', 'preview.html'),
-			phantom: path.join(__dirname, 'grunticon', 'phantom.js'),
-			mascot:  path.join(__dirname, 'grunticon', 'static', 'excessive.txt')
+			mascot:  path.join(__dirname, 'grunticon', 'static', 'excessive.txt'),
+			phantom: path.join(__dirname, 'grunticon', 'phantom.js')
 		};
 
 		var phantomJsPath = options.phantomjs;
@@ -78,14 +76,6 @@ module.exports = function(grunt, undefined) {
 
 		var pngTempDir = path.join(options.dest, options.pngTempDir);
 		var pngDestDir = path.join(options.dest, options.pngDestDir);
-
-		// Reset!
-		if(grunt.file.exists(options.dest)){
-			grunt.file.delete(options.dest);
-		}
-		grunt.file.mkdir(options.dest);
-		grunt.file.mkdir(pngTempDir);
-		grunt.file.mkdir(pngDestDir);
 
 		// Filter out nonexistent files, build file objects
 		this.files.forEach(function(file){
@@ -123,6 +113,15 @@ module.exports = function(grunt, undefined) {
 		var preflight = function(){
 			sep('Preflight checks');
 			var p = new RSVP.Promise();
+
+			// Reset!
+			if(grunt.file.exists(options.dest)){
+				grunt.file.delete(options.dest);
+			}
+			grunt.file.mkdir(options.dest);
+			grunt.file.mkdir(pngTempDir);
+			grunt.file.mkdir(pngDestDir);
+
 			if( svgCount + pngCount > 0 ){
 				// Nice message about PNGs
 				if(pngCount > 0){
@@ -197,8 +196,6 @@ module.exports = function(grunt, undefined) {
 			var p = new RSVP.Promise();
 
 			if(pngCount > 0){
-				grunt.verbose.ok('Copying files to temp directory');
-
 				// Copy non-rendered PNGs
 				for(var b in pngFiles){
 					var f = pngFiles[b];
@@ -275,19 +272,21 @@ module.exports = function(grunt, undefined) {
 		}
 
 		var buildCSS = function(){
-			sep('Building CSS files');
+			sep('Building HTML/CSS files');
 			var p = new RSVP.Promise();
 
 			if(pngCount + svgCount === 0){
 				p.reject();
 			} else {
 				var buildCSSRule = function(s,i){
-					return '.'+s+'{\n\tbackground-image: url('+i+');'+'\n}\n';
+					i = i.replace(/\"/g,'\\"');
+					return '.'+s+'{\n\tbackground-image: url("'+i+'");'+'\n}\n';
 				}
 
 				var pngFileRules = [];
 				var pngDataRules = [];
 				var svgDataRules = [];
+				var cssFiles = [];
 				var htmlPreviewBody = [];
 
 				var svgHeader = "data:image/svg+xml;charset=US-ASCII,";
@@ -328,11 +327,19 @@ module.exports = function(grunt, undefined) {
 					var sel = options.cssPrefix + f.basename;
 					sel = sel.replace(/[^\w]+/gmi, '-').toLowerCase();
 
+					// TODO: Calculate width/height
+					cssFiles.push({
+						width: 100,
+						height: 100,
+						selector: sel
+					});
+
 					if( f.basename in options.customSelectors ){
 						sel += ', '+options.customSelectors[f.basename];
 					}
 
-					grunt.verbose.ok((++idx)+'/'+(svgCount+pngCount)+' -- '+sel);
+					// grunt.verbose.ok((++idx)+'/'+(svgCount+pngCount)+' -- '+sel);
+					grunt.verbose.ok('.'+sel);
 
 					// CSS Files
 					pngFileRules.push(buildCSSRule(sel, pngFileURL));
@@ -340,39 +347,43 @@ module.exports = function(grunt, undefined) {
 					svgDataRules.push(buildCSSRule(sel, svgDataURI));
 
 				};
-
-				// Output formatting
-				var pretty = true;
-				var tab = "";
-				var newline = "";
-
-				if (pretty){
-					tab = "\t";
-					newline = "\n";
-				}
-
 				grunt.verbose.or.ok('Done!');
 
-				sep('Writing snippet HTML file (' + options.loaderSnippet + ')');
-				var loader = grunt.file.read(grunticonFiles.banner) + "\n" + uglify.minify(grunticonFiles.loader).code;
+				sep('Writing HTML/CSS files');
+				var snippetTemplate = grunt.file.read(grunticonFiles.snippet);
+				var previewTemplate = grunt.file.read(grunticonFiles.preview);
+				var loaderJS = uglify.minify(grunticonFiles.loader).code;
 
-				var filesnippet = [
-					'<script>',
-					loader,
-					'grunticon([',
-					tab + '"' + path.join(options.cssBasePath, options.svgDataCSS) +'",',
-					tab + '"' + path.join(options.cssBasePath, options.pngDataCSS) +'",',
-					tab + '"' + path.join(options.cssBasePath, options.pngFileCSS) +'"',
-					']);',
-					"</script>\n",
-					'<noscript>',
-					tab + '<link href="' + path.join(options.cssBasePath, options.pngFileCSS) + '" rel="stylesheet">',
-					'</noscript>'
-				].join(newline);
-				grunt.file.write(path.join(options.dest, options.loaderSnippet), filesnippet);
-				grunt.verbose.or.ok('Done!');
+				// Preview Grunticon snippet
+				var previewSnippet = grunt.template.process(snippetTemplate, {
+					data: {
+						loader: loaderJS,
+						svgDataPath: options.svgDataCSS,
+						pngDataPath: options.pngDataCSS,
+						pngFilePath: options.pngFileCSS
+					}
+				});
 
-				sep('Writing preview CSS files');
+				// Preview HTML
+				var previewHTML = grunt.template.process(previewTemplate, {
+					data: {
+						snippet: previewSnippet,
+						cssFiles: cssFiles
+					}
+				});
+
+				// Production Grunticon snippet
+				var loaderSnippet = grunt.template.process(snippetTemplate, {
+					data: {
+						loader: loaderJS,
+						svgDataPath: path.join(options.cssBasePath, options.svgDataCSS),
+						pngDataPath: path.join(options.cssBasePath, options.pngDataCSS),
+						pngFilePath: path.join(options.cssBasePath, options.pngFileCSS)
+					}
+				});
+
+				grunt.file.write(path.join(options.dest, options.previewHTML), previewHTML);
+				grunt.file.write(path.join(options.dest, options.loaderSnippet), loaderSnippet);
 				grunt.file.write(path.join(options.dest, options.pngFileCSS), pngFileRules.join("\n"));
 				grunt.file.write(path.join(options.dest, options.pngDataCSS), pngDataRules.join("\n"));
 				grunt.file.write(path.join(options.dest, options.svgDataCSS), svgDataRules.join("\n"));

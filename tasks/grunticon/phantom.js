@@ -43,8 +43,7 @@ var crunchSVG = function(fileObj){
 
 	// DO IT
 	page.open(fileObj.src, function(status){
-		vlog(fileObj.src+' [32m=>[39m '+ fileObj.temp);
-
+		vlog('Generated "'+fileObj.temp+'"');
 		if(status !== 'success'){
 			promise.reject();
 		} else {

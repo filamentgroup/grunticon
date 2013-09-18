@@ -54,9 +54,6 @@ module.exports = function(grunt) {
 					// prefix for CSS classnames
 					cssPrefix: "icon-",
 
-					defaultWidth: 300,
-					defaultHeight: 200,
-
 					// css file path prefix - this defaults to "/" and will be placed before the "dest" path when stylesheets are loaded.
 					// This allows root-relative referencing of the CSS. If you don't want a prefix path, set to to ""
 					cssBasePath: "{{ STATIC_URL }}/output",
