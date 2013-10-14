@@ -29,6 +29,7 @@ phantom args sent from grunticon.js:
 	[14] - colors
 	[15] - if we should render files
 	[16] - if we should write CSS
+    [17] - put dimensions in css
 */
 
 (function(){
@@ -54,7 +55,8 @@ phantom args sent from grunticon.js:
 		defaultHeight: phantom.args[13],
 		colors: phantom.args[14],
 		render: phantom.args[15],
-		writeCSS: phantom.args[16]
+		writeCSS: phantom.args[16],
+        cssdimensions: phantom.args[17]
 	};
 
 	var files = fs.list( options.inputdir );

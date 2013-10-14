@@ -44,6 +44,9 @@ module.exports = function(grunt) {
 					// prefix for CSS classnames
 					cssprefix: "icon-",
 
+                    // Whether to include the height and width properties in the generated CSS files.
+                    cssdimensions: false,
+
 					defaultWidth: "300px",
 					defaultHeight: "200px",
 
