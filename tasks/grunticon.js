@@ -287,19 +287,20 @@ module.exports = function( grunt , undefined ) {
 			};
 
 			var crush = function( pngfolder ){
-				grunt.log.write( "\ngrunticon now spawning pngcrush..." );
-				grunt.log.writeln('(using path: ' + crushPath + ')');
-				var tmpPngfolder = path.join( tmp, pngfolder );
-
 				if( grunt.file.exists( path.join( config.dest , pngfolder ) ) ){
 					grunt.file.delete( path.join( config.dest, pngfolder ) );
 				}
+
+				var tmpPngfolder = path.join( tmp, pngfolder );
+
+				grunt.log.writeln( "\ngrunticon now spawning pngcrush..." );
+				grunt.log.writeln('(using path: ' + crushPath + ')');
 
 				crusher.crush({
 					input: tmpPngfolder,
 					outputDir:  path.join( config.dest , pngfolder ),
 					crushPath: crushPath,
-                    maxBuffer: 250
+					maxBuffer: 250
 				}, function( stdout , stderr ){
 					grunt.verbose.write( stdout );
 					grunt.verbose.write( stderr );

@@ -44,9 +44,13 @@ nav li a.deadly-bears:before { background-image: url(png/gummy-bears-2.png); bac
 
 .icon-map { background-image: url(png/map.png); background-repeat: no-repeat; }
 
+.icon-menu { background-image: url(png/menu.png); background-repeat: no-repeat; }
+
 .icon-over-ie8-data-uri-limit { background-image: url(png/over-ie8-data-uri-limit.png); background-repeat: no-repeat; }
 
 .icon-plus { background-image: url(png/plus.png); background-repeat: no-repeat; }
+
+.icon-search { background-image: url(png/search.png); background-repeat: no-repeat; }
 
 .icon-star { background-image: url(png/star.png); background-repeat: no-repeat; }
 
