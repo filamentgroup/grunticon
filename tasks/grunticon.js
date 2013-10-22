@@ -251,7 +251,7 @@ module.exports = function( grunt , undefined ) {
 
 
 
-			var callPhantom = function( pngf, temp, writeCSS , callback){
+			var callPhantom = function( pngf, writeCSS , callback){
 				// take it to phantomjs to do the rest
 				grunt.log.write( "\ngrunticon now spawning phantomjs..." );
 				var phantomJsPath = require('phantomjs').path;
@@ -276,7 +276,7 @@ module.exports = function( grunt , undefined ) {
 						width,
 						height,
 						colors,
-						temp,
+						true,
 						writeCSS
 					],
 					fallback: ''
@@ -355,22 +355,15 @@ module.exports = function( grunt , undefined ) {
 				});
 			};
 
-			// Get this party started
-			if( compressPNG !== false ){
-				render = true;
-				writeCSS = false;
-			} else {
-				render = true;
-				writeCSS = true;
-			}
+			writeCSS = !compressPNG;
 
 			var pngpath;
-			if( render && writeCSS ){
+			if( writeCSS ){
 				pngpath = pngfolder;
 			} else {
 				pngpath = path.join( "tmp", pngfolder , path.sep );
 			}
-			callPhantom( pngpath, render, writeCSS, function(err, result, code) {
+			callPhantom( pngpath, writeCSS, function(err, result, code) {
 				// TODO boost this up a bit.
 				if( err ){
 					grunt.log.write("\nSomething went wrong with phantomjs...");
@@ -378,7 +371,7 @@ module.exports = function( grunt , undefined ) {
 					done( false );
 				} else {
 					grunt.log.write( result.stdout );
-					if( render && writeCSS ){
+					if( writeCSS ){
 						grunt.file.delete( tmp );
 						done();
 					} else {

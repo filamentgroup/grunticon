@@ -24,7 +24,7 @@ module.exports = function(grunt) {
 					// SVGO compression, false is the default, true will make it so
 					svgo: true,
 
-					// PNG compression, true is the default, false will skip it
+					// PNG compression, false is the default, true will make it so
 					pngcrush: true,
 
 					// CSS filenames
