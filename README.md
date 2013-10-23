@@ -90,6 +90,7 @@ grunticon will now batch your icons whenever you run grunt.
 In addition to the required configuration properties above, grunticon's grunt configuration lets you configure the names of the files and the images folder it generates inside `dest`. 
 
 - `svgo`: Choose whether or not you would like to use SVGO to optimize your SVG files. Default: `false`
+- `pngcrush`: Choose whether or not you like to use pngcrush to optimize your png files. Default: `false`
 - `datasvgcss`: The name of the generated CSS file containing SVG data uris. Default: `"icons.data.svg.css"`
 - `datapngcss`: The name of the generated CSS file containing PNG data uris. Default: `"icons.data.png.css"`
 - `urlpngcss`: The name of the generated CSS file containing external png url references. Default: `"icons.fallback.css"`
