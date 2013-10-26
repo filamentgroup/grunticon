@@ -1,0 +1,18 @@
+/* Last generated <%= grunt.template.today() %> */
+<% icons.forEach(function(icon){ %>.<%= icon.selector %>, <% }); %>{
+	background-repeat: none;
+}
+
+<%
+
+icons.forEach(function(icon){
+	var selector = icon.selector;
+	if( selector == 'icon-home_media'){
+		selector = 'icon-home-media';
+	}
+
+%>
+.<%= selector %>{
+	background-image: url("<%= icon.url %>");
+}
+<% }); %>

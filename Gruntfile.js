@@ -20,19 +20,26 @@ module.exports = function(grunt) {
 				// If you don’t want a prefix path, set to to ""
 				cssBasePath: "{{ STATIC_URL }}/output",
 
-				// pngcrush and phantomjs need to be installed with homebrew:
-				// brew install pngcrush phantomjs
 				// TODO: preflight check to ensure that files exist and are executable.
+				// Specify a path to pngcrush
+				// Set to false to disable pngcrush
+				// Set to true to load npm-installed pngcrush (pngcrush-installer)
 				pngcrush: '/usr/local/bin/pngcrush',
+				// Specify a path to phantomjs
+				// Set to false to load npm-installed phantomjs
 				phantomjs: '/usr/local/bin/phantomjs',
 
 				// Core Grunticon files that’ll be dumped in options.dest
 				svgDataCSS: "icons.data.svg.css",
 				pngDataCSS: "icons.data.png.css",
 				pngFileCSS: "icons.fallback.css",
+
+				// Specify the filename for the loader snippet
+				// Set to false to prevent loader file from being generated
 				loaderSnippet: "grunticon.loader.html",
 
-				// Icon preview file
+				// Specify the filename for the preview HTML file
+				// Set to false to prevent preview file from being generated
 				previewHTML: "preview.html",
 
 				// subfolder in options.dest for PNG output
