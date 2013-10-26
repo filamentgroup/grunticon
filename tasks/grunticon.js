@@ -42,7 +42,6 @@ module.exports = function(grunt, undefined) {
 			cssPrefix:       'icon-',
 			customSelectors: {},
 			cssBasePath:     '',
-			cssBanner:       'Last generated <%= grunt.template.today() %>',
 			generatePreview: true
 		});
 
@@ -383,16 +382,13 @@ module.exports = function(grunt, undefined) {
 
 				// Grunticon CSS
 				var pngFileCSS = grunt.template.process(iconCSS, {data: {
-					icons: pngFileRules,
-					banner: options.cssBanner
+					icons: pngFileRules
 				}});
 				var pngDataCSS = grunt.template.process(iconCSS, {data: {
-					icons: pngDataRules,
-					banner: options.cssBanner
+					icons: pngDataRules
 				}});
 				var svgDataCSS = grunt.template.process(iconCSS, {data: {
-					icons: svgDataRules,
-					banner: options.cssBanner
+					icons: svgDataRules
 				}});
 
 				grunt.file.write(path.join(options.dest, options.pngFileCSS), pngFileCSS);

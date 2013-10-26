@@ -1,4 +1,4 @@
-/* <%= banner %> */
+/* Last generated <%= grunt.template.today() %> */
 <% icons.forEach(function(icon){ %>
 .<%= icon.selector %>{
 	background-image: url("<%= icon.url %>");
