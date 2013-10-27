@@ -15,10 +15,6 @@ module.exports = function(grunt) {
 		},
 		grunticon: {
 			options: {
-				// Required: output directory, relative to pwd
-				// TODO: Move this to child config.
-				dest: 'example/output',
-
 				// Optional: CSS file path prefix appended to CSS filenames with path.join
 				// Defaults to ''
 				cssBasePath: '{{ STATIC_URL }}/output',
@@ -80,6 +76,8 @@ module.exports = function(grunt) {
 					}
 				],
 				options: {
+					// Required: output directory, relative to pwd
+					dest: 'example/output',
 					cssPrefix: 'icon-'
 				}
 			}

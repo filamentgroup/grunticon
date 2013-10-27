@@ -33,7 +33,7 @@ module.exports = function(grunt, undefined) {
 	grunt.registerMultiTask('grunticon', 'A mystical CSS icon solution.', function(){
 		grunt.log.subhead('Look, it’s a grunticon!');
 
-		this.requiresConfig('grunticon.options.dest');
+		this.requiresConfig(this.name+'.'+this.target+'.options.dest');
 
 		var done = this.async();
 
@@ -93,7 +93,7 @@ module.exports = function(grunt, undefined) {
 		if(deadFiles > 0){
 			grunt.fail.fatal(deadFiles+' required file'+(deadFiles==1?'':'s')+' could not be found.');
 		} else {
-			grunt.verbose.or.ok('All necessary files are where they need to be.')
+			grunt.verbose.or.ok('All required files are where they need to be.')
 		}
 
 		var svgFiles = {};
