@@ -15,12 +15,12 @@ module.exports = function(grunt) {
 		},
 		grunticon: {
 			options: {
+				// Required: output directory, relative to pwd
 				dest: 'example/output',
+
 				// Optional: CSS file path prefix appended to CSS filenames with path.join
 				// Defaults to ''
 				cssBasePath: '{{ STATIC_URL }}/output',
-
-				// TODO: preflight check to ensure that binaries exist and are executable.
 
 				// Optional: path to pngcrush
 				// Set to false to disable pngcrush
@@ -63,7 +63,7 @@ module.exports = function(grunt) {
 				// Optional: path to previewFile template, relative to pwd
 				// Set to false to load the default file
 				// Defaults to false
-				previewTemplate: 'example/templates/preview.html'
+				previewTemplate: 'example/templates/preview.html',
 
 				// Optional: subfolder in options.dest for PNG output
 				// Defaults to 'png'
@@ -71,7 +71,7 @@ module.exports = function(grunt) {
 
 				// Optional: prefix for CSS classnames
 				// Defaults to 'icon-'
-				cssPrefix: 'overwritten-by-child-task-',
+				cssPrefix: 'overwritten-by-child-task-'
 			},
 
 			foo: {

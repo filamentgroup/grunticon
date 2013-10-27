@@ -37,7 +37,7 @@ module.exports = function(grunt, undefined) {
 			pngFileCSS:      'icons.fallback.css',
 			previewFile:     'preview.html',
 			loaderFile:      'grunticon.loader.html',
-			pngcrush:        false
+			pngcrush:        false,
 			pngDestDir:      'png',
 			pngTempDir:      'grunticon-temp',
 			cssPrefix:       'icon-',
