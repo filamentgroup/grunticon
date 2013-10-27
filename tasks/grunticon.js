@@ -32,6 +32,9 @@ module.exports = function(grunt, undefined) {
 
 	grunt.registerMultiTask('grunticon', 'A mystical CSS icon solution.', function(){
 		grunt.log.subhead('Look, it’s a grunticon!');
+
+		this.requiresConfig('grunticon.options.dest');
+
 		var done = this.async();
 
 		// Load config
