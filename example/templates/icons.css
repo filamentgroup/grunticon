@@ -1,5 +1,15 @@
 /* Last generated <%= grunt.template.today() %> */
-<% icons.forEach(function(icon){ %>.<%= icon.selector %>, <% }); %>{
+<%
+
+icons.forEach(function(icon, idx){
+
+	if(idx > 0){
+		print(', ');
+	}
+	print(icon.selector);
+});
+
+%>{
 	background-repeat: none;
 }
 
@@ -7,8 +17,18 @@
 
 icons.forEach(function(icon){
 	var selector = icon.selector;
-	if( selector == 'icon-home_media'){
-		selector = 'icon-home-media';
+
+	/* Custom selectors */
+	switch (selector) {
+		case 'icon-cat':
+			selector += ', #el-gato';
+			break;
+		case 'icon-gummy-bears-2':
+			selector += ', nav li a.deadly-bears:before';
+			break;
+		case 'icon-home_media':
+			selector = 'icon-home-media';
+			break;
 	}
 
 %>

@@ -374,10 +374,6 @@ module.exports = function(grunt, undefined) {
 						selector: sel
 					});
 
-					if( f.basename in options.customSelectors ){
-						sel += ', '+options.customSelectors[f.basename];
-					}
-
 					grunt.verbose.ok( grunt.log.table([5,11,64],[idx+'.', width+'x'+height+'px','.'+sel]) );
 
 					// CSS Files

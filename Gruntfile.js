@@ -16,6 +16,7 @@ module.exports = function(grunt) {
 		grunticon: {
 			options: {
 				// Required: output directory, relative to pwd
+				// TODO: Move this to child config.
 				dest: 'example/output',
 
 				// Optional: CSS file path prefix appended to CSS filenames with path.join
@@ -79,11 +80,7 @@ module.exports = function(grunt) {
 					}
 				],
 				options: {
-					cssPrefix: 'icon-',
-					customSelectors: {
-						'cat' : '#el-gato',
-						'gummy-bears-2' : 'nav li a.deadly-bears:before'
-					}
+					cssPrefix: 'icon-'
 				}
 			}
 		},
