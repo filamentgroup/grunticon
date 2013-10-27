@@ -16,37 +16,62 @@ module.exports = function(grunt) {
 		grunticon: {
 			options: {
 				dest: 'example/output',
-				// css file path prefix, written to the loader snippet
-				// If you don’t want a prefix path, set to to ""
-				cssBasePath: "{{ STATIC_URL }}/output",
+				// Optional: CSS file path prefix appended to CSS filenames with path.join
+				// Defaults to ''
+				cssBasePath: '{{ STATIC_URL }}/output',
 
-				// TODO: preflight check to ensure that files exist and are executable.
-				// Specify a path to pngcrush
+				// TODO: preflight check to ensure that binaries exist and are executable.
+
+				// Optional: path to pngcrush
 				// Set to false to disable pngcrush
 				// Set to true to load npm-installed pngcrush (pngcrush-installer)
+				// Defaults to false
 				pngcrush: '/usr/local/bin/pngcrush',
-				// Specify a path to phantomjs
+
+				// Optional: path to phantomjs
 				// Set to false to load npm-installed phantomjs
+				// Defaults to false
 				phantomjs: '/usr/local/bin/phantomjs',
 
-				// Core Grunticon files that’ll be dumped in options.dest
-				svgDataCSS: "icons.data.svg.css",
-				pngDataCSS: "icons.data.png.css",
-				pngFileCSS: "icons.fallback.css",
+				// Optional: SVG data URI stylesheet name
+				// Defaults to 'icons.data.svg.css'
+				svgDataCSS: 'icons.data.svg.css',
 
-				// Specify the filename for the loader snippet
+				// Optional: PNG data URI stylesheet name
+				// Defaults to 'icons.data.png.css'
+				pngDataCSS: 'icons.data.png.css',
+
+				// Optional: linked PNG stylesheet name
+				// Defaults to 'icons.fallback.css'
+				pngFileCSS: 'icons.fallback.css',
+
+				// Optional: the filename for the loader snippet
 				// Set to false to prevent loader file from being generated
-				loaderSnippet: "grunticon.loader.html",
+				// Defaults to 'grunticon.loader.html'
+				loaderFile: 'grunticon.loader.html',
 
-				// Specify the filename for the preview HTML file
+				// Optional: path to loaderFile template, relative to pwd
+				// Set to false to load the default file
+				// Defaults to false
+				loaderTemplate: 'example/templates/loader.html',
+
+				// Optional: the filename for the preview HTML file
 				// Set to false to prevent preview file from being generated
-				previewHTML: "preview.html",
+				// Defaults to 'preview.html'
+				previewFile: 'preview.html',
 
-				// subfolder in options.dest for PNG output
-				pngDestDir: "png",
+				// Optional: path to previewFile template, relative to pwd
+				// Set to false to load the default file
+				// Defaults to false
+				previewTemplate: 'example/templates/preview.html'
 
-				// prefix for CSS classnames
-				cssPrefix: "overwritten-by-child-task-",
+				// Optional: subfolder in options.dest for PNG output
+				// Defaults to 'png'
+				pngDestDir: 'png',
+
+				// Optional: prefix for CSS classnames
+				// Defaults to 'icon-'
+				cssPrefix: 'overwritten-by-child-task-',
 			},
 
 			foo: {

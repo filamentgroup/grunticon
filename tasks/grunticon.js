@@ -35,14 +35,14 @@ module.exports = function(grunt, undefined) {
 			svgDataCSS:      'icons.data.svg.css',
 			pngDataCSS:      'icons.data.png.css',
 			pngFileCSS:      'icons.fallback.css',
-			previewHTML:     'preview.html',
-			loaderSnippet:   'grunticon.loader.html',
+			previewFile:     'preview.html',
+			loaderFile:      'grunticon.loader.html',
+			pngcrush:        false
 			pngDestDir:      'png',
 			pngTempDir:      'grunticon-temp',
 			cssPrefix:       'icon-',
 			customSelectors: {},
-			cssBasePath:     '',
-			generatePreview: true
+			cssBasePath:     ''
 		});
 
 		// Grunticon templates and assorted what-not
@@ -369,7 +369,7 @@ module.exports = function(grunt, undefined) {
 				var iconCSS = grunt.file.read(grunticonFiles.css);
 
 				// Production Grunticon snippet
-				var loaderSnippet = grunt.template.process(snippetTemplate, {
+				var loaderFile = grunt.template.process(snippetTemplate, {
 					data: {
 						loader: loaderJS,
 						svgDataPath: path.join(options.cssBasePath, options.svgDataCSS),
@@ -378,7 +378,7 @@ module.exports = function(grunt, undefined) {
 					}
 				});
 
-				grunt.file.write(path.join(options.dest, options.loaderSnippet), loaderSnippet);
+				grunt.file.write(path.join(options.dest, options.loaderFile), loaderFile);
 
 				// Grunticon CSS
 				var pngFileCSS = grunt.template.process(iconCSS, {data: {
@@ -396,7 +396,7 @@ module.exports = function(grunt, undefined) {
 				grunt.file.write(path.join(options.dest, options.svgDataCSS), svgDataCSS);
 
 				// Preview HTML file
-				if(options.generatePreview){
+				if(options.previewFile !== false){
 					var previewTemplate = grunt.file.read(grunticonFiles.preview);
 					var previewSnippet = grunt.template.process(snippetTemplate, {
 						data: {
@@ -407,14 +407,14 @@ module.exports = function(grunt, undefined) {
 						}
 					});
 
-					var previewHTML = grunt.template.process(previewTemplate, {
+					var previewFile = grunt.template.process(previewTemplate, {
 						data: {
 							snippet: previewSnippet,
 							cssFiles: cssFiles
 						}
 					});
 
-					grunt.file.write(path.join(options.dest, options.previewHTML), previewHTML);
+					grunt.file.write(path.join(options.dest, options.previewFile), previewFile);
 				}
 
 				p.resolve();
