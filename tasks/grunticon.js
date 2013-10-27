@@ -159,6 +159,11 @@ module.exports = function( grunt , undefined ) {
 			cssprefix = "icon-";
 		}
 
+		// batch background-repeat
+		var batchbackgroundrepeat = config.batchbackgroundrepeat;
+		if( config.batchbackgroundrepeat === undefined ){
+			batchbackgroundrepeat = config.batchbackgroundrepeat = false;
+		}
 
 		var width = config.defaultWidth;
 		if( !width ){
@@ -314,7 +319,8 @@ module.exports = function( grunt , undefined ) {
 							datacss: datasvgcss,
 							outputdir: config.dest,
 							fallbackcss: urlpngcss,
-							cssbasepath: cssbasepath
+							cssbasepath: cssbasepath,
+							batchbackgroundrepeat: batchbackgroundrepeat
 						};
 						files = files.filter( function( file ){
 							var stats = fs.lstatSync( path.resolve( path.join( tmp , file ) ) );

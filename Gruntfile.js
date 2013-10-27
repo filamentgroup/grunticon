@@ -19,6 +19,7 @@ module.exports = function(grunt) {
 					// required config
 					src: "example/source/",
 					dest: "example/output/",
+					batchbackgroundrepeat: true,
 
 					// optional grunticon config properties
 					// SVGO compression, false is the default, true will make it so
