@@ -63,9 +63,8 @@ module.exports = function(grunt) {
 				// Defaults to 'icon-'
 				cssPrefix: 'overwritten-by-child-task-',
 
-				// Optional: path to previewFile template, relative to pwd
-				// Set to false to load the default file
-				// Defaults to false
+				// Optional: path to templates
+				// Relative paths are (of course) relative to pwd
 				previewTemplate: 'example/templates/preview.html',
 				snippetTemplate: 'example/templates/snippet.html',
 				cssTemplate:     'example/templates/icons.css',

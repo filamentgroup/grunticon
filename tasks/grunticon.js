@@ -18,6 +18,10 @@ module.exports = function(grunt, undefined) {
 		isVerbose = true;
 	}
 
+	var sep = function(msg){
+		grunt.log.subhead(msg);
+	}
+
 	var uglify = require('uglify-js');
 	var fs = require('fs');
 	var path = require('path');
@@ -43,21 +47,13 @@ module.exports = function(grunt, undefined) {
 			cssPrefix:       'icon-',
 			customSelectors: {},
 			cssBasePath:     '',
-			previewTemplate: false,
-			snippetTemplate: false,
-			cssTemplate:     false,
-			loaderTemplate:  false
+			previewTemplate: path.join(__dirname, 'grunticon', 'static', 'preview.html'),
+			snippetTemplate: path.join(__dirname, 'grunticon', 'static', 'snippet.html'),
+			cssTemplate:     path.join(__dirname, 'grunticon', 'static', 'icons.css'),
+			loaderTemplate:  path.join(__dirname, 'grunticon', 'static', 'loader.js')
 		});
 
-		// Grunticon templates and assorted what-not
-		var grunticonFiles = {
-			snippet: path.join(__dirname, 'grunticon', 'static', 'snippet.html'),
-			loader:  path.join(__dirname, 'grunticon', 'static', 'loader.js'),
-			css:     path.join(__dirname, 'grunticon', 'static', 'icons.css'),
-			preview: path.join(__dirname, 'grunticon', 'static', 'preview.html'),
-			mascot:  path.join(__dirname, 'grunticon', 'static', 'excessive.txt'),
-			phantom: path.join(__dirname, 'grunticon', 'phantom.js')
-		};
+		var mascotPath = path.join(__dirname, 'grunticon', 'static', 'excessive.txt');
 
 		var phantomJsPath = options.phantomjs;
 		var phantomJsArgs;
@@ -71,8 +67,30 @@ module.exports = function(grunt, undefined) {
 			crushingIt = true;
 		}
 
-		var sep = function(msg){
-			grunt.log.subhead(msg);
+		var deadFiles = 0;
+
+		// TODO: Ensure files are readable and binaries are executable
+		sep('Checking for required files.');
+		[
+			options.previewTemplate,
+			options.snippetTemplate,
+			options.cssTemplate,
+			options.loaderTemplate,
+			phantomJsPath,
+			pngcrushPath
+		].forEach(function(filePath){
+			if(grunt.file.exists(filePath)){
+				grunt.verbose.ok(filePath+' exists!');
+			} else {
+				grunt.log.warn('Y U NO EXIST, '+filePath);
+				deadFiles++;
+			}
+		});
+
+		if(deadFiles > 0){
+			grunt.fail.fatal(deadFiles+' required file'+(deadFiles==1?'':'s')+' could not be found.');
+		} else {
+			grunt.verbose.or.ok('All necessary files are where they need to be.')
 		}
 
 		var svgFiles = {};
@@ -183,7 +201,7 @@ module.exports = function(grunt, undefined) {
 			// Process SVGs
 			if(svgCount > 0){
 				phantomJsArgs = [
-					grunticonFiles.phantom,
+					path.join(__dirname, 'grunticon', 'phantom.js'),
 					'--debug='+isVerbose,
 					JSON.stringify(svgFiles)
 				]
@@ -368,9 +386,9 @@ module.exports = function(grunt, undefined) {
 				grunt.verbose.or.ok('Done!');
 
 				sep('Writing HTML/CSS files');
-				var snippetTemplate = grunt.file.read(grunticonFiles.snippet);
-				var loaderJS = uglify.minify(grunticonFiles.loader).code;
-				var iconCSS = grunt.file.read(grunticonFiles.css);
+				var snippetTemplate = grunt.file.read(options.snippetTemplate);
+				var loaderJS = uglify.minify(options.loaderTemplate).code;
+				var iconCSS = grunt.file.read(options.cssTemplate);
 
 				// Production Grunticon snippet
 				var snippetFile = grunt.template.process(snippetTemplate, {
@@ -401,7 +419,7 @@ module.exports = function(grunt, undefined) {
 
 				// Preview HTML file
 				if(options.previewFile !== false){
-					var previewTemplate = grunt.file.read(grunticonFiles.preview);
+					var previewTemplate = grunt.file.read(options.previewTemplate);
 					var previewSnippet = grunt.template.process(snippetTemplate, {
 						data: {
 							loader: loaderJS,
@@ -441,7 +459,7 @@ module.exports = function(grunt, undefined) {
 
 		var declareVictory = function(){
 			sep('Success!!');
-			grunt.log.writeln("\n"+grunt.file.read(grunticonFiles.mascot));
+			grunt.log.writeln("\n"+grunt.file.read(mascotPath));
 			done();
 		}
 
