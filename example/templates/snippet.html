@@ -1,0 +1,13 @@
+<script>
+/*
+	grunticon Stylesheet Loader
+	https://github.com/filamentgroup/grunticon
+	(c) <%= grunt.template.today('yyyy') %> Scott Jehl, Filament Group, Inc.
+	MIT license
+*/
+<%= loader %>
+grunticon(["<%= svgDataPath %>","<%= pngDataPath %>","<%= pngFilePath %>"]);
+</script>
+<noscript>
+	<link href="<%= pngFilePath %>" rel="stylesheet">
+</noscript>

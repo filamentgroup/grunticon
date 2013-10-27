@@ -93,7 +93,7 @@ In addition to the required configuration properties above, grunticon's grunt co
 - `pngDataCSS`: The name of the generated CSS file containing PNG data uris. Default: `"icons.data.png.css"`
 - `pngFileCSS`: The name of the generated CSS file containing external png url references. Default: `"icons.fallback.css"`
 - `previewFile`: The name of the generated HTML file containing PNG data uris. Default: `"preview.html"`
-- `loaderFile`:  The name of the generated text file containing the grunticon loading snippet. Default: `"grunticon.loader.html"`
+- `snippetFile`:  The name of the generated text file containing the grunticon loading snippet. Default: `"grunticon.loader.html"`
 - `pngDestDir`:  The name of the generated folder containing the generated PNG images. Default: `"png/"`
 - `cssPrefix`: a string to prefix all css classes with. Default: `"icon-"`
 - `customSelectors`: Allows you to specify custom selectors (in addition to the generated `cssPrefix + filename - extension` class) for individual files.

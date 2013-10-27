@@ -46,24 +46,14 @@ module.exports = function(grunt) {
 				pngFileCSS: 'icons.fallback.css',
 
 				// Optional: the filename for the loader snippet
-				// Set to false to prevent loader file from being generated
+				// Set to false to prevent grunticon snippet file from being generated
 				// Defaults to 'grunticon.loader.html'
-				loaderFile: 'grunticon.loader.html',
-
-				// Optional: path to loaderFile template, relative to pwd
-				// Set to false to load the default file
-				// Defaults to false
-				loaderTemplate: 'example/templates/loader.html',
+				snippetFile: 'grunticon.loader.html',
 
 				// Optional: the filename for the preview HTML file
 				// Set to false to prevent preview file from being generated
 				// Defaults to 'preview.html'
 				previewFile: 'preview.html',
-
-				// Optional: path to previewFile template, relative to pwd
-				// Set to false to load the default file
-				// Defaults to false
-				previewTemplate: 'example/templates/preview.html',
 
 				// Optional: subfolder in options.dest for PNG output
 				// Defaults to 'png'
@@ -71,7 +61,15 @@ module.exports = function(grunt) {
 
 				// Optional: prefix for CSS classnames
 				// Defaults to 'icon-'
-				cssPrefix: 'overwritten-by-child-task-'
+				cssPrefix: 'overwritten-by-child-task-',
+
+				// Optional: path to previewFile template, relative to pwd
+				// Set to false to load the default file
+				// Defaults to false
+				previewTemplate: 'example/templates/preview.html',
+				snippetTemplate: 'example/templates/snippet.html',
+				cssTemplate:     'example/templates/icons.css',
+				loaderTemplate:  'example/templates/loader.js'
 			},
 
 			foo: {

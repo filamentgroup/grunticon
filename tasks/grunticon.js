@@ -36,19 +36,23 @@ module.exports = function(grunt, undefined) {
 			pngDataCSS:      'icons.data.png.css',
 			pngFileCSS:      'icons.fallback.css',
 			previewFile:     'preview.html',
-			loaderFile:      'grunticon.loader.html',
+			snippetFile:     'snippet.html',
 			pngcrush:        false,
 			pngDestDir:      'png',
 			pngTempDir:      'grunticon-temp',
 			cssPrefix:       'icon-',
 			customSelectors: {},
-			cssBasePath:     ''
+			cssBasePath:     '',
+			previewTemplate: false,
+			snippetTemplate: false,
+			cssTemplate:     false,
+			loaderTemplate:  false
 		});
 
 		// Grunticon templates and assorted what-not
 		var grunticonFiles = {
 			snippet: path.join(__dirname, 'grunticon', 'static', 'snippet.html'),
-			loader:  path.join(__dirname, 'grunticon', 'static', 'grunticon.loader.js'),
+			loader:  path.join(__dirname, 'grunticon', 'static', 'loader.js'),
 			css:     path.join(__dirname, 'grunticon', 'static', 'icons.css'),
 			preview: path.join(__dirname, 'grunticon', 'static', 'preview.html'),
 			mascot:  path.join(__dirname, 'grunticon', 'static', 'excessive.txt'),
@@ -369,7 +373,7 @@ module.exports = function(grunt, undefined) {
 				var iconCSS = grunt.file.read(grunticonFiles.css);
 
 				// Production Grunticon snippet
-				var loaderFile = grunt.template.process(snippetTemplate, {
+				var snippetFile = grunt.template.process(snippetTemplate, {
 					data: {
 						loader: loaderJS,
 						svgDataPath: path.join(options.cssBasePath, options.svgDataCSS),
@@ -378,7 +382,7 @@ module.exports = function(grunt, undefined) {
 					}
 				});
 
-				grunt.file.write(path.join(options.dest, options.loaderFile), loaderFile);
+				grunt.file.write(path.join(options.dest, options.snippetFile), snippetFile);
 
 				// Grunticon CSS
 				var pngFileCSS = grunt.template.process(iconCSS, {data: {
