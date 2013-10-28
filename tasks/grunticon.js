@@ -45,6 +45,7 @@ module.exports = function(grunt, undefined) {
 			previewFile:     'preview.html',
 			snippetFile:     'snippet.html',
 			pngcrush:        false,
+			phantomjs:       false,
 			pngDestDir:      'png',
 			pngTempDir:      'grunticon-temp',
 			cssPrefix:       'icon-',
@@ -58,30 +59,77 @@ module.exports = function(grunt, undefined) {
 
 		var mascotPath = path.join(__dirname, 'grunticon', 'static', 'excessive.txt');
 
-		var phantomJsPath = options.phantomjs;
+		var phantomJsPath;
 		var phantomJsArgs;
+
+		if(options.phantomjs === false){
+			try {
+				phantomJsPath = require('phantomjs').path;
+				grunt.verbose.ok('phantomjs: npm-installed ('+phantomJsPath+')');
+			} catch (e) {
+				grunt.log.error(
+					'phantomjs isn’t installed! That’s bad.\n'+
+					'Your options:\n'+
+					'1. Install phantomjs through npm with `npm install phantomjs`\n'+
+					'2. Install phantomjs through homebrew (or your preferred package manager).\n'+
+					'   Set `phantomjs` to "/usr/local/bin/phantomjs" in your grunticon options.');
+				grunt.fail.fatal('Can’t continue until phantomjs is installed.');
+			}
+		} else {
+			phantomJsPath = options.phantomjs;
+			grunt.verbose.ok('phantomjs: user-specified ('+phantomJsPath+')');
+		}
 
 		// pngcrush?
 		var crushingIt = false;
 		var pngcrushPath;
 
-		if(options.pngcrush) {
-			pngcrushPath = options.pngcrush;
+		if(options.pngcrush){
 			crushingIt = true;
+			if(options.pngcrush === true){
+				try {
+					pngcrushPath = require('pngcrush-installer').getBinPath();
+					grunt.verbose.ok('pngcrush: npm-installed ('+pngcrushPath+')');
+				} catch (e) {
+					grunt.log.error(
+						'`pngcrush` is set to `true` in your Gruntfile, but it isn’t installed.\n'+
+						'Your options:\n'+
+						'1. Install pngcrush through npm with `npm install pngcrush-installer`\n'+
+						'2. Install pngcrush through homebrew (or your preferred package manager).\n'+
+						'   Set pngcrush to "/usr/local/bin/pngcrush" in your grunticon options.\n'+
+						'3. Run grunt with the --force to flag to continue without compressing PNGs.\n'+
+						'4. Set pngcrush to false in your grunticon options.'
+					);
+					grunt.fail.warn('pngcrush is disabled.');
+					crushingIt = false;
+				}
+			} else {
+				pngcrushPath = options.pngcrush;
+				grunt.verbose.ok('pngcrush: user-specified ('+pngcrushPath+')');
+			}
+
+		} else {
+			grunt.verbose.ok('pngcrush is disabled');
 		}
 
 		var deadFiles = 0;
 
 		// TODO: Ensure files are readable and binaries are executable
-		sep('Checking for required files.');
-		[
+		sep('Checking for required files');
+		var requiredFiles = [
 			options.previewTemplate,
 			options.snippetTemplate,
 			options.cssTemplate,
 			options.loaderTemplate,
-			phantomJsPath,
-			pngcrushPath
-		].forEach(function(filePath){
+			phantomJsPath
+		];
+
+		// pngcrushPath is required only if pngcrush is enabled
+		if(crushingIt){
+			requiredFiles.push(pngcrushPath);
+		}
+
+		requiredFiles.forEach(function(filePath){
 			if(grunt.file.exists(filePath)){
 				grunt.verbose.ok(filePath+' exists!');
 			} else {
@@ -93,7 +141,7 @@ module.exports = function(grunt, undefined) {
 		if(deadFiles > 0){
 			grunt.fail.fatal(deadFiles+' required file'+(deadFiles==1?'':'s')+' could not be found.');
 		} else {
-			grunt.verbose.or.ok('All required files are where they need to be.')
+			grunt.verbose.or.ok('Looking good, cap’n.')
 		}
 
 		var svgFiles = {};
@@ -140,24 +188,16 @@ module.exports = function(grunt, undefined) {
 		});
 
 		var preflight = function(){
-			sep('Preflight checks');
+			sep('Summary');
 			var p = new RSVP.Promise();
-
-			// Reset!
-			if(grunt.file.exists(options.dest)){
-				grunt.file.delete(options.dest);
-			}
-			grunt.file.mkdir(options.dest);
-			grunt.file.mkdir(pngTempDir);
-			grunt.file.mkdir(pngDestDir);
 
 			if( svgCount + pngCount > 0 ){
 				// Nice message about PNGs
 				if(pngCount > 0){
 					if(crushingIt){
-						grunt.log.ok('PNG'+(pngCount===1?'':'s')+' => pngcrush => "'+pngDestDir+'"');
+						grunt.log.ok(pngCount+' PNG'+(pngCount===1?'':'s')+' => pngcrush => "'+pngDestDir+'"');
 					} else {
-						grunt.log.ok('PNG'+(pngCount===1?'':'s')+' => "'+pngDestDir+'"');
+						grunt.log.ok(pngCount+' PNG'+(pngCount===1?'':'s')+' => "'+pngDestDir+'"');
 					}
 				} else {
 					grunt.log.warn('No PNG files were found.');
@@ -166,9 +206,9 @@ module.exports = function(grunt, undefined) {
 				// Nice message about SVGs
 				if(svgCount > 0){
 					if(crushingIt){
-						grunt.log.ok('SVG'+(svgCount===1?'':'s')+' => phantomjs => "'+pngTempDir+'" => pngcrush => "'+pngDestDir+'"');
+						grunt.log.ok(svgCount+' SVG'+(svgCount===1?'':'s')+' => phantomjs => "'+pngTempDir+'" => pngcrush => "'+pngDestDir+'"');
 					} else {
-						grunt.log.ok('SVG'+(svgCount===1?'':'s')+' => phantomjs => "'+pngTempDir+'" => "'+pngDestDir+'"');
+						grunt.log.ok(svgCount+' SVG'+(svgCount===1?'':'s')+' => phantomjs => "'+pngTempDir+'" => "'+pngDestDir+'"');
 					}
 
 				} else {
@@ -189,9 +229,21 @@ module.exports = function(grunt, undefined) {
 			if(svgCount > 0){ sepText.push(svgCount+' SVG'+(svgCount===1?'':'s')); }
 			sep('Processing source images: '+sepText.join(' and '));
 			var p = new RSVP.Promise();
+			var png_promise = new RSVP.Promise();
+			var svg_promise = new RSVP.Promise();
+
+			// Reset!
+			grunt.verbose.ok('Resetting destination directory');
+			if(grunt.file.exists(options.dest)){
+				grunt.file.delete(options.dest);
+			}
+			grunt.file.mkdir(options.dest);
+			grunt.file.mkdir(pngTempDir);
+			grunt.file.mkdir(pngDestDir);
 
 			// Copy PNGs
 			if(pngCount > 0){
+				grunt.log.ok('Copying PNGs');
 				for(var b in pngFiles){
 					var f = pngFiles[b];
 					grunt.file.copy(
@@ -199,10 +251,16 @@ module.exports = function(grunt, undefined) {
 						path.join(f.temp)
 					);
 				}
+				grunt.log.ok('Done!');
+				png_promise.resolve();
+			} else {
+				grunt.log.ok('No PNGs to copy');
+				png_promise.resolve();
 			}
 
 			// Process SVGs
 			if(svgCount > 0){
+				grunt.log.ok('Processing SVGs');
 				phantomJsArgs = [
 					path.join(__dirname, 'grunticon', 'phantom.js'),
 					'--debug='+isVerbose,
@@ -216,17 +274,24 @@ module.exports = function(grunt, undefined) {
 				},
 				function(err, result, code){
 					if(err){
-						p.reject();
+						svg_promise.reject();
 					} else {
-						p.resolve();
-						grunt.verbose.or.ok('Done!');
+						svg_promise.resolve();
+						grunt.log.ok('Done!');
 					}
 				});
 
 				// Print everything to the screen
 				phantomjs.stdout.pipe(process.stdout);
 				phantomjs.stderr.pipe(process.stderr);
+			} else {
+				svg_promise.resolve();
+				grunt.log.warn('No SVGs to process');
 			}
+
+			RSVP.all([svg_promise,png_promise]).then(function(){
+				p.resolve();
+			});
 
 			return p;
 		}

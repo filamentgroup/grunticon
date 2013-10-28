@@ -43,7 +43,6 @@ module.exports = function(grunt) {
 				pngFileCSS: 'icons.fallback.css',
 
 				// Optional: the filename for the loader snippet
-				// Set to false to prevent grunticon snippet file from being generated
 				// Defaults to 'snippet.html'
 				snippetFile: 'snippet.html',
 
