@@ -106,10 +106,10 @@ grunticon is designed to run with minimal configuration, but if you’d like to 
 <dd>CSS file path prefix appended to CSS filenames.</dd>
 <dd>Default: <code>''</code></dd>
 <dt>pngcrush</dt>
-<dd>path to pngcrush binary. Set to false to disable pngcrush. Set to true to load npm-installed pngcrush (install it with `npm install pngcrush-installer`).</dd>
+<dd>Path to pngcrush binary. Set to false to disable pngcrush. Set to true to load npm-installed pngcrush (install it with `npm install pngcrush-installer`).</dd>
 <dd>Default: <code>false</code></dd>
 <dt>phantomjs</dt>
-<dd>path to phantomjs binary. Set to false to load npm-installed phantomjs (install with `npm install phantomjs`).</dd>
+<dd>Path to phantomjs binary. Set to false to load npm-installed phantomjs (install with `npm install phantomjs`).</dd>
 <dd>Default: <code>false</code></dd>
 <dt>svgDataCSS</dt>
 <dd>The name of the generated CSS file containing SVG data URIs.</dd>
