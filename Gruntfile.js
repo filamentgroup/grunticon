@@ -44,8 +44,8 @@ module.exports = function(grunt) {
 
 				// Optional: the filename for the loader snippet
 				// Set to false to prevent grunticon snippet file from being generated
-				// Defaults to 'grunticon.loader.html'
-				snippetFile: 'grunticon.loader.html',
+				// Defaults to 'snippet.html'
+				snippetFile: 'snippet.html',
 
 				// Optional: the filename for the preview HTML file
 				// Set to false to prevent preview file from being generated
