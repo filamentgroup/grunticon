@@ -104,46 +104,46 @@ grunticon is designed to run with minimal configuration, but if you’d like to 
 <dl>
 <dt>cssBasePath</dt>
 <dd>CSS file path prefix appended to CSS filenames.</dd>
-<dd>Default: `''`</dd>
+<dd>Default: <code>''</code></dd>
 <dt>pngcrush</dt>
 <dd>path to pngcrush binary. Set to false to disable pngcrush. Set to true to load npm-installed pngcrush (install it with `npm install pngcrush-installer`).</dd>
-<dd>Default: `false`</dd>
+<dd>Default: <code>false</code></dd>
 <dt>phantomjs</dt>
 <dd>path to phantomjs binary. Set to false to load npm-installed phantomjs (install with `npm install phantomjs`).</dd>
-<dd>Default: `false`</dd>
+<dd>Default: <code>false</code></dd>
 <dt>svgDataCSS</dt>
 <dd>The name of the generated CSS file containing SVG data URIs.</dd>
-<dd>Default: `'icons.data.svg.css'`</dd>
+<dd>Default: <code>'icons.data.svg.css'</code></dd>
 <dt>pngDataCSS</dt>
 <dd>The name of the generated CSS file containing PNG data URIs.</dd>
-<dd>Default: `'icons.data.png.css'`</dd>
+<dd>Default: <code>'icons.data.png.css'</code></dd>
 <dt>pngFileCSS</dt>
 <dd>The name of the generated CSS file containing external PNG URL references.</dd>
-<dd>Default: `'icons.fallback.css'`</dd>
+<dd>Default: <code>'icons.fallback.css'</code></dd>
 <dt>snippetFile</dt>
 <dd>The name of the generated HTML file containing the grunticon async snippet.</dd>
-<dd>Default: `'snippet.html'`</dd>
+<dd>Default: <code>'snippet.html'</code></dd>
 <dt>previewFile</dt>
 <dd>The name of the generated icon preview HTML file. Set to `false` to disable preview generation.</dd>
-<dd>Default: `'preview.html'`</dd>
+<dd>Default: <code>'preview.html'</code></dd>
 <dt>pngDestDir</dt>
 <dd>The name of the subfolder in `dest` containing the generated PNG images.</dd>
-<dd>Default: `'png'`</dd>
+<dd>Default: <code>'png'</code></dd>
 <dt>cssPrefix</dt>
 <dd>A string to prefix all CSS selectors with.</dd>
-<dd>Default: `'icon-'`</dd>
+<dd>Default: <code>'icon-'</code></dd>
 <dt>previewTemplate</dt>
 <dd>Path to your custom preview.html template.</dd>
-<dd>Default: internal preview template</dd>
+<dd>Default: <a href="example/templates/preview.html">internal preview template</a></dd>
 <dt>snippetTemplate</dt>
 <dd>Path to your custom snippet.html template.</dd>
-<dd>Default: internal snippet template</dd>
+<dd>Default: <a href="example/templates/snippet.html">internal snippet template</a></dd>
 <dt>cssTemplate</dt>
 <dd>Path to your custom icon CSS template.</dd>
-<dd>Default: internal CSS template</dd>
+<dd>Default: <a href="example/templates/icons.css">internal CSS template</a></dd>
 <dt>loaderTemplate</dt>
 <dd>Path to your custom JS loader template.</dd>
-<dd>Default: internal loader template</dd>
+<dd>Default: <a href="example/templates/loader.js">internal loader template</a></dd>
 </dl>
 
 ## Browser testing results for icon output
