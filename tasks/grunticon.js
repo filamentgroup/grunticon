@@ -25,7 +25,6 @@ module.exports = function(grunt, undefined) {
 	var uglify = require('uglify-js');
 	var fs = require('fs');
 	var path = require('path');
-	// TODO: Load official RSVP module?
 	var RSVP = require(path.join('..', 'lib', 'rsvp'));
 	var imgstats = require(path.join('..', 'lib', 'img-stats'))
 	var imgdata = {};
@@ -432,7 +431,6 @@ module.exports = function(grunt, undefined) {
 					var sel = options.cssPrefix + f.basename;
 					sel = sel.replace(/[^\w]+/gmi, '-').toLowerCase();
 
-					// TODO: Calculate width/height
 					cssFiles.push({
 						width: width,
 						height: height,

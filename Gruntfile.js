@@ -71,6 +71,7 @@ module.exports = function(grunt) {
 				files: [
 					{
 						src: 'example/source/*.{svg,png}',
+						// dest: 'example/output', // TODO
 						filter: 'isFile'
 					}
 				],

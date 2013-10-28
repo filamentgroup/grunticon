@@ -34,6 +34,16 @@ All three files are [placed in the destination folder][final] along with a subfo
 
 You can see [a demonstration of the output here][demotron].
 
+[example source]: https://github.com/filamentgroup/grunticon/tree/master/example/source
+[example output]: https://github.com/filamentgroup/grunticon/tree/master/example/output
+[SVG data URIs]: https://github.com/filamentgroup/grunticon/blob/master/example/output/icons.data.svg.css
+[PNG data URIs]: https://github.com/filamentgroup/grunticon/blob/master/example/output/icons.data.png.css
+[PNG fallback]: https://github.com/filamentgroup/grunticon/blob/master/example/output/icons.fallback.css
+[final]: https://github.com/filamentgroup/grunticon/tree/master/example/output/png
+[snippet]: https://github.com/filamentgroup/grunticon/blob/master/example/output/grunticon.loader.txt
+[demotron]: http://filamentgroup.github.com/grunticon/example/output/preview.html
+
+
 ## License
 Copyright (c) 2013 Scott Jehl, [Filament Group, Inc.](http://filamentgroup.com)
 Licensed under the MIT license.
@@ -48,24 +58,43 @@ Licensed under the MIT license.
 
 If you’re interested in trying out Grumpicon, you might be interested in this handy guide as well: [Grumpicon Workflow][]
 
-## Getting Started
+[grump]: http://grumpicon.com
+[grumpicon workflow]: http://filamentgroup.com/lab/grumpicon_workflow/
 
-You’ll need to have [Grunt][] installed.
+## Installing grunticon
 
-Install the grunticon module with: `npm install grunt-grunticon`
+You’ll need to have `node` and [Grunt][grunt] installed.
 
-Then add this line to your project’s `Gruntfile.js`:
+- Mac: You can install `node` with [Homebrew][brew], a package manager. It’s one of the easiest way to manage command-line binaries on your Mac. [Read more on the Homebrew wiki][brew wiki].
+- Linux: You can install `node` with your OS’s preferred package manager.
+- Windows: ???
 
-```javascript
-grunt.loadNpmTasks('grunt-grunticon');
-```
+Once `node` is installed, you’ll have access to the node package manager (`npm`). Installing grunt is a two-step thing:
 
-And lastly, add the configuration settings to your `Gruntfile.js` as mentioned below. grunticon will batch your icons whenever you run `grunt` and output the files listed above to your `dest` folder, which is documented below.
+1. Install the grunt CLI with `npm install -g grunt-cli`.
+2. In your project directory, run `npm install grunt` to install the local guts into the `node_modules` folder.
+
+For more details on `grunt` installation, [check out the official documentation][install grunt].
+
+---
+
+Now, to grunticon.
+
+1. In your project directory, run `npm install grunt-grunticon` to install the grunticon locally.
+2. Add the following to your `Gruntfile.js`:
+	```javascript
+	grunt.loadNpmTasks('grunt-grunticon');
+	```
+
+[brew]: http://brew.sh/
+[brew wiki]: https://github.com/mxcl/homebrew/wiki
+[grunt]: https://github.com/cowboy/grunt/
+[install grunt]: http://gruntjs.com/getting-started#installing-the-cli
 
 
-## Documentation
+## Configuring your grunticon task
 
-Grunticon is a [multitask][multitask], which makes it easy to create as many export batches as you’d like. Here’s a sample task:
+Grunticon is a [multi task][multitask], which makes it easy to create as many export batches as you’d like. Here’s a sample task:
 
 ```javascript
 grunticon: {
@@ -83,7 +112,7 @@ grunticon: {
 }
 ```
 
-Read more about multitasks on the [official grunt documentation][multitask].
+Read more about multi tasks on the [official grunt documentation][multitask].
 
 `files` is a [grunt file array object][grunt file array].
 
@@ -96,6 +125,10 @@ grunt.registerTask('default', 'svgo cssmin grunticon');
 ```
 
 Otherwise, you can run the grunticon task with `grunt grunticon:yourTaskName`.
+
+[multitask]: http://gruntjs.com/creating-tasks#multi-tasks
+[grunt file array]: http://gruntjs.com/configuring-tasks#files-array-format
+
 
 ### Optional configuration properties
 
@@ -179,6 +212,9 @@ View the full support spreadsheet [here][support spreadsheet]. Feel free to edit
 
 The test page can be found [here][test page].
 
+[support spreadsheet]: https://docs.google.com/spreadsheet/ccc?key=0Ag5_yGvxpINRdHFYeUJPNnZMWUZKR2ItMEpRTXZPdUE#gid=0
+[test page]: http://filamentgroup.com/examples/grunticon-icon-test/
+
 ## Tips
 
 ### Serving compressed CSS
@@ -188,15 +224,22 @@ One of the great benefits to data URIs is the ability to compress images heavily
 
 The workflow we’ve been using so far involves creating a new Illustrator file with the artboard set to the desired size of the icon you want set in the CSS.
 
-Export the artwork by choosing `File > Save as…`. In the dialog, choose “SVG” as the format and enter a name for the file. This filename will be used as your class name later. Non-word characters will be stripped out.
+Export the artwork by choosing `File > Save as…`. In the dialog, choose *SVG* as the format and enter a name for the file. This filename will be used as your class name later. Non-word characters will be stripped out.
 
-The Save SVG dialog that opens up has a plethora of options. Here are a few tips we’ve learned.
+#### Recommended *Save SVG* dialog options
 
-- SVG Profile: Seems like SVG 1.1 Tiny is really well supported across even older mobile platforms, so if you have simple artwork that doesn’t use gradients or opacity, this will yield a smaller and more compatible graphic. If you want to use all the fancy effects, save artwork as SVG 1.1.
-- Type: Convert to outline before export.
-- Subsetting: Not necessary, since text is converted to outlines.
-- Images: Embed
-- Don’t check “Preserve Illustrator editing” to reduce file size.
+<dl>
+	<dt>SVG Profiles</dt>
+	<dd>If you’re not using gradients and fancy SVG effects, <em>SVG 1.1 Tiny</em> will yield a smaller, more compatible file. If you want to use all the fancy effects, save artwork as <em>SVG 1.1</em>.</dd>
+	<dt>Type</dt>
+	<dd>Select <em>Convert to outline</em></dd>
+	<dt>Subsetting</dt>
+	<dd>Not necessary, since text is converted to outlines</dd>
+	<dt>Image Location</dt>
+	<dd>Select <em>Embed</em></dd>
+	<dt>Preserve Illustrator Editing Capabilities</dt>
+	<dd>Leave this unchecked to reduce SVG file size.</dd>
+</dl>
 
 ## Changelog
 
@@ -208,7 +251,7 @@ The Save SVG dialog that opens up has a plethora of options. Here are a few tips
 - Version 0.3.4: SVGs without width and height can be used
 - Version 0.3.2: Added PhantomJS as a Node dependency, easing installation
 - Version 0.3.1: Documentation updates
-- Version 0.3.0: Grunticon becomes a multitask - syntax change involved in gruntfile
+- Version 0.3.0: Grunticon becomes a multi task - syntax change involved in gruntfile
 - Version 0.2.1: Custom selectors feature added
 - Version 0.2.0: Compatibility rewrite for Grunt 0.4x
 - Version 0.1.6: Switched from base64 encoding to escaping raw SVG text in data uris. Fixes to cssPrefix setting. If fallback png data uri is > 32768 chars, link to ext png instead for IE issues.
@@ -222,22 +265,6 @@ The example SVG icons in the source folder are borrowed from a few places, with 
 - [Cat icon by  Marie Coons][cat icon]
 - All others are either from [this free set by Tehk Seven][475 icon set] or drawn by @toddparker of Filament Group
 
-
-[grunt]: https://github.com/cowboy/grunt/
-[grump]: http://grumpicon.com
-[example source]: https://github.com/filamentgroup/grunticon/tree/master/example/source
-[example output]: https://github.com/filamentgroup/grunticon/tree/master/example/output
-[SVG data URIs]: https://github.com/filamentgroup/grunticon/blob/master/example/output/icons.data.svg.css
-[PNG data URIs]: https://github.com/filamentgroup/grunticon/blob/master/example/output/icons.data.png.css
-[PNG fallback]: https://github.com/filamentgroup/grunticon/blob/master/example/output/icons.fallback.css
-[final]: https://github.com/filamentgroup/grunticon/tree/master/example/output/png
-[snippet]: https://github.com/filamentgroup/grunticon/blob/master/example/output/grunticon.loader.txt
-[demotron]: http://filamentgroup.github.com/grunticon/example/output/preview.html
-[grunt file array]: http://gruntjs.com/configuring-tasks#files-array-format
-[multitask]: http://gruntjs.com/creating-tasks#multi-tasks
-[grumpicon workflow]: http://filamentgroup.com/lab/grumpicon_workflow/
-[support spreadsheet]: https://docs.google.com/spreadsheet/ccc?key=0Ag5_yGvxpINRdHFYeUJPNnZMWUZKR2ItMEpRTXZPdUE#gid=0
-[test page]: http://filamentgroup.com/examples/grunticon-icon-test/
 [unicorn icon]: http://thenounproject.com/noun/unicorn/#icon-No3364
 [bear icon]: http://thenounproject.com/noun/bear/#icon-No499
 [cat icon]: http://thenounproject.com/noun/cat/#icon-No840
