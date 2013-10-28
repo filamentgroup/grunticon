@@ -101,20 +101,50 @@ Otherwise, you can run the grunticon task with `grunt grunticon:yourTaskName`.
 
 grunticon is designed to run with minimal configuration, but if you’d like to customise things, the following keys are configurable in `options`:
 
-- `cssBasePath`: CSS file path prefix appended to CSS filenames. Default: `''`
-- `pngcrush`: path to pngcrush binary. Set to false to disable pngcrush. Set to true to load npm-installed pngcrush (install it with `npm install pngcrush-installer`). Default: `false`
-- `phantomjs`: path to phantomjs binary. Set to false to load npm-installed phantomjs (install with `npm install phantomjs`). Default: `false`
-- `svgDataCSS`: The name of the generated CSS file containing SVG data URIs. Default: `'icons.data.svg.css'`
-- `pngDataCSS`: The name of the generated CSS file containing PNG data URIs. Default: `'icons.data.png.css'`
-- `pngFileCSS`: The name of the generated CSS file containing external PNG URL references. Default: `'icons.fallback.css'`
-- `snippetFile`: The name of the generated HTML file containing the grunticon async snippet. Default: `'snippet.html'`
-- `previewFile`: the name of the generated icon preview HTML file. Set to `false` to disable preview generation. Default: `'preview.html'`
-- `pngDestDir`: The name of the subfolder in `dest` containing the generated PNG images. Default: `'png'`
-- `cssPrefix`: a string to prefix all css classes with. Default: `'icon-'`
-- `previewTemplate`: path to your custom preview.html template. Default: internal preview template
-- `snippetTemplate`: path to your custom snippet.html template. Default: internal snippet template
-- `cssTemplate`: path to your custom icon CSS template. Default: internal CSS template
-- `loaderTemplate`:  path to your custom JS loader template. Default: internal loader template
+<dl>
+<dt>cssBasePath</dt>
+<dd>CSS file path prefix appended to CSS filenames.</dd>
+<dd>Default: `''`</dd>
+<dt>pngcrush</dt>
+<dd>path to pngcrush binary. Set to false to disable pngcrush. Set to true to load npm-installed pngcrush (install it with `npm install pngcrush-installer`).</dd>
+<dd>Default: `false`</dd>
+<dt>phantomjs</dt>
+<dd>path to phantomjs binary. Set to false to load npm-installed phantomjs (install with `npm install phantomjs`).</dd>
+<dd>Default: `false`</dd>
+<dt>svgDataCSS</dt>
+<dd>The name of the generated CSS file containing SVG data URIs.</dd>
+<dd>Default: `'icons.data.svg.css'`</dd>
+<dt>pngDataCSS</dt>
+<dd>The name of the generated CSS file containing PNG data URIs.</dd>
+<dd>Default: `'icons.data.png.css'`</dd>
+<dt>pngFileCSS</dt>
+<dd>The name of the generated CSS file containing external PNG URL references.</dd>
+<dd>Default: `'icons.fallback.css'`</dd>
+<dt>snippetFile</dt>
+<dd>The name of the generated HTML file containing the grunticon async snippet.</dd>
+<dd>Default: `'snippet.html'`</dd>
+<dt>previewFile</dt>
+<dd>The name of the generated icon preview HTML file. Set to `false` to disable preview generation.</dd>
+<dd>Default: `'preview.html'`</dd>
+<dt>pngDestDir</dt>
+<dd>The name of the subfolder in `dest` containing the generated PNG images.</dd>
+<dd>Default: `'png'`</dd>
+<dt>cssPrefix</dt>
+<dd>A string to prefix all CSS selectors with.</dd>
+<dd>Default: `'icon-'`</dd>
+<dt>previewTemplate</dt>
+<dd>Path to your custom preview.html template.</dd>
+<dd>Default: internal preview template</dd>
+<dt>snippetTemplate</dt>
+<dd>Path to your custom snippet.html template.</dd>
+<dd>Default: internal snippet template</dd>
+<dt>cssTemplate</dt>
+<dd>Path to your custom icon CSS template.</dd>
+<dd>Default: internal CSS template</dd>
+<dt>loaderTemplate</dt>
+<dd>Path to your custom JS loader template.</dd>
+<dd>Default: internal loader template</dd>
+</dl>
 
 ## Browser testing results for icon output
 
