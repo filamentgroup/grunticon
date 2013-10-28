@@ -25,6 +25,7 @@ From a CSS perspective, it’s easy to use, as it generates a class referencing 
 grunticon takes a grunt file object comprised of [SVG and PNG files][example source]. PNG files are copied to the destination folder. SVGs are run through `phantomjs` and converted to PNGs in the destination folder. All PNGs are optionally crushed with `pngcrush` (recommended but not enabled by default).
 
 [Three CSS files][example output] are created:
+
 1. [a CSS file with SVG data URIs][SVG data URIs] for latest and greatest browsers,
 2. [a CSS file with PNG data URIs][PNG data URIs] for browsers that don’t support SVG, and
 3. [a fallback CSS file with references to those generated PNG images][PNG fallback] for browsers that don’t do data URIs.
@@ -91,7 +92,7 @@ The `dest` property is the directory you’d like grunticon to create. It’ll c
 If you’d like grunticon to run as a default task (whenever you run `grunt` without specifying a task), add `grunticon` to your default tasks list:
 
 ```javascript
-	grunt.registerTask('default', 'svgo cssmin grunticon');
+grunt.registerTask('default', 'svgo cssmin grunticon');
 ```
 
 Otherwise, you can run the grunticon task with `grunt grunticon:yourTaskName`.
@@ -157,7 +158,7 @@ One of the great benefits to data URIs is the ability to compress images heavily
 
 The workflow we’ve been using so far involves creating a new Illustrator file with the artboard set to the desired size of the icon you want set in the CSS.
 
-Export the artwork by choosing File > Save as…  In the dialog, choose “SVG” as the format and enter a name for the file. This filename will be used as your class name later. Non-word characters will be stripped out.
+Export the artwork by choosing `File > Save as…`. In the dialog, choose “SVG” as the format and enter a name for the file. This filename will be used as your class name later. Non-word characters will be stripped out.
 
 The Save SVG dialog that opens up has a plethora of options. Here are a few tips we’ve learned.
 
