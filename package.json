@@ -40,7 +40,7 @@
 	},
 	"devDependencies": {
 		"grunt-cli":"~0.1",
-		"nodeunit": "0.8.2"
+		"grunt-contrib-nodeunit": "0.2.2"
 	},
 	"keywords": [
 		"gruntplugin"
