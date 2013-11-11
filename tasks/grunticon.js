@@ -21,6 +21,7 @@ module.exports = function( grunt , undefined ) {
 	var crushPath = require( 'pngcrush-installer' ).getBinPath();
 	var crusher = require( path.join( '..', 'lib', 'pngcrusher' ) );
 	var grunticoner = require( path.join( '..', 'lib', 'grunticoner' ) );
+	var svgToPng = require( path.join( '..', 'lib', 'svg-to-png' ) );
 
 	var GruntiFile = require( path.join( '..', 'lib', 'grunticon-file') ).grunticonFile;
 
@@ -333,48 +334,26 @@ module.exports = function( grunt , undefined ) {
 			};
 
 
-
-			var svgToPng = function( pngf ){
-				var promise = new RSVP.Promise();
-				// take it to phantomjs to do the rest
-				grunt.log.writeln( "grunticon now spawning phantomjs..." );
-				var phantomJsPath = require('phantomjs').path;
-				grunt.log.writeln('(using path: ' + phantomJsPath + ')');
-
-				grunt.util.spawn({
-					cmd: phantomJsPath,
-					args: [
-						config.files.phantom,
-						tmp,
-						config.dest,
-						pngf, //path.join( "tmp","png", path.sep),
-						width,
-						height,
-						colors
-					],
-					fallback: ''
-				}, function(err, result, code){
-					if( err ){
-						promise.reject( err );
-						grunt.log.write("\nSomething went wrong with phantomjs...");
-						grunt.fatal( result.stderr );
-					}
-
-					grunt.log.write( result.stdout );
-					promise.resolve();
-				});
-
-				return promise;
-			};
-
 			var pngpath;
 			if( compressPNG ){
 				pngpath = path.join( "tmp", pngfolder , path.sep );
 			} else {
 				pngpath = pngfolder;
 			}
-			svgToPng( pngpath )
-			.then( function(err, result ){
+
+			var svgToPngOpts = {
+				tmp: tmp,
+				dest: config.dest,
+				width: width,
+				height: height,
+				colors: colors
+			};
+
+			svgToPng.convert( pngpath, svgToPngOpts )
+			.then( function( err, result ){
+				if( err ){
+					grunt.fatal( err );
+				}
 				if( compressPNG ){
 					crush( pngfolder )
 					.then( createCSS )
