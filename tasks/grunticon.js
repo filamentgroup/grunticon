@@ -249,40 +249,6 @@ module.exports = function( grunt , undefined ) {
 			grunt.file.write( loaderCodeDest, min );
 			grunt.log.write( "\ngrunticon loader file created." );
 
-
-
-			var callPhantom = function( pngf, writeCSS , callback){
-				// take it to phantomjs to do the rest
-				grunt.log.write( "\ngrunticon now spawning phantomjs..." );
-				var phantomJsPath = require('phantomjs').path;
-				grunt.log.write('(using path: ' + phantomJsPath + ')');
-
-				grunt.util.spawn({
-					cmd: phantomJsPath,
-					args: [
-						config.files.phantom,
-						tmp,
-						config.dest,
-						loaderCodeDest,
-						previewHTMLsrc,
-						datasvgcss,
-						datapngcss,
-						urlpngcss,
-						previewhtml,
-						pngf, //path.join( "tmp","png", path.sep),
-						cssprefix,
-						cssbasepath,
-						customselectors,
-						width,
-						height,
-						colors,
-						true,
-						writeCSS
-					],
-					fallback: ''
-				}, callback );
-			};
-
 			var crush = function( pngfolder ){
 				var promise = new RSVP.Promise();
 				if( grunt.file.exists( path.join( config.dest , pngfolder ) ) ){
@@ -366,30 +332,69 @@ module.exports = function( grunt , undefined ) {
 				return promise;
 			};
 
+
+
+			var svgToPng = function( pngf, writeCSS , callback){
+				var promise = new RSVP.Promise();
+				// take it to phantomjs to do the rest
+				grunt.log.write( "\ngrunticon now spawning phantomjs..." );
+				var phantomJsPath = require('phantomjs').path;
+				grunt.log.write('(using path: ' + phantomJsPath + ')');
+
+				grunt.util.spawn({
+					cmd: phantomJsPath,
+					args: [
+						config.files.phantom,
+						tmp,
+						config.dest,
+						loaderCodeDest,
+						previewHTMLsrc,
+						datasvgcss,
+						datapngcss,
+						urlpngcss,
+						previewhtml,
+						pngf, //path.join( "tmp","png", path.sep),
+						cssprefix,
+						cssbasepath,
+						customselectors,
+						width,
+						height,
+						colors,
+						true,
+						writeCSS
+					],
+					fallback: ''
+				}, function(err, result, code){
+					if( err ){
+						promise.reject( err );
+						grunt.log.write("\nSomething went wrong with phantomjs...");
+						grunt.fatal( result.stderr );
+					}
+
+					grunt.log.write( result.stdout );
+					promise.resolve();
+				});
+
+				return promise;
+			};
+
 			var pngpath;
 			if( compressPNG ){
 				pngpath = path.join( "tmp", pngfolder , path.sep );
 			} else {
 				pngpath = pngfolder;
 			}
-			callPhantom( pngpath, !compressPNG, function(err, result, code) {
-				// TODO boost this up a bit.
-				if( err ){
-					grunt.log.write("\nSomething went wrong with phantomjs...");
-					grunt.fatal( result.stderr );
-					done( false );
-				} else {
-					grunt.log.write( result.stdout );
-					if( compressPNG ){
-						crush( pngfolder )
-						.then( createCSS )
-						.then( function(){
-							done();
-						});
-					} else {
-						grunt.file.delete( tmp );
+			svgToPng( pngpath, !compressPNG )
+			.then( function(err, result ){
+				if( compressPNG ){
+					crush( pngfolder )
+					.then( createCSS )
+					.then( function(){
 						done();
-					}
+					});
+				} else {
+					grunt.file.delete( tmp );
+					done();
 				}
 			});
 
