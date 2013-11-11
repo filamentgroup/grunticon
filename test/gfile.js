@@ -1,4 +1,5 @@
-var grunt = require('grunt');
+var path = require( 'path' );
+var GrunticonFile = require( path.join( '..', 'lib', 'grunticon-file') ).grunticonFile;
 
 /*
 	======== A Handy Little Nodeunit Reference ========
@@ -19,18 +20,32 @@ var grunt = require('grunt');
 		test.doesNotThrow(block, [error], [message])
 		test.ifError(value)
 */
+"use strict";
+var constructor = GrunticonFile;
 
-exports['grunticon'] = {
-	setUp: function(done) {
-		"use strict";
-		// setup here
+module.exports = {
+	setUp: function( done ) {
 		done();
 	},
-	'helper': function(test) {
-		"use strict";
-		test.expect(1);
-		// tests here
-		test.equal(grunt.helper('grunticon'), 'grunticon!!!', 'should return the correct value.');
+
+	isSvgIsSet: function( test ) {
+		test.expect( 1 );
+		var gf = new constructor( "foo.svg" );
+		test.ok( gf.isSvg );
+		test.done();
+	},
+
+	isSvgIsNotSet: function( test ) {
+		test.expect( 1 );
+		var gf = new constructor( "foo.png" );
+		test.ok( !gf.isSvg );
+		test.done();
+	},
+
+	fileNameSet: function( test ) {
+		test.expect( 1 );
+		var gf = new constructor( "bar.svg" );
+		test.equal( gf.filenamenoext, "bar" );
 		test.done();
 	}
 };
