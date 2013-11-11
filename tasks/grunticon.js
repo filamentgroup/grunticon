@@ -310,6 +310,8 @@ module.exports = function( grunt , undefined ) {
 			};
 
 			var createCSS = function(){
+				var promise = new RSVP.Promise();
+
 				grunt.log.writeln( "Writing CSS" );
 				readDir( tmp )
 				.then( function( files , err ){
@@ -355,11 +357,13 @@ module.exports = function( grunt , undefined ) {
 							if( idx +1 === files.length ){
 								GruntiFile.writeCSS( dataarr, o );
 								grunt.file.delete( tmp );
-								done();
+								promise.resolve();
 							}
 						});
 					});
 				});
+
+				return promise;
 			};
 
 			var pngpath;
@@ -378,7 +382,10 @@ module.exports = function( grunt , undefined ) {
 					grunt.log.write( result.stdout );
 					if( compressPNG ){
 						crush( pngfolder )
-						.then( createCSS );
+						.then( createCSS )
+						.then( function(){
+							done();
+						});
 					} else {
 						grunt.file.delete( tmp );
 						done();
