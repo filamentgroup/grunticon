@@ -39,7 +39,8 @@
 		"xmldom": "0.1.16"
 	},
 	"devDependencies": {
-		"grunt-cli":"~0.1"
+		"grunt-cli":"~0.1",
+		"nodeunit": "0.8.2"
 	},
 	"keywords": [
 		"gruntplugin"
