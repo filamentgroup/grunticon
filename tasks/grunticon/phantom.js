@@ -27,6 +27,8 @@ phantom args sent from grunticon.js:
 	[12] - default width
 	[13] - default height
 	[14] - colors
+	[15] - if we should render files
+	[16] - if we should write CSS
 */
 
 (function(){
