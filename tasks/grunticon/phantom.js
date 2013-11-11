@@ -27,8 +27,6 @@ phantom args sent from grunticon.js:
 	[12] - default width
 	[13] - default height
 	[14] - colors
-	[15] - if we should render files
-	[16] - if we should write CSS
 */
 
 (function(){
@@ -52,9 +50,7 @@ phantom args sent from grunticon.js:
 		customselectors: phantom.args[11],
 		defaultWidth: phantom.args[12],
 		defaultHeight: phantom.args[13],
-		colors: phantom.args[14],
-		render: phantom.args[15],
-		writeCSS: phantom.args[16]
+		colors: phantom.args[14]
 	};
 
 	var files = fs.list( options.inputdir );
@@ -138,9 +134,6 @@ phantom args sent from grunticon.js:
 
 
 	RSVP.all( promises ).then( function( dataarr ){
-		if( options.writeCSS !== "false" ){
-			grunticoner.writeCSS( dataarr , options );
-		}
 		deleteTempFiles();
 		phantom.exit();
 	});
