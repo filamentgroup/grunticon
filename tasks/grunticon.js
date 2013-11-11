@@ -176,7 +176,7 @@ module.exports = function( grunt , undefined ) {
 		var tmp = path.join( config.dest , 'tmp' , path.sep );
 
 		var compressPNG = config.pngcrush,
-			render, writeCSS;
+			render;
 
 
 		// create temp directory
@@ -361,15 +361,14 @@ module.exports = function( grunt , undefined ) {
 					});
 				});
 			};
-			writeCSS = !compressPNG;
 
 			var pngpath;
-			if( writeCSS ){
+			if( !compressPNG ){
 				pngpath = pngfolder;
 			} else {
 				pngpath = path.join( "tmp", pngfolder , path.sep );
 			}
-			callPhantom( pngpath, writeCSS, function(err, result, code) {
+			callPhantom( pngpath, !compressPNG, function(err, result, code) {
 				// TODO boost this up a bit.
 				if( err ){
 					grunt.log.write("\nSomething went wrong with phantomjs...");
@@ -377,7 +376,7 @@ module.exports = function( grunt , undefined ) {
 					done( false );
 				} else {
 					grunt.log.write( result.stdout );
-					if( writeCSS ){
+					if( !compressPNG ){
 						grunt.file.delete( tmp );
 						done();
 					} else {
