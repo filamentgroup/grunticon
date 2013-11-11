@@ -363,10 +363,10 @@ module.exports = function( grunt , undefined ) {
 			};
 
 			var pngpath;
-			if( !compressPNG ){
-				pngpath = pngfolder;
-			} else {
+			if( compressPNG ){
 				pngpath = path.join( "tmp", pngfolder , path.sep );
+			} else {
+				pngpath = pngfolder;
 			}
 			callPhantom( pngpath, !compressPNG, function(err, result, code) {
 				// TODO boost this up a bit.
@@ -376,12 +376,12 @@ module.exports = function( grunt , undefined ) {
 					done( false );
 				} else {
 					grunt.log.write( result.stdout );
-					if( !compressPNG ){
-						grunt.file.delete( tmp );
-						done();
-					} else {
+					if( compressPNG ){
 						crush( pngfolder )
 						.then( createCSS );
+					} else {
+						grunt.file.delete( tmp );
+						done();
 					}
 				}
 			});
