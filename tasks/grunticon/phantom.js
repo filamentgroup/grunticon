@@ -14,21 +14,10 @@
 phantom args sent from grunticon.js:
 	[0] - input directory path
 	[1] - output directory path
-	[2] - asyncCSS output file path
-	[3] - preview.html static file path
-	[4] - CSS filename for datasvg css
-	[5] - CSS filename for datapng css
-	[6] - CSS filename for urlpng css
-	[7] - filename for preview HTML file
-	[8] - png folder name
-	[9] - css classname prefix
-	[10] - css basepath prefix
-	[11] - custom CSS selectors
-	[12] - default width
-	[13] - default height
-	[14] - colors
-	[15] - if we should render files
-	[16] - if we should write CSS
+	[3] - png folder name
+	[4] - default width
+	[5] - default height
+	[6] - colors
 */
 
 (function(){
@@ -40,19 +29,10 @@ phantom args sent from grunticon.js:
 	var options = {
 		inputdir: phantom.args[0],
 		outputdir: phantom.args[1],
-		pngout:  phantom.args[8],
-		cssprefix: phantom.args[9],
-		fallbackcss: phantom.args[6],
-		pngdatacss: phantom.args[5],
-		datacss: phantom.args[4],
-		cssbasepath: phantom.args[10],
-		asyncCSSpath: phantom.args[2],
-		previewFilePath: phantom.args[3],
-		previewHTMLFilePath: phantom.args[7],
-		customselectors: phantom.args[11],
-		defaultWidth: phantom.args[12],
-		defaultHeight: phantom.args[13],
-		colors: phantom.args[14]
+		pngout:  phantom.args[2],
+		defaultWidth: phantom.args[3],
+		defaultHeight: phantom.args[4],
+		colors: phantom.args[5]
 	};
 
 	var files = fs.list( options.inputdir );
@@ -135,7 +115,7 @@ phantom args sent from grunticon.js:
 
 
 
-	RSVP.all( promises ).then( function( dataarr ){
+	RSVP.all( promises ).then( function(){
 		deleteTempFiles();
 		phantom.exit();
 	});
