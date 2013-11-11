@@ -359,9 +359,7 @@ module.exports = function( grunt , undefined ) {
 						customselectors,
 						width,
 						height,
-						colors,
-						true,
-						false
+						colors
 					],
 					fallback: ''
 				}, function(err, result, code){
