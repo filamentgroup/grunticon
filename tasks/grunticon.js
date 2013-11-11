@@ -334,12 +334,12 @@ module.exports = function( grunt , undefined ) {
 
 
 
-			var svgToPng = function( pngf, writeCSS , callback){
+			var svgToPng = function( pngf ){
 				var promise = new RSVP.Promise();
 				// take it to phantomjs to do the rest
-				grunt.log.write( "\ngrunticon now spawning phantomjs..." );
+				grunt.log.writeln( "grunticon now spawning phantomjs..." );
 				var phantomJsPath = require('phantomjs').path;
-				grunt.log.write('(using path: ' + phantomJsPath + ')');
+				grunt.log.writeln('(using path: ' + phantomJsPath + ')');
 
 				grunt.util.spawn({
 					cmd: phantomJsPath,
@@ -361,7 +361,7 @@ module.exports = function( grunt , undefined ) {
 						height,
 						colors,
 						true,
-						writeCSS
+						false
 					],
 					fallback: ''
 				}, function(err, result, code){
@@ -384,7 +384,7 @@ module.exports = function( grunt , undefined ) {
 			} else {
 				pngpath = pngfolder;
 			}
-			svgToPng( pngpath, !compressPNG )
+			svgToPng( pngpath )
 			.then( function(err, result ){
 				if( compressPNG ){
 					crush( pngfolder )
@@ -393,8 +393,11 @@ module.exports = function( grunt , undefined ) {
 						done();
 					});
 				} else {
-					grunt.file.delete( tmp );
-					done();
+					createCSS()
+					.then(function(){
+						grunt.file.delete( tmp );
+						done();
+					});
 				}
 			});
 
