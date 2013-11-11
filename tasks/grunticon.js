@@ -176,8 +176,7 @@ module.exports = function( grunt , undefined ) {
 		var svgosrc = config.src;
 		var tmp = path.join( config.dest , 'tmp' , path.sep );
 
-		var compressPNG = config.pngcrush,
-			render;
+		var compressPNG = config.pngcrush, render;
 
 
 		// create temp directory
@@ -342,10 +341,10 @@ module.exports = function( grunt , undefined ) {
 			}
 
 			var svgToPngOpts = {
-				tmp: tmp,
+				input: tmp,
 				dest: config.dest,
-				width: width,
-				height: height,
+				defaultWidth: width,
+				defaultHeight: height,
 				colors: colors
 			};
 
