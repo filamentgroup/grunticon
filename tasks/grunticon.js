@@ -20,8 +20,8 @@ module.exports = function( grunt , undefined ) {
 	var RSVP = require( path.join( '..', 'lib', 'rsvp' ) );
 	var crushPath = require( 'pngcrush-installer' ).getBinPath();
 	var crusher = require( path.join( '..', 'lib', 'pngcrusher' ) );
-	var grunticoner = require( path.join( '..', 'lib', 'grunticoner' ) );
 	var svgToPng = require( path.join( '..', 'lib', 'svg-to-png' ) );
+	var imgToCSS = require( path.join( '..', 'lib', 'img-to-css' ) );
 
 	var GruntiFile = require( path.join( '..', 'lib', 'grunticon-file') ).grunticonFile;
 
@@ -275,63 +275,6 @@ module.exports = function( grunt , undefined ) {
 				return promise;
 			};
 
-			var createCSS = function(){
-				var promise = new RSVP.Promise();
-
-				grunt.log.writeln( "Writing CSS" );
-				readDir( tmp )
-				.then( function( files , err ){
-					var dataarr = [];
-					var o = {
-						previewHTMLFilePath: previewHTMLsrc,
-						previewFilePath: previewhtml,
-						pngdatacss: datapngcss,
-						asyncCSSpath: path.join( config.dest, loadersnippet),
-						datacss: datasvgcss,
-						outputdir: config.dest,
-						fallbackcss: urlpngcss,
-						cssbasepath: cssbasepath
-					};
-					files = files.filter( function( file ){
-						var stats = fs.lstatSync( path.resolve( path.join( tmp , file ) ) );
-						if( !stats.isDirectory() &&
-							( path.extname( file ) === ".svg" || path.extname( file ) === ".png" ) ){
-							return file;
-						}
-					});
-					var newFiles = GruntiFile.colorConfig( files , {
-						inputDir: path.resolve( tmp ),
-						colors: JSON.parse( colors )
-					});
-					files.push.apply( files , newFiles );
-					files.forEach( function( file, idx ){
-						var gFile = new GruntiFile( file );
-						var imgLoc = gFile.isSvg ? tmp : path.resolve( path.join( tmp , pngfolder ) );
-						gFile.setImageData( imgLoc );
-						gFile.setPngLocation({
-							relative: pngfolder,
-							absolute: path.resolve( path.join( config.dest, pngfolder ) )
-						});
-						gFile.stats({
-							inputDir: imgLoc,
-							defaultWidth: config.defaultWidth,
-							defaultHeight: config.defaultHeight
-						})
-						.then( function( stats , err ){
-							var res = gFile.getCSSRules( stats, pngfolder, cssprefix, config );
-							dataarr.push( res );
-							if( idx +1 === files.length ){
-								GruntiFile.writeCSS( dataarr, o );
-								grunt.file.delete( tmp );
-								promise.resolve();
-							}
-						});
-					});
-				});
-
-				return promise;
-			};
-
 
 			var pngpath;
 			if( compressPNG ){
@@ -349,18 +292,41 @@ module.exports = function( grunt , undefined ) {
 			};
 
 			svgToPng.convert( pngpath, svgToPngOpts )
-			.then( function( err, result ){
+			.then( function( result, err ){
 				if( err ){
 					grunt.fatal( err );
 				}
+				var o = {
+					previewHTMLFilePath: previewHTMLsrc,
+					previewFilePath: previewhtml,
+					pngdatacss: datapngcss,
+					asyncCSSpath: path.join( config.dest, loadersnippet),
+					datacss: datasvgcss,
+					outputdir: config.dest,
+					fallbackcss: urlpngcss,
+					cssbasepath: cssbasepath,
+					colors: colors,
+					pngfolder: pngfolder,
+					defaultWidth: config.defaultWidth,
+					defaultHeight: config.defaultHeight,
+					config: config,
+					cssprefix: cssprefix
+				};
+
 				if( compressPNG ){
 					crush( pngfolder )
-					.then( createCSS )
 					.then( function(){
+						return imgToCSS.create( path.join( result, "tmp" ), o );
+					} )
+					.then( function( _, err){
+						if( err ){
+							grunt.fatal( err );
+							done( false );
+						}
 						done();
 					});
 				} else {
-					createCSS()
+					imgToCSS.create( path.join( result, "tmp"), o )
 					.then(function(){
 						grunt.file.delete( tmp );
 						done();
