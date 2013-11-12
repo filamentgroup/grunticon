@@ -63,7 +63,8 @@ module.exports = function(grunt) {
 				// Relative paths are (of course) relative to pwd
 				previewTemplate: 'example/templates/preview.html',
 				snippetTemplate: 'example/templates/snippet.html',
-				cssTemplate:     'example/templates/icons.css',
+				cssDataTemplate: 'example/templates/data.css',
+				cssFileTemplate: 'example/templates/file.css',
 				loaderTemplate:  'example/templates/loader.js'
 			},
 

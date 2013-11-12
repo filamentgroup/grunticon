@@ -1,0 +1,6 @@
+/* Last generated <%= grunt.template.today() %> */
+<% icons.forEach(function(icon){ %>
+.<%= icon.selector %>{
+	background-image: url("{{ STATIC_URL }}images/png/<%= icon.url %>");
+}
+<% }); %>
