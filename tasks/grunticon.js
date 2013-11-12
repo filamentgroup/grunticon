@@ -255,7 +255,7 @@ module.exports = function(grunt, undefined) {
 				grunt.log.ok('Done!');
 				png_promise.resolve();
 			} else {
-				grunt.log.ok('No PNGs to copy');
+				grunt.log.warn('No PNGs to copy. Moving on…');
 				png_promise.resolve();
 			}
 
@@ -287,7 +287,7 @@ module.exports = function(grunt, undefined) {
 				phantomjs.stderr.pipe(process.stderr);
 			} else {
 				svg_promise.resolve();
-				grunt.log.warn('No SVGs to process');
+				grunt.log.warn('No SVGs to process. Moving on…');
 			}
 
 			RSVP.all([svg_promise,png_promise]).then(function(){
