@@ -55,11 +55,11 @@ exports['setImageData'] = {
 		done();
 	},
 
-  setImageData: function( test ) {
+	setImageData: function( test ) {
 		test.expect( 2 );
-    test.equal( gf.imagedata, undefined );
-    gf.setImageData( "test/files/" );
-    test.equal( gf.imagedata, "<foo/>\n" );
+		test.equal( gf.imagedata, undefined );
+		gf.setImageData( "test/files/" );
+		test.equal( gf.imagedata, "<foo/>\n" );
 		test.done();
-  }
+	}
 };
