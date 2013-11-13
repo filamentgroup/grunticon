@@ -123,3 +123,52 @@ exports['pngdatauri'] = {
 		test.done();
 	}
 };
+
+function imageSetup( gf ) {
+	gf.setImageData( "test/files/" );
+
+	gf.setPngLocation({
+		relative: "test/files",
+		absolute: path.resolve( "test/files" )
+	});
+}
+
+exports['stats'] = {
+	setUp: function( done ) {
+		gf = new constructor( "bear.svg" );
+		done();
+	},
+
+	// NOTE png stats should probably be recorded in the image_stats tests
+	actualStats: function( test ) {
+		test.expect( 2 );
+		imageSetup( gf );
+
+		gf.stats({ inputDir: "test/files" }).then(function( data ) {
+			test.equal( parseInt(data.width.replace(/px/, ''), 10), 100 );
+			test.equal( parseInt(data.height.replace(/px/, ''), 10), 62 );
+			test.done();
+		}, function() {
+			test.done();
+		});
+	},
+
+	defaultStats: function( test ) {
+		test.expect( 2 );
+		gf = new constructor( "no-stats-bear.svg" );
+
+		imageSetup( gf );
+
+		gf.stats({
+			inputDir: "test/files",
+			defaultWidth: "10px",
+			defaultHeight: "10px"
+		}).then(function( data ) {
+			test.equal( parseInt(data.width.replace(/px/, ''), 10), 10 );
+			test.equal( parseInt(data.height.replace(/px/, ''), 10), 10 );
+			test.done();
+		}, function() {
+			test.done();
+		});
+	}
+};
