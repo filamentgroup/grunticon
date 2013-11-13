@@ -115,7 +115,7 @@ exports['pngdatauri'] = {
 	},
 
 	encoded: function( test ) {
-		// test that all characters are base64
+		// test that all characters are base64, might include = for low bytes
 		gf.pngdatauri().split('base64,')[1].split('').forEach(function( c ) {
 			test.ok( /[a-zA-Z0-9+\/=]+/.test(c) );
 		});
