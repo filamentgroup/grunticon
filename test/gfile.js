@@ -1,25 +1,6 @@
 var path = require( 'path' );
 var GrunticonFile = require( path.join( '..', 'lib', 'grunticon-file') ).grunticonFile;
 
-/*
-	======== A Handy Little Nodeunit Reference ========
-	https://github.com/caolan/nodeunit
-
-	Test methods:
-		test.expect(numAssertions)
-		test.done()
-	Test assertions:
-		test.ok(value, [message])
-		test.equal(actual, expected, [message])
-		test.notEqual(actual, expected, [message])
-		test.deepEqual(actual, expected, [message])
-		test.notDeepEqual(actual, expected, [message])
-		test.strictEqual(actual, expected, [message])
-		test.notStrictEqual(actual, expected, [message])
-		test.throws(block, [error], [message])
-		test.doesNotThrow(block, [error], [message])
-		test.ifError(value)
-*/
 "use strict";
 var gf, constructor = GrunticonFile;
 
@@ -60,6 +41,85 @@ exports['setImageData'] = {
 		test.equal( gf.imagedata, undefined );
 		gf.setImageData( "test/files/" );
 		test.equal( gf.imagedata, "<foo/>\n" );
+		test.done();
+	}
+};
+
+exports['setPngLocation'] = {
+	setUp: function( done ) {
+		gf = new constructor( "foo.svg" );
+		done();
+	},
+
+	setPngLocation: function( test ) {
+		test.expect( 4 );
+
+		test.equal( gf.relPngLocation, undefined );
+		test.equal( gf.absPngLocation, undefined );
+
+		gf.setPngLocation({
+			relative: "test/files",
+			absolute: path.resolve( "test/files" )
+		});
+
+		test.equal( gf.relPngLocation.toString(), "test/files/foo.png" );
+		test.ok( /test\/files\/foo.png$/.test(gf.absPngLocation.toString()) );
+		test.done();
+	}
+};
+
+exports['svgdatauri'] = {
+	setUp: function( done ) {
+		gf = new constructor( "foo.svg" );
+		done();
+	},
+
+	assignedOnce: function( test ) {
+		test.expect( 2 );
+		var val = gf._svgdatauri = "test/files/foo.svg";
+
+		test.equal( val, gf.svgdatauri() );
+		test.equal( val, gf.svgdatauri() );
+		test.done();
+	},
+
+	prefix: function( test ) {
+		test.expect( 1 );
+		gf.setImageData( "test/files/" );
+		test.equal( gf.svgdatauri().indexOf("data:image/svg"), 0 );
+		test.done();
+	},
+
+	replace: function( test ) {
+		var data;
+		test.expect( 2 );
+		gf = new constructor( "complex-foo.svg" );
+		gf.setImageData( "test/files/" );
+		test.equal( gf.imagedata, "<foo/>\n<bar/>\n<!-- comment -->\n", 0 );
+
+		data = gf.svgdatauri().split( "ASCII," )[1];
+
+		test.equal( data, encodeURIComponent( "<foo/><bar/>" ) );
+		test.done();
+	}
+};
+
+exports['pngdatauri'] = {
+	setUp: function( done ) {
+		gf = new constructor( "foo.png" );
+		gf.setPngLocation({
+			relative: "test/files",
+			absolute: path.resolve( "test/files" )
+		});
+		done();
+	},
+
+	encoded: function( test ) {
+		// test that all characters are base64
+		gf.pngdatauri().split('base64,')[1].split('').forEach(function( c ) {
+			test.ok( /[a-zA-Z0-9+\/=]+/.test(c) );
+		});
+
 		test.done();
 	}
 };
