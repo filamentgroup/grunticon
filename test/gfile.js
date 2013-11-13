@@ -104,6 +104,12 @@ exports['svgdatauri'] = {
 	}
 };
 
+function testEncoded( test, str ) {
+	str.split('base64,')[1].split('').forEach(function( c ) {
+		test.ok( /[a-zA-Z0-9+\/=]+/.test(c) );
+	});
+}
+
 exports['pngdatauri'] = {
 	setUp: function( done ) {
 		gf = new constructor( "foo.png" );
@@ -116,10 +122,7 @@ exports['pngdatauri'] = {
 
 	encoded: function( test ) {
 		// test that all characters are base64, might include = for low bytes
-		gf.pngdatauri().split('base64,')[1].split('').forEach(function( c ) {
-			test.ok( /[a-zA-Z0-9+\/=]+/.test(c) );
-		});
-
+		testEncoded( test, gf.pngdatauri() );
 		test.done();
 	}
 };
@@ -166,6 +169,33 @@ exports['stats'] = {
 		}).then(function( data ) {
 			test.equal( parseInt(data.width.replace(/px/, ''), 10), 10 );
 			test.equal( parseInt(data.height.replace(/px/, ''), 10), 10 );
+			test.done();
+		}, function() {
+			test.done();
+		});
+	}
+};
+
+exports['getCSSRules'] = {
+	setUp: function( done ) {
+		gf = new constructor( "bear.svg" );
+		done();
+	},
+
+	output: function( test ) {
+		imageSetup(gf);
+
+		gf.stats({
+			inputDir: "test/files"
+		}).then(function( stats ) {
+			var res = gf.getCSSRules( stats, "test/files", "foo-", {});
+
+			// remove the trailing css from the encoding, the preceding css
+			// is removed in testEncode
+			testEncoded(test, res.pngdatacssrule.split("')")[0]);
+
+			test.ok( res.pngdatacssrule.indexOf("foo-bear") > 0 );
+			test.ok( res.datacssrule.indexOf("foo-bear") > 0 );
 			test.done();
 		}, function() {
 			test.done();
