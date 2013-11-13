@@ -296,7 +296,7 @@ module.exports = function( grunt , undefined ) {
 			// create the output directory
 			grunt.file.mkdir( config.dest );
 
-			svgToPng.convert( pngpath, svgToPngOpts )
+			svgToPng.convert( svgToPngOpts.input, pngpath, svgToPngOpts )
 			.then( function( result, err ){
 				if( err ){
 					grunt.fatal( err );
