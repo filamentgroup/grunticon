@@ -102,11 +102,11 @@ module.exports = function( grunt , undefined ) {
 				config.dest += path.sep;
 		}
 
-		var f = fs.readdirSync( config.src );
-		f = f.filter( function( file ){
+		var files = fs.readdirSync( config.src );
+		files = files.filter( function( file ){
 			return file.match( /png|svg/ );
 		});
-		if( f.length === 0 ){
+		if( files.length === 0 ){
 			grunt.log.writeln( "Grunticon has no files to read!" );
 			done();
 		}
@@ -214,8 +214,6 @@ module.exports = function( grunt , undefined ) {
 			});
 			return promise;
 		};
-
-		var files = fs.readdirSync( svgosrc );
 
 		optimizeAndCopy( files )
 		.then( function(){
