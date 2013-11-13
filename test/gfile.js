@@ -1,5 +1,6 @@
 var path = require( 'path' );
 var GrunticonFile = require( path.join( '..', 'lib', 'grunticon-file') ).grunticonFile;
+var fs = require('fs');
 
 "use strict";
 var gf, constructor = GrunticonFile;
@@ -196,6 +197,43 @@ exports['getCSSRules'] = {
 
 			test.ok( res.pngdatacssrule.indexOf("foo-bear") > 0 );
 			test.ok( res.datacssrule.indexOf("foo-bear") > 0 );
+			test.done();
+		}, function() {
+			test.done();
+		});
+	}
+};
+
+exports['writeCSS'] = {
+	setUp: function( done ) {
+		gf = new constructor( "bear.svg" );
+		done();
+	},
+
+	output: function( test ) {
+		imageSetup(gf);
+
+		gf.stats({
+			inputDir: "test/files"
+		}).then(function( stats ) {
+			var images = [gf.getCSSRules( stats, "test/files", "foo-", {})];
+
+			constructor.writeCSS( images, {
+				outputdir: "test/output",
+				cssbasepath: "",
+				previewHTMLFilePath: "test/files/foo.html",
+				previewFilePath: "foo.html",
+				fallbackcss: "foo.css",
+				pngdatacss: "foo-pngdata.css",
+				datacss: "foo-data.css",
+				asyncCSSpath: "test/files/async.css"
+			});
+
+			test.ok( fs.existsSync("test/output/foo-data.css") );
+			test.ok( fs.existsSync("test/output/foo-pngdata.css") );
+			test.ok( fs.existsSync("test/output/foo.css") );
+			test.ok( fs.existsSync("test/output/foo.html") );
+
 			test.done();
 		}, function() {
 			test.done();
