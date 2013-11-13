@@ -103,3 +103,23 @@ exports['svgdatauri'] = {
 		test.done();
 	}
 };
+
+exports['pngdatauri'] = {
+	setUp: function( done ) {
+		gf = new constructor( "foo.png" );
+		gf.setPngLocation({
+			relative: "test/files",
+			absolute: path.resolve( "test/files" )
+		});
+		done();
+	},
+
+	encoded: function( test ) {
+		// test that all characters are base64
+		gf.pngdatauri().split('base64,')[1].split('').forEach(function( c ) {
+			test.ok( /[a-zA-Z0-9+\/=]+/.test(c) );
+		});
+
+		test.done();
+	}
+};
