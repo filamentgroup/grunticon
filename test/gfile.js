@@ -21,31 +21,45 @@ var GrunticonFile = require( path.join( '..', 'lib', 'grunticon-file') ).gruntic
 		test.ifError(value)
 */
 "use strict";
-var constructor = GrunticonFile;
+var gf, constructor = GrunticonFile;
 
-module.exports = {
+exports['constructor'] = {
 	setUp: function( done ) {
+		gf = new constructor( "foo.svg" );
 		done();
 	},
 
 	isSvgIsSet: function( test ) {
 		test.expect( 1 );
-		var gf = new constructor( "foo.svg" );
 		test.ok( gf.isSvg );
 		test.done();
 	},
 
 	isSvgIsNotSet: function( test ) {
 		test.expect( 1 );
-		var gf = new constructor( "foo.png" );
+		gf = new constructor( "foo.png" );
 		test.ok( !gf.isSvg );
 		test.done();
 	},
 
 	fileNameSet: function( test ) {
 		test.expect( 1 );
-		var gf = new constructor( "bar.svg" );
-		test.equal( gf.filenamenoext, "bar" );
+		test.equal( gf.filenamenoext, "foo" );
 		test.done();
 	}
+};
+
+exports['setImageData'] = {
+	setUp: function( done ) {
+		gf = new constructor( "foo.svg" );
+		done();
+	},
+
+  setImageData: function( test ) {
+		test.expect( 2 );
+    test.equal( gf.imagedata, undefined );
+    gf.setImageData( "test/files/" );
+    test.equal( gf.imagedata, "<foo/>\n" );
+		test.done();
+  }
 };
