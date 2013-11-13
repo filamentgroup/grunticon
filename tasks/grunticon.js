@@ -244,7 +244,10 @@ module.exports = function( grunt , undefined ) {
 				outputDir: dest,
 				crushPath: crushPath,
 				maxBuffer: 250
-			}, function( stdout , stderr ){
+			}, function( err, stdout , stderr ){
+				if( err ){
+					promise.reject( err );
+				}
 				grunt.verbose.write( stdout );
 				grunt.verbose.write( stderr );
 
@@ -253,6 +256,7 @@ module.exports = function( grunt , undefined ) {
 
 			return promise;
 		};
+
 		var imgToCSSOpts = {
 			previewHTMLFilePath: previewHTMLsrc,
 			previewFilePath: previewhtml,
@@ -285,6 +289,8 @@ module.exports = function( grunt , undefined ) {
 			pngpath = pngfolder;
 		}
 
+
+		// MAIN
 		optimizeAndCopy( files, config.src, tmp )
 		.then( function(){
 			// create the output directory
