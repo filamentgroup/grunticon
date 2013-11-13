@@ -23,20 +23,6 @@ module.exports = function( grunt , undefined ) {
 	var svgToPng = require( path.join( '..', 'lib', 'svg-to-png' ) );
 	var imgToCSS = require( path.join( '..', 'lib', 'img-to-css' ) );
 
-	var GruntiFile = require( path.join( '..', 'lib', 'grunticon-file') ).grunticonFile;
-
-	var readDir = function( path ){
-		var promise = new RSVP.Promise();
-		fs.readdir( path , function( err , files ){
-			if( err ){
-				grunt.log.error( err );
-				promise.reject( err );
-			} else {
-				promise.resolve( files );
-			}
-		});
-		return promise;
-	};
 
 	var readFile = function( filepath ){
 		var promise = new RSVP.Promise();
@@ -186,9 +172,7 @@ module.exports = function( grunt , undefined ) {
 		}
 		grunt.file.mkdir( tmp );
 
-
-		readDir( svgosrc )
-		.then( function( files ){
+		var optimizeAndCopy = function( files ){
 			var promise = new RSVP.Promise();
 			var promises = [];
 			if( config.svgo ){
@@ -229,7 +213,11 @@ module.exports = function( grunt , undefined ) {
 				promise.resolve();
 			});
 			return promise;
-		})
+		};
+
+		var files = fs.readdirSync( svgosrc );
+
+		optimizeAndCopy( files )
 		.then( function(){
 			// create the output directory
 			grunt.file.mkdir( config.dest );
@@ -249,20 +237,18 @@ module.exports = function( grunt , undefined ) {
 			grunt.file.write( loaderCodeDest, min );
 			grunt.log.write( "\ngrunticon loader file created." );
 
-			var crush = function( pngfolder ){
+			var crush = function( src, dest ){
 				var promise = new RSVP.Promise();
-				if( grunt.file.exists( path.join( config.dest , pngfolder ) ) ){
-					grunt.file.delete( path.join( config.dest, pngfolder ) );
+				if( grunt.file.exists( dest ) ){
+					grunt.file.delete( dest );
 				}
-
-				var tmpPngfolder = path.join( tmp, pngfolder );
 
 				grunt.log.writeln( "\ngrunticon now spawning pngcrush..." );
 				grunt.log.writeln('(using path: ' + crushPath + ')');
 
 				crusher.crush({
-					input: tmpPngfolder,
-					outputDir:  path.join( config.dest , pngfolder ),
+					input: src,
+					outputDir: dest,
 					crushPath: crushPath,
 					maxBuffer: 250
 				}, function( stdout , stderr ){
@@ -314,7 +300,8 @@ module.exports = function( grunt , undefined ) {
 				};
 
 				if( compressPNG ){
-					crush( pngfolder )
+					var tmpPngfolder = path.join( tmp, pngfolder );
+					crush( tmpPngfolder, path.join( config.dest, pngfolder ) )
 					.then( function(){
 						return imgToCSS.create( path.join( result, "tmp" ), o );
 					} )
