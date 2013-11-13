@@ -172,7 +172,7 @@ module.exports = function( grunt , undefined ) {
 		}
 		grunt.file.mkdir( tmp );
 
-		var optimizeAndCopy = function( files ){
+		var optimizeAndCopy = function( files, srcDir, destDir ){
 			var promise = new RSVP.Promise();
 			var promises = [];
 			if( config.svgo ){
@@ -180,10 +180,13 @@ module.exports = function( grunt , undefined ) {
 			}
 			files.forEach( function( file ){
 				var p;
+				var src = path.join( srcDir, file );
+				var dest = path.join( destDir, file );
+
 				if( file.match( /svg|png/ ) ){
 					p = new RSVP.Promise();
 
-					readFile( svgosrc + file )
+					readFile( src )
 					.then( function( data , err ){
 						if( err ){
 							grunt.fatal( err );
@@ -196,7 +199,7 @@ module.exports = function( grunt , undefined ) {
 							grunt.fatal( err );
 							done( false );
 						}
-						return writeFile( path.join( tmp , file) , result );
+						return writeFile( dest  , result );
 					})
 					.then( function( _null , err ){
 						if( err ){
@@ -215,7 +218,7 @@ module.exports = function( grunt , undefined ) {
 			return promise;
 		};
 
-		optimizeAndCopy( files )
+		optimizeAndCopy( files, svgosrc, tmp )
 		.then( function(){
 			// create the output directory
 			grunt.file.mkdir( config.dest );
