@@ -63,3 +63,26 @@ exports['setImageData'] = {
 		test.done();
 	}
 };
+
+exports['setPngLocation'] = {
+	setUp: function( done ) {
+		gf = new constructor( "foo.svg" );
+		done();
+	},
+
+	setPngLocation: function( test ) {
+		test.expect( 4 );
+
+		test.equal( gf.relPngLocation, undefined );
+		test.equal( gf.absPngLocation, undefined );
+
+		gf.setPngLocation({
+			relative: "test/files",
+			absolute: path.resolve( "test/files" )
+		});
+
+		test.equal( gf.relPngLocation.toString(), "test/files/foo.png" );
+		test.ok( /test\/files\/foo.png$/.test(gf.absPngLocation.toString()) );
+		test.done();
+	}
+};
