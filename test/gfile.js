@@ -1,25 +1,6 @@
 var path = require( 'path' );
 var GrunticonFile = require( path.join( '..', 'lib', 'grunticon-file') ).grunticonFile;
 
-/*
-	======== A Handy Little Nodeunit Reference ========
-	https://github.com/caolan/nodeunit
-
-	Test methods:
-		test.expect(numAssertions)
-		test.done()
-	Test assertions:
-		test.ok(value, [message])
-		test.equal(actual, expected, [message])
-		test.notEqual(actual, expected, [message])
-		test.deepEqual(actual, expected, [message])
-		test.notDeepEqual(actual, expected, [message])
-		test.strictEqual(actual, expected, [message])
-		test.notStrictEqual(actual, expected, [message])
-		test.throws(block, [error], [message])
-		test.doesNotThrow(block, [error], [message])
-		test.ifError(value)
-*/
 "use strict";
 var gf, constructor = GrunticonFile;
 
@@ -106,6 +87,19 @@ exports['svgdatauri'] = {
 		test.expect( 1 );
 		gf.setImageData( "test/files/" );
 		test.equal( gf.svgdatauri().indexOf("data:image/svg"), 0 );
+		test.done();
+	},
+
+	replace: function( test ) {
+		var data;
+		test.expect( 2 );
+		gf = new constructor( "complex-foo.svg" );
+		gf.setImageData( "test/files/" );
+		test.equal( gf.imagedata, "<foo/>\n<bar/>\n<!-- comment -->\n", 0 );
+
+		data = gf.svgdatauri().split( "ASCII," )[1];
+
+		test.equal( data, encodeURIComponent( "<foo/><bar/>" ) );
 		test.done();
 	}
 };
