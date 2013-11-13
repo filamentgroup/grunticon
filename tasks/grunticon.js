@@ -158,19 +158,10 @@ module.exports = function( grunt , undefined ) {
 
 		// get color variables from config
 		var colors = JSON.stringify( config.colors || {} );
-
-		var svgosrc = config.src;
 		var tmp = path.join( config.dest , 'tmp' , path.sep );
-
 		var compressPNG = config.pngcrush, render;
 
 
-		// create temp directory
-		grunt.log.write( "creating temp directory at:" + tmp );
-		if( grunt.file.exists( tmp ) ){
-			grunt.file.delete( tmp );
-		}
-		grunt.file.mkdir( tmp );
 
 		var optimizeAndCopy = function( files, srcDir, destDir ){
 			var promise = new RSVP.Promise();
@@ -218,7 +209,14 @@ module.exports = function( grunt , undefined ) {
 			return promise;
 		};
 
-		optimizeAndCopy( files, svgosrc, tmp )
+		// create temp directory
+		grunt.log.write( "creating temp directory at:" + tmp );
+		if( grunt.file.exists( tmp ) ){
+			grunt.file.delete( tmp );
+		}
+		grunt.file.mkdir( tmp );
+
+		optimizeAndCopy( files, config.src, tmp )
 		.then( function(){
 			// create the output directory
 			grunt.file.mkdir( config.dest );
