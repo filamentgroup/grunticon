@@ -86,3 +86,26 @@ exports['setPngLocation'] = {
 		test.done();
 	}
 };
+
+exports['svgdatauri'] = {
+	setUp: function( done ) {
+		gf = new constructor( "foo.svg" );
+		done();
+	},
+
+	assignedOnce: function( test ) {
+		test.expect( 2 );
+		var val = gf._svgdatauri = "test/files/foo.svg";
+
+		test.equal( val, gf.svgdatauri() );
+		test.equal( val, gf.svgdatauri() );
+		test.done();
+	},
+
+	prefix: function( test ) {
+		test.expect( 1 );
+		gf.setImageData( "test/files/" );
+		test.equal( gf.svgdatauri().indexOf("data:image/svg"), 0 );
+		test.done();
+	}
+};
