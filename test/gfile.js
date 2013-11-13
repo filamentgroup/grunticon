@@ -104,6 +104,12 @@ exports['svgdatauri'] = {
 	}
 };
 
+function testEncoded( test, str ) {
+	str.split('base64,')[1].split('').forEach(function( c ) {
+		test.ok( /[a-zA-Z0-9+\/=]+/.test(c) );
+	});
+}
+
 exports['pngdatauri'] = {
 	setUp: function( done ) {
 		gf = new constructor( "foo.png" );
@@ -115,11 +121,84 @@ exports['pngdatauri'] = {
 	},
 
 	encoded: function( test ) {
-		// test that all characters are base64
-		gf.pngdatauri().split('base64,')[1].split('').forEach(function( c ) {
-			test.ok( /[a-zA-Z0-9+\/=]+/.test(c) );
-		});
-
+		// test that all characters are base64, might include = for low bytes
+		testEncoded( test, gf.pngdatauri() );
 		test.done();
+	}
+};
+
+function imageSetup( gf ) {
+	gf.setImageData( "test/files/" );
+
+	gf.setPngLocation({
+		relative: "test/files",
+		absolute: path.resolve( "test/files" )
+	});
+}
+
+exports['stats'] = {
+	setUp: function( done ) {
+		gf = new constructor( "bear.svg" );
+		done();
+	},
+
+	// NOTE png stats should probably be recorded in the image_stats tests
+	actualStats: function( test ) {
+		test.expect( 2 );
+		imageSetup( gf );
+
+		gf.stats({ inputDir: "test/files" }).then(function( data ) {
+			test.equal( parseInt(data.width.replace(/px/, ''), 10), 100 );
+			test.equal( parseInt(data.height.replace(/px/, ''), 10), 62 );
+			test.done();
+		}, function() {
+			test.done();
+		});
+	},
+
+	defaultStats: function( test ) {
+		test.expect( 2 );
+		gf = new constructor( "no-stats-bear.svg" );
+
+		imageSetup( gf );
+
+		gf.stats({
+			inputDir: "test/files",
+			defaultWidth: "10px",
+			defaultHeight: "10px"
+		}).then(function( data ) {
+			test.equal( parseInt(data.width.replace(/px/, ''), 10), 10 );
+			test.equal( parseInt(data.height.replace(/px/, ''), 10), 10 );
+			test.done();
+		}, function() {
+			test.done();
+		});
+	}
+};
+
+exports['getCSSRules'] = {
+	setUp: function( done ) {
+		gf = new constructor( "bear.svg" );
+		done();
+	},
+
+	output: function( test ) {
+		imageSetup(gf);
+
+		gf.stats({
+			inputDir: "test/files"
+		}).then(function( stats ) {
+			var res = gf.getCSSRules( stats, "test/files", "foo-", {});
+
+			// remove the trailing css from the encoding, the preceding css
+			// is removed in testEncode
+			testEncoded(test, res.pngdatacssrule.split("')")[0]);
+
+			test.ok( res.pngdatacssrule.indexOf("foo-bear") > 0 );
+			test.ok( res.datacssrule.indexOf("foo-bear") > 0 );
+			test.done();
+		}, function() {
+			test.done();
+		});
 	}
 };
