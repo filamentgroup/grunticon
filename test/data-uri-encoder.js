@@ -32,3 +32,30 @@ exports['constructor'] = {
 		test.done();
 	}
 };
+
+function testEncoded( test, str ) {
+	str.split('').forEach(function( c ) {
+		test.ok( /[a-zA-Z0-9+\/=]+/.test(c) );
+	});
+}
+
+exports['encode'] = {
+	setUp: function( done ) {
+		encoder = new constructor( "test/files/bear.svg" );
+		done();
+	},
+
+	output: function( test ) {
+		testEncoded( test, encoder.encode().replace(encoder.prefix, "") );
+		test.done();
+	},
+
+	callback: function( test ) {
+		encoder.encode(function( prefix, fileData ) {
+			test.equal( prefix, encoder.prefix );
+			test.ok( fileData );
+		});
+
+		test.done();
+	}
+};
