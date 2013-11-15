@@ -15,7 +15,7 @@ exports['encode'] = {
 	output: function( test ) {
 		encoder.encode();
 		test.ok( fs.existsSync(output) );
-		test.ok( /\.bear/.test(fs.readFileSync(output, {encoding: "utf8"})) );
+		test.ok( /\.bear/.test(fs.readFileSync(output)) );
 		test.done();
 	},
 
