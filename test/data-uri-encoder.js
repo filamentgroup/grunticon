@@ -1,5 +1,5 @@
 var path = require( 'path' );
-var constructor = require( path.join('..', 'lib', 'data-uri-encoder')).DataURIEncoder;
+var constructor = require( path.join('..', 'lib', 'data-uri-encoder'));
 var fs = require('fs');
 
 "use strict";
