@@ -20,14 +20,19 @@ exports['encode'] = {
 	},
 
 	selector: function( test ) {
-		// TODO differentiate between same name files
 		encoder._css = function( name, data ){
-			test.equal( name, "bear" );
+			test.ok( name === "bear" || name === "dog" );
 
 			return constructor.prototype._css(name, data);
 		};
 
 		encoder.encode();
+		test.done();
+	},
+
+	dup: function( test ) {
+		encoder = new constructor( "test/encoding-dup", output );
+		test.throws(function() { encoder.encode(); });
 		test.done();
 	}
 };
