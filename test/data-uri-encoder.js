@@ -41,7 +41,7 @@ function testEncoded( test, str ) {
 
 exports['encode'] = {
 	setUp: function( done ) {
-		encoder = new constructor( "test/files/bear.svg" );
+		encoder = new constructor( "test/files/bear.png" );
 		done();
 	},
 
