@@ -5,7 +5,6 @@ var fs = require('fs');
 "use strict";
 var encoder, output = "test/output/encoded.css";
 
-
 exports['encode'] = {
 	setUp: function( done ) {
 		encoder = new constructor( "test/encoding", output );
@@ -36,6 +35,39 @@ exports['encode'] = {
 		test.done();
 	}
 };
+
+exports['encodeOptions'] = {
+	setUp: function( done ) {
+		encoder = new constructor( "test/encoding", output );
+		done();
+	},
+
+	handler: function( test ) {
+		test.expect( 4 );
+
+		// the two handlers below should change the datauri value
+		encoder._css = function( filename, datauri ) {
+			test.ok( datauri === "png" || datauri === "svg" );
+		};
+
+		encoder.encode({
+			datauriHandlers: {
+				png: function() {
+					test.ok(true, "png handler called" );
+					return "png";
+				},
+
+				svg: function() {
+					test.ok(true, "svg handler called" );
+					return "svg";
+				}
+			}
+		});
+
+		test.done();
+	}
+};
+
 
 exports['css'] = {
 	setUp: function( done ) {
