@@ -36,21 +36,11 @@ exports['encode'] = {
 	}
 };
 
-exports['encodeOptions'] = {
-	setUp: function( done ) {
-		encoder = new constructor( "test/encoding", output );
-		done();
-	},
-
+exports['datauriHandlers'] = {
 	handler: function( test ) {
 		test.expect( 4 );
 
-		// the two handlers below should change the datauri value
-		encoder._css = function( filename, datauri ) {
-			test.ok( datauri === "png" || datauri === "svg" );
-		};
-
-		encoder.encode({
+		encoder = new constructor( "test/encoding", output, {
 			datauriHandlers: {
 				png: function() {
 					test.ok(true, "png handler called" );
@@ -63,6 +53,13 @@ exports['encodeOptions'] = {
 				}
 			}
 		});
+
+		// the two handlers below should change the datauri value
+		encoder._css = function( filename, datauri ) {
+			test.ok( datauri === "png" || datauri === "svg" );
+		};
+
+		encoder.encode();
 
 		test.done();
 	}
