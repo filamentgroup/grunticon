@@ -36,28 +36,35 @@ exports['encode'] = {
 	}
 };
 
-exports['datauriHandlers'] = {
+var svg = constructor.encoders.svg,
+  png = constructor.encoders.png;
+
+exports['encoderSelection'] = {
+	setUp: function( done ) {
+		encoder = new constructor( "test/encoding", output );
+		done();
+	},
+
+  tearDown: function( done ) {
+    svg = constructor.encoders.svg;
+    png = constructor.encoders.png;
+    done();
+  },
+
 	handler: function( test ) {
-		test.expect( 4 );
+    constructor.encoders.svg = function(){};
+    constructor.encoders.svg.prototype.encode = function() {
+      return "foo";
+    };
 
-		encoder = new constructor( "test/encoding", output, {
-			datauriHandlers: {
-				png: function() {
-					test.ok(true, "png handler called" );
-					return "png";
-				},
+    constructor.encoders.png = function(){};
+    constructor.encoders.png.prototype.encode = function() {
+      return "bar";
+    };
 
-				svg: function() {
-					test.ok(true, "svg handler called" );
-					return "svg";
-				}
-			}
-		});
-
-		// the two handlers below should change the datauri value
-		encoder._css = function( filename, datauri ) {
-			test.ok( datauri === "png" || datauri === "svg" );
-		};
+    encoder._css= function( filename, datauri ) {
+      test.ok( datauri === "foo" || datauri === "bar" );
+    };
 
 		encoder.encode();
 
