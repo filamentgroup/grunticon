@@ -76,6 +76,8 @@ exports['encoderSelection'] = {
 exports['css'] = {
 	setUp: function( done ) {
 		encoder = new constructor( "test/encoding", "test/output/encoded.css" );
+		encoder2 = new constructor( "test/encoding", "test/output/encoded2.css",
+															{ template: "test/files/default-css.hbs"} );
 		done();
 	},
 
@@ -83,5 +85,15 @@ exports['css'] = {
 		test.equal( encoder._css("foo", "bar"),
 			".foo { background-image: url('bar'); background-repeat: no-repeat; }" );
 		test.done();
+	},
+
+	withTemplate: function( test ) {
+		test.equal( encoder2._css("foo", "bar"),
+			".foo {\n" +
+				"\tbackground-image: url('bar');\n" +
+				"\tbackground-repeat: no-repeat;\n" +
+			"}\n" );
+		test.done();
 	}
+
 };
