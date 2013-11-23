@@ -2,7 +2,6 @@ var path = require( 'path' );
 var GrunticonFile = require( path.join( '..', 'lib', 'grunticon-file') ).grunticonFile;
 var fs = require('fs');
 
-"use strict";
 var gf, constructor = GrunticonFile;
 
 exports['constructor'] = {
