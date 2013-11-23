@@ -78,6 +78,13 @@ exports['css'] = {
 		encoder = new constructor( "test/encoding", "test/output/encoded.css" );
 		encoder2 = new constructor( "test/encoding", "test/output/encoded2.css",
 															{ template: "test/files/default-css.hbs"} );
+		encoder3 = new constructor( "test/encoding", "test/output/encoded3.css",
+															{
+																template: "test/files/default-css.hbs",
+																customselectors: {
+																	"foo": ["icon-2"]
+																}
+															} );
 		done();
 	},
 
@@ -89,7 +96,17 @@ exports['css'] = {
 
 	withTemplate: function( test ) {
 		test.equal( encoder2._css("foo", "bar"),
-			".foo {\n" +
+			"\n.icon-foo {\n" +
+				"\tbackground-image: url('bar');\n" +
+				"\tbackground-repeat: no-repeat;\n" +
+			"}\n" );
+		test.done();
+	},
+
+	withTemplateCustomSelectors: function( test ) {
+		test.equal( encoder3._css("foo", "bar"),
+			"\n.icon-2,\n" +
+			"\n.icon-foo {\n" +
 				"\tbackground-image: url('bar');\n" +
 				"\tbackground-repeat: no-repeat;\n" +
 			"}\n" );
