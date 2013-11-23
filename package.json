@@ -30,7 +30,6 @@
 	},
 	"dependencies": {
 		"grunt": "~0.4.0",
-		"grunt-contrib-jshint": "~0.2.0",
 		"uglify-js": "~2.2.5",
 		"phantomjs": "1.9.2-0",
 		"svgo":"~0.3.7",
@@ -40,6 +39,7 @@
 	},
 	"devDependencies": {
 		"grunt-cli":"~0.1",
+		"grunt-contrib-jshint": "~0.7.2",
 		"grunt-contrib-nodeunit": "0.2.2"
 	},
 	"keywords": [
