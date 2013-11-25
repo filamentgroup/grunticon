@@ -41,7 +41,8 @@
 	},
 	"devDependencies": {
 		"grunt-cli":"~0.1",
-		"grunt-contrib-nodeunit": "0.2.2"
+		"grunt-contrib-nodeunit": "0.2.2",
+		"lodash":""
 	},
 	"keywords": [
 		"gruntplugin"
