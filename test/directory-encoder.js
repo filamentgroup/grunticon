@@ -2,7 +2,8 @@ var path = require( 'path' );
 var constructor = require( path.join('..', 'lib', 'directory-encoder') );
 var SvgURIEncoder = require( path.join('..', 'lib', 'svg-uri-encoder') );
 var PngURIEncoder = require( path.join('..', 'lib', 'png-uri-encoder') );
-var fs = require('fs');
+var fs = require( 'fs' );
+var _ = require( 'lodash' );
 
 "use strict";
 var encoder, output = "test/output/encoded.css";
@@ -38,17 +39,17 @@ exports['encode'] = {
 	}
 };
 
+var encoders;
+
 exports['encoderSelection'] = {
 	setUp: function( done ) {
 		encoder = new constructor( "test/encoding", output );
+		encoders = _.clone( constructor.encoders );
 		done();
 	},
 
 	tearDown: function( done ) {
-		constructor.encoders = {
-			svg: SvgURIEncoder,
-			png: PngURIEncoder
-		};
+		constructor.encoders = encoders;
 
 		done();
 	},
