@@ -285,17 +285,26 @@ module.exports = function( grunt , undefined ) {
 					pngfolder: pngfolder,
 					customselectors: customselectors,
 					template: path.resolve( path.join( config.src, "..", "default-css.hbs" ) ),
-					noencode: false
+					noencodepng: false
+				};
+
+				var o2 = {
+					pngfolder: pngfolder,
+					customselectors: customselectors,
+					template: path.resolve( path.join( config.src, "..", "default-css.hbs" ) ),
+					noencodepng: true
 				};
 
 
 				var svgde = new DirectoryEncoder( path.join( result, "tmp" ), path.join( config.dest, datasvgcss ), o ),
-					pngde = new DirectoryEncoder( path.join( config.dest, pngpath ) , path.join( config.dest, datapngcss ), o );
+					pngde = new DirectoryEncoder( path.join( config.dest, pngpath ) , path.join( config.dest, datapngcss ), o ),
+					pngdefall = new DirectoryEncoder( path.join( config.dest, pngpath ) , path.join( config.dest, datapngcss ), o2 );
 
 				grunt.log.writeln("Writing CSS");
 				try {
 					svgde.encode();
 					pngde.encode();
+					pngdefall.encode();
 				} catch( e ){
 					grunt.fatal( e );
 					done( false );
