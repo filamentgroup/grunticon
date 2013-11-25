@@ -129,7 +129,7 @@ module.exports = function( grunt , undefined ) {
 		// css references base path for the loader
 		var cssbasepath = config.cssbasepath || path.sep;
 
-		var customselectors = JSON.stringify( config.customselectors ) || "{}";
+		var customselectors = config.customselectors;
 
 		// folder name (within the output folder) for generated png files
 		var pngfolder = config.pngfolder || "png";
@@ -282,20 +282,12 @@ module.exports = function( grunt , undefined ) {
 					grunt.fatal( err );
 				}
 				var o = {
-					previewHTMLFilePath: previewHTMLsrc,
-					previewFilePath: previewhtml,
-					pngdatacss: datapngcss,
-					asyncCSSpath: path.join( config.dest, loadersnippet),
-					datacss: datasvgcss,
-					outputdir: config.dest,
-					fallbackcss: urlpngcss,
-					cssbasepath: cssbasepath,
 					pngfolder: pngfolder,
-					defaultWidth: config.defaultWidth,
-					defaultHeight: config.defaultHeight,
-					config: config,
-					cssprefix: cssprefix
+					customselectors: customselectors,
+					template: path.resolve( path.join( config.src, "..", "default-css.hbs" ) ),
+					noencode: false
 				};
+
 
 				var svgde = new DirectoryEncoder( path.join( result, "tmp" ), path.join( config.dest, datasvgcss ), o ),
 					pngde = new DirectoryEncoder( path.join( config.dest, pngpath ) , path.join( config.dest, datapngcss ), o );

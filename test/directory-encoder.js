@@ -80,12 +80,12 @@ exports['css'] = {
 	setUp: function( done ) {
 		encoder = new constructor( "test/encoding", "test/output/encoded.css" );
 		encoder2 = new constructor( "test/encoding", "test/output/encoded2.css",
-															{ template: "test/files/default-css.hbs"} );
+															{ template: path.resolve( "test/files/default-css.hbs" )} );
 		encoder3 = new constructor( "test/encoding", "test/output/encoded3.css",
 															{
-																template: "test/files/default-css.hbs",
+																template: path.resolve( "test/files/default-css.hbs" ),
 																customselectors: {
-																	"foo": ["icon-2"]
+																	"foo": [".icon-2"]
 																}
 															} );
 		done();

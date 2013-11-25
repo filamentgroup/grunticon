@@ -57,8 +57,8 @@ module.exports = function(grunt) {
 					// This allows root-relative referencing of the CSS. If you don't want a prefix path, set to to ""
 					cssbasepath: "/",
 					customselectors: {
-						"cat" : "#el-gato",
-						"gummy-bears-2" : "nav li a.deadly-bears:before"
+						"cat" : ["#el-gato"],
+						"gummy-bears-2" : ["nav li a.deadly-bears:before"]
 					}
 
 				}
