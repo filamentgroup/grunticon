@@ -1,5 +1,7 @@
 var path = require( 'path' );
-var constructor = require( path.join('..', 'lib', 'directory-encoder'));
+var constructor = require( path.join('..', 'lib', 'directory-encoder') );
+var SvgURIEncoder = require( path.join('..', 'lib', 'svg-uri-encoder') );
+var PngURIEncoder = require( path.join('..', 'lib', 'png-uri-encoder') );
 var fs = require('fs');
 
 "use strict";
@@ -36,35 +38,35 @@ exports['encode'] = {
 	}
 };
 
-var svg = constructor.encoders.svg,
-  png = constructor.encoders.png;
-
 exports['encoderSelection'] = {
 	setUp: function( done ) {
 		encoder = new constructor( "test/encoding", output );
 		done();
 	},
 
-  tearDown: function( done ) {
-    svg = constructor.encoders.svg;
-    png = constructor.encoders.png;
-    done();
-  },
+	tearDown: function( done ) {
+		constructor.encoders = {
+			svg: SvgURIEncoder,
+			png: PngURIEncoder
+		};
+
+		done();
+	},
 
 	handler: function( test ) {
-    constructor.encoders.svg = function(){};
-    constructor.encoders.svg.prototype.encode = function() {
-      return "foo";
-    };
+		constructor.encoders.svg = function(){};
+		constructor.encoders.svg.prototype.encode = function() {
+			return "foo";
+		};
 
-    constructor.encoders.png = function(){};
-    constructor.encoders.png.prototype.encode = function() {
-      return "bar";
-    };
+		constructor.encoders.png = function(){};
+		constructor.encoders.png.prototype.encode = function() {
+			return "bar";
+		};
 
-    encoder._css= function( filename, datauri ) {
-      test.ok( datauri === "foo" || datauri === "bar" );
-    };
+		encoder._css = function( filename, datauri ) {
+			test.ok( datauri === "foo" || datauri === "bar" );
+		};
 
 		encoder.encode();
 
