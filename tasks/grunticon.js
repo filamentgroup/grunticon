@@ -21,7 +21,7 @@ module.exports = function( grunt , undefined ) {
 	var crushPath = require( 'pngcrush-installer' ).getBinPath();
 	var crusher = require( path.join( '..', 'lib', 'pngcrusher' ) );
 	var svgToPng = require( path.join( '..', 'lib', 'svg-to-png' ) );
-	var imgToCSS = require( path.join( '..', 'lib', 'img-to-css' ) );
+	var DirectoryEncoder = require( path.join( '..', 'lib', 'directory-encoder' ) );
 
 
 	var readFile = function( filepath ){
@@ -290,7 +290,6 @@ module.exports = function( grunt , undefined ) {
 					outputdir: config.dest,
 					fallbackcss: urlpngcss,
 					cssbasepath: cssbasepath,
-					colors: colors,
 					pngfolder: pngfolder,
 					defaultWidth: config.defaultWidth,
 					defaultHeight: config.defaultHeight,
@@ -298,26 +297,19 @@ module.exports = function( grunt , undefined ) {
 					cssprefix: cssprefix
 				};
 
-				if( compressPNG ){
-					var tmpPngfolder = path.join( tmp, pngfolder );
-					crush( tmpPngfolder, path.join( config.dest, pngfolder ) )
-					.then( function(){
-						return imgToCSS.create( path.join( result, "tmp" ), o );
-					} )
-					.then( function( _, err){
-						if( err ){
-							grunt.fatal( err );
-							done( false );
-						}
-						done();
-					});
-				} else {
-					imgToCSS.create( path.join( result, "tmp"), o )
-					.then(function(){
-						grunt.file.delete( tmp );
-						done();
-					});
+				var svgde = new DirectoryEncoder( path.join( result, "tmp" ), path.join( config.dest, datasvgcss ), o ),
+					pngde = new DirectoryEncoder( path.join( config.dest, pngpath ) , path.join( config.dest, datapngcss ), o );
+
+				grunt.log.writeln("Writing CSS");
+				try {
+					svgde.encode();
+					pngde.encode();
+				} catch( e ){
+					grunt.fatal( e );
+					done( false );
 				}
+				grunt.file.delete( path.join( result, "tmp" ) );
+				done();
 			});
 
 		});

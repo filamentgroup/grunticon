@@ -66,7 +66,7 @@ exports['SvgURIEncoder'] = {
 	}
 };
 
-var parentDecode = constructor.prototype.encode;
+/*var parentDecode = constructor.prototype.encode;*/
 
 exports['PngURIEncoder'] = {
 	setUp: function( done ) {
@@ -75,7 +75,7 @@ exports['PngURIEncoder'] = {
 	},
 
 	tearDown: function( done ) {
-		constructor.prototype.encode = parentDecode;
+		/*constructor.prototype.encode = parentDecode;*/
 		done();
 	},
 
@@ -84,7 +84,7 @@ exports['PngURIEncoder'] = {
 
 		testEncoded( test, encoder.encode().replace(PngURIEncoder.prefix, "") );
 		test.done();
-	},
+	}/*,
 
 	pathSwitch: function( test ) {
 		constructor.prototype.encode = function(){
@@ -100,5 +100,5 @@ exports['PngURIEncoder'] = {
 
 		test.equal( encoder.encode({ pngfolder: "foo" }), "foo/bear.png" );
 		test.done();
-	}
+	}*/
 };

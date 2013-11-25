@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 					svgo: true,
 
 					// PNG compression, false is the default, true will make it so
-					pngcrush: true,
+					pngcrush: false,
 
 					// CSS filenames
 					datasvgcss: "icons.data.svg.css",
@@ -96,6 +96,7 @@ module.exports = function(grunt) {
 
 	// Default task.
 	grunt.registerTask('default', ['nodeunit', 'jshint', 'grunticon:foo']);
+	grunt.registerTask('skip-tests', ['jshint', 'grunticon:foo']);
 	grunt.registerTask('travis', ['nodeunit', 'jshint', 'grunticon:foo']);
 
 };
