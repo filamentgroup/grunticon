@@ -11,7 +11,11 @@
 	exports.constructor = {
 		setUp: function( done ) {
 			this.dc = new DirectoryColorfy( "" , "" );
-			this.dc2 = new DirectoryColorfy( "foo/bar", "baz/qua", { colors: [ "blue" ]} );
+			this.dc2 = new DirectoryColorfy( "foo/bar", "baz/qua",
+																			{ colors: {
+																					"blue": "blue"
+																				}
+																			});
 			done();
 		},
 		tearDown: function( done ){
@@ -26,14 +30,19 @@
 		constructor: function( test ){
 			test.equal( this.dc2.input, "foo/bar", "Input filled in on constuctor" );
 			test.equal( this.dc2.output, "baz/qua", "Output filled in on constuctor" );
-			test.equal( this.dc2.options.colors.length, 1, "Colors filled" );
-			test.equal( this.dc2.options.colors[0], "blue", "Colors filled" );
+			test.equal( Object.keys( this.dc2.options.colors ).length, 1, "Colors filled" );
+			test.equal( Object.keys(this.dc2.options.colors)[0], "blue", "Colors filled" );
 			test.done();
 		}
 	};
 	exports.convert = {
 		setUp: function( done ) {
-			this.dc = new DirectoryColorfy( path.resolve( path.join( "test", "files", "directory-colorfy" )), path.resolve( path.join( "test", "files", "temp" )), { colors: [ "green", "orange" ]} );
+			this.dc = new DirectoryColorfy( path.resolve( path.join( "test", "files", "directory-colorfy" )), path.resolve( path.join( "test", "files", "temp" )),
+																		{ colors: {
+																				"green": "green",
+																				"orange": "orange"
+																			}
+																		});
 			done();
 		},
 		tearDown: function( done ){

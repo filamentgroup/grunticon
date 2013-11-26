@@ -36,7 +36,7 @@
 		setUp: function( done ) {
 			this.c = new Colorfy( "test/files/bear.svg" );
 			this.c2 = new Colorfy( "test/files/bear.colors-blue-red.svg" );
-			this.c3 = new Colorfy( "test/files/bear.svg", ["orange", "green"] );
+			this.c3 = new Colorfy( "test/files/bear.svg", {"orange": "orange", "green": "green" } );
 			done();
 		},
 
@@ -78,15 +78,15 @@
 		},
 
 		colorsNone: function( test ) {
-			test.ok( arrayEqual( this.c.colors, [] ) );
+			test.ok( arrayEqual( this.c.colornames, [] ) );
 			test.done();
 		},
 		colors: function( test ) {
-			test.ok( arrayEqual( this.c2.colors, ['blue', 'red'] ) );
+			test.ok( arrayEqual( this.c2.colornames, ['blue', 'red'] ) );
 			test.done();
 		},
 		colorsAsArg: function( test ){
-			test.ok( arrayEqual( this.c3.colors, ['orange', 'green'] ) );
+			test.ok( arrayEqual( this.c3.colornames, ['orange', 'green'] ) );
 			test.done();
 		}
 	};
@@ -95,7 +95,7 @@
 		setUp: function( done ) {
 			this.c = new Colorfy( "test/files/bear.svg" );
 			this.c2 = new Colorfy( "test/files/bear.colors-blue-red.svg" );
-			this.c3 = new Colorfy( "test/files/bear.svg", ["orange", "green"] );
+			this.c3 = new Colorfy( "test/files/bear.svg", { "orange": "#ffa500", "green": "#00ff00"} );
 			done();
 		},
 		colorFilesNoColor: function( test ){

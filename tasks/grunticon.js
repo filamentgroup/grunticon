@@ -22,6 +22,7 @@ module.exports = function( grunt , undefined ) {
 	var crusher = require( path.join( '..', 'lib', 'pngcrusher' ) );
 	var svgToPng = require( path.join( '..', 'lib', 'svg-to-png' ) );
 	var DirectoryEncoder = require( path.join( '..', 'lib', 'directory-encoder' ) );
+	var DirectoryColorfy = require( path.join( '..', 'lib', 'directory-colorfy' ) );
 
 
 	var readFile = function( filepath ){
