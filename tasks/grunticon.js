@@ -13,65 +13,14 @@ module.exports = function( grunt , undefined ) {
 	"use strict";
 
 	var uglify = require( 'uglify-js' );
-	var svgo = new (require( 'svgo' ))();
 	var fs = require( 'fs' );
 	var path = require( 'path' );
 
 	var RSVP = require( path.join( '..', 'lib', 'rsvp' ) );
-	var crushPath = require( 'pngcrush-installer' ).getBinPath();
-	var crusher = require( path.join( '..', 'lib', 'pngcrusher' ) );
 	var svgToPng = require( path.join( '..', 'lib', 'svg-to-png' ) );
 	var DirectoryEncoder = require( path.join( '..', 'lib', 'directory-encoder' ) );
 	var DirectoryColorfy = require( path.join( '..', 'lib', 'directory-colorfy' ) );
 
-
-	var readFile = function( filepath ){
-		var promise = new RSVP.Promise();
-		fs.readFile( filepath , function( err , data ){
-			if( err ){
-				grunt.log.error( err );
-				promise.reject( err );
-			} else {
-				promise.resolve( data );
-			}
-		});
-		return promise;
-	};
-
-	var optimize = function( file , data , opt ){
-		var promise = new RSVP.Promise();
-		try{
-			if( file.match( /png/ ) || !opt ){
-				promise.resolve( data );
-			} else {
-				svgo.optimize( data.toString() , function( result ){
-					if( result.error ){
-						grunt.log.error( result.error );
-						promise.reject( result.error );
-					} else {
-						promise.resolve( result.data );
-					}
-				});
-			}
-		} catch(e) {
-			grunt.log.error( e + ": File - " + file);
-			promise.reject( e );
-		}
-		return promise;
-	};
-
-	var writeFile = function( filepath , result ){
-		var promise = new RSVP.Promise();
-		fs.writeFile( filepath , result , function( err ){
-			if( err ){
-				grunt.log.error( err );
-				promise.reject( err );
-			} else {
-				promise.resolve();
-			}
-		});
-		return promise;
-	};
 
 	grunt.registerMultiTask( 'grunticon', 'A mystical CSS icon solution.', function() {
 		var done = this.async();
@@ -97,10 +46,10 @@ module.exports = function( grunt , undefined ) {
 
 		// make sure src and dest have / at the end
 		if( !config.src.match( path.sep + '$' ) ){
-				config.src += path.sep;
+			config.src += path.sep;
 		}
 		if( !config.dest.match( path.sep + '$' ) ){
-				config.dest += path.sep;
+			config.dest += path.sep;
 		}
 
 		var files = fs.readdirSync( config.src );
@@ -159,167 +108,72 @@ module.exports = function( grunt , undefined ) {
 
 		// get color variables from config
 		var colors = config.colors || {};
-		var tmp = path.join( config.dest , 'tmp' , path.sep );
-		var compressPNG = config.pngcrush, render;
+
+		// create the output directory
+		grunt.file.mkdir( config.dest );
+
+		// minify the source of the grunticon loader and write that to the output
+		grunt.log.write( "\ngrunticon now minifying the stylesheet loader source." );
+		var banner = grunt.file.read( asyncCSSBanner );
+		var min = banner + "\n" + uglify.minify( asyncCSS ).code;
+		var loaderCodeDest = config.dest + loadersnippet;
+		grunt.file.write( loaderCodeDest, min );
+		grunt.log.write( "\ngrunticon loader file created." );
 
 
-
-		var optimizeAndCopy = function( files, srcDir, destDir ){
-			var promise = new RSVP.Promise();
-			var promises = [];
-			if( config.svgo ){
-				grunt.log.write( "\nUsing SVGO to optimize.\n" );
-			}
-			files.forEach( function( file ){
-				var p;
-				var src = path.join( srcDir, file );
-				var dest = path.join( destDir, file );
-
-				if( file.match( /svg|png/ ) ){
-					p = new RSVP.Promise();
-
-					readFile( src )
-					.then( function( data , err ){
-						if( err ){
-							grunt.fatal( err );
-							done( false );
-						}
-						return optimize( file , data , config.svgo );
-					})
-					.then( function( result , err ){
-						if( err ){
-							grunt.fatal( err );
-							done( false );
-						}
-						return writeFile( dest  , result );
-					})
-					.then( function( _null , err ){
-						if( err ){
-							grunt.fatal( err );
-							done( false );
-						} else {
-							p.resolve();
-						}
-					});
-					promises.push( p );
-				}
-			});
-			RSVP.all( promises ).then( function(){
-				promise.resolve();
-			});
-			return promise;
+		var svgToPngOpts = {
+			dest: config.dest,
+			defaultWidth: width,
+			defaultHeight: height
 		};
 
-		// create temp directory
-		grunt.log.write( "creating temp directory at:" + tmp );
-		if( grunt.file.exists( tmp ) ){
-			grunt.file.delete( tmp );
+		var o = {
+			pngfolder: pngfolder,
+			customselectors: customselectors,
+			template: path.resolve( path.join( config.src, "..", "default-css.hbs" ) ),
+			noencodepng: false
+		};
+
+		var o2 = {
+			pngfolder: pngfolder,
+			customselectors: customselectors,
+			template: path.resolve( path.join( config.src, "..", "default-css.hbs" ) ),
+			noencodepng: true
+		};
+
+		var colorFiles;
+		try{
+			var dc = new DirectoryColorfy( config.src, config.src, colors );
+			colorFiles = dc.convert();
+		} catch( e ){
+			grunt.fatal(e);
+			done( false );
 		}
-		grunt.file.mkdir( tmp );
 
-		optimizeAndCopy( files, config.src, tmp )
-		.then( function(){
-			// create the output directory
-			grunt.file.mkdir( config.dest );
-
-			// create the tmp output icons directory
-			if( grunt.file.exists( path.join( tmp , pngfolder ))){
-				grunt.file.delete( path.join( tmp, pngfolder ));
-			}
-			grunt.file.mkdir( path.join( tmp , pngfolder ));
-
-
-			// minify the source of the grunticon loader and write that to the output
-			grunt.log.write( "\ngrunticon now minifying the stylesheet loader source." );
-			var banner = grunt.file.read( asyncCSSBanner );
-			var min = banner + "\n" + uglify.minify( asyncCSS ).code;
-			var loaderCodeDest = config.dest + loadersnippet;
-			grunt.file.write( loaderCodeDest, min );
-			grunt.log.write( "\ngrunticon loader file created." );
-
-			var crush = function( src, dest ){
-				var promise = new RSVP.Promise();
-				if( grunt.file.exists( dest ) ){
-					grunt.file.delete( dest );
-				}
-
-				grunt.log.writeln( "\ngrunticon now spawning pngcrush..." );
-				grunt.log.writeln('(using path: ' + crushPath + ')');
-
-				crusher.crush({
-					input: src,
-					outputDir: dest,
-					crushPath: crushPath,
-					maxBuffer: 250
-				}, function( stdout , stderr ){
-					grunt.verbose.write( stdout );
-					grunt.verbose.write( stderr );
-
-					promise.resolve();
-				});
-
-				return promise;
-			};
-
-
-			var pngpath;
-			if( compressPNG ){
-				pngpath = path.join( "tmp", pngfolder , path.sep );
-			} else {
-				pngpath = pngfolder;
+		svgToPng.convert( config.src, pngfolder, svgToPngOpts )
+		.then( function( result, err ){
+			if( err ){
+				grunt.fatal( err );
 			}
 
-			var svgToPngOpts = {
-				dest: config.dest,
-				defaultWidth: width,
-				defaultHeight: height
-			};
+			var svgde = new DirectoryEncoder( config.src, path.join( config.dest, datasvgcss ), o ),
+				pngde = new DirectoryEncoder( path.join( config.dest, pngfolder ) , path.join( config.dest, datapngcss ), o ),
+				pngdefall = new DirectoryEncoder( path.join( config.dest, pngfolder ) , path.join( config.dest, urlpngcss ), o2 );
 
-			var o = {
-				pngfolder: pngfolder,
-				customselectors: customselectors,
-				template: path.resolve( path.join( config.src, "..", "default-css.hbs" ) ),
-				noencodepng: false
-			};
-
-			var o2 = {
-				pngfolder: pngfolder,
-				customselectors: customselectors,
-				template: path.resolve( path.join( config.src, "..", "default-css.hbs" ) ),
-				noencodepng: true
-			};
-
-			try{
-				var dc = new DirectoryColorfy( tmp, tmp, colors );
-				dc.convert();
+			grunt.log.writeln("Writing CSS");
+			try {
+				svgde.encode();
+				pngde.encode();
+				pngdefall.encode();
 			} catch( e ){
-				grunt.fatal(e);
+				grunt.fatal( e );
 				done( false );
 			}
-
-			svgToPng.convert( tmp, pngpath, svgToPngOpts )
-			.then( function( result, err ){
-				if( err ){
-					grunt.fatal( err );
-				}
-
-				var svgde = new DirectoryEncoder( path.join( result, "tmp" ), path.join( config.dest, datasvgcss ), o ),
-					pngde = new DirectoryEncoder( path.join( config.dest, pngpath ) , path.join( config.dest, datapngcss ), o ),
-					pngdefall = new DirectoryEncoder( path.join( config.dest, pngpath ) , path.join( config.dest, urlpngcss ), o2 );
-
-				grunt.log.writeln("Writing CSS");
-				try {
-					svgde.encode();
-					pngde.encode();
-					pngdefall.encode();
-				} catch( e ){
-					grunt.fatal( e );
-					done( false );
-				}
-				grunt.file.delete( path.join( result, "tmp" ) );
-				done();
+			colorFiles.forEach( function( file ){
+				grunt.file.delete( file );
 			});
-
+			done();
 		});
+
 	});
 };
