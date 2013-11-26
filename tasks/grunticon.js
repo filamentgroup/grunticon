@@ -269,36 +269,35 @@ module.exports = function( grunt , undefined ) {
 			}
 
 			var svgToPngOpts = {
-				input: tmp,
 				dest: config.dest,
 				defaultWidth: width,
 				defaultHeight: height,
 				colors: colors
 			};
 
-			svgToPng.convert( pngpath, svgToPngOpts )
+			var o = {
+				pngfolder: pngfolder,
+				customselectors: customselectors,
+				template: path.resolve( path.join( config.src, "..", "default-css.hbs" ) ),
+				noencodepng: false
+			};
+
+			var o2 = {
+				pngfolder: pngfolder,
+				customselectors: customselectors,
+				template: path.resolve( path.join( config.src, "..", "default-css.hbs" ) ),
+				noencodepng: true
+			};
+
+			svgToPng.convert( tmp, pngpath, svgToPngOpts )
 			.then( function( result, err ){
 				if( err ){
 					grunt.fatal( err );
 				}
-				var o = {
-					pngfolder: pngfolder,
-					customselectors: customselectors,
-					template: path.resolve( path.join( config.src, "..", "default-css.hbs" ) ),
-					noencodepng: false
-				};
-
-				var o2 = {
-					pngfolder: pngfolder,
-					customselectors: customselectors,
-					template: path.resolve( path.join( config.src, "..", "default-css.hbs" ) ),
-					noencodepng: true
-				};
-
 
 				var svgde = new DirectoryEncoder( path.join( result, "tmp" ), path.join( config.dest, datasvgcss ), o ),
 					pngde = new DirectoryEncoder( path.join( config.dest, pngpath ) , path.join( config.dest, datapngcss ), o ),
-					pngdefall = new DirectoryEncoder( path.join( config.dest, pngpath ) , path.join( config.dest, datapngcss ), o2 );
+					pngdefall = new DirectoryEncoder( path.join( config.dest, pngpath ) , path.join( config.dest, urlpngcss ), o2 );
 
 				grunt.log.writeln("Writing CSS");
 				try {
