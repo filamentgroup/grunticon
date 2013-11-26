@@ -36,6 +36,7 @@
 		setUp: function( done ) {
 			this.c = new Colorfy( "test/files/bear.svg" );
 			this.c2 = new Colorfy( "test/files/bear.colors-blue-red.svg" );
+			this.c3 = new Colorfy( "test/files/bear.svg", ["orange", "green"] );
 			done();
 		},
 
@@ -56,13 +57,23 @@
 			test.done();
 		},
 
-		originalFilenameNoColor: function( test ) {
+		originalFilepathNoColor: function( test ) {
+			test.equal( this.c.originalFilepath, "test/files/bear.svg" );
+			test.done();
+		},
+
+		originalFilepath: function( test ) {
 			test.equal( this.c.originalFilepath, "test/files/bear.svg" );
 			test.done();
 		},
 
 		originalFilename: function( test ) {
-			test.equal( this.c.originalFilepath, "test/files/bear.svg" );
+			test.equal( this.c.originalFilename, "bear.svg" );
+			test.done();
+		},
+
+		originalFilenameNoExt: function( test ) {
+			test.equal( this.c.ofnNoExt, "bear" );
 			test.done();
 		},
 
@@ -73,6 +84,10 @@
 		colors: function( test ) {
 			test.ok( arrayEqual( this.c2.colors, ['blue', 'red'] ) );
 			test.done();
+		},
+		colorsAsArg: function( test ){
+			test.ok( arrayEqual( this.c3.colors, ['orange', 'green'] ) );
+			test.done();
 		}
 	};
 
@@ -80,6 +95,7 @@
 		setUp: function( done ) {
 			this.c = new Colorfy( "test/files/bear.svg" );
 			this.c2 = new Colorfy( "test/files/bear.colors-blue-red.svg" );
+			this.c3 = new Colorfy( "test/files/bear.svg", ["orange", "green"] );
 			done();
 		},
 		colorFilesNoColor: function( test ){
@@ -97,6 +113,12 @@
 			this.c2.convert();
 			test.equals( this.c2.colorFiles['bear-blue.svg'], bearBlueSVG );
 			test.equals( this.c2.colorFiles['bear-red.svg'], bearRedSVG );
+			test.done();
+		},
+		colorFilesOpts: function( test ){
+			this.c3.convert();
+			test.equals( Object.keys( this.c3.colorFiles ).length, 2 );
+			test.ok( arrayEqual( Object.keys( this.c3.colorFiles ), ['bear-orange.svg', 'bear-green.svg'] ));
 			test.done();
 		}
 	};
