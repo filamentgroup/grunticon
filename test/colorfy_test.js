@@ -36,7 +36,7 @@
 	exports.constructor = {
 		setUp: function( done ) {
 			this.c = new Colorfy( "test/files/bear.svg" );
-			this.c2 = new Colorfy( "test/files/bear.colors-blue-red.svg", {"blue": "blue", "red": "red"} );
+			this.c2 = new Colorfy( "test/files/bear.colors-blue-red.svg" );
 			this.c3 = new Colorfy( "test/files/bear.svg", {"orange": "orange", "green": "green" } );
 			done();
 		},
@@ -95,9 +95,9 @@
 	exports.convert = {
 		setUp: function( done ) {
 			this.c = new Colorfy( "test/files/bear.svg" );
-			this.c2 = new Colorfy( "test/files/bear.colors-blue-red.svg", {"blue": "blue", "red": "red"} );
+			this.c2 = new Colorfy( "test/files/bear.colors-blue-red.svg" );
 			this.c3 = new Colorfy( "test/files/bear.svg", { "orange": "#ffa500", "green": "#00ff00"} );
-			this.c4 = new Colorfy( "test/files/bear.colors-primary-blue-red.svg", { "primary": "#ffa500", "blue": "blue", "red": "red"} );
+			this.c4 = new Colorfy( "test/files/bear.colors-primary-blue-red.svg", { "primary": "#ffa500" } );
 			this.c5 = new Colorfy( "test/files/bear.colors-secondary.svg", { "primary": "#ffa500" } );
 			done();
 		},
@@ -127,7 +127,7 @@
 		colorFilesOptsDefinition: function( test ){
 			this.c4.convert();
 			test.equals( Object.keys( this.c4.colorFiles ).length, 3 );
-			test.ok( arrayEqual( Object.keys( this.c4.colorFiles ), ['bear-primary.svg', 'bear-blue.svg', 'bear-red.svg'] ));
+			test.ok( arrayEqual( Object.keys( this.c4.colorFiles ), ['bear-blue.svg', 'bear-red.svg', 'bear-primary.svg'] ));
 			test.equals( this.c4.colorFiles['bear-primary.svg'], bearPrimaryFFA500 );
 			test.done();
 		},
@@ -141,7 +141,7 @@
 	exports.writeFile = {
 		setUp: function( done ) {
 			this.c = new Colorfy( "test/files/bear.svg" );
-			this.c2 = new Colorfy( "test/files/bear.colors-blue-red.svg", {"blue": "blue", "red": "red"} );
+			this.c2 = new Colorfy( "test/files/bear.colors-blue-red.svg" );
 			done();
 		},
 		tearDown: function( done ){

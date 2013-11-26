@@ -10,8 +10,8 @@
 
 	exports.constructor = {
 		setUp: function( done ) {
-			this.dc = new DirectoryColorfy( "" , "" );
-			this.dc2 = new DirectoryColorfy( "foo/bar", "baz/qua",
+			this.dc = new DirectoryColorfy( "test/files" , "test/files" );
+			this.dc2 = new DirectoryColorfy( "test/files", "test/files/temp",
 																			{ colors: {
 																					"blue": "blue"
 																				}
@@ -22,14 +22,12 @@
 			done();
 		},
 		emptyConstructor: function( test ){
-			test.equal( this.dc.input, "" , "Empty input on constructor" );
-			test.equal( this.dc.output, "" , "Empty output on constructor" );
 			test.equal( Object.keys( this.dc.options ).length, 0 , "Empty options hash on constructor" );
 			test.done();
 		},
 		constructor: function( test ){
-			test.equal( this.dc2.input, "foo/bar", "Input filled in on constuctor" );
-			test.equal( this.dc2.output, "baz/qua", "Output filled in on constuctor" );
+			test.equal( this.dc2.input, "test/files", "Input filled in on constuctor" );
+			test.equal( this.dc2.output, "test/files/temp", "Output filled in on constuctor" );
 			test.equal( Object.keys( this.dc2.options.colors ).length, 1, "Colors filled" );
 			test.equal( Object.keys(this.dc2.options.colors)[0], "blue", "Colors filled" );
 			test.done();
