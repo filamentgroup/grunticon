@@ -158,7 +158,7 @@ module.exports = function( grunt , undefined ) {
 		}
 
 		// get color variables from config
-		var colors = JSON.stringify( config.colors || {} );
+		var colors = config.colors || {};
 		var tmp = path.join( config.dest , 'tmp' , path.sep );
 		var compressPNG = config.pngcrush, render;
 
@@ -272,8 +272,7 @@ module.exports = function( grunt , undefined ) {
 			var svgToPngOpts = {
 				dest: config.dest,
 				defaultWidth: width,
-				defaultHeight: height,
-				colors: colors
+				defaultHeight: height
 			};
 
 			var o = {
@@ -289,6 +288,14 @@ module.exports = function( grunt , undefined ) {
 				template: path.resolve( path.join( config.src, "..", "default-css.hbs" ) ),
 				noencodepng: true
 			};
+
+			try{
+				var dc = new DirectoryColorfy( tmp, tmp, colors );
+				dc.convert();
+			} catch( e ){
+				grunt.fatal(e);
+				done( false );
+			}
 
 			svgToPng.convert( tmp, pngpath, svgToPngOpts )
 			.then( function( result, err ){
