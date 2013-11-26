@@ -36,11 +36,13 @@
 		"svgo":"~0.3.7",
 		"pngcrush-installer": "1.7.67-2",
 		"fs-extra": "0.6.3",
-		"xmldom": "0.1.16"
+		"xmldom": "0.1.16",
+		"handlebars": "1.1.2"
 	},
 	"devDependencies": {
 		"grunt-cli":"~0.1",
-		"grunt-contrib-nodeunit": "0.2.2"
+		"grunt-contrib-nodeunit": "0.2.2",
+		"lodash":""
 	},
 	"keywords": [
 		"gruntplugin"

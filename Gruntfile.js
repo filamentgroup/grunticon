@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 					svgo: true,
 
 					// PNG compression, false is the default, true will make it so
-					pngcrush: true,
+					pngcrush: false,
 
 					// CSS filenames
 					datasvgcss: "icons.data.svg.css",
@@ -57,8 +57,8 @@ module.exports = function(grunt) {
 					// This allows root-relative referencing of the CSS. If you don't want a prefix path, set to to ""
 					cssbasepath: "/",
 					customselectors: {
-						"cat" : "#el-gato",
-						"gummy-bears-2" : "nav li a.deadly-bears:before"
+						"cat" : ["#el-gato"],
+						"gummy-bears-2" : ["nav li a.deadly-bears:before"]
 					}
 
 				}
@@ -96,6 +96,7 @@ module.exports = function(grunt) {
 
 	// Default task.
 	grunt.registerTask('default', ['nodeunit', 'jshint', 'grunticon:foo']);
+	grunt.registerTask('skip-tests', ['jshint', 'grunticon:foo']);
 	grunt.registerTask('travis', ['nodeunit', 'jshint', 'grunticon:foo']);
 
 };
