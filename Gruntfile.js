@@ -13,6 +13,16 @@ module.exports = function(grunt) {
 			files: '<config:lint.files>',
 			tasks: 'default'
 		},
+		svgmin: {
+			dist: {
+				files: [{
+					expand: true,
+					cwd: 'example/svgs',
+					src: ['*.svg'],
+					dest: 'example/source'
+				}]
+			}
+		},
 		grunticon: {
 			foo: {
 				options: {
@@ -93,9 +103,10 @@ module.exports = function(grunt) {
 
 	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
 	grunt.loadNpmTasks( 'grunt-contrib-nodeunit' );
+	grunt.loadNpmTasks( 'grunt-svgmin' );
 
 	// Default task.
-	grunt.registerTask('default', ['nodeunit', 'jshint', 'grunticon:foo']);
+	grunt.registerTask('default', ['nodeunit', 'jshint', 'svgmin', 'grunticon:foo']);
 	grunt.registerTask('skip-tests', ['jshint', 'grunticon:foo']);
 	grunt.registerTask('travis', ['nodeunit', 'jshint', 'grunticon:foo']);
 

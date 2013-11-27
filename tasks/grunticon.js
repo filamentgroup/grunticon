@@ -16,15 +16,18 @@ module.exports = function( grunt , undefined ) {
 	var fs = require( 'fs' );
 	var path = require( 'path' );
 
+	var Handlebars = require( 'handlebars' );
 	var RSVP = require( path.join( '..', 'lib', 'rsvp' ) );
+
 	var svgToPng = require( path.join( '..', 'lib', 'svg-to-png' ) );
 	var DirectoryEncoder = require( path.join( '..', 'lib', 'directory-encoder' ) );
 	var DirectoryColorfy = require( path.join( '..', 'lib', 'directory-colorfy' ) );
 
+	var imgStats = require( path.join( '..', 'lib', 'img-stats' ) );
+	var _ = require( 'lodash' );
 
 	grunt.registerMultiTask( 'grunticon', 'A mystical CSS icon solution.', function() {
 		var done = this.async();
-
 
 		// just a quick starting message
 		grunt.log.write( "Look, it's a grunticon!\n" );
@@ -113,13 +116,12 @@ module.exports = function( grunt , undefined ) {
 		grunt.file.mkdir( config.dest );
 
 		// minify the source of the grunticon loader and write that to the output
-		grunt.log.write( "\ngrunticon now minifying the stylesheet loader source." );
+		grunt.log.writeln( "grunticon now minifying the stylesheet loader source." );
 		var banner = grunt.file.read( asyncCSSBanner );
 		var min = banner + "\n" + uglify.minify( asyncCSS ).code;
 		var loaderCodeDest = config.dest + loadersnippet;
 		grunt.file.write( loaderCodeDest, min );
-		grunt.log.write( "\ngrunticon loader file created." );
-
+		grunt.log.writeln( "grunticon loader file created." );
 
 		var svgToPngOpts = {
 			dest: config.dest,
@@ -169,6 +171,34 @@ module.exports = function( grunt , undefined ) {
 				grunt.fatal( e );
 				done( false );
 			}
+
+
+			grunt.log.writeln( "Grunticon now creating Preview File" );
+			try {
+				var source = fs.readFileSync( path.join( "example", "preview.hbs" ) ).toString( 'utf-8' );
+				var template = Handlebars.compile(source);
+				var icons = [];
+				
+				fs.readdirSync(config.src).forEach(function( file ){
+					var icon = {};
+					icon.name = path.basename( file ).replace( path.extname( file ), "" );
+					var data = imgStats.statsSync( path.join( config.src, file ) );
+					_.extend( icon, data );
+					icons.push( icon );
+				});
+
+				var prevData = {
+					loaderText: min,
+					icons: icons
+				};
+				var html = template( prevData );
+				fs.writeFileSync( path.join( config.dest, "preview.html" ), html );
+			} catch(er) {
+				grunt.fatal(er);
+			}
+
+
+			grunt.log.writeln( "Delete Temp Files" );
 			colorFiles.forEach( function( file ){
 				grunt.file.delete( file );
 			});
