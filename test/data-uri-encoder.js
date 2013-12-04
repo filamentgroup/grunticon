@@ -2,15 +2,15 @@
 (function(){
 	"use strict";
 	var path = require( 'path' );
-	var constructor = require( path.join('..', 'lib', 'data-uri-encoder'));
+	var Constructor = require( path.join('..', 'lib', 'data-uri-encoder'));
 	var SvgURIEncoder = require( path.join('..', 'lib', 'svg-uri-encoder'));
 	var PngURIEncoder = require( path.join('..', 'lib', 'png-uri-encoder'));
 	var fs = require('fs');
 	var _ = require( 'lodash' );
 
-	exports['constructor'] = {
+	exports['Constructor'] = {
 		setUp: function( done ) {
-			this.encoder = new constructor( "test/files/bear.svg" );
+			this.encoder = new Constructor( "test/files/bear.svg" );
 			done();
 		},
 
@@ -33,7 +33,7 @@
 
 	exports['encode'] = {
 		setUp: function( done ) {
-			this.encoder = new constructor( "test/files/bear.png" );
+			this.encoder = new Constructor( "test/files/bear.png" );
 			done();
 		},
 
@@ -71,12 +71,12 @@
 	exports['PngURIEncoder'] = {
 		setUp: function( done ) {
 			this.encoder = new PngURIEncoder( "test/files/bear.png" );
-			this.encode = _.clone( constructor.prototype.encode );
+			this.encode = _.clone( Constructor.prototype.encode );
 			done();
 		},
 
 		tearDown: function( done ) {
-			constructor.prototype.encode = this.encode;
+			Constructor.prototype.encode = this.encode;
 			done();
 		},
 
@@ -88,7 +88,7 @@
 		},
 
 		pathSwitch: function( test ) {
-			constructor.prototype.encode = function(){
+			Constructor.prototype.encode = function(){
 				var i = 32768, datauri = "";
 
 				while( i >= 0 ) {
