@@ -6,9 +6,6 @@ module.exports = function(grunt) {
 		nodeunit: {
 			files: ['test/**/*.js']
 		},
-		lint: {
-			files: ['grunt.js', 'tasks/**/*.js', 'test/**/*.js']
-		},
 		watch: {
 			files: '<config:lint.files>',
 			tasks: 'default'
@@ -88,13 +85,11 @@ module.exports = function(grunt) {
 				eqnull: true,
 				smarttabs: true,
 				node: true,
-				es5: true,
-				strict: false
+				strict: false,
+				browser: true
+
 			},
-			globals: {
-				Image: true,
-				window: true
-			}
+			all: ['Gruntfile.js', 'tasks/**/*.js', 'test/**/*.js'],
 		}
 	});
 
