@@ -104,6 +104,6 @@ module.exports = function(grunt) {
 	// Default task.
 	grunt.registerTask('default', ['nodeunit', 'jshint', 'svgmin', 'grunticon:foo']);
 	grunt.registerTask('skip-tests', ['jshint', 'grunticon:foo']);
-	grunt.registerTask('travis', ['nodeunit', 'jshint', 'grunticon:foo']);
+	grunt.registerTask('travis', ['nodeunit', 'jshint', 'svgmin', 'grunticon:foo']);
 
 };
