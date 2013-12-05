@@ -183,6 +183,12 @@ module.exports = function( grunt , undefined ) {
 					var icon = {};
 					icon.name = path.basename( file ).replace( path.extname( file ), "" );
 					var data = imgStats.statsSync( path.join( config.src, file ) );
+					if( !data.width ){
+						data.width = width.replace(/px/, "");
+					}
+					if( !data.height ){
+						data.height = height.replace(/px/,"");
+					}
 					_.extend( icon, data );
 					icons.push( icon );
 				});
