@@ -90,7 +90,7 @@ module.exports = function(grunt) {
 				es5: true
 
 			},
-			all: ['Gruntfile.js', 'tasks/**/*.js', 'test/**/*.js'],
+			all: ['Gruntfile.js', 'tasks/**/*.js', 'test/**/*.js']
 		}
 	});
 
