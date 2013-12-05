@@ -10,7 +10,6 @@
 /*global require:true*/
 
 module.exports = function( grunt , undefined ) {
-	"use strict";
 
 	var uglify = require( 'uglify-js' );
 	var fs = require( 'fs' );

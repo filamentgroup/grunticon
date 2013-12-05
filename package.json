@@ -29,7 +29,7 @@
 		"test": "grunt travis --verbose"
 	},
 	"dependencies": {
-		"grunt": "~0.4.0",
+		"grunt": "~0.4",
 		"uglify-js": "~2.2.5",
 		"phantomjs": "1.9.2-0",
 		"svgo":"~0.3.7",

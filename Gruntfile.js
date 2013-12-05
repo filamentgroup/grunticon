@@ -86,8 +86,7 @@ module.exports = function(grunt) {
 				smarttabs: true,
 				node: true,
 				strict: false,
-				browser: true,
-				es5: true
+				browser: true
 
 			},
 			all: ['Gruntfile.js', 'tasks/**/*.js', 'test/**/*.js']
