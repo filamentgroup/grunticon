@@ -16,10 +16,10 @@ module.exports = function( grunt , undefined ) {
 	var path = require( 'path' );
 
 	var Handlebars = require( 'handlebars' );
+	var DirectoryEncoder = require( 'directory-encoder' );
 	var RSVP = require( path.join( '..', 'lib', 'rsvp' ) );
 
 	var svgToPng = require( path.join( '..', 'lib', 'svg-to-png' ) );
-	var DirectoryEncoder = require( path.join( '..', 'lib', 'directory-encoder' ) );
 	var DirectoryColorfy = require( path.join( '..', 'lib', 'directory-colorfy' ) );
 
 	var imgStats = require( path.join( '..', 'lib', 'img-stats' ) );

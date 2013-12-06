@@ -38,7 +38,8 @@
 		"xmldom": "0.1.16",
 		"handlebars": "1.1.2",
 		"lodash":"2.4.0",
-		"grunt-svgmin": "0.3.0"
+		"grunt-svgmin": "0.3.0",
+		"directory-encoder": "0.1.0"
 	},
 	"devDependencies": {
 		"grunt-cli":"~0.1",
