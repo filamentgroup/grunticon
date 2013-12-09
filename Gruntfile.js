@@ -22,6 +22,11 @@ module.exports = function(grunt) {
 		},
 		grunticon: {
 			foo: {
+				files: [{
+					expand: true,
+					cwd: 'example/source',
+					src: ['*.svg', '*.png']
+				}],
 				options: {
 					// required config
 					src: "example/source/",

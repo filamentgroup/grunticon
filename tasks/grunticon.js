@@ -61,15 +61,9 @@ module.exports = function( grunt , undefined ) {
 			done( false );
 		}
 
-		// make sure src and dest have / at the end
-		if( !config.src.match( path.sep + '$' ) ){
-			config.src += path.sep;
-		}
-		if( !config.dest.match( path.sep + '$' ) ){
-			config.dest += path.sep;
-		}
-
-		var files = fs.readdirSync( config.src );
+		var files = this.files.map( function( file ){
+			return file.src[0];
+		});
 		files = files.filter( function( file ){
 			return file.match( /png|svg/ );
 		});
