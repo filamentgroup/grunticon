@@ -48,7 +48,11 @@ module.exports = function( grunt , undefined ) {
 			previewhtml: "preview.html",
 			loadersnippet: "grunticon.loader.txt",
 			cssbasepath: path.sep,
-			customselectors: {}
+			customselectors: {},
+			cssprefix: "icon-",
+			defaultWidth: "400px",
+			defaultHeight: "300px",
+			colors: {}
 		});
 
 		// fail if config or no src or dest config
@@ -81,27 +85,9 @@ module.exports = function( grunt , undefined ) {
 
 		// make sure pngfolder has / at the end
 		if( !pngfolder.match( path.sep + '$' ) ){
-				pngfolder += path.sep;
+			pngfolder += path.sep;
 		}
 
-		// css class prefix
-		var cssprefix = config.cssprefix;
-		if( cssprefix === undefined ){
-			cssprefix = "icon-";
-		}
-
-
-		var width = config.defaultWidth;
-		if( !width ){
-			width = "400px";
-		}
-		var height = config.defaultHeight;
-		if( !height ){
-			height = "300px";
-		}
-
-		// get color variables from config
-		var colors = config.colors || {};
 
 		// create the output directory
 		grunt.file.mkdir( config.dest );
@@ -116,8 +102,8 @@ module.exports = function( grunt , undefined ) {
 
 		var svgToPngOpts = {
 			dest: config.dest,
-			defaultWidth: width,
-			defaultHeight: height
+			defaultWidth: config.defaultWidth,
+			defaultHeight: config.defaultHeight
 		};
 
 		var o = {
@@ -137,7 +123,7 @@ module.exports = function( grunt , undefined ) {
 		grunt.log.writeln("Coloring SVG files");
 		var colorFiles;
 		try{
-			var dc = new DirectoryColorfy( config.src, config.src, colors );
+			var dc = new DirectoryColorfy( config.src, config.src, config.colors );
 			colorFiles = dc.convert();
 		} catch( e ){
 			grunt.fatal(e);
@@ -168,7 +154,7 @@ module.exports = function( grunt , undefined ) {
 
 			grunt.log.writeln( "Grunticon now creating Preview File" );
 			try {
-				helper.createPreview(config.src, config.dest, width, height, min, config.previewhtml);
+				helper.createPreview(config.src, config.dest, config.defaultWidth, config.defaultHeight, min, config.previewhtml);
 			} catch(er) {
 				grunt.fatal(er);
 			}
