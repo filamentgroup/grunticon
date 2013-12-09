@@ -17,13 +17,14 @@ module.exports = function( grunt , undefined ) {
 
 	var Handlebars = require( 'handlebars' );
 	var DirectoryEncoder = require( 'directory-encoder' );
-	var RSVP = require( path.join( '..', 'lib', 'rsvp' ) );
+	var RSVP = require( 'rsvp' );
+	var _ = require( 'lodash' );
 
 	var svgToPng = require( path.join( '..', 'lib', 'svg-to-png' ) );
 	var DirectoryColorfy = require( path.join( '..', 'lib', 'directory-colorfy' ) );
 
 	var imgStats = require( path.join( '..', 'lib', 'img-stats' ) );
-	var _ = require( 'lodash' );
+	var helper = require( path.join( '..', 'lib', 'grunticon-helper' ) );
 
 	grunt.registerMultiTask( 'grunticon', 'A mystical CSS icon solution.', function() {
 		var done = this.async();
@@ -174,30 +175,7 @@ module.exports = function( grunt , undefined ) {
 
 			grunt.log.writeln( "Grunticon now creating Preview File" );
 			try {
-				var source = fs.readFileSync( path.join( "example", "preview.hbs" ) ).toString( 'utf-8' );
-				var template = Handlebars.compile(source);
-				var icons = [];
-				
-				fs.readdirSync(config.src).forEach(function( file ){
-					var icon = {};
-					icon.name = path.basename( file ).replace( path.extname( file ), "" );
-					var data = imgStats.statsSync( path.join( config.src, file ) );
-					if( !data.width ){
-						data.width = width.replace(/px/, "");
-					}
-					if( !data.height ){
-						data.height = height.replace(/px/,"");
-					}
-					_.extend( icon, data );
-					icons.push( icon );
-				});
-
-				var prevData = {
-					loaderText: min,
-					icons: icons
-				};
-				var html = template( prevData );
-				fs.writeFileSync( path.join( config.dest, "preview.html" ), html );
+				helper.createPreview(config.src, config.dest, width, height, min);
 			} catch(er) {
 				grunt.fatal(er);
 			}
