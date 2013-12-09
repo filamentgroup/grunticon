@@ -21,7 +21,7 @@ module.exports = function( grunt , undefined ) {
 	var DirectoryEncoder = require( 'directory-encoder' );
 	var RSVP = require( 'rsvp' );
 
-	var svgToPng = require( path.join( '..', 'lib', 'svg-to-png' ) );
+	var svgToPng = require( 'svg-to-png' );
 	var DirectoryColorfy = require( path.join( '..', 'lib', 'directory-colorfy' ) );
 
 	var imgStats = require( path.join( '..', 'lib', 'img-stats' ) );
