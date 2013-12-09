@@ -20,7 +20,6 @@ module.exports = function( grunt , undefined ) {
 	var Handlebars = require( 'handlebars' );
 	var DirectoryEncoder = require( 'directory-encoder' );
 	var RSVP = require( 'rsvp' );
-	var _ = require( 'lodash' );
 
 	var svgToPng = require( path.join( '..', 'lib', 'svg-to-png' ) );
 	var DirectoryColorfy = require( path.join( '..', 'lib', 'directory-colorfy' ) );
@@ -52,7 +51,8 @@ module.exports = function( grunt , undefined ) {
 			cssprefix: "icon-",
 			defaultWidth: "400px",
 			defaultHeight: "300px",
-			colors: {}
+			colors: {},
+			pngfolder: "png"
 		});
 
 		// fail if config or no src or dest config
@@ -80,7 +80,7 @@ module.exports = function( grunt , undefined ) {
 
 
 		// folder name (within the output folder) for generated png files
-		var pngfolder = config.pngfolder || "png";
+		var pngfolder = config.pngfolder;
 		pngfolder = path.join.apply( null, pngfolder.split( path.sep ) );
 
 		// make sure pngfolder has / at the end
@@ -96,8 +96,7 @@ module.exports = function( grunt , undefined ) {
 		grunt.log.writeln( "grunticon now minifying the stylesheet loader source." );
 		var banner = grunt.file.read( config.files.banner );
 		var min = banner + "\n" + uglify.minify( config.files.loader ).code;
-		var loaderCodeDest = config.dest + config.loadersnippet;
-		grunt.file.write( loaderCodeDest, min );
+		grunt.file.write( path.join( config.dest, config.loadersnippet ), min );
 		grunt.log.writeln( "grunticon loader file created." );
 
 		var svgToPngOpts = {
