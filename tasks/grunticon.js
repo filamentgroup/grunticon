@@ -11,6 +11,8 @@
 
 module.exports = function( grunt , undefined ) {
 
+	"use strict";
+
 	var uglify = require( 'uglify-js' );
 	var fs = require( 'fs' );
 	var path = require( 'path' );
@@ -33,14 +35,22 @@ module.exports = function( grunt , undefined ) {
 		grunt.log.write( "Look, it's a grunticon!\n" );
 
 		// get the config
-		var config = this.options();
+		var config = this.options({
+			datasvgcss: "icons.data.svg.css",
+			datapngcss: "icons.data.png.css",
+			urlpngcss: "icons.fallback.css",
+			files: {
+				loader: path.join( __dirname, 'grunticon', 'static', 'grunticon.loader.js'),
+				banner: path.join( __dirname, 'grunticon', 'static', 'grunticon.loader.banner.js'),
+				preview: path.join( __dirname, 'grunticon', 'static', 'preview.html'),
+				phantom: path.join( __dirname,  'grunticon', 'phantom.js')
+			},
+			previewhtml: "preview.html",
+			loadersnippet: "grunticon.loader.txt",
+			cssbasepath: path.sep,
+			customselectors: {}
+		});
 
-		config.files = {
-			loader: path.join( __dirname, 'grunticon', 'static', 'grunticon.loader.js'),
-			banner: path.join( __dirname, 'grunticon', 'static', 'grunticon.loader.banner.js'),
-			preview: path.join( __dirname, 'grunticon', 'static', 'preview.html'),
-			phantom: path.join( __dirname,  'grunticon', 'phantom.js')
-		};
 		// fail if config or no src or dest config
 		if( !config || config.src === undefined || config.dest === undefined ){
 			grunt.fatal( "Oops! Please provide grunticon configuration for src and dest in your grunt.js file" );
@@ -64,25 +74,6 @@ module.exports = function( grunt , undefined ) {
 			done();
 		}
 
-		var asyncCSS = config.files.loader;
-		var asyncCSSBanner = config.files.banner;
-		var previewHTMLsrc = config.files.preview;
-
-		// CSS filenames with optional mixin from config
-		var datasvgcss = config.datasvgcss || "icons.data.svg.css";
-		var datapngcss = config.datapngcss || "icons.data.png.css";
-		var urlpngcss = config.urlpngcss || "icons.fallback.css";
-
-		//filename for generated output preview HTML file
-		var previewhtml = config.previewhtml || "preview.html";
-
-		//filename for generated loader HTML snippet file
-		var loadersnippet = config.loadersnippet || "grunticon.loader.txt";
-
-		// css references base path for the loader
-		var cssbasepath = config.cssbasepath || path.sep;
-
-		var customselectors = config.customselectors;
 
 		// folder name (within the output folder) for generated png files
 		var pngfolder = config.pngfolder || "png";
@@ -117,9 +108,9 @@ module.exports = function( grunt , undefined ) {
 
 		// minify the source of the grunticon loader and write that to the output
 		grunt.log.writeln( "grunticon now minifying the stylesheet loader source." );
-		var banner = grunt.file.read( asyncCSSBanner );
-		var min = banner + "\n" + uglify.minify( asyncCSS ).code;
-		var loaderCodeDest = config.dest + loadersnippet;
+		var banner = grunt.file.read( config.files.banner );
+		var min = banner + "\n" + uglify.minify( config.files.loader ).code;
+		var loaderCodeDest = config.dest + config.loadersnippet;
 		grunt.file.write( loaderCodeDest, min );
 		grunt.log.writeln( "grunticon loader file created." );
 
@@ -131,18 +122,19 @@ module.exports = function( grunt , undefined ) {
 
 		var o = {
 			pngfolder: pngfolder,
-			customselectors: customselectors,
+			customselectors: config.customselectors,
 			template: path.resolve( path.join( config.src, "..", "default-css.hbs" ) ),
 			noencodepng: false
 		};
 
 		var o2 = {
 			pngfolder: pngfolder,
-			customselectors: customselectors,
+			customselectors: config.customselectors,
 			template: path.resolve( path.join( config.src, "..", "default-css.hbs" ) ),
 			noencodepng: true
 		};
 
+		grunt.log.writeln("Coloring SVG files");
 		var colorFiles;
 		try{
 			var dc = new DirectoryColorfy( config.src, config.src, colors );
@@ -152,15 +144,16 @@ module.exports = function( grunt , undefined ) {
 			done( false );
 		}
 
+		grunt.log.writeln("Converting SVG to PNG");
 		svgToPng.convert( config.src, pngfolder, svgToPngOpts )
 		.then( function( result, err ){
 			if( err ){
 				grunt.fatal( err );
 			}
 
-			var svgde = new DirectoryEncoder( config.src, path.join( config.dest, datasvgcss ), o ),
-				pngde = new DirectoryEncoder( path.join( config.dest, pngfolder ) , path.join( config.dest, datapngcss ), o ),
-				pngdefall = new DirectoryEncoder( path.join( config.dest, pngfolder ) , path.join( config.dest, urlpngcss ), o2 );
+			var svgde = new DirectoryEncoder( config.src, path.join( config.dest, config.datasvgcss ), o ),
+				pngde = new DirectoryEncoder( path.join( config.dest, pngfolder ) , path.join( config.dest, config.datapngcss ), o ),
+				pngdefall = new DirectoryEncoder( path.join( config.dest, pngfolder ) , path.join( config.dest, config.urlpngcss ), o2 );
 
 			grunt.log.writeln("Writing CSS");
 			try {
@@ -175,7 +168,7 @@ module.exports = function( grunt , undefined ) {
 
 			grunt.log.writeln( "Grunticon now creating Preview File" );
 			try {
-				helper.createPreview(config.src, config.dest, width, height, min);
+				helper.createPreview(config.src, config.dest, width, height, min, config.previewhtml);
 			} catch(er) {
 				grunt.fatal(er);
 			}
