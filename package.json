@@ -37,7 +37,7 @@
 		"handlebars": "1.1.2",
 		"lodash":"2.4.0",
 		"grunt-svgmin": "0.3.0",
-		"directory-encoder": "0.2.1",
+		"directory-encoder": "0.3.1",
 		"rsvp": "1.2.0",
 		"svg-to-png": "0.2.0"
 	},
