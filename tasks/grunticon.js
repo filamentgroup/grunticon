@@ -93,14 +93,16 @@ module.exports = function( grunt , undefined ) {
 			pngfolder: pngfolder,
 			customselectors: config.customselectors,
 			template: path.resolve( path.join( config.src, "..", "default-css.hbs" ) ),
-			noencodepng: false
+			noencodepng: false,
+			prefix: config.cssprefix
 		};
 
 		var o2 = {
 			pngfolder: pngfolder,
 			customselectors: config.customselectors,
 			template: path.resolve( path.join( config.src, "..", "default-css.hbs" ) ),
-			noencodepng: true
+			noencodepng: true,
+			prefix: config.cssprefix
 		};
 
 		grunt.log.writeln("Coloring SVG files");

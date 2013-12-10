@@ -54,7 +54,7 @@ module.exports = function(grunt) {
 					pngfolder: "png",
 
 					// prefix for CSS classnames
-					cssprefix: "icon-",
+					cssprefix: ".icon-",
 
 					defaultWidth: "300px",
 					defaultHeight: "200px",
