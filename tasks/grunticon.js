@@ -13,22 +13,19 @@ module.exports = function( grunt , undefined ) {
 
 	"use strict";
 
-	var uglify = require( 'uglify-js' );
 	var path = require( 'path' );
 
-	var DirectoryEncoder = require( 'directory-encoder' );
+	var uglify = require( 'uglify-js' );
 	var RSVP = require( 'rsvp' );
 
+	var DirectoryEncoder = require( 'directory-encoder' );
 	var svgToPng = require( 'svg-to-png' );
-	var DirectoryColorfy = require( path.join( '..', 'lib', 'directory-colorfy' ) );
 
+	var DirectoryColorfy = require( path.join( '..', 'lib', 'directory-colorfy' ) );
 	var helper = require( path.join( '..', 'lib', 'grunticon-helper' ) );
 
 	grunt.registerMultiTask( 'grunticon', 'A mystical CSS icon solution.', function() {
 		var done = this.async();
-
-		// just a quick starting message
-		grunt.log.write( "Look, it's a grunticon!\n" );
 
 		// get the config
 		var config = this.options({
@@ -52,6 +49,9 @@ module.exports = function( grunt , undefined ) {
 			pngfolder: "png"
 		});
 
+		// just a quick starting message
+		grunt.log.writeln( "Look, it's a grunticon!" );
+
 		// fail if config or no src or dest config
 		if( !config || config.src === undefined || config.dest === undefined ){
 			grunt.fatal( "Oops! Please provide grunticon configuration for src and dest in your grunt.js file" );
@@ -71,14 +71,7 @@ module.exports = function( grunt , undefined ) {
 
 
 		// folder name (within the output folder) for generated png files
-		var pngfolder = config.pngfolder;
-		pngfolder = path.join.apply( null, pngfolder.split( path.sep ) );
-
-		// make sure pngfolder has / at the end
-		if( !pngfolder.match( path.sep + '$' ) ){
-			pngfolder += path.sep;
-		}
-
+		var pngfolder = path.join.apply( null, config.pngfolder.split( path.sep ) );
 
 		// create the output directory
 		grunt.file.mkdir( config.dest );
@@ -122,7 +115,7 @@ module.exports = function( grunt , undefined ) {
 
 		grunt.log.writeln("Converting SVG to PNG");
 		svgToPng.convert( config.src, config.dest, svgToPngOpts )
-		.then( function( result, err ){
+		.then( function( result , err ){
 			if( err ){
 				grunt.fatal( err );
 			}
