@@ -17,14 +17,12 @@ module.exports = function( grunt , undefined ) {
 	var fs = require( 'fs' );
 	var path = require( 'path' );
 
-	var Handlebars = require( 'handlebars' );
 	var DirectoryEncoder = require( 'directory-encoder' );
 	var RSVP = require( 'rsvp' );
 
 	var svgToPng = require( 'svg-to-png' );
 	var DirectoryColorfy = require( path.join( '..', 'lib', 'directory-colorfy' ) );
 
-	var imgStats = require( path.join( '..', 'lib', 'img-stats' ) );
 	var helper = require( path.join( '..', 'lib', 'grunticon-helper' ) );
 
 	grunt.registerMultiTask( 'grunticon', 'A mystical CSS icon solution.', function() {
@@ -94,7 +92,7 @@ module.exports = function( grunt , undefined ) {
 		grunt.log.writeln( "grunticon loader file created." );
 
 		var svgToPngOpts = {
-			dest: config.dest,
+			pngfolder: pngfolder,
 			defaultWidth: config.defaultWidth,
 			defaultHeight: config.defaultHeight
 		};
@@ -124,7 +122,7 @@ module.exports = function( grunt , undefined ) {
 		}
 
 		grunt.log.writeln("Converting SVG to PNG");
-		svgToPng.convert( config.src, pngfolder, svgToPngOpts )
+		svgToPng.convert( config.src, config.dest, svgToPngOpts )
 		.then( function( result, err ){
 			if( err ){
 				grunt.fatal( err );

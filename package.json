@@ -31,7 +31,6 @@
 	"dependencies": {
 		"grunt": "~0.4",
 		"uglify-js": "~2.2.5",
-		"phantomjs": "1.9.2-0",
 		"pngcrush-installer": "1.7.67-2",
 		"fs-extra": "0.6.3",
 		"xmldom": "0.1.16",
@@ -40,7 +39,7 @@
 		"grunt-svgmin": "0.3.0",
 		"directory-encoder": "0.1.0",
 		"rsvp": "1.2.0",
-		"svg-to-png": "0.1.1"
+		"svg-to-png": "0.2.0"
 	},
 	"devDependencies": {
 		"grunt-cli":"~0.1",
