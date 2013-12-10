@@ -14,7 +14,6 @@ module.exports = function( grunt , undefined ) {
 	"use strict";
 
 	var uglify = require( 'uglify-js' );
-	var fs = require( 'fs' );
 	var path = require( 'path' );
 
 	var DirectoryEncoder = require( 'directory-encoder' );
