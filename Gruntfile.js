@@ -1,10 +1,18 @@
+/*
+ * grunticon
+ * https://github.com/filamentgroup/grunticon
+ *
+ * Copyright (c) 2013 Scott Jehl
+ * Licensed under the MIT license.
+ */
+
 module.exports = function(grunt) {
 	"use strict";
 
 	// Project configuration.
 	grunt.initConfig({
 		nodeunit: {
-			files: ['test/**/*.js']
+			files: ['test/**/*_test.js']
 		},
 		watch: {
 			files: '<config:lint.files>',
@@ -77,24 +85,19 @@ module.exports = function(grunt) {
 			}
 		},
 		jshint: {
+			all: [
+				'Gruntfile.js',
+				'tasks/*.js',
+				'<%= nodeunit.tests %>'
+			],
 			options: {
-				curly: true,
-				eqeqeq: true,
-				immed: true,
-				latedef: false,
-				newcap: true,
-				noarg: true,
-				sub: true,
-				undef: true,
-				boss: true,
-				eqnull: true,
-				smarttabs: true,
-				node: true,
-				strict: false,
-				browser: true
+				jshintrc: '.jshintrc'
+			}
+		},
 
-			},
-			all: ['Gruntfile.js', 'tasks/**/*.js', 'test/**/*.js']
+// Before generating any new files, remove any previously-created files.
+		clean: {
+			tests: ['tmp']
 		}
 	});
 
@@ -111,3 +114,4 @@ module.exports = function(grunt) {
 	grunt.registerTask('travis', ['nodeunit', 'jshint', 'svgmin', 'grunticon:foo']);
 
 };
+
