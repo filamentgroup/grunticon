@@ -2,7 +2,7 @@
  * grunticon
  * https://github.com/filamentgroup/grunticon
  *
- * Copyright (c) 2013 Scott Jehl
+ * Copyright (c) 2012 Scott Jehl
  * Licensed under the MIT license.
  */
 
