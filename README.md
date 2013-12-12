@@ -53,42 +53,38 @@ grunt.loadNpmTasks('grunt-grunticon');
 
 ### Required configuration properties
 
-grunticon has 2 required configuration properties: `src` and `dest`. Both need to be defined for grunticon to run.
-
-- `src`: path to your folder of svg files, relative to the Gruntfile.js file. Perhaps something like `images/icons-source/`.
-- `dest`: path to the folder that grunticon will write to, relative to the Gruntfile.js file. Ideally, this would be a folder that does not yet exist in your directory. Perhaps something like `css/icons-dist/`.
+grunticon has a files object that needs to be filled in order to run,
+this files object currently requires that a cwd, and a dest dir are
+placed, and therefore will blow up without it. This will be fixed to
+better fit the pattern set by Grunt for this.
 
 These can be set in your Gruntfile.js config file. Grunticon is a multitask, making it easy to create as many export batches as you'd like. Just create one or more custom named objects within the `grunticon` object, and configure Grunticon `options` within it, like so:
 
 ```
 	grunticon: {
     myIcons: {
-			files
+			files: [{
+				expand: true,
+				cwd: 'example/source',
+				src: ['*.svg', '*.png'],
+				dest: "example/output"
+			}],
   		options: {
-        src: "css/dist/icons/",
-        dest: "css/icons/"
       }
     }
 	}
 ```
 
-Within the `options` object, the `src` property refers to the directory in which your SVG icons are stored. The `dest` property refers to the directory you'd like grunticon to create, which will contain your output files. 
-
 **IMPORTANT NOTE:** grunticon will overwrite any files in the `dest` directory if they are of the same name as a file that grunticon needs to create. For easiest results, you can set `dest` to a folder that does not yet exist in your directory and grunticon will create that folder, or set it to an existing folder and be sure to configure grunticon to create file names that do not already exist in that folder.
 
 With these configuration properties set, you can add `grunticon` to your default tasks list. That'll look something like this:
 
-    grunt.registerTask('default', 'lint qunit concat min grunticon');
+    grunt.registerTask('default', 'lint qunit concat min
+grunticon:myIcons');
 
 grunticon will now batch your icons whenever you run grunt.
 
 ### Options
-
-#### options.separator
-Type: `String`
-Default value: `',  '`
-
-A string value that is used to do something with whatever.
 
 #### options.datasvgcss
 Type: `String`
