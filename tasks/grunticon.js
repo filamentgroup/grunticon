@@ -52,23 +52,20 @@ module.exports = function( grunt , undefined ) {
 		// just a quick starting message
 		grunt.log.writeln( "Look, it's a grunticon!" );
 
-		// fail if config or no src or dest config
-		if( !config || config.src === undefined || config.dest === undefined ){
-			grunt.fatal( "Oops! Please provide grunticon configuration for src and dest in your grunt.js file" );
-			done( false );
-		}
-
-		var files = this.files.map( function( file ){
-			return file.src[0];
-		});
-		files = files.filter( function( file ){
-			return file.match( /png|svg/ );
+		var files = this.files.filter( function( file ){
+			return file.src[0].match( /png|svg/ );
 		});
 		if( files.length === 0 ){
 			grunt.log.writeln( "Grunticon has no files to read!" );
 			done();
 		}
 
+		files = files.map( function( file ){
+			return file.src[0];
+		});
+
+		config.src = this.files[0].orig.cwd;
+		config.dest = this.files[0].orig.dest;
 
 		// folder name (within the output folder) for generated png files
 		var pngfolder = path.join.apply( null, config.pngfolder.split( path.sep ) );

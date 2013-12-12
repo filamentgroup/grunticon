@@ -33,12 +33,10 @@ module.exports = function(grunt) {
 				files: [{
 					expand: true,
 					cwd: 'example/source',
-					src: ['*.svg', '*.png']
+					src: ['*.svg', '*.png'],
+					dest: "example/output"
 				}],
 				options: {
-					// required config
-					src: "example/source/",
-					dest: "example/output/",
 
 					// optional grunticon config properties
 					// SVGO compression, false is the default, true will make it so
