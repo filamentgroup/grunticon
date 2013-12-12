@@ -18,10 +18,10 @@ module.exports = function( grunt , undefined ) {
 	var uglify = require( 'uglify-js' );
 	var RSVP = require( 'rsvp' );
 
+	var DirectoryColorfy = require( 'directory-colorfy' );
 	var DirectoryEncoder = require( 'directory-encoder' );
 	var svgToPng = require( 'svg-to-png' );
 
-	var DirectoryColorfy = require( path.join( '..', 'lib', 'directory-colorfy' ) );
 	var helper = require( path.join( '..', 'lib', 'grunticon-helper' ) );
 
 	grunt.registerMultiTask( 'grunticon', 'A mystical CSS icon solution.', function() {
