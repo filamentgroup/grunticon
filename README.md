@@ -230,6 +230,8 @@ In the Save SVG dialog that opens up, there are lots of options. SVG has a ton o
 - Images: Embed
 - Don't check "Preserve Illustrator editing" to reduce file size
 
+## Warnings
+* If your files have `#`, `.`, `>`, or any other css selecting character in their names, they will likely be improperly processed.
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
