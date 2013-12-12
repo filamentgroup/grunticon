@@ -88,7 +88,7 @@ module.exports = function(grunt) {
 			all: [
 				'Gruntfile.js',
 				'tasks/*.js',
-				'<%= nodeunit.tests %>'
+				'lib/*.js'
 			],
 			options: {
 				jshintrc: '.jshintrc'
@@ -109,9 +109,9 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks( 'grunt-svgmin' );
 
 	// Default task.
-	grunt.registerTask('default', ['nodeunit', 'jshint', 'svgmin', 'grunticon:foo']);
 	grunt.registerTask('skip-tests', ['jshint', 'grunticon:foo']);
-	grunt.registerTask('travis', ['nodeunit', 'jshint', 'svgmin', 'grunticon:foo']);
+	grunt.registerTask('travis', ['jshint', 'svgmin', 'grunticon:foo', 'nodeunit']);
+	grunt.registerTask('default', ['travis']);
 
 };
 
