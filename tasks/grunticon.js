@@ -34,9 +34,7 @@ module.exports = function( grunt , undefined ) {
 			urlpngcss: "icons.fallback.css",
 			files: {
 				loader: path.join( __dirname, 'grunticon', 'static', 'grunticon.loader.js'),
-				banner: path.join( __dirname, 'grunticon', 'static', 'grunticon.loader.banner.js'),
-				preview: path.join( __dirname, 'grunticon', 'static', 'preview.html'),
-				phantom: path.join( __dirname,  'grunticon', 'phantom.js')
+				banner: path.join( __dirname, 'grunticon', 'static', 'grunticon.loader.banner.js')
 			},
 			previewhtml: "preview.html",
 			loadersnippet: "grunticon.loader.txt",
