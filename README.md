@@ -1,4 +1,4 @@
-# grunticon!
+# Grunticon
 [![Build Status](https://travis-ci.org/filamentgroup/grunticon.png?branch=master)](https://travis-ci.org/filamentgroup/grunticon)
 
 ```
@@ -6,27 +6,23 @@
         //
     .  //
     |\//7
-   /' " \     
-  .   . .      
-  | (    \     
-  |  '._  '        
+   /' " \
+  .   . .
+  | (    \
+  |  '._  '
   /    \'-'
 
 ```
 
-## A mystical CSS icon solution.
+### A mystical CSS icon solution
 
-grunticon is a [Grunt.js](https://github.com/cowboy/grunt/) task that makes it easy to manage icons and background images for all devices, preferring HD (retina) SVG icons but also provides fallback support for standard definition browsers, and old browsers alike. From a CSS perspective, it's easy to use, as it generates a class referencing each icon, and doesn't use CSS sprites. 
+grunticon is a [Grunt.js](https://github.com/cowboy/grunt/) task that makes it easy to manage icons and background images for all devices, preferring HD (retina) SVG icons but also provides fallback support for standard definition browse
 
-grunticon takes a [folder of SVG/PNG files](https://github.com/filamentgroup/grunticon/tree/master/example/source) (typically, icons that you've drawn in an application like Adobe Illustrator), and [outputs them](https://github.com/filamentgroup/grunticon/tree/master/example/output) to CSS in 3 formats: [svg data urls](https://github.com/filamentgroup/grunticon/blob/master/example/output/icons.data.svg.css), [png data urls](https://github.com/filamentgroup/grunticon/blob/master/example/output/icons.data.png.css), and [a third fallback CSS file with references to regular png images](https://github.com/filamentgroup/grunticon/blob/master/example/output/icons.fallback.css), which are also automatically [generated and placed in a folder](https://github.com/filamentgroup/grunticon/tree/master/example/output/png). 
+grunticon takes a [folder of SVG/PNG files](https://github.com/filamentgroup/grunticon/tree/master/example/source) (typically, icons that you've drawn in an application like Adobe Illustrator), and [outputs them](https://github.com/filam
 
-grunticon also generates [a small bit of JavaScript and CSS](https://github.com/filamentgroup/grunticon/blob/master/example/output/grunticon.loader.txt) to drop into your site, which asynchronously loads the appropriate icon CSS depending on a browser's capabilities, and a preview HTML file with that loader script in place. 
+grunticon also generates [a small bit of JavaScript and CSS](https://github.com/filamentgroup/grunticon/blob/master/example/output/grunticon.loader.txt) to drop into your site, which asynchronously loads the appropriate icon CSS dependin
 
 You can see [a demonstration of the output here](http://filamentgroup.github.com/grunticon/example/output/preview.html).
-
-## License
-Copyright (c) 2012 Scott Jehl, [Filament Group, Inc.](http://filamentgroup.com)
-Licensed under the MIT license.
 
 ## Before you get started!
 
@@ -34,26 +30,26 @@ Licensed under the MIT license.
 
 [<img src="http://filamentgroup.com/images/grunticon_workflow_grumpicon.jpg" width="400">](http://grumpicon.com)
 
-[Grumpicon](http://grumpicon.com) is a browser-based app that performs much of the functionality of Grunticon through a simple drag and drop interface. It's much easier to set up than Grunticon, and sometimes, it's all you need (though it won't always be!)
+[Grumpicon](http://grumpicon.com) is a browser-based app that performs much of the functionality of Grunticon through a simple drag and drop interface. It's much easier to set up than Grunticon, and sometimes, it's all you need (though i
 
 If you're interested in trying out Grumpicon, you might be interested in this handy guide as well: [Grumpicon Workflow](http://filamentgroup.com/lab/grumpicon_workflow/)
 
 ## Getting Started
+This plugin requires Grunt `~0.4.2`
 
-You'll need to have [Grunt](https://github.com/cowboy/grunt) installed.
+If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
-Install the grunticon module with: `npm install grunt-grunticon`
+```shell
+npm install grunt-grunticon --save-dev
+```
 
-Then add this line to your project's `Gruntfile.js` gruntfile:
+Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
-```javascript
+```js
 grunt.loadNpmTasks('grunt-grunticon');
 ```
 
-And lastly, add the configuration settings to your `Gruntfile.js` file as mentioned below. grunticon will batch your icons whenever you run `$ grunt`, and output the files listed above to your `dest` folder, which is documented below.
-
-
-## Documentation
+## The "grunticon" task
 
 ### Required configuration properties
 
@@ -67,6 +63,7 @@ These can be set in your Gruntfile.js config file. Grunticon is a multitask, mak
 ```
 	grunticon: {
     myIcons: {
+			files
   		options: {
         src: "css/dist/icons/",
         dest: "css/icons/"
@@ -85,26 +82,95 @@ With these configuration properties set, you can add `grunticon` to your default
 
 grunticon will now batch your icons whenever you run grunt.
 
-### Optional configuration properties
+### Options
 
-In addition to the required configuration properties above, grunticon's grunt configuration lets you configure the names of the files and the images folder it generates inside `dest`. 
+#### options.separator
+Type: `String`
+Default value: `',  '`
 
-- `svgo`: Choose whether or not you would like to use SVGO to optimize your SVG files. Default: `false`
-- `pngcrush`: Choose whether or not you like to use pngcrush to optimize your png files. Default: `false`
-- `datasvgcss`: The name of the generated CSS file containing SVG data uris. Default: `"icons.data.svg.css"`
-- `datapngcss`: The name of the generated CSS file containing PNG data uris. Default: `"icons.data.png.css"`
-- `urlpngcss`: The name of the generated CSS file containing external png url references. Default: `"icons.fallback.css"`
-- `previewhtml`: The name of the generated HTML file containing PNG data uris. Default: `"preview.html"`
-- `loadersnippet`:  The name of the generated text file containing the grunticon loading snippet. Default: `"grunticon.loader.txt"`
-- `pngfolder`:  The name of the generated folder containing the generated PNG images. Default: `"png/"`
-- `cssprefix`: a string to prefix all css classes with. Default: `"icon-"`
-- `customselectors`: Allows you to specify custom selectors (in addition to the generated `cssprefix + filename - extension` class) for individual files. 
-- `defaultWidth`: a string that MUST be defined in px that will be the
-  size of the PNG if there is no width given in the SVG element.
-Example: `defaultWidth: "300px";` Default: `"400px"`
-- `defaultHeight`: similar to defaultWidth, but for height
-Example: `defaultHeight: "200px";` Default: `"300px"`
-- `colors`: Allows you to predefine colors as variables that can be used in filename color configuration.
+A string value that is used to do something with whatever.
+
+#### options.datasvgcss
+Type: `String`
+Default value: `"icons.data.svg.css"`
+
+The name of the generated CSS file containing SVG data uris.
+
+#### options.datapngcss
+Type: `String`
+Default value: `"icons.data.png.css"`
+
+The name of the generated CSS file containing PNG data uris
+
+#### options.urlpngcss
+Type: `String`
+Default value: `"icons.fallback.css"`
+
+The name of the generated CSS file containing external png url references.
+
+#### options.previewhtml
+Type: `String`
+Default value: `"preview.html"`
+
+The name of the generated HTML file containing PNG data uris.
+
+#### options.loadersnippet
+Type: `String`
+Default value: `"grunticon.loader.txt"`
+
+ The name of the generated text file containing the grunticon loading snippet.
+
+#### options.pngfolder
+Type: `String`
+Default value: `"png/"`
+
+ The name of the generated folder containing the generated PNG images.
+
+#### options.cssprefix
+Type: `String`
+Default value: `"icon-"`
+
+a string to prefix all css classes with.
+
+#### options.customselectors
+Type: `Object`
+
+Allows you to specify custom selectors (in addition to the generated `cssprefix + filename - extension` class) for individual files. 
+
+Example:
+
+```
+{
+	"foo": [".icon-bar", ".baz"]
+}
+```
+
+will produce:
+
+```
+.icon-bar,
+.bar,
+.icon-foo{
+	//css
+}
+```
+
+#### options.defaultWidth
+Type: `String`
+Default value: `"400px"`
+
+a string that MUST be defined in px that will be the size of the PNG if there is no width given in the SVG element.
+
+#### options.defaultHeight
+Type: `String`
+Default value: `"300px"`
+
+similar to defaultWidth, but for height
+
+#### options.colors
+
+Allows you to predefine colors as variables that can be used in filename color configuration.
+
 
 #### Automating color variations
 
@@ -164,28 +230,23 @@ In the Save SVG dialog that opens up, there are lots of options. SVG has a ton o
 - Images: Embed
 - Don't check "Preserve Illustrator editing" to reduce file size
 
-## Changelog
 
-- Version 0.6.5: CSS Writing has been moved from Phantom to Node, in order to decrease base64 datauri sizes
-- Version 0.6.0: Grunticon now comes with PNG Crush. This will reduce the size of your SVGs
-- Version 0.5.0: Grunticon now comes with SVGO. This cleans up your SVGs, greatly reducing the size of your CSS file.
-- Version 0.4.1: Opera browsers prior to version 15 are given fallback PNG due to SVG scaling troubles.
-- Version 0.4.0: Automated filename-driven color variations were added, along with the `colors` option
-- Version 0.3.4: SVGs without width and height can be used
-- Version 0.3.2: Added PhantomJS as a Node dependency, easing installation
-- Version 0.3.1: Documentation updates
-- Version 0.3.0: Grunticon becomes a multitask - syntax change involved in gruntfile
-- Version 0.2.1: Custom selectors feature added
-- Version 0.2.0: Compatibility rewrite for Grunt 0.4x
-- Version 0.1.6: Switched from base64 encoding to escaping raw SVG text in data uris. Fixes to cssprefix setting. If fallback png data uri is > 32768 chars, link to ext png instead for IE issues.
+## Contributing
+In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
-
-## Copyright and licensing for the example SVG icons...
-
-The example SVG icons in the source folder are borrowed from a few places, with attribution noted below. 
-- [Unicorn icon by Andrew McKinley, The Noun Project](http://thenounproject.com/noun/unicorn/#icon-No3364)
-- [Bear icon by National Park Service](http://thenounproject.com/noun/bear/#icon-No499)
-- [Cat icon by  Marie Coons](http://thenounproject.com/noun/cat/#icon-No840)
-- All others are either from [this free set by Tehk Seven](http://www.tehkseven.net/blog/1/entry-1066-475-free-awesome-high-quality-icons-for-designers/) or drawn by @toddparker of Filament Group
-
+## Release History
+-- Version 1.0.0: Almost complete rewrite. Breaking out pieces of this
+project into other areas
+-- Version 0.6.5: CSS Writing has been moved from Phantom to Node, in order to decrease base64 datauri sizes
+-- Version 0.6.0: Grunticon now comes with PNG Crush. This will reduce the size of your SVGs
+-- Version 0.5.0: Grunticon now comes with SVGO. This cleans up your SVGs, greatly reducing the size of your CSS file.
+-- Version 0.4.1: Opera browsers prior to version 15 are given fallback PNG due to SVG scaling troubles.
+-- Version 0.4.0: Automated filename-driven color variations were added, along with the `colors` option
+-- Version 0.3.4: SVGs without width and height can be used
+-- Version 0.3.2: Added PhantomJS as a Node dependency, easing installation
+-- Version 0.3.1: Documentation updates
+-- Version 0.3.0: Grunticon becomes a multitask - syntax change involved in gruntfile
+-- Version 0.2.1: Custom selectors feature added
+-- Version 0.2.0: Compatibility rewrite for Grunt 0.4x
+-- Version 0.1.6: Switched from base64 encoding to escaping raw SVG text in data uris. Fixes to cssprefix setting. If fallback png data uri is > 32768 chars, link to ext png instead for IE issues.
 
