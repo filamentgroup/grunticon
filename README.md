@@ -235,18 +235,18 @@ In the Save SVG dialog that opens up, there are lots of options. SVG has a ton o
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
--- Version 1.0.0: Almost complete rewrite. Breaking out pieces of this
+* Version 1.0.0: Almost complete rewrite. Breaking out pieces of this
 project into other areas
--- Version 0.6.5: CSS Writing has been moved from Phantom to Node, in order to decrease base64 datauri sizes
--- Version 0.6.0: Grunticon now comes with PNG Crush. This will reduce the size of your SVGs
--- Version 0.5.0: Grunticon now comes with SVGO. This cleans up your SVGs, greatly reducing the size of your CSS file.
--- Version 0.4.1: Opera browsers prior to version 15 are given fallback PNG due to SVG scaling troubles.
--- Version 0.4.0: Automated filename-driven color variations were added, along with the `colors` option
--- Version 0.3.4: SVGs without width and height can be used
--- Version 0.3.2: Added PhantomJS as a Node dependency, easing installation
--- Version 0.3.1: Documentation updates
--- Version 0.3.0: Grunticon becomes a multitask - syntax change involved in gruntfile
--- Version 0.2.1: Custom selectors feature added
--- Version 0.2.0: Compatibility rewrite for Grunt 0.4x
--- Version 0.1.6: Switched from base64 encoding to escaping raw SVG text in data uris. Fixes to cssprefix setting. If fallback png data uri is > 32768 chars, link to ext png instead for IE issues.
+* Version 0.6.5: CSS Writing has been moved from Phantom to Node, in order to decrease base64 datauri sizes
+* Version 0.6.0: Grunticon now comes with PNG Crush. This will reduce the size of your SVGs
+* Version 0.5.0: Grunticon now comes with SVGO. This cleans up your SVGs, greatly reducing the size of your CSS file.
+* Version 0.4.1: Opera browsers prior to version 15 are given fallback PNG due to SVG scaling troubles.
+* Version 0.4.0: Automated filename-driven color variations were added, along with the `colors` option
+* Version 0.3.4: SVGs without width and height can be used
+* Version 0.3.2: Added PhantomJS as a Node dependency, easing installation
+* Version 0.3.1: Documentation updates
+* Version 0.3.0: Grunticon becomes a multitask - syntax change involved in gruntfile
+* Version 0.2.1: Custom selectors feature added
+* Version 0.2.0: Compatibility rewrite for Grunt 0.4x
+* Version 0.1.6: Switched from base64 encoding to escaping raw SVG text in data uris. Fixes to cssprefix setting. If fallback png data uri is > 32768 chars, link to ext png instead for IE issues.
 
