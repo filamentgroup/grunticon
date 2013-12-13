@@ -134,7 +134,7 @@ module.exports = function( grunt , undefined ) {
 
 			grunt.log.writeln( "Grunticon now creating Preview File" );
 			try {
-				helper.createPreview(config.src, config.dest, config.defaultWidth, config.defaultHeight, min, config.previewhtml);
+				helper.createPreview(config.src, config.dest, config.defaultWidth, config.defaultHeight, min, config.previewhtml, config.cssprefix);
 			} catch(er) {
 				grunt.fatal(er);
 			}
