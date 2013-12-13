@@ -269,6 +269,44 @@ grunticon: {
 }
 ```
 
+Custom Selectors now have a wildcard!
+
+Example:
+
+```
+grunticon: {
+	foo: {
+		files: [{
+			expand: true,
+			cwd: 'example/source',
+			src: ['*.svg', '*.png'],
+			dest: "example/output"
+		}],
+		options: {
+			customselectors: {
+				"*": [".icon-$1:before"]
+			}
+        }
+	}
+}
+```
+
+If you have a file named `bear.svg` and a file named `cat.svg`, it will produce these selectors:
+
+```
+.icon-bear:before,
+.icon-bear{
+//css
+}
+
+.icon-cat:before,
+.icon-cat{
+//css
+}
+
+```
+
+
 We've parted with SVGO, as keeping grunt-svgmin part of your build
 process is easy and they do a great job on that project over there.
 We've also parted with using PNGCrush for the time being. We're
