@@ -132,7 +132,7 @@ Default value: `"png/"`
 
 #### options.cssprefix
 Type: `String`
-Default value: `"icon-"`
+Default value: `".icon-"`
 
 a string to prefix all css classes with.
 

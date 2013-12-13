@@ -40,7 +40,7 @@ module.exports = function( grunt , undefined ) {
 			loadersnippet: "grunticon.loader.txt",
 			cssbasepath: path.sep,
 			customselectors: {},
-			cssprefix: "icon-",
+			cssprefix: ".icon-",
 			defaultWidth: "400px",
 			defaultHeight: "300px",
 			colors: {},
