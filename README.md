@@ -171,6 +171,27 @@ Default value: `"300px"`
 
 similar to defaultWidth, but for height
 
+#### options.template
+Type: `String`
+Default value: `""`
+
+Location of a handlebars template that will allow you to structure your
+CSS file the way that you choose. As more data becomes available via
+[directory-encoder](https://github.com/filamentgroup/directory-encoder),
+more options will be available for you to tap into during templating.
+
+
+Example of .hbs file contents:
+
+```
+{{#each customselectors}}{{this}},{{/each}}
+{{prefix}}{{name}} {
+	background-image: url('{{datauri}}');
+	background-repeat: no-repeat;
+}
+```
+
+
 #### options.colors
 
 Allows you to predefine colors as variables that can be used in filename color configuration.

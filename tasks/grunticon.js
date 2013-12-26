@@ -44,7 +44,8 @@ module.exports = function( grunt , undefined ) {
 			defaultWidth: "400px",
 			defaultHeight: "300px",
 			colors: {},
-			pngfolder: "png"
+			pngfolder: "png",
+			template: ""
 		});
 
 		// just a quick starting message
@@ -87,7 +88,7 @@ module.exports = function( grunt , undefined ) {
 		var o = {
 			pngfolder: pngfolder,
 			customselectors: config.customselectors,
-			template: path.resolve( path.join( config.src, "..", "default-css.hbs" ) ),
+			template: path.resolve( config.template ),
 			noencodepng: false,
 			prefix: config.cssprefix
 		};
@@ -95,7 +96,7 @@ module.exports = function( grunt , undefined ) {
 		var o2 = {
 			pngfolder: pngfolder,
 			customselectors: config.customselectors,
-			template: path.resolve( path.join( config.src, "..", "default-css.hbs" ) ),
+			template: path.resolve( config.template ),
 			noencodepng: true,
 			prefix: config.cssprefix
 		};

@@ -77,7 +77,9 @@ module.exports = function(grunt) {
 					customselectors: {
 						"cat" : ["#el-gato"],
 						"gummy-bears-2" : ["nav li a.deadly-bears:before"]
-					}
+					},
+
+					template: "example/default-css.hbs"
 
 				}
 			}
