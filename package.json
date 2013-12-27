@@ -1,7 +1,7 @@
 {
 	"name": "grunt-grunticon",
 	"description": "A mystical CSS icon solution",
-	"version": "1.0.0-alpha.9",
+	"version": "1.0.0-beta.0",
 	"homepage": "https://github.com/filamentgroup/grunticon",
 	"author": {
 		"name": "Scott Jehl",
@@ -34,7 +34,7 @@
 		"handlebars": "1.1.2",
 		"lodash":"2.4.0",
 		"grunt-svgmin": "0.3.0",
-		"directory-encoder": "0.3.7",
+		"directory-encoder": "0.4.0",
 		"directory-colorfy": "0.1.0",
 		"rsvp": "1.2.0",
 		"svg-to-png": "0.2.0"
