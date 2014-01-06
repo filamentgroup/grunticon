@@ -87,8 +87,7 @@ These can be set in your Gruntfile.js config file. Grunticon is a multitask, mak
 
 With these configuration properties set, you can add `grunticon` to your default tasks list. That'll look something like this:
 
-    grunt.registerTask('default', 'lint qunit concat min
-grunticon:myIcons');
+    grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify', 'grunticon:myIcons']);
 
 grunticon will now batch your icons whenever you run grunt.
 
