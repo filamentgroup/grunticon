@@ -1,7 +1,7 @@
 {
 	"name": "grunt-grunticon",
 	"description": "A mystical CSS icon solution",
-	"version": "1.0.0-beta.0",
+	"version": "1.0.0-beta.1",
 	"homepage": "https://github.com/filamentgroup/grunticon",
 	"author": {
 		"name": "Scott Jehl",
