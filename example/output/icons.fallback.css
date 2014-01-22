@@ -90,8 +90,8 @@
 
 
 
-.icon-bear.colors-primary-blue-aa0000 {
-	background-image: url('png/bear.colors-primary-blue-aa0000.png');
+.icon-bear-primary {
+	background-image: url('png/bear-primary.png');
 	background-repeat: no-repeat;
 }
 
@@ -174,8 +174,8 @@
 
 
 
-.icon-grunticontest.colors-primary-blue-aa0000 {
-	background-image: url('png/grunticontest.colors-primary-blue-aa0000.png');
+.icon-grunticontest-primary {
+	background-image: url('png/grunticontest-primary.png');
 	background-repeat: no-repeat;
 }
 

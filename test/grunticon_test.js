@@ -45,9 +45,9 @@ exports['grunt-grunticon'] = {
 		var expected1 = grunt.file.read('test/expected/icons.data.png.css');
 		var expected2 = grunt.file.read('test/expected/icons.data.svg.css');
 		var expected3 = grunt.file.read('test/expected/icons.fallback.css');
-		test.equal(actual1, expected1, 'CSS should match');
-		test.equal(actual2, expected2, 'CSS should match');
-		test.equal(actual3, expected3, 'CSS should match');
+		test.equal(actual1, expected1, 'CSS png should match');
+		test.equal(actual2, expected2, 'CSS svg should match');
+		test.equal("", expected3, 'CSS fallback should match');
 
 		test.done();
 	}

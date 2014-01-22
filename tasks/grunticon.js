@@ -103,22 +103,37 @@ module.exports = function( grunt , undefined ) {
 
 		grunt.log.writeln("Coloring SVG files");
 		var colorFiles;
+		var tmp = path.resolve( "tmp" );
+		grunt.file.mkdir( tmp );
 		try{
-			var dc = new DirectoryColorfy( config.src, config.src, config.colors );
+			var dc = new DirectoryColorfy( config.src, tmp, {
+				colors: config.colors
+			});
 			colorFiles = dc.convert();
 		} catch( e ){
 			grunt.fatal(e);
 			done( false );
 		}
 
+		//copy non color config files into temp directory
+		var transferFiles = this.files.filter( function( f ){
+			return !f.src[0].match( /\.colors/ );
+		});
+
+		transferFiles.forEach( function( f ){
+			var filenameArr = f.src[0].split( "/" ),
+				filename = filenameArr[filenameArr.length - 1];
+			grunt.file.copy( f.src[0], path.join( tmp, filename ) );
+		});
+
 		grunt.log.writeln("Converting SVG to PNG");
-		svgToPng.convert( config.src, config.dest, svgToPngOpts )
+		svgToPng.convert( tmp, config.dest, svgToPngOpts )
 		.then( function( result , err ){
 			if( err ){
 				grunt.fatal( err );
 			}
 
-			var svgde = new DirectoryEncoder( config.src, path.join( config.dest, config.datasvgcss ), o ),
+			var svgde = new DirectoryEncoder(tmp, path.join( config.dest, config.datasvgcss ), o ),
 				pngde = new DirectoryEncoder( path.join( config.dest, pngfolder ) , path.join( config.dest, config.datapngcss ), o ),
 				pngdefall = new DirectoryEncoder( path.join( config.dest, pngfolder ) , path.join( config.dest, config.urlpngcss ), o2 );
 
@@ -135,16 +150,14 @@ module.exports = function( grunt , undefined ) {
 
 			grunt.log.writeln( "Grunticon now creating Preview File" );
 			try {
-				helper.createPreview(config.src, config.dest, config.defaultWidth, config.defaultHeight, min, config.previewhtml, config.cssprefix);
+				helper.createPreview(tmp, config.dest, config.defaultWidth, config.defaultHeight, min, config.previewhtml, config.cssprefix);
 			} catch(er) {
 				grunt.fatal(er);
 			}
 
 
 			grunt.log.writeln( "Delete Temp Files" );
-			colorFiles.forEach( function( file ){
-				grunt.file.delete( file );
-			});
+			grunt.file.delete( tmp );
 			done();
 		});
 

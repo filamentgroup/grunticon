@@ -1,4 +1,3 @@
-
 .icon-Home_Media {
 	background-image: url('png/Home_Media.png');
 	background-repeat: no-repeat;
@@ -76,6 +75,7 @@
 
 
 
+
 .icon-bear-2 {
 	background-image: url('png/bear-2.png');
 	background-repeat: no-repeat;
@@ -85,13 +85,6 @@
 
 .icon-bear-blue {
 	background-image: url('png/bear-blue.png');
-	background-repeat: no-repeat;
-}
-
-
-
-.icon-bear.colors-primary-blue-aa0000 {
-	background-image: url('png/bear.colors-primary-blue-aa0000.png');
 	background-repeat: no-repeat;
 }
 
@@ -169,13 +162,6 @@
 
 .icon-grunticontest-blue {
 	background-image: url('png/grunticontest-blue.png');
-	background-repeat: no-repeat;
-}
-
-
-
-.icon-grunticontest.colors-primary-blue-aa0000 {
-	background-image: url('png/grunticontest.colors-primary-blue-aa0000.png');
 	background-repeat: no-repeat;
 }
 
