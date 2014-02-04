@@ -261,7 +261,7 @@ In the Save SVG dialog that opens up, there are lots of options. SVG has a ton o
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## What's Changed (in this Major Version)?
-With the release of 1.0.0-alpha, we have broken out the code to make it
+With the release of 1.0.0, we have broken out the code to make it
 easier to maintain so we can more quickly respond to bugs and new
 feature requests. There have also been some changes to the way the
 Gruntfile is set up, in that it now uses Grunt's file system.
@@ -342,6 +342,7 @@ currently looking for another solution (suggestions welcome).
 
 
 ## Release History
+* Version 1.0.0: Some alpha and beta bugs taken care of.
 * Version 1.0.0-alpha: Almost complete rewrite. Breaking out pieces of this
 project into other areas
 * Version 0.6.5: CSS Writing has been moved from Phantom to Node, in order to decrease base64 datauri sizes
