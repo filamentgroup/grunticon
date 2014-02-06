@@ -37,7 +37,7 @@ module.exports = function( grunt , undefined ) {
 				banner: path.join( __dirname, 'grunticon', 'static', 'grunticon.loader.banner.js')
 			},
 			previewhtml: "preview.html",
-			loadersnippet: "grunticon.loader.txt",
+			loadersnippet: "grunticon.loader.js",
 			cssbasepath: path.sep,
 			customselectors: {},
 			cssprefix: ".icon-",
