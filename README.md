@@ -170,9 +170,44 @@ Default value: `"300px"`
 
 similar to defaultWidth, but for height
 
+#### options.previewTemplate
+Type: `String`
+Default value: `""`
+
+Example of .hbs file contents:
+
+```
+<!doctype HTML>
+<html>
+  <head>
+    <title>Icons Preview!</title>
+    <style>
+      body {
+        background-image: linear-gradient(#eee 25%, transparent 25%, transparent), linear-gradient(#eee 25%, transparent 25%, transparent), linear-gradient(transparent 75%, #eee 75%), linear-gradient(transparent 75%, #eee 75%);
+        width: 100%;
+        background-size: 10px 10px;
+      }
+    </style>
+    <script>
+      {{{loaderText}}}
+      grunticon(["icons.data.svg.css", "icons.data.png.css", "icons.fallback.css"]);
+    </script>
+  <noscript><link href="icons.fallback.css" rel="stylesheet"></noscript>
+  </head>
+  <body>
+    {{#each icons}}
+      {{#with this}}
+      <pre><code>{{prefix}}{{name}}:</code></pre><div class="{{prefixClass}}{{name}}" style="width: {{width}}px; height: {{height}}px;" ></div><hr/>
+      {{/with}}
+    {{/each}}
+</body>
+</html>
+```
+
 #### options.template
 Type: `String`
 Default value: `""`
+
 
 Location of a handlebars template that will allow you to structure your
 CSS file the way that you choose. As more data becomes available via

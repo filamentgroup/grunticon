@@ -79,7 +79,8 @@ module.exports = function(grunt) {
 						"gummy-bears-2" : ["nav li a.deadly-bears:before"]
 					},
 
-					template: "example/default-css.hbs"
+					template: "example/default-css.hbs",
+					previewTemplate: "example/preview.hbs"
 
 				}
 			}
