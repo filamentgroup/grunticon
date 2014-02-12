@@ -45,7 +45,8 @@ module.exports = function( grunt , undefined ) {
 			defaultHeight: "300px",
 			colors: {},
 			pngfolder: "png",
-			template: ""
+			template: "",
+			previewTemplate: path.join( __dirname, "..", "example", "preview.hbs" )
 		});
 
 		// just a quick starting message
@@ -89,6 +90,7 @@ module.exports = function( grunt , undefined ) {
 			pngfolder: pngfolder,
 			customselectors: config.customselectors,
 			template: path.resolve( config.template ),
+			previewTemplate: path.resolve( config.previewTemplate ),
 			noencodepng: false,
 			prefix: config.cssprefix
 		};
@@ -97,6 +99,7 @@ module.exports = function( grunt , undefined ) {
 			pngfolder: pngfolder,
 			customselectors: config.customselectors,
 			template: path.resolve( config.template ),
+			previewTemplate: path.resolve( config.previewTemplate ),
 			noencodepng: true,
 			prefix: config.cssprefix
 		};
@@ -147,10 +150,9 @@ module.exports = function( grunt , undefined ) {
 				done( false );
 			}
 
-
 			grunt.log.writeln( "Grunticon now creating Preview File" );
 			try {
-				helper.createPreview(tmp, config.dest, config.defaultWidth, config.defaultHeight, min, config.previewhtml, config.cssprefix);
+				helper.createPreview(tmp, config.dest, config.defaultWidth, config.defaultHeight, min, config.previewhtml, config.cssprefix, config.previewTemplate);
 			} catch(er) {
 				grunt.fatal(er);
 			}
