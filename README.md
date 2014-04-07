@@ -117,6 +117,7 @@ Default value: `"preview.html"`
 
 The name of the generated HTML file containing PNG data uris.
 
+
 #### options.loadersnippet
 Type: `String`
 Default value: `"grunticon.loader.txt"`
@@ -172,9 +173,9 @@ similar to defaultWidth, but for height
 
 #### options.previewTemplate
 Type: `String`
-Default value: `""`
+Default value: Goes to the example/preview.hbs file
 
-Example of .hbs file contents:
+Takes a path to the template that will be used for the preview.html. Example of .hbs file contents:
 
 ```
 <!doctype HTML>
