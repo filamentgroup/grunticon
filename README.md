@@ -69,18 +69,18 @@ better fit the pattern set by Grunt for this.
 These can be set in your Gruntfile.js config file. Grunticon is a multitask, making it easy to create as many export batches as you'd like. Just create one or more custom named objects within the `grunticon` object, and configure Grunticon `options` within it, like so:
 
 ```
-	grunticon: {
-    myIcons: {
-			files: [{
-				expand: true,
-				cwd: 'example/source',
-				src: ['*.svg', '*.png'],
-				dest: "example/output"
-			}],
-  		options: {
-      }
-    }
+grunticon: {
+	myIcons: {
+		files: [{
+			expand: true,
+			cwd: 'example/source',
+			src: ['*.svg', '*.png'],
+			dest: "example/output"
+		}],
+		options: {
+		}
 	}
+}
 ```
 
 **IMPORTANT NOTE:** grunticon will overwrite any files in the `dest` directory if they are of the same name as a file that grunticon needs to create. For easiest results, you can set `dest` to a folder that does not yet exist in your directory and grunticon will create that folder, or set it to an existing folder and be sure to configure grunticon to create file names that do not already exist in that folder.
@@ -153,7 +153,7 @@ will produce:
 ```
 .icon-bar,
 .bar,
-.icon-foo{
+.icon-foo {
 	//css
 }
 ```
