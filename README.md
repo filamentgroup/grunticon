@@ -130,6 +130,29 @@ Default value: `"png/"`
 
  The name of the generated folder containing the generated PNG images.
 
+#### options.pngpath
+Type: `String`
+Default value: value of `options.pngfolder`
+
+Allows you to specify a custom URL to serve fallback PNGs at.
+
+Example:
+
+```
+{
+    pngpath: "/assets/icons/png"
+}
+```
+
+Will generate PNG fallbacks like:
+
+```
+.icon-bar {
+	background-image: url('/assets/icons/png/bar.png');
+	background-repeat: no-repeat;
+}
+```
+
 #### options.cssprefix
 Type: `String`
 Default value: `".icon-"`

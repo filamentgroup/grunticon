@@ -45,6 +45,7 @@ module.exports = function( grunt , undefined ) {
 			defaultHeight: "300px",
 			colors: {},
 			pngfolder: "png",
+			pngpath: "",
 			template: "",
 			previewTemplate: path.join( __dirname, "..", "example", "preview.hbs" )
 		});
@@ -97,6 +98,7 @@ module.exports = function( grunt , undefined ) {
 
 		var o2 = {
 			pngfolder: pngfolder,
+			pngpath: config.pngpath,
 			customselectors: config.customselectors,
 			template: path.resolve( config.template ),
 			previewTemplate: path.resolve( config.previewTemplate ),
