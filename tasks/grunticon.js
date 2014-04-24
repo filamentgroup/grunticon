@@ -14,6 +14,7 @@ module.exports = function( grunt , undefined ) {
 	"use strict";
 
 	var path = require( 'path' );
+	var os = require( 'os' );
 
 	var uglify = require( 'uglify-js' );
 	var RSVP = require( 'rsvp' );
@@ -49,6 +50,8 @@ module.exports = function( grunt , undefined ) {
 			template: "",
 			previewTemplate: path.join( __dirname, "..", "example", "preview.hbs" )
 		});
+
+		var tmpFolderName = "grunticon-tmp";
 
 		// just a quick starting message
 		grunt.log.writeln( "Look, it's a grunticon!" );
@@ -108,7 +111,7 @@ module.exports = function( grunt , undefined ) {
 
 		grunt.log.writeln("Coloring SVG files");
 		var colorFiles;
-		var tmp = path.resolve( "tmp" );
+		var tmp = path.join( os.tmpDir(), tmpFolderName );
 		grunt.file.mkdir( tmp );
 		try{
 			var dc = new DirectoryColorfy( config.src, tmp, {
@@ -159,9 +162,6 @@ module.exports = function( grunt , undefined ) {
 				grunt.fatal(er);
 			}
 
-
-			grunt.log.writeln( "Delete Temp Files" );
-			grunt.file.delete( tmp );
 			done();
 		});
 
