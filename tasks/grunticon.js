@@ -16,6 +16,7 @@ module.exports = function( grunt , undefined ) {
 	var path = require( 'path' );
 	var os = require( 'os' );
 
+	var fs = require( 'fs-extra' );
 	var uglify = require( 'uglify-js' );
 	var RSVP = require( 'rsvp' );
 
@@ -162,6 +163,8 @@ module.exports = function( grunt , undefined ) {
 				grunt.fatal(er);
 			}
 
+			grunt.log.writeln( "Delete Temp Files" );
+			fs.removeSync( tmp );
 			done();
 		});
 

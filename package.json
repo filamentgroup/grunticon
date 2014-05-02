@@ -37,7 +37,8 @@
 		"directory-encoder": "0.5.0",
 		"directory-colorfy": "0.3.0",
 		"rsvp": "1.2.0",
-		"svg-to-png": "0.2.0"
+		"svg-to-png": "0.2.0",
+		"fx-extra": "0.8.1"
 	},
 	"devDependencies": {
 		"grunt-cli": "~0.1",
