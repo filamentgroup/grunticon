@@ -34,14 +34,6 @@ You can see [a demonstration of the output here](http://filamentgroup.github.com
 
 If you're interested in trying out Grumpicon, you might be interested in this handy guide as well: [Grumpicon Workflow](http://filamentgroup.com/lab/grumpicon_workflow/)
 
-## Also before you get started!
-
-Have you seen [svgo-gui](https://github.com/svg/svgo-gui) or [grunt-svgmin](https://github.com/sindresorhus/grunt-svgmin)?
-
-SVG files don't have to be anywhere NEAR the size they are when they come out of a tool like illustrator. Love your users, use tools like this.
-
-We use it in our workflow and there is an example in the grunticon example.
-
 ## Getting Started
 This plugin requires Grunt `~0.4.2`
 
