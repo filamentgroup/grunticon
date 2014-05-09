@@ -38,13 +38,6 @@ module.exports = function(grunt) {
 				}],
 				options: {
 
-					// optional grunticon config properties
-					// SVGO compression, false is the default, true will make it so
-					svgo: true,
-
-					// PNG compression, false is the default, true will make it so
-					pngcrush: false,
-
 					// CSS filenames
 					datasvgcss: "icons.data.svg.css",
 					datapngcss: "icons.data.png.css",

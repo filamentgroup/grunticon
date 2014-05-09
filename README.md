@@ -257,7 +257,7 @@ Allows you to predefine colors as variables that can be used in filename color c
 
 #### Automating color variations
 
-Grunticon allows you to output any icon in different colors simply by changing its filename to the following syntax: `myfilename.colors-red-aa0000-gray.svg`. In this example, any color names or hexidecimal values that follow `colors-` and are separated by a dash will be used to generate additional icons of that color. By default, each icon will be assigned a numbered class name for CSS use. You can improve the class naming conventions by defining color variables in your gruntfile's `colors` option shown above. When defined, you can reference a color variable in place of a color in your file names, and the generated classes will use that variable name as well. See the `gruntfile.js`'s `colors` option and the sample bear svg for an example of color automation.
+Grunticon allows you to output any icon in different colors simply by changing its filename to the following syntax: `myfilename.colors-red-aa0000-gray.svg`. In this example, any color names or hexidecimal values that follow `colors-` and are separated by a dash will be used to generate additional icons of that color. By default, each icon will be assigned a numbered class name for CSS use. You can improve the class naming conventions by defining color variables in your Gruntfile's `colors` option shown above. When defined, you can reference a color variable in place of a color in your file names, and the generated classes will use that variable name as well. See the `Gruntfile.js`'s `colors` option and the sample bear svg for an example of color automation.
 
 *A note on filesize impact:* Adding color variations of an icon involves creating duplicates of that icon's SVG source in the CSS, so unfortunately, each color variation will cause an increase in filesize. However, transferring CSS with gzip compression can negate much of this filesize increase, and we highly recommend always transferring with gzip. In testing, we found that creating a color variation of every icon in our example set increased overall size by 25%, rather than 100% as a raw text duplicate would increase. That said, size increases for non-SVG-supporting browsers will be more dramatic, as the fallback PNGs will not have the heavy transfer compression as SVG enjoys. We advise using this feature on a case-by-case basis to ensure overhead is kept to a minimum.
 
@@ -295,6 +295,47 @@ View the full support spreadsheet [here](https://docs.google.com/spreadsheet/ccc
 The test page can be found [here](http://filamentgroup.com/examples/grunticon-icon-test/).
 
 ## Tips
+
+### Cleaning the cruft out of your SVGs
+
+In earlier versions of Grunticon, we included SVGO to optimize the SVG output. In the 1.0 
+version, we removed this dependency to ease the installation complexity but still recommend
+that SVG optimization is part of the Grunticon workflow.
+
+When producing SVGs through a tool like Illustrator, there is a lot of
+unnecessary markup, comments, and general code written into your SVG
+files. Because of that, we strongly recommend using a tool like [grunt-svgmin](https://github.com/sindresorhus/grunt-svgmin).
+If run before running Grunticon, it can greatly reduce your filesizes!
+
+Here's an example:
+
+```
+svgmin: {
+	dist: {
+		files: [{
+			expand: true,
+			cwd: 'example/svgs',
+			src: ['*.svg'],
+			dest: 'example/source'
+		}]
+	}
+},
+grunticon: {
+	foo: {
+		files: [{
+			expand: true,
+			cwd: 'example/source',
+			src: ['*.svg', '*.png'],
+			dest: "example/output"
+		}],
+		options: {
+    }
+  }
+}
+```
+
+For a more extensive example, check out our Gruntfile and example
+project.
 
 ### Serving compressed CSS
 One of the great benefits to data uris is the ability to compress the images heavily via gzip compression. Be sure to enable gzip of CSS on your server, as it'll cut your icon transfer size greatly.
@@ -401,9 +442,13 @@ currently looking for another solution (suggestions welcome).
 
 
 ## Release History
+* Version 1.2.0: Update directory-encoder version, this allows the
+  `pngpath` option
+* Version 1.1.0: Add `previewTemplate` option
 * Version 1.0.0: Some alpha and beta bugs taken care of.
 * Version 1.0.0-alpha: Almost complete rewrite. Breaking out pieces of this
-project into other areas
+project into other areas. Removed SVGO and PNGCrush. SVGO is better
+served through the svgmin plugin.
 * Version 0.6.5: CSS Writing has been moved from Phantom to Node, in order to decrease base64 datauri sizes
 * Version 0.6.0: Grunticon now comes with PNG Crush. This will reduce the size of your SVGs
 * Version 0.5.0: Grunticon now comes with SVGO. This cleans up your SVGs, greatly reducing the size of your CSS file.
@@ -412,7 +457,7 @@ project into other areas
 * Version 0.3.4: SVGs without width and height can be used
 * Version 0.3.2: Added PhantomJS as a Node dependency, easing installation
 * Version 0.3.1: Documentation updates
-* Version 0.3.0: Grunticon becomes a multitask - syntax change involved in gruntfile
+* Version 0.3.0: Grunticon becomes a multitask - syntax change involved in Gruntfile
 * Version 0.2.1: Custom selectors feature added
 * Version 0.2.0: Compatibility rewrite for Grunt 0.4x
 * Version 0.1.6: Switched from base64 encoding to escaping raw SVG text in data uris. Fixes to cssprefix setting. If fallback png data uri is > 32768 chars, link to ext png instead for IE issues.
