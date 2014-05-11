@@ -49,10 +49,9 @@ module.exports = function( grunt , undefined ) {
 			pngfolder: "png",
 			pngpath: "",
 			template: "",
+      tmpFolder: "grunticon-tmp",
 			previewTemplate: path.join( __dirname, "..", "example", "preview.hbs" )
 		});
-
-		var tmpFolderName = "grunticon-tmp";
 
 		// just a quick starting message
 		grunt.log.writeln( "Look, it's a grunticon!" );
@@ -113,7 +112,7 @@ module.exports = function( grunt , undefined ) {
 
 		grunt.log.writeln("Coloring SVG files");
 		var colorFiles;
-		var tmp = path.join( os.tmpDir(), tmpFolderName );
+		var tmp = path.join( os.tmpDir(), config.tmpFolder );
 		grunt.file.mkdir( tmp );
 		try{
 			var dc = new DirectoryColorfy( config.src, tmp, {
