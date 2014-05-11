@@ -155,7 +155,7 @@ a string to prefix all css classes with.
 #### options.customselectors
 Type: `Object`
 
-Allows you to specify custom selectors (in addition to the generated `cssprefix + filename - extension` class) for individual files. 
+Allows you to specify custom selectors (in addition to the generated `cssprefix + filename - extension` class) for individual files.
 
 Example:
 
@@ -266,6 +266,12 @@ Takes a path to the template that will be used for the preview.html. Example of 
 Type: `String`
 Default value: `""`
 
+#### options.tmpDir
+Type: `String`
+Default value: `"grunticon-tmp"`
+
+Let's you specify a tmp-folder. Useful when having multiple grunticon tasks and using [grunt-concurrent](https://github.com/sindresorhus/grunt-concurrent "grunt-concurrent on github").
+
 
 Location of a handlebars template that will allow you to structure your
 CSS file the way that you choose. As more data becomes available via
@@ -304,7 +310,7 @@ Browsers that render the SVG data url stylesheet:
 - Chrome 14+ (maybe older too?)
 - Safari 4+ (maybe older too?)
 - Firefox 3.6+ (maybe older too?)
-- Opera 15+ 
+- Opera 15+
 - iOS 3+ Safari and Chrome
 - Android 4.0 Chrome (caveat: SVG icons do not scale in vector, but do appear to draw in high-resolution)
 - Android 4.0 ICS Browser
@@ -332,7 +338,7 @@ The test page can be found [here](http://filamentgroup.com/examples/grunticon-ic
 
 ### Cleaning the cruft out of your SVGs
 
-In earlier versions of Grunticon, we included SVGO to optimize the SVG output. In the 1.0 
+In earlier versions of Grunticon, we included SVGO to optimize the SVG output. In the 1.0
 version, we removed this dependency to ease the installation complexity but still recommend
 that SVG optimization is part of the Grunticon workflow.
 
@@ -376,13 +382,13 @@ One of the great benefits to data uris is the ability to compress the images hea
 
 ### Creating SVG Artwork
 
-The workflow we've been using so far involves creating a new Illustrator file with the artboard set to the desired size of the icon you want set in the CSS. 
+The workflow we've been using so far involves creating a new Illustrator file with the artboard set to the desired size of the icon you want set in the CSS.
 
 Export the artwork by choosing File > Save as...  In the dialog, choose "SVG" as the format and enter a name for the file (this wil be used as your class name later, so keep it free of any disallowed CSS class characters like `.`, `{`, `(`, `)`, etc.
 
-In the Save SVG dialog that opens up, there are lots of options. SVG has a ton of formats, so here are a few tips we've learned. 
+In the Save SVG dialog that opens up, there are lots of options. SVG has a ton of formats, so here are a few tips we've learned.
 
-- SVG Profile: Seems like SVG 1.1 Tiny is really well supported across even older mobile platforms so if you have simple artwork that doesn't use gradients or opacity this will yield a smaller and more compatible graphic. If you want to use all the fancy effects, save artwork as SVG 1.1. 
+- SVG Profile: Seems like SVG 1.1 Tiny is really well supported across even older mobile platforms so if you have simple artwork that doesn't use gradients or opacity this will yield a smaller and more compatible graphic. If you want to use all the fancy effects, save artwork as SVG 1.1.
 - Type: Convert to outline before export.
 - Subsetting: None, I usually convert all text to outlines ahead of time
 - Images: Embed
