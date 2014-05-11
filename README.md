@@ -220,16 +220,15 @@ Takes a path to the template that will be used for the preview.html. Example of 
 </html>
 ```
 
-#### options.template
-Type: `String`
-Default value: `""`
-
 #### options.tmpDir
 Type: `String`
 Default value: `"grunticon-tmp"`
 
 Let's you specify a tmp-folder. Useful when having multiple grunticon tasks and using [grunt-concurrent](https://github.com/sindresorhus/grunt-concurrent "grunt-concurrent on github").
 
+#### options.template
+Type: `String`
+Default value: `""`
 
 Location of a handlebars template that will allow you to structure your
 CSS file the way that you choose. As more data becomes available via
