@@ -174,6 +174,47 @@ will produce:
 }
 ```
 
+You can also use an asterisk in your custom selector!
+
+Examples:
+
+```
+customselectors: {
+  "*": [".icon-$1:before", ".icon-$1-what", ".hey-$1"]
+},
+prefix: ".icon-"
+```
+
+Should give the file bear.svg the css
+```
+.icon-bear:before,
+.icon-bear-what,
+.hey-bear,
+.icon-bear {
+ // CSS THINGS
+}
+```
+
+And if there are files bear.svg and cat.svg, the css should be like:
+
+```
+.icon-bear:before,
+.icon-bear-what,
+.hey-bear,
+.icon-bear {
+ // CSS THINGS
+}
+
+.icon-cat:before,
+.icon-cat-what,
+.hey-cat,
+.icon-cat {
+ // CSS THINGS
+}
+```
+
+This should give you more flexibility with your selectors.
+
 #### options.defaultWidth
 Type: `String`
 Default value: `"400px"`
