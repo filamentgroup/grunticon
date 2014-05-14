@@ -63,6 +63,7 @@ module.exports = function( grunt , undefined ) {
 		if( files.length === 0 ){
 			grunt.log.writeln( "Grunticon has no files to read!" );
 			done();
+			return;
 		}
 
 		files = files.map( function( file ){
