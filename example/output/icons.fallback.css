@@ -237,6 +237,34 @@ nav li a.deadly-bears:before,
 
 
 
+.icon-sketch-example-blue {
+	background-image: url('png/sketch-example-blue.png');
+	background-repeat: no-repeat;
+}
+
+
+
+.icon-sketch-example-primary {
+	background-image: url('png/sketch-example-primary.png');
+	background-repeat: no-repeat;
+}
+
+
+
+.icon-sketch-example-red {
+	background-image: url('png/sketch-example-red.png');
+	background-repeat: no-repeat;
+}
+
+
+
+.icon-sketch-example {
+	background-image: url('png/sketch-example.png');
+	background-repeat: no-repeat;
+}
+
+
+
 .icon-star {
 	background-image: url('png/star.png');
 	background-repeat: no-repeat;
