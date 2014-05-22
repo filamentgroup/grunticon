@@ -1,5 +1,4 @@
-# Grunticon
-[![Build Status](https://travis-ci.org/filamentgroup/grunticon.png?branch=master)](https://travis-ci.org/filamentgroup/grunticon)
+# Grunticon [![Build Status](https://travis-ci.org/filamentgroup/grunticon.png?branch=master)](https://travis-ci.org/filamentgroup/grunticon)
 
 ```
          /'
@@ -13,6 +12,8 @@
   /    \'-'
 
 ```
+
+[![Filament Group](http://filamentgroup.com/images/fg-logo-positive-sm-crop.png) ](http://www.filamentgroup.com/)
 
 ### A mystical CSS icon solution
 
