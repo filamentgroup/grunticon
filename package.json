@@ -37,7 +37,7 @@
 		"directory-encoder": "0.5.0",
 		"directory-colorfy": "0.4.1",
 		"rsvp": "1.2.0",
-		"svg-to-png": "0.3.0",
+		"svg-to-png": "0.4.0",
 		"fs-extra": "0.8.1"
 	},
 	"devDependencies": {
