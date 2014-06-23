@@ -37,7 +37,7 @@ module.exports = function(grunt) {
 					dest: "example/output"
 				}],
 				options: {
-
+          tmpDir: "grunticon-tmp",
 					// CSS filenames
 					datasvgcss: "icons.data.svg.css",
 					datapngcss: "icons.data.png.css",
@@ -108,4 +108,3 @@ module.exports = function(grunt) {
 	grunt.registerTask('default', ['travis']);
 
 };
-

@@ -49,10 +49,9 @@ module.exports = function( grunt , undefined ) {
 			pngfolder: "png",
 			pngpath: "",
 			template: "",
+      tmpDir: "grunticon-tmp",
 			previewTemplate: path.join( __dirname, "..", "example", "preview.hbs" )
 		});
-
-		var tmpFolderName = "grunticon-tmp";
 
 		// just a quick starting message
 		grunt.log.writeln( "Look, it's a grunticon!" );
@@ -113,7 +112,7 @@ module.exports = function( grunt , undefined ) {
 
 		grunt.log.writeln("Coloring SVG files");
 		var colorFiles;
-		var tmp = path.join( os.tmpDir(), tmpFolderName );
+		var tmp = path.join( os.tmpDir(), config.tmpDir );
 		grunt.file.mkdir( tmp );
 		try{
 			var dc = new DirectoryColorfy( config.src, tmp, {
@@ -133,7 +132,18 @@ module.exports = function( grunt , undefined ) {
 		transferFiles.forEach( function( f ){
 			var filenameArr = f.src[0].split( "/" ),
 				filename = filenameArr[filenameArr.length - 1];
-			grunt.file.copy( f.src[0], path.join( tmp, filename ) );
+
+      var fileBuffer = grunt.file.read(f.src[0]);
+
+      if(fileBuffer.indexOf('<path fill="none" d="z"/>') > -1){
+
+        var cleanFile = fileBuffer.replace(/<path fill="none" d="z"\/>/g, "");
+        grunt.file.write(f.src[0], cleanFile);
+
+      }
+
+      grunt.file.copy( f.src[0], path.join( tmp, filename ) );
+
 		});
 
 		grunt.log.writeln("Converting SVG to PNG");

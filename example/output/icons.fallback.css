@@ -202,6 +202,13 @@ nav li a.deadly-bears:before,
 
 
 
+.icon-icon-relocate-hover {
+	background-image: url('png/icon-relocate-hover.png');
+	background-repeat: no-repeat;
+}
+
+
+
 .icon-map {
 	background-image: url('png/map.png');
 	background-repeat: no-repeat;
