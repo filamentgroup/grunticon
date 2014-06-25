@@ -49,7 +49,7 @@ module.exports = function( grunt , undefined ) {
 			pngfolder: "png",
 			pngpath: "",
 			template: "",
-      tmpDir: "grunticon-tmp",
+			tmpDir: "grunticon-tmp",
 			previewTemplate: path.join( __dirname, "..", "example", "preview.hbs" )
 		});
 
