@@ -111,9 +111,13 @@ module.exports = function( grunt , undefined ) {
 		};
 
 		grunt.log.writeln("Coloring SVG files");
-		var colorFiles;
+		// create the tmp directory
 		var tmp = path.join( os.tmpDir(), config.tmpDir );
+		if( grunt.file.exists( tmp ) ){
+			fs.removeSync( tmp );
+		}
 		grunt.file.mkdir( tmp );
+		var colorFiles;
 		try{
 			var dc = new DirectoryColorfy( config.src, tmp, {
 				colors: config.colors
