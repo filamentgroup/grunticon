@@ -72,6 +72,10 @@ module.exports = function( grunt , undefined ) {
 		config.src = this.files[0].orig.cwd;
 		config.dest = this.files[0].orig.dest;
 
+		if( !config.dest || config.dest && config.dest === "" ){
+			grunt.fatal("The destination must be a directory");
+		}
+
 		// folder name (within the output folder) for generated png files
 		var pngfolder = path.join.apply( null, config.pngfolder.split( path.sep ) );
 
