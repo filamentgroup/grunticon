@@ -85,8 +85,8 @@ module.exports = function( grunt , undefined ) {
 		// minify the source of the grunticon loader and write that to the output
 		grunt.log.writeln( "grunticon now minifying the stylesheet loader source." );
 		var banner = grunt.file.read( config.files.banner );
-		var min = banner + "\n" + uglify.minify( config.files.loader ).code;
-		grunt.file.write( path.join( config.dest, config.loadersnippet ), min );
+		config.min = banner + "\n" + uglify.minify( config.files.loader ).code;
+		grunt.file.write( path.join( config.dest, config.loadersnippet ), config.min );
 		grunt.log.writeln( "grunticon loader file created." );
 
 		var svgToPngOpts = {
@@ -166,7 +166,7 @@ module.exports = function( grunt , undefined ) {
 
 			grunt.log.writeln( "Grunticon now creating Preview File" );
 			try {
-				helper.createPreview(tmp, config.dest, config.defaultWidth, config.defaultHeight, min, config.previewhtml, config.cssprefix, config.previewTemplate);
+				helper.createPreview( tmp, config );
 			} catch(er) {
 				grunt.fatal(er);
 			}

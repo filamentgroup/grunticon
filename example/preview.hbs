@@ -11,9 +11,11 @@
 		</style>
 		<script>
 			{{{loaderText}}}
-			grunticon(["icons.data.svg.css", "icons.data.png.css", "icons.fallback.css"]);
+{{#with cssFiles}}
+			grunticon(["{{svg}}", "{{png}}", "{{fallback}}"]);
 		</script>
-	<noscript><link href="icons.fallback.css" rel="stylesheet"></noscript>
+		<noscript><link href="{{fallback}}" rel="stylesheet"></noscript>
+{{/with}}
 	</head>
 	<body>
 		{{#each icons}}
