@@ -46,6 +46,7 @@ module.exports = function( grunt , undefined ) {
 			defaultWidth: "400px",
 			defaultHeight: "300px",
 			colors: {},
+			createpng: true,
 			pngfolder: "png",
 			pngpath: "",
 			template: "",
@@ -143,9 +144,16 @@ module.exports = function( grunt , undefined ) {
 			grunt.file.copy( f.src[0], path.join( tmp, filename ) );
 		});
 
-		grunt.log.writeln("Converting SVG to PNG");
-		svgToPng.convert( tmp, config.dest, svgToPngOpts )
-		.then( function( result , err ){
+		if (config.createpng) {
+			grunt.log.writeln("Converting SVG to PNG");
+			svgToPng.convert( tmp, config.dest, svgToPngOpts )
+			.then( finishAndCleanUp ) ;
+		}
+		else {
+			finishAndCleanUp() ;
+		}
+		
+		function finishAndCleanUp( result , err ) {
 			if( err ){
 				grunt.fatal( err );
 			}
@@ -157,8 +165,10 @@ module.exports = function( grunt , undefined ) {
 			grunt.log.writeln("Writing CSS");
 			try {
 				svgde.encode();
-				pngde.encode();
-				pngdefall.encode();
+				if (config.createpng) {
+					pngde.encode();
+					pngdefall.encode();
+				}
 			} catch( e ){
 				grunt.fatal( e );
 				done( false );
@@ -174,7 +184,7 @@ module.exports = function( grunt , undefined ) {
 			grunt.log.writeln( "Delete Temp Files" );
 			fs.removeSync( tmp );
 			done();
-		});
+		} ;
 
 	});
 };

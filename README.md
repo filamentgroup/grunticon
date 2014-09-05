@@ -117,6 +117,12 @@ Default value: `"grunticon.loader.txt"`
 
  The name of the generated text file containing the grunticon loading snippet.
 
+#### options.createpng
+Type: `Boolean`
+Default value: `true`
+
+Setting this option to `false` will omit conversion of SVG files to PNG as well as the generation of the corresponding CSS files (datapngcss, urlpngcss).
+
 #### options.pngfolder
 Type: `String`
 Default value: `"png/"`
