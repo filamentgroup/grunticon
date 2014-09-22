@@ -489,7 +489,7 @@ currently looking for another solution (suggestions welcome).
 project into other areas. Removed SVGO and PNGCrush. SVGO is better
 served through the svgmin plugin.
 * Version 0.6.5: CSS Writing has been moved from Phantom to Node, in order to decrease base64 datauri sizes
-* Version 0.6.0: Grunticon now comes with PNG Crush. This will reduce the size of your SVGs
+* Version 0.6.0: Grunticon now comes with PNG Crush. This will reduce the size of your PNGs
 * Version 0.5.0: Grunticon now comes with SVGO. This cleans up your SVGs, greatly reducing the size of your CSS file.
 * Version 0.4.1: Opera browsers prior to version 15 are given fallback PNG due to SVG scaling troubles.
 * Version 0.4.0: Automated filename-driven color variations were added, along with the `colors` option
