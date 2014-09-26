@@ -183,7 +183,7 @@ Examples:
 customselectors: {
   "*": [".icon-$1:before", ".icon-$1-what", ".hey-$1"]
 },
-prefix: ".icon-"
+cssprefix: ".icon-"
 ```
 
 Should give the file bear.svg the css
