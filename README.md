@@ -292,6 +292,13 @@ Example of .hbs file contents:
 #### options.colors
 
 Allows you to predefine colors as variables that can be used in filename color configuration.
+```
+options: {
+	colors: {
+		myAwesomeRed: "#fc3d39",
+		coolBlue: "#6950ff"
+	}
+```
 
 
 #### Automating color variations
