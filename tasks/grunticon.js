@@ -46,6 +46,7 @@ module.exports = function( grunt , undefined ) {
 			defaultWidth: "400px",
 			defaultHeight: "300px",
 			colors: {},
+			dynamicColorOnly: false,
 			pngfolder: "png",
 			pngpath: "",
 			template: "",
@@ -124,7 +125,8 @@ module.exports = function( grunt , undefined ) {
 		var colorFiles;
 		try{
 			var dc = new DirectoryColorfy( config.src, tmp, {
-				colors: config.colors
+				colors: config.colors,
+				dynamicColorOnly: config.dynamicColorOnly
 			});
 			colorFiles = dc.convert();
 		} catch( e ){
