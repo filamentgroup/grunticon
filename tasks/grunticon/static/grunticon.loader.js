@@ -6,7 +6,7 @@ window.grunticon = function( css, foo ){
 
 	// Thanks Modernizr & Erik Dahlstrom
 	var w = window,
-		svg = !!w.document.createElementNS && !!w.document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect && !!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image", "1.1") && !(window.opera && navigator.userAgent.indexOf('Chrome') === -1),
+		svg = !!w.document.createElementNS && !!w.document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect && !!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image", "1.1") && !(window.opera && navigator.userAgent.indexOf('Chrome') === -1) && navigator.userAgent.indexOf('Series40') === -1,
 		/*! loadCSS: borrowed from https://github.com/filamentgroup/loadCSS */
 		loadCSS = function( data ){
 			var link = w.document.createElement( "link" ),
