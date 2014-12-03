@@ -264,6 +264,12 @@ Takes a path to the template that will be used for the preview.html. Example of 
 
 #### options.tmpDir
 Type: `String`
+Default value: `os.tmpDir()`
+
+Let's you specify a tmp-path.
+
+#### options.tmpDir
+Type: `String`
 Default value: `"grunticon-tmp"`
 
 Let's you specify a tmp-folder. Useful when having multiple grunticon tasks and using [grunt-concurrent](https://github.com/sindresorhus/grunt-concurrent "grunt-concurrent on github").

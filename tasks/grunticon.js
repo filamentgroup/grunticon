@@ -50,6 +50,7 @@ module.exports = function( grunt , undefined ) {
 			pngfolder: "png",
 			pngpath: "",
 			template: "",
+			tmpPath: os.tmpDir(),
 			tmpDir: "grunticon-tmp",
 			previewTemplate: path.join( __dirname, "..", "example", "preview.hbs" )
 		});
@@ -117,7 +118,7 @@ module.exports = function( grunt , undefined ) {
 
 		grunt.log.writeln("Coloring SVG files");
 		// create the tmp directory
-		var tmp = path.join( os.tmpDir(), config.tmpDir );
+		var tmp = path.join( config.tmpPath, config.tmpDir );
 		if( grunt.file.exists( tmp ) ){
 			fs.removeSync( tmp );
 		}
