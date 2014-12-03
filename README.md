@@ -262,11 +262,11 @@ Takes a path to the template that will be used for the preview.html. Example of 
 </html>
 ```
 
-#### options.tmpDir
+#### options.tmpPath
 Type: `String`
 Default value: `os.tmpDir()`
 
-Let's you specify a tmp-path.
+Let's you specify an absolute tmp-path (`options.tmpDir` will still be appended).
 
 #### options.tmpDir
 Type: `String`
