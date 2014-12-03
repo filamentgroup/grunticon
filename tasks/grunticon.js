@@ -98,6 +98,7 @@ module.exports = function( grunt , undefined ) {
 
 		var o = {
 			pngfolder: pngfolder,
+			pngpath: config.pngpath,
 			customselectors: config.customselectors,
 			template: path.resolve( config.template ),
 			previewTemplate: path.resolve( config.previewTemplate ),
