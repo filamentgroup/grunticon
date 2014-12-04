@@ -521,6 +521,7 @@ currently looking for another solution (suggestions welcome).
 
 
 ## Release History
+* Version 1.4.0: Add `tmpPath` option
 * Version 1.3.0: Add `dynamicColorOnly` support from directory-colorfy
 * Version 1.2.0: Update directory-encoder version, this allows the
   `pngpath` option
