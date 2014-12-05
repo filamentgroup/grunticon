@@ -107,15 +107,8 @@ module.exports = function( grunt , undefined ) {
 			prefix: config.cssprefix
 		};
 
-		var o2 = {
-			pngfolder: pngfolder,
-			pngpath: config.pngpath,
-			customselectors: config.customselectors,
-			template: path.resolve( config.template ),
-			previewTemplate: path.resolve( config.previewTemplate ),
-			noencodepng: true,
-			prefix: config.cssprefix
-		};
+		var o2 = JSON.parse(JSON.stringify(o)); /* clone object */
+		o2.noencodepng = true;
 
 		grunt.log.writeln("Coloring SVG files");
 		// create the tmp directory
