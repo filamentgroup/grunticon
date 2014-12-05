@@ -82,13 +82,13 @@ module.exports = function( grunt , undefined ) {
 		var pngfolder = path.join.apply( null, config.pngfolder.split( path.sep ) );
 
 		// create the output directory
-		grunt.file.mkdir( config.dest );
+		fs.mkdirpSync( config.dest );
 
 		// minify the source of the grunticon loader and write that to the output
 		grunt.log.writeln( "grunticon now minifying the stylesheet loader source." );
-		var banner = grunt.file.read( config.files.banner );
+		var banner = fs.readFileSync( config.files.banner );
 		config.min = banner + "\n" + uglify.minify( config.files.loader ).code;
-		grunt.file.write( path.join( config.dest, config.loadersnippet ), config.min );
+		fs.writeFileSync( path.join( config.dest, config.loadersnippet ), config.min );
 		grunt.log.writeln( "grunticon loader file created." );
 
 		var svgToPngOpts = {
@@ -120,10 +120,10 @@ module.exports = function( grunt , undefined ) {
 		grunt.log.writeln("Coloring SVG files");
 		// create the tmp directory
 		var tmp = path.join( config.tmpPath, config.tmpDir );
-		if( grunt.file.exists( tmp ) ){
+		if( fs.existsSync( tmp ) ){
 			fs.removeSync( tmp );
 		}
-		grunt.file.mkdir( tmp );
+		fs.mkdirpSync( tmp );
 		var colorFiles;
 		try{
 			var dc = new DirectoryColorfy( config.src, tmp, {
@@ -144,7 +144,7 @@ module.exports = function( grunt , undefined ) {
 		transferFiles.forEach( function( f ){
 			var filenameArr = f.src[0].split( "/" ),
 				filename = filenameArr[filenameArr.length - 1];
-			grunt.file.copy( f.src[0], path.join( tmp, filename ) );
+			fs.copySync( f.src[0], path.join( tmp, filename ) );
 		});
 
 		grunt.log.writeln("Converting SVG to PNG");
