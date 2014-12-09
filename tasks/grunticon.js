@@ -76,6 +76,7 @@ module.exports = function( grunt , undefined ) {
 
 		if( !config.dest || config.dest && config.dest === "" ){
 			grunt.fatal("The destination must be a directory");
+			done( false );
 		}
 
 		// folder name (within the output folder) for generated png files
@@ -145,6 +146,7 @@ module.exports = function( grunt , undefined ) {
 		.then( function( result , err ){
 			if( err ){
 				grunt.fatal( err );
+				done( false );
 			}
 
 			var svgde = new DirectoryEncoder(tmp, path.join( config.dest, config.datasvgcss ), o ),
@@ -166,6 +168,7 @@ module.exports = function( grunt , undefined ) {
 				helper.createPreview( tmp, config );
 			} catch(er) {
 				grunt.fatal(er);
+				done( false );
 			}
 
 			grunt.log.writeln( "Delete Temp Files" );
