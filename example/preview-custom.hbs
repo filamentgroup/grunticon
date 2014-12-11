@@ -23,9 +23,13 @@
 		{{#each icons}}
 			{{#with this}}
 			<pre><code>{{prefix}}{{name}}:</code></pre><div class="{{prefixClass}}{{name}}" style="width: {{width}}px; height: {{height}}px;" ></div><hr/>
-			<p>Embedded SVG alternative (The <code>data-grunticon-embed</code> attribute tells grunticon to inject SVG inline):
-			<pre><code>{{prefix}}{{name}}:</code></pre><div class="{{prefixClass}}{{name}}" data-grunticon-embed style="width: {{width}}px; height: {{height}}px;" ></div><hr/>
 			{{/with}}
 		{{/each}}
+
+		<h2>Embedded SVG option</h2>
+		<p>(The <code>data-grunticon-embed</code> attribute tells grunticon to inject SVG inline):</p>
+		<pre><code>icon-Home_Media:</code></pre><div class="icon-Home_Media" data-grunticon-embed style="width: {{width}}px; height: {{height}}px;" ></div><hr/>
+		<pre><code>icon-cat:</code></pre><div class="icon-cat" data-grunticon-embed style="width: {{width}}px; height: {{height}}px;" ></div><hr/>
+		<pre><code>icon-gradients-flat-opacity:</code></pre><div class="icon-gradients-flat-opacity" data-grunticon-embed style="width: {{width}}px; height: {{height}}px;" ></div><hr/>
 </body>
 </html>
