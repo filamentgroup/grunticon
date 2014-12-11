@@ -50,10 +50,11 @@ window.grunticon = function( css, foo ){
 					var cssText = rules[ i ].cssText;
 					var iconSelector = cssText.split( "{" )[ 0 ].split( "," ).pop();
 					var iconClass = iconSelector.replace( ".", "" ).trim();
-					var iconSVGEncoded = cssText.match( /US\-ASCII,([^']+)/ );
+					var iconSVGEncoded = cssText.split( ");" )[ 0 ].match( /US\-ASCII\,([^']+)/ );
 					if( iconSVGEncoded && iconSVGEncoded[ 1 ] ){
 						var iconSVGRaw = decodeURIComponent( iconSVGEncoded[ 1 ] );
 						icons[ iconClass ] = iconSVGRaw;
+
 					}
 				}
 				return icons;
