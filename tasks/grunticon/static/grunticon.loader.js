@@ -34,7 +34,7 @@ window.grunticon = function( css, foo ){
 		getIcons = function(){
 			// get grunticon stylesheet by its href
 			var allss = w.document.styleSheets;
-			var svgcss = "icons.data.svg.css";
+			var svgcss = css[ 0 ];
 			var svgss;
 			for( var i = 0; i < allss.length; i++ ){
 				if( allss[ i ].href && allss[ i ].href.indexOf( svgcss ) > -1 ){
