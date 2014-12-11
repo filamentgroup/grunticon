@@ -52,7 +52,7 @@ window.grunticon = function( css, foo ){
 					var iconClass = iconSelector.replace( ".", "" ).trim();
 					var iconSVGEncoded = cssText.match( /US\-ASCII,([^']+)/ );
 					if( iconSVGEncoded && iconSVGEncoded[ 1 ] ){
-						var iconSVGRaw = unescape( iconSVGEncoded[ 1 ] );
+						var iconSVGRaw = decodeURIComponent( iconSVGEncoded[ 1 ] );
 						icons[ iconClass ] = iconSVGRaw;
 					}
 				}
