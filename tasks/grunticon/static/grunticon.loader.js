@@ -21,6 +21,7 @@ window.grunticon = function( css, foo ){
 				link.onload = function(){
 					icons = getIcons();
 					ready( embedIcons );
+					ready( useIcons );
 				};
 			}
 			ref.parentNode.insertBefore( link, ref );
@@ -69,9 +70,58 @@ window.grunticon = function( css, foo ){
 		embedIcons = function(){
 			for( var iconName in icons ){
 				var embedElems = w.document.querySelectorAll( "." + iconName + "[" + embedAttr + "]" );
-				for( var i = 0; i < embedElems.length; i++ ){
-					embedElems[ i ].innerHTML = icons[ iconName ];
-					embedElems[ i ].style.backgroundImage = "none";
+				if( embedElems.length ){
+					for( var i = 0; i < embedElems.length; i++ ){
+						embedElems[ i ].innerHTML = icons[ iconName ];
+						embedElems[ i ].style.backgroundImage = "none";
+						embedElems[ i ].removeAttribute( embedAttr );
+					}
+				}
+			}
+		},
+
+		// attr to specify svg embedding
+		useAttr = "data-grunticon-use",
+
+		useTemplate = w.document.createElement( "svg" ),
+		useDefs = w.document.createElement( "defs" ),
+
+		// create a <defs> template for an icon of a particular name ("icon-foo") and reference that def in all elements with that icon class through a <use> element
+		// and remove its background image
+		useIcons = function(){
+			// if useTemplate isn't already in the page, insert it
+			if( !useTemplate.parentNode ){
+				// svg attrs don't appear to be required. add if needed
+				//useTemplate.setAttribute( "xmlns", "http://www.w3.org/2000/svg" );
+				//useTemplate.style.display = "none";
+				useTemplate.appendChild( useDefs );
+				w.document.body.insertBefore( useTemplate, w.document.body.firstChild );
+			}
+			for( var iconName in icons ){
+
+				//template first
+				var useElems = w.document.querySelectorAll( "." + iconName + "[" + useAttr + "]" );
+				if( useElems.length ){
+					if( !w.document.getElementById( iconName ) ){
+						var symbol = w.document.createElement( "symbol" );
+						symbol.id = iconName;
+						var svgdata =  icons[ iconName ];
+						symbol.innerHTML = svgdata;
+						var svgvb = symbol.firstChild.getAttribute( "viewBox" );
+						symbol.setAttribute( "viewBox", svgvb );
+						symbol.viewBox = svgvb;
+						symbol.innerHTML = symbol.firstChild.innerHTML;
+						useDefs.appendChild( symbol );
+					}
+					var svg = w.document.createElement( "svg" );
+					var use = w.document.createElement( "use" );
+					use.setAttribute( "xlink:href", "#" + iconName );
+					svg.appendChild( use );
+					for( var i = 0; i < useElems.length; i++ ){
+						useElems[ i ].appendChild( svg );
+						useElems[ i ].style.backgroundImage = "none";
+						useElems[ i ].removeAttribute( useAttr );
+					}
 				}
 			}
 		},

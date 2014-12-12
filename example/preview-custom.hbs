@@ -19,6 +19,7 @@
 {{/with}}
 	</head>
 	<body>
+
 		<h1>CUSTOM PREVIEW - you can change this in the previewTemplate option</h1>
 		{{#each icons}}
 			{{#with this}}
@@ -43,6 +44,17 @@
 		</style>
 
 		<pre><code>icon-gradients-flat-opacity (styled variation):</code></pre><div class="icon-gradients-flat-opacity alt" data-grunticon-embed style="width: {{width}}px; height: {{height}}px;" ></div><hr/>
+
+
+		<h2>Templated "Use" SVG option</h2>
+		<p>(The <code>data-grunticon-use</code> attribute tells grunticon to create an SVG as a `defs` symbol for reuse, and inject a <code>use</code> reference to that icon inside elements referencing that symbol):</p>
+		<pre><code>icon-Home_Media:</code></pre><div class="icon-Home_Media" data-grunticon-use style="width: {{width}}px; height: {{height}}px;" ></div><hr/>
+
+
+
+		<pre><code>icon-cat:</code></pre><div class="icon-cat" data-grunticon-use style="width: {{width}}px; height: {{height}}px;" ></div><hr/>
+
+		<pre><code>icon-gradients-flat-opacity:</code></pre><div class="icon-gradients-flat-opacity" data-grunticon-use style="width: {{width}}px; height: {{height}}px;" ></div><hr/>
 
 
 </body>
