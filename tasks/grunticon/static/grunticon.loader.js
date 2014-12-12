@@ -20,7 +20,7 @@ window.grunticon = function( css, foo ){
 			if( svg ){
 				link.onload = function(){
 					icons = getIcons();
-					bindSVGDomReady();
+					ready( embedIcons );
 				};
 			}
 			ref.parentNode.insertBefore( link, ref );
@@ -45,12 +45,12 @@ window.grunticon = function( css, foo ){
 
 			if( svgss ){
 				var icons = {};
-				var rules = svgss.rules; //cssRules better?
+				var rules = svgss.cssRules ? svgss.cssRules : svgss.rules;
 				for( i = 0; i < rules.length; i++ ){
 					var cssText = rules[ i ].cssText;
 					var iconSelector = cssText.split( "{" )[ 0 ].split( "," ).pop();
 					var iconClass = iconSelector.replace( ".", "" ).trim();
-					var iconSVGEncoded = cssText.split( ");" )[ 0 ].match( /US\-ASCII\,([^']+)/ );
+					var iconSVGEncoded = cssText.split( ");" )[ 0 ].match( /US\-ASCII\,([^"']+)/ );
 					if( iconSVGEncoded && iconSVGEncoded[ 1 ] ){
 						var iconSVGRaw = decodeURIComponent( iconSVGEncoded[ 1 ] );
 						icons[ iconClass ] = iconSVGRaw;
@@ -76,12 +76,20 @@ window.grunticon = function( css, foo ){
 			}
 		},
 
-		bindSVGDomReady = function(){
-			if( w.document.readyState === "complete" ){
-				embedIcons();
+		ready = function( fn ){
+			var ran = false;
+			function callback(){
+				if( !ran ){
+					fn();
+				}
+				ran = true;
 			}
-			else {
-				w.document.addEventListener( "DOMContentLoaded", embedIcons );
+			// If DOM is already ready at exec time, depends on the browser.
+			// From: https://github.com/mobify/mobifyjs/blob/526841be5509e28fc949038021799e4223479f8d/src/capture.js#L128
+			if ( w.document.readyState !== "loading" ) {
+				fn();
+			} else if( w.document.addEventListener ){
+				w.document.addEventListener( "DOMContentLoaded", fn, false );
 			}
 		},
 
