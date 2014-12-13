@@ -83,45 +83,38 @@ window.grunticon = function( css, foo ){
 		// attr to specify svg embedding
 		useAttr = "data-grunticon-use",
 
-		useTemplate = w.document.createElement( "svg" ),
-		useDefs = w.document.createElement( "defs" ),
+		useContainer = w.document.createElement( "div" ),
+		defs = [],
 
 		// create a <defs> template for an icon of a particular name ("icon-foo") and reference that def in all elements with that icon class through a <use> element
 		// and remove its background image
 		useIcons = function(){
-			// if useTemplate isn't already in the page, insert it
-			if( !useTemplate.parentNode ){
-				// svg attrs don't appear to be required. add if needed
-				//useTemplate.setAttribute( "xmlns", "http://www.w3.org/2000/svg" );
-				//useTemplate.style.display = "none";
-				useTemplate.appendChild( useDefs );
-				w.document.body.insertBefore( useTemplate, w.document.body.firstChild );
-			}
 			for( var iconName in icons ){
-
 				//template first
 				var useElems = w.document.querySelectorAll( "." + iconName + "[" + useAttr + "]" );
 				if( useElems.length ){
-					if( !w.document.getElementById( iconName ) ){
-						var symbol = w.document.createElement( "symbol" );
-						symbol.id = iconName;
-						var svgdata =  icons[ iconName ];
-						symbol.innerHTML = svgdata;
-						var svgvb = symbol.firstChild.getAttribute( "viewBox" );
-						symbol.setAttribute( "viewBox", svgvb );
-						symbol.viewBox = svgvb;
-						symbol.innerHTML = symbol.firstChild.innerHTML;
-						useDefs.appendChild( symbol );
+					// if useTemplate isn't already in the page, insert it
+					if( !useContainer.parentNode ){
+						useContainer.className = "grunticon-template";
+						useContainer.style.display = "none";
+						w.document.body.insertBefore( useContainer, w.document.body.firstChild );
 					}
-					var svg = w.document.createElement( "svg" );
-					var use = w.document.createElement( "use" );
-					use.setAttribute( "xlink:href", "#" + iconName );
-					svg.appendChild( use );
+					if( !w.document.getElementById( iconName ) ){
+						//var svgvb = symbol.firstChild.getAttribute( "viewBox" );
+						//symbol.setAttribute( "viewBox", svgvb );
+						//symbol.viewBox = svgvb;
+						var vb = icons[ iconName ].match( /viewBox="([^"]+)/mi ) && RegExp.$1;
+						// NOTE: viewBox must be defined in the source SVG file for this to work
+						defs.push( "<symbol id='" + iconName + "' viewBox='" + ( vb || "" ) + "'>" + icons[ iconName ] + "</symbol>" );
+					}
+					var use = "<svg><use xlink:href='#" + iconName + "'></use></svg>";
+					var useTemp = w.document.createElement( "div" );
 					for( var i = 0; i < useElems.length; i++ ){
-						useElems[ i ].appendChild( svg );
+						useElems[ i ].innerHTML = use;
 						useElems[ i ].style.backgroundImage = "none";
 						useElems[ i ].removeAttribute( useAttr );
 					}
+					useContainer.innerHTML = "<svg><defs>" + defs.join( "" ) + "</defs></svg>";
 				}
 			}
 		},
