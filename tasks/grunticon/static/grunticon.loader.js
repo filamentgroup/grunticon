@@ -104,8 +104,9 @@ window.grunticon = function( css, foo ){
 						//symbol.setAttribute( "viewBox", svgvb );
 						//symbol.viewBox = svgvb;
 						var vb = icons[ iconName ].match( /viewBox="([^"]+)/mi ) && RegExp.$1;
+						var strippedSVG = icons[ iconName ].replace( /<\/?svg[^>]*>/gmi, "" );
 						// NOTE: viewBox must be defined in the source SVG file for this to work
-						defs.push( "<symbol id='" + iconName + "' viewBox='" + ( vb || "" ) + "'>" + icons[ iconName ] + "</symbol>" );
+						defs.push( "<symbol id='" + iconName + "' viewBox='" + ( vb || "" ) + "'>" + strippedSVG + "</symbol>" );
 					}
 					var use = "<svg><use xlink:href='#" + iconName + "'></use></svg>";
 					var useTemp = w.document.createElement( "div" );
@@ -114,9 +115,9 @@ window.grunticon = function( css, foo ){
 						useElems[ i ].style.backgroundImage = "none";
 						useElems[ i ].removeAttribute( useAttr );
 					}
-					useContainer.innerHTML = "<svg><defs>" + defs.join( "" ) + "</defs></svg>";
 				}
 			}
+			useContainer.innerHTML = "<svg><defs>" + defs.join( "" ) + "</defs></svg>";
 		},
 
 		ready = function( fn ){

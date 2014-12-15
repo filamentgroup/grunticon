@@ -1,1 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" height="11.5px" viewBox="0 0 20.502 11.5" width="20.502px"><g stroke="#823029" stroke-width="2" stroke-linecap="round" fill="none"><line y2="1" x1="1" x2="19.502" y1="1"/><line y2="5.75" x1="1" x2="19.502" y1="5.75"/><line y2="10.5" x1="1" x2="19.502" y1="10.5"/></g></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 17.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="svg-source" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="23.2px" height="17.7px" viewBox="10.4 181.8 23.2 17.7" enable-background="new 10.4 181.8 23.2 17.7"
+	 xml:space="preserve">
+<g id="hamburger_menu">
+	
+		<line id="bottom-bun" fill="none" stroke="#72747A" stroke-width="3.2" stroke-linecap="round" stroke-miterlimit="10" x1="12" y1="183.4" x2="32" y2="183.4"/>
+	
+		<line id="meat" fill="none" stroke="#72747A" stroke-width="3.2" stroke-linecap="round" stroke-miterlimit="10" x1="12" y1="190.7" x2="32" y2="190.7"/>
+	
+		<line id="top-bun" fill="none" stroke="#72747A" stroke-width="3.2" stroke-linecap="round" stroke-miterlimit="10" x1="12" y1="197.9" x2="32" y2="197.9"/>
+</g>
+</svg>

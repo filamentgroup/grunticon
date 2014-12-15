@@ -12,7 +12,7 @@
 		</style>
 		<script>
 			/* grunticon Stylesheet Loader | https://github.com/filamentgroup/grunticon | (c) 2012 Scott Jehl, Filament Group, Inc. | MIT license. */
-window.grunticon=function(e){if(e&&3===e.length){var t=window,n=!(!t.document.createElementNS||!t.document.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect||!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1")||window.opera&&-1===navigator.userAgent.indexOf("Chrome")||-1!==navigator.userAgent.indexOf("Series40")),o={},r=function(r){var a=t.document.createElement("link"),c=t.document.getElementsByTagName("script")[0];a.rel="stylesheet",a.href=e[r&&n?0:r?1:2],a.media="only x",n&&(a.onload=function(){o=i(),m(d),m(u)}),c.parentNode.insertBefore(a,c),setTimeout(function(){a.media="all"})},i=function(){for(var n,o=t.document.styleSheets,r=e[0],i=0;o.length>i;i++)if(o[i].href&&o[i].href.indexOf(r)>-1){n=o[i];break}if(n){var a={},d=n.cssRules?n.cssRules:n.rules;for(i=0;d.length>i;i++){var c=d[i].cssText,l=c.split("{")[0].split(",").pop(),s=l.replace(".","").trim(),u=c.split(");")[0].match(/US\-ASCII\,([^"']+)/);if(u&&u[1]){var m=decodeURIComponent(u[1]);a[s]=m}}return a}},a="data-grunticon-embed",d=function(){for(var e in o){var n=t.document.querySelectorAll("."+e+"["+a+"]");if(n.length)for(var r=0;n.length>r;r++)n[r].innerHTML=o[e],n[r].style.backgroundImage="none",n[r].removeAttribute(a)}},c="data-grunticon-use",l=t.document.createElement("div"),s=[],u=function(){for(var e in o){var n=t.document.querySelectorAll("."+e+"["+c+"]");if(n.length){if(l.parentNode||(l.className="grunticon-template",l.style.display="none",t.document.body.insertBefore(l,t.document.body.firstChild)),!t.document.getElementById(e)){var r=o[e].match(/viewBox="([^"]+)/im)&&RegExp.$1;s.push("<symbol id='"+e+"' viewBox='"+(r||"")+"'>"+o[e]+"</symbol>")}var i="<svg><use xlink:href='#"+e+"'></use></svg>";t.document.createElement("div");for(var a=0;n.length>a;a++)n[a].innerHTML=i,n[a].style.backgroundImage="none",n[a].removeAttribute(c);l.innerHTML="<svg><defs>"+s.join("")+"</defs></svg>"}}},m=function(e){"loading"!==t.document.readyState?e():t.document.addEventListener&&t.document.addEventListener("DOMContentLoaded",e,!1)},f=new t.Image;f.onerror=function(){r(!1)},f.onload=function(){r(1===f.width&&1===f.height)},f.src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="}};
+window.grunticon=function(e){if(e&&3===e.length){var t=window,n=!(!t.document.createElementNS||!t.document.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect||!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1")||window.opera&&-1===navigator.userAgent.indexOf("Chrome")||-1!==navigator.userAgent.indexOf("Series40")),o={},r=function(r){var a=t.document.createElement("link"),c=t.document.getElementsByTagName("script")[0];a.rel="stylesheet",a.href=e[r&&n?0:r?1:2],a.media="only x",n&&(a.onload=function(){o=i(),m(d),m(u)}),c.parentNode.insertBefore(a,c),setTimeout(function(){a.media="all"})},i=function(){for(var n,o=t.document.styleSheets,r=e[0],i=0;o.length>i;i++)if(o[i].href&&o[i].href.indexOf(r)>-1){n=o[i];break}if(n){var a={},d=n.cssRules?n.cssRules:n.rules;for(i=0;d.length>i;i++){var c=d[i].cssText,l=c.split("{")[0].split(",").pop(),s=l.replace(".","").trim(),u=c.split(");")[0].match(/US\-ASCII\,([^"']+)/);if(u&&u[1]){var m=decodeURIComponent(u[1]);a[s]=m}}return a}},a="data-grunticon-embed",d=function(){for(var e in o){var n=t.document.querySelectorAll("."+e+"["+a+"]");if(n.length)for(var r=0;n.length>r;r++)n[r].innerHTML=o[e],n[r].style.backgroundImage="none",n[r].removeAttribute(a)}},c="data-grunticon-use",l=t.document.createElement("div"),s=[],u=function(){for(var e in o){var n=t.document.querySelectorAll("."+e+"["+c+"]");if(n.length){if(l.parentNode||(l.className="grunticon-template",l.style.display="none",t.document.body.insertBefore(l,t.document.body.firstChild)),!t.document.getElementById(e)){var r=o[e].match(/viewBox="([^"]+)/im)&&RegExp.$1,i=o[e].replace(/<\/?svg[^>]*>/gim,"");s.push("<symbol id='"+e+"' viewBox='"+(r||"")+"'>"+i+"</symbol>")}var a="<svg><use xlink:href='#"+e+"'></use></svg>";t.document.createElement("div");for(var d=0;n.length>d;d++)n[d].innerHTML=a,n[d].style.backgroundImage="none",n[d].removeAttribute(c)}}l.innerHTML="<svg><defs>"+s.join("")+"</defs></svg>"},m=function(e){"loading"!==t.document.readyState?e():t.document.addEventListener&&t.document.addEventListener("DOMContentLoaded",e,!1)},g=new t.Image;g.onerror=function(){r(!1)},g.onload=function(){r(1===g.width&&1===g.height)},g.src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="}};
 
 			grunticon(["icons.data.svg.css", "icons.data.png.css", "icons.fallback.css"]);
 		</script>
@@ -24,65 +24,7 @@ window.grunticon=function(e){if(e&&3===e.length){var t=window,n=!(!t.document.cr
 		<h1>CUSTOM PREVIEW - you can change this in the previewTemplate option</h1>
 		
 			
-			<pre><code>.icon-Home_Media:</code></pre><div class="icon-Home_Media" style="width: 44px; height: 44px;" ></div><hr/>
-			
-		
-			
-			<pre><code>.icon-Image_Exchange:</code></pre><div class="icon-Image_Exchange" style="width: 44px; height: 44px;" ></div><hr/>
-			
-		
-			
-			<pre><code>.icon-Internet-no-width-no-height:</code></pre><div class="icon-Internet-no-width-no-height" style="width: 300px; height: 200px;" ></div><hr/>
-			
-		
-			
-			<pre><code>.icon-Internet:</code></pre><div class="icon-Internet" style="width: 44px; height: 44px;" ></div><hr/>
-			
-		
-			
-			<pre><code>.icon-Internet_FP2:</code></pre><div class="icon-Internet_FP2" style="width: 44px; height: 44px;" ></div><hr/>
-			
-		
-			
-			<pre><code>.icon-Internet_Radio:</code></pre><div class="icon-Internet_Radio" style="width: 44px; height: 44px;" ></div><hr/>
-			
-		
-			
-			<pre><code>.icon-Internet_Tel:</code></pre><div class="icon-Internet_Tel" style="width: 44px; height: 44px;" ></div><hr/>
-			
-		
-			
-			<pre><code>.icon-Intranet:</code></pre><div class="icon-Intranet" style="width: 44px; height: 44px;" ></div><hr/>
-			
-		
-			
-			<pre><code>.icon-arrow-11:</code></pre><div class="icon-arrow-11" style="width: 30px; height: 30px;" ></div><hr/>
-			
-		
-			
-			<pre><code>.icon-arrow-btn:</code></pre><div class="icon-arrow-btn" style="width: 13.777px; height: 20.001px;" ></div><hr/>
-			
-		
-			
-			<pre><code>.icon-arrow-tiny:</code></pre><div class="icon-arrow-tiny" style="width: 30px; height: 30px;" ></div><hr/>
-			
-		
-			
 			<pre><code>.icon-bear-0:</code></pre><div class="icon-bear-0" style="width: 100px; height: 62.905px;" ></div><hr/>
-			<p>Embedded SVG alternative (The <code>data-grunticon-embed</code> attribute tells grunticon to inject SVG inline):
-			<pre><code>.icon-bear-0:</code></pre><div class="icon-bear-0" data-grunticon-embed style="width: 100px; height: 62.905px;" ></div><hr/>
-			
-		
-			
-			<pre><code>.icon-bear-2:</code></pre><div class="icon-bear-2" style="width: 100px; height: 62.905px;" ></div><hr/>
-			
-		
-			
-			<pre><code>.icon-bear-blue:</code></pre><div class="icon-bear-blue" style="width: 100px; height: 62.905px;" ></div><hr/>
-			
-		
-			
-			<pre><code>.icon-bear-primary:</code></pre><div class="icon-bear-primary" style="width: 100px; height: 62.905px;" ></div><hr/>
 			
 		
 			
@@ -90,127 +32,112 @@ window.grunticon=function(e){if(e&&3===e.length){var t=window,n=!(!t.document.cr
 			
 		
 			
-			<pre><code>.icon-cat:</code></pre><div class="icon-cat" style="width: 100px; height: 100px;" ></div><hr/>
+			<pre><code>.icon-burger:</code></pre><div class="icon-burger" style="width: 300px; height: 30px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-cyrillic:</code></pre><div class="icon-cyrillic" style="width: 650px; height: 347.078px;" ></div><hr/>
+			<pre><code>.icon-chevron:</code></pre><div class="icon-chevron" style="width: 11.8px; height: 18.7px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-fishing-hook:</code></pre><div class="icon-fishing-hook" style="width: 300px; height: 200px;" ></div><hr/>
+			<pre><code>.icon-cloud-sync:</code></pre><div class="icon-cloud-sync" style="width: 32px; height: 23px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-flag:</code></pre><div class="icon-flag" style="width: 36px; height: 26px;" ></div><hr/>
+			<pre><code>.icon-delete:</code></pre><div class="icon-delete" style="width: 17.3px; height: 17.3px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-gear:</code></pre><div class="icon-gear" style="width: 30px; height: 30px;" ></div><hr/>
+			<pre><code>.icon-disc-arrow:</code></pre><div class="icon-disc-arrow" style="width: 28px; height: 28px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-gradients-flat-opacity:</code></pre><div class="icon-gradients-flat-opacity" style="width: 84.501px; height: 42px;" ></div><hr/>
+			<pre><code>.icon-disc-plus:</code></pre><div class="icon-disc-plus" style="width: 28px; height: 28px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-gradients:</code></pre><div class="icon-gradients" style="width: 30px; height: 30px;" ></div><hr/>
+			<pre><code>.icon-eye:</code></pre><div class="icon-eye" style="width: 32px; height: 32px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-grunticon:</code></pre><div class="icon-grunticon" style="width: 100px; height: 100px;" ></div><hr/>
+			<pre><code>.icon-flag:</code></pre><div class="icon-flag" style="width: 27px; height: 32px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-grunticontest-2:</code></pre><div class="icon-grunticontest-2" style="width: 200px; height: 200px;" ></div><hr/>
+			<pre><code>.icon-hotdiggity:</code></pre><div class="icon-hotdiggity" style="width: 32.1px; height: 32.1px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-grunticontest-blue:</code></pre><div class="icon-grunticontest-blue" style="width: 200px; height: 200px;" ></div><hr/>
+			<pre><code>.icon-kswiss:</code></pre><div class="icon-kswiss" style="width: 31.9px; height: 31.9px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-grunticontest-primary:</code></pre><div class="icon-grunticontest-primary" style="width: 200px; height: 200px;" ></div><hr/>
+			<pre><code>.icon-map:</code></pre><div class="icon-map" style="width: 32px; height: 32px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-grunticontest:</code></pre><div class="icon-grunticontest" style="width: 200px; height: 200px;" ></div><hr/>
+			<pre><code>.icon-marker:</code></pre><div class="icon-marker" style="width: 20px; height: 27.5px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-gummy-bears-1:</code></pre><div class="icon-gummy-bears-1" style="width: 340px; height: 448px;" ></div><hr/>
+			<pre><code>.icon-menu:</code></pre><div class="icon-menu" style="width: 23.2px; height: 17.7px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-gummy-bears-2:</code></pre><div class="icon-gummy-bears-2" style="width: 340px; height: 449px;" ></div><hr/>
+			<pre><code>.icon-minus:</code></pre><div class="icon-minus" style="width: 23.2px; height: 3.2px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-map:</code></pre><div class="icon-map" style="width: 24px; height: 34px;" ></div><hr/>
+			<pre><code>.icon-mountain:</code></pre><div class="icon-mountain" style="width: 32px; height: 32px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-menu:</code></pre><div class="icon-menu" style="width: 20.502px; height: 11.5px;" ></div><hr/>
+			<pre><code>.icon-piggy:</code></pre><div class="icon-piggy" style="width: 32.1px; height: 23.9px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-over-ie8-data-uri-limit:</code></pre><div class="icon-over-ie8-data-uri-limit" style="width: 440px; height: 230px;" ></div><hr/>
+			<pre><code>.icon-plus:</code></pre><div class="icon-plus" style="width: 23.2px; height: 23.2px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-plus:</code></pre><div class="icon-plus" style="width: 30px; height: 30px;" ></div><hr/>
-			
-		
-			
-			<pre><code>.icon-search:</code></pre><div class="icon-search" style="width: 15.779px; height: 16.482px;" ></div><hr/>
-			
-		
-			
-			<pre><code>.icon-sketch-example-blue:</code></pre><div class="icon-sketch-example-blue" style="width: 5px; height: 3px;" ></div><hr/>
-			
-		
-			
-			<pre><code>.icon-sketch-example-primary:</code></pre><div class="icon-sketch-example-primary" style="width: 5px; height: 3px;" ></div><hr/>
-			
-		
-			
-			<pre><code>.icon-sketch-example-red:</code></pre><div class="icon-sketch-example-red" style="width: 5px; height: 3px;" ></div><hr/>
-			
-		
-			
-			<pre><code>.icon-sketch-example:</code></pre><div class="icon-sketch-example" style="width: 5px; height: 3px;" ></div><hr/>
-			
-		
-			
-			<pre><code>.icon-star:</code></pre><div class="icon-star" style="width: 42px; height: 42px;" ></div><hr/>
+			<pre><code>.icon-search:</code></pre><div class="icon-search" style="width: 20.3px; height: 20.9px;" ></div><hr/>
 			
 		
 
 		<h2>Embedded SVG option</h2>
 		<p>(The <code>data-grunticon-embed</code> attribute tells grunticon to inject SVG inline):</p>
-		<pre><code>icon-Home_Media:</code></pre><div class="icon-Home_Media" data-grunticon-embed style="width: px; height: px;" ></div><hr/>
 
-
-
-		<pre><code>icon-cat:</code></pre><div class="icon-cat" data-grunticon-embed style="width: px; height: px;" ></div><hr/>
-
-		<pre><code>icon-gradients-flat-opacity:</code></pre><div class="icon-gradients-flat-opacity" data-grunticon-embed style="width: px; height: px;" ></div><hr/>
+		<pre><code>icon-burger:</code></pre><div class="icon-burger" data-grunticon-embed style="width: px; height: px;" ></div><hr/>
 
 		<style>
-			.icon-gradients-flat-opacity.alt .letter-a {
+			.icon-burger.alt .cheese {
 				fill: red;
 			}
+
 		</style>
 
-		<pre><code>icon-gradients-flat-opacity (styled variation):</code></pre><div class="icon-gradients-flat-opacity alt" data-grunticon-embed style="width: px; height: px;" ></div><hr/>
+		<pre><code>icon-burger (styled variation):</code></pre><div class="icon-burger alt" data-grunticon-embed></div><hr/>
 
 
 		<h2>Templated "Use" SVG option</h2>
+		<style>
+			.icon-disc-arrow svg,
+			.icon-disc-plus svg {
+				width: 50px;
+				height: 50px;
+				display: block;
+			}
+			.icon-disc-arrow:hover svg,
+			.icon-disc-plus:hover svg {
+				fill: orange;
+			}
+
+		</style>
 		<p>(The <code>data-grunticon-use</code> attribute tells grunticon to create an SVG as a `defs` symbol for reuse, and inject a <code>use</code> reference to that icon inside elements referencing that symbol):</p>
-		<pre><code>icon-Home_Media:</code></pre><div class="icon-Home_Media" data-grunticon-use style="width: px; height: px;" ></div><hr/>
+		<pre><code>icon-disc-arrow:</code></pre><a href="#" class="icon-disc-arrow" data-grunticon-use></a><hr/>
 
 
-		<pre><code>icon-gradients-flat-opacity:</code></pre><div class="icon-gradients-flat-opacity" data-grunticon-use style="width: px; height: px;" ></div><hr/>
+		<pre><code>icon-disc-plus:</code></pre><a href="#" class="icon-disc-plus" data-grunticon-use></a><hr/>
 
 
 </body>
