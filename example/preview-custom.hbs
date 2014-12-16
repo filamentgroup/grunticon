@@ -33,9 +33,22 @@
 		<pre><code>icon-burger:</code></pre><div class="icon-burger" data-grunticon-embed style="width: {{width}}px; height: {{height}}px;" ></div><hr/>
 
 		<style>
-			.icon-burger.alt .cheese {
-				fill: red;
+			.icon-burger {
+				width: 30px;
+				height: 30px;
 			}
+			  .icon-burger.alt .cheese {
+		                fill: red;
+		            }
+				 .icon-burger.alt .buns {
+		                fill: orange;
+		            }
+				  .icon-burger.alt .burger {
+		                fill: yellow;
+		            }
+		 		 .icon-burger.alt .lettuce {
+		                fill: green;
+		            }
 
 		</style>
 
@@ -44,10 +57,13 @@
 
 		<h2>Templated "Use" SVG option</h2>
 		<style>
+			.icon-disc-arrow,
+			.icon-disc-plus  {
+				width: 30px;
+				height: 30px;
+			}
 			.icon-disc-arrow svg,
 			.icon-disc-plus svg {
-				width: 50px;
-				height: 50px;
 				display: inline-block;
 			}
 			.icon-disc-arrow svg {
