@@ -17,7 +17,7 @@ window.grunticon = function( css, foo ){
 			// temporarily, set media to something non-matching to ensure it'll fetch without blocking render
 			link.media = "only x";
 			// NOTE: link onload approach will need to be cross-browser.  Check how onload lines up with svg support
-			if( svg ){
+			if( data && svg ){
 				link.onload = function(){
 					icons = getIcons();
 					ready( embedIcons );
