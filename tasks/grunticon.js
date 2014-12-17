@@ -27,6 +27,7 @@ module.exports = function( grunt , undefined ) {
 	var helper = require( path.join( '..', 'lib', 'grunticon-helper' ) );
 
 	grunt.registerMultiTask( 'grunticon', 'A mystical CSS icon solution.', function() {
+		var self = this;
 		var done = this.async();
 
 		// get the config
@@ -118,62 +119,64 @@ module.exports = function( grunt , undefined ) {
 			fs.removeSync( tmp );
 		}
 		fs.mkdirpSync( tmp );
-		var colorFiles;
+		var dc;
 		try{
-			var dc = new DirectoryColorfy( config.src, tmp, {
+			dc = new DirectoryColorfy( config.src, tmp, {
 				colors: config.colors,
 				dynamicColorOnly: config.dynamicColorOnly
 			});
-			colorFiles = dc.convert();
 		} catch( e ){
 			grunt.fatal(e);
 			done( false );
 		}
 
-		//copy non color config files into temp directory
-		var transferFiles = this.files.filter( function( f ){
-			return !f.src[0].match( /\.colors/ );
-		});
+		dc.convert()
+		.then(function(){
+			//copy non color config files into temp directory
+			var transferFiles = self.files.filter( function( f ){
+				return !f.src[0].match( /\.colors/ );
+			});
 
-		transferFiles.forEach( function( f ){
-			var filenameArr = f.src[0].split( "/" ),
-				filename = filenameArr[filenameArr.length - 1];
-			fs.copySync( f.src[0], path.join( tmp, filename ) );
-		});
+			transferFiles.forEach( function( f ){
+				var filenameArr = f.src[0].split( "/" ),
+					filename = filenameArr[filenameArr.length - 1];
+				fs.copySync( f.src[0], path.join( tmp, filename ) );
+			});
 
-		grunt.log.writeln("Converting SVG to PNG");
-		svgToPng.convert( tmp, config.dest, svgToPngOpts )
-		.then( function( result , err ){
-			if( err ){
-				grunt.fatal( err );
-				done( false );
-			}
+			grunt.log.writeln("Converting SVG to PNG");
+			svgToPng.convert( tmp, config.dest, svgToPngOpts )
+			.then( function( result , err ){
+				if( err ){
+					grunt.fatal( err );
+					done( false );
+				}
 
-			var svgde = new DirectoryEncoder(tmp, path.join( config.dest, config.datasvgcss ), o ),
-				pngde = new DirectoryEncoder( path.join( config.dest, pngfolder ) , path.join( config.dest, config.datapngcss ), o ),
-				pngdefall = new DirectoryEncoder( path.join( config.dest, pngfolder ) , path.join( config.dest, config.urlpngcss ), o2 );
+				var svgde = new DirectoryEncoder(tmp, path.join( config.dest, config.datasvgcss ), o ),
+					pngde = new DirectoryEncoder( path.join( config.dest, pngfolder ) , path.join( config.dest, config.datapngcss ), o ),
+					pngdefall = new DirectoryEncoder( path.join( config.dest, pngfolder ) , path.join( config.dest, config.urlpngcss ), o2 );
 
-			grunt.log.writeln("Writing CSS");
-			try {
-				svgde.encode();
-				pngde.encode();
-				pngdefall.encode();
-			} catch( e ){
-				grunt.fatal( e );
-				done( false );
-			}
+				grunt.log.writeln("Writing CSS");
+				try {
+					svgde.encode();
+					pngde.encode();
+					pngdefall.encode();
+				} catch( e ){
+					grunt.fatal( e );
+					done( false );
+				}
 
-			grunt.log.writeln( "Grunticon now creating Preview File" );
-			try {
-				helper.createPreview( tmp, config );
-			} catch(er) {
-				grunt.fatal(er);
-				done( false );
-			}
+				grunt.log.writeln( "Grunticon now creating Preview File" );
+				try {
+					helper.createPreview( tmp, config );
+				} catch(er) {
+					grunt.fatal(er);
+					done( false );
+				}
 
-			grunt.log.writeln( "Delete Temp Files" );
-			fs.removeSync( tmp );
-			done();
+				grunt.log.writeln( "Delete Temp Files" );
+				fs.removeSync( tmp );
+				done();
+			});
 		});
 
 	});
