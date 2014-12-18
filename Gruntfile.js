@@ -33,7 +33,7 @@ module.exports = function(grunt) {
 				files: [{
 					expand: true,
 					cwd: 'example/source',
-					src: ['*.svg', '*.png'],
+					src: ['**/*.svg', '**/*.png'],
 					dest: "example/output"
 				}],
 				options: {
