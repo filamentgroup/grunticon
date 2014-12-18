@@ -72,7 +72,6 @@ module.exports = function( grunt , undefined ) {
 			return file.src[0];
 		});
 
-		config.src = this.files[0].orig.cwd;
 		config.dest = this.files[0].orig.dest;
 
 		if( !config.dest || config.dest && config.dest === "" ){
@@ -121,7 +120,7 @@ module.exports = function( grunt , undefined ) {
 		fs.mkdirpSync( tmp );
 		var dc;
 		try{
-			dc = new DirectoryColorfy( config.src, tmp, {
+			dc = new DirectoryColorfy( files, tmp, {
 				colors: config.colors,
 				dynamicColorOnly: config.dynamicColorOnly
 			});
