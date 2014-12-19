@@ -5,15 +5,16 @@
 		navigator = window.navigator,
 		Image = window.Image;
 
+	// Thanks Modernizr & Erik Dahlstrom
+	var svg = !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect && !!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image", "1.1") && !(window.opera && navigator.userAgent.indexOf('Chrome') === -1) && navigator.userAgent.indexOf('Series40') === -1;
+
 	var grunticon = function( css, foo ){
 		// expects a css array with 3 items representing CSS paths to datasvg, datapng, urlpng
 		if( !css || css.length !== 3 ){
 			return;
 		}
 
-		// Thanks Modernizr & Erik Dahlstrom
-		var svg = !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect && !!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image", "1.1") && !(window.opera && navigator.userAgent.indexOf('Chrome') === -1) && navigator.userAgent.indexOf('Series40') === -1,
-			icons = {},
+		var icons = {},
 			/*! loadCSS: borrowed from https://github.com/filamentgroup/loadCSS */
 			loadCSS = function( data ){
 				var link = document.createElement( "link" ),
