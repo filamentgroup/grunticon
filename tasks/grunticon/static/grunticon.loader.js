@@ -7,6 +7,22 @@
 
 	// Thanks Modernizr & Erik Dahlstrom
 	var svg = !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect && !!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image", "1.1") && !(window.opera && navigator.userAgent.indexOf('Chrome') === -1) && navigator.userAgent.indexOf('Series40') === -1;
+	var ready = function( fn ){
+		var ran = false;
+		function callback(){
+			if( !ran ){
+				fn();
+			}
+			ran = true;
+		}
+		// If DOM is already ready at exec time, depends on the browser.
+		// From: https://github.com/mobify/mobifyjs/blob/526841be5509e28fc949038021799e4223479f8d/src/capture.js#L128
+		if ( document.readyState !== "loading" ) {
+			fn();
+		} else if( document.addEventListener ){
+			document.addEventListener( "DOMContentLoaded", fn, false );
+		}
+	};
 
 	/*! loadCSS: borrowed from https://github.com/filamentgroup/loadCSS */
 	var loadCSS = function( href, onload ){
@@ -123,23 +139,6 @@
 					}
 				}
 				useContainer.innerHTML = "<svg><defs>" + defs.join( "" ) + "</defs></svg>";
-			},
-
-			ready = function( fn ){
-				var ran = false;
-				function callback(){
-					if( !ran ){
-						fn();
-					}
-					ran = true;
-				}
-				// If DOM is already ready at exec time, depends on the browser.
-				// From: https://github.com/mobify/mobifyjs/blob/526841be5509e28fc949038021799e4223479f8d/src/capture.js#L128
-				if ( document.readyState !== "loading" ) {
-					fn();
-				} else if( document.addEventListener ){
-					document.addEventListener( "DOMContentLoaded", fn, false );
-				}
 			},
 
 			// Thanks Modernizr
