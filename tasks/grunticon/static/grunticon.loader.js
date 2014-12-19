@@ -45,6 +45,47 @@
 		});
 	};
 
+
+			// create a <defs> template for an icon of a particular name ("icon-foo") and reference that def in all elements with that icon class through a <use> element
+			// and remove its background image
+	var useIcons = function(icons){
+
+		// attr to specify svg embedding
+		var useAttr = "data-grunticon-use",
+			useContainer = document.createElement( "div" ),
+			defs = [];
+
+		for( var iconName in icons ){
+			//template first
+			var useElems = document.querySelectorAll( "." + iconName + "[" + useAttr + "]" );
+			if( useElems.length ){
+				// if useTemplate isn't already in the page, insert it
+				if( !useContainer.parentNode ){
+					useContainer.className = "grunticon-template";
+					useContainer.style.display = "none";
+					document.body.insertBefore( useContainer, document.body.firstChild );
+				}
+				if( !document.getElementById( iconName ) ){
+					//var svgvb = symbol.firstChild.getAttribute( "viewBox" );
+					//symbol.setAttribute( "viewBox", svgvb );
+					//symbol.viewBox = svgvb;
+					var vb = icons[ iconName ].match( /viewBox="([^"]+)/mi ) && RegExp.$1;
+					var strippedSVG = icons[ iconName ].replace( /<\/?svg[^>]*>/gmi, "" );
+					// NOTE: viewBox must be defined in the source SVG file for this to work
+					defs.push( "<symbol id='" + iconName + "' viewBox='" + ( vb || "" ) + "'>" + strippedSVG + "</symbol>" );
+				}
+				var use = "<svg><use xlink:href='#" + iconName + "'></use></svg>";
+				var useTemp = document.createElement( "div" );
+				for( var i = 0; i < useElems.length; i++ ){
+					useElems[ i ].innerHTML = use;
+					useElems[ i ].style.backgroundImage = "none";
+					useElems[ i ].removeAttribute( useAttr );
+				}
+			}
+		}
+		useContainer.innerHTML = "<svg><defs>" + defs.join( "" ) + "</defs></svg>";
+	};
+
 	var grunticon = function( css, foo ){
 		// expects a css array with 3 items representing CSS paths to datasvg, datapng, urlpng
 		if( !css || css.length !== 3 ){
@@ -101,45 +142,6 @@
 				}
 			},
 
-			// attr to specify svg embedding
-			useAttr = "data-grunticon-use",
-
-			useContainer = document.createElement( "div" ),
-			defs = [],
-
-			// create a <defs> template for an icon of a particular name ("icon-foo") and reference that def in all elements with that icon class through a <use> element
-			// and remove its background image
-			useIcons = function(){
-				for( var iconName in icons ){
-					//template first
-					var useElems = document.querySelectorAll( "." + iconName + "[" + useAttr + "]" );
-					if( useElems.length ){
-						// if useTemplate isn't already in the page, insert it
-						if( !useContainer.parentNode ){
-							useContainer.className = "grunticon-template";
-							useContainer.style.display = "none";
-							document.body.insertBefore( useContainer, document.body.firstChild );
-						}
-						if( !document.getElementById( iconName ) ){
-							//var svgvb = symbol.firstChild.getAttribute( "viewBox" );
-							//symbol.setAttribute( "viewBox", svgvb );
-							//symbol.viewBox = svgvb;
-							var vb = icons[ iconName ].match( /viewBox="([^"]+)/mi ) && RegExp.$1;
-							var strippedSVG = icons[ iconName ].replace( /<\/?svg[^>]*>/gmi, "" );
-							// NOTE: viewBox must be defined in the source SVG file for this to work
-							defs.push( "<symbol id='" + iconName + "' viewBox='" + ( vb || "" ) + "'>" + strippedSVG + "</symbol>" );
-						}
-						var use = "<svg><use xlink:href='#" + iconName + "'></use></svg>";
-						var useTemp = document.createElement( "div" );
-						for( var i = 0; i < useElems.length; i++ ){
-							useElems[ i ].innerHTML = use;
-							useElems[ i ].style.backgroundImage = "none";
-							useElems[ i ].removeAttribute( useAttr );
-						}
-					}
-				}
-				useContainer.innerHTML = "<svg><defs>" + defs.join( "" ) + "</defs></svg>";
-			},
 
 			// Thanks Modernizr
 			img = new Image();
@@ -157,7 +159,9 @@
 					onload = function(){
 						icons = getIcons();
 						ready( embedIcons );
-						ready( useIcons );
+						ready(function(){
+							useIcons(icons);
+						});
 					};
 				}
 
