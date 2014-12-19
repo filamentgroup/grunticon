@@ -86,89 +86,88 @@
 		useContainer.innerHTML = "<svg><defs>" + defs.join( "" ) + "</defs></svg>";
 	};
 
+	// this function can rip the svg markup from the css so we can embed it anywhere
+	var getIcons = function(svgcss){
+		// get grunticon stylesheet by its href
+		var icons = {};
+		var allss = document.styleSheets;
+		var svgss;
+		for( var i = 0; i < allss.length; i++ ){
+			if( allss[ i ].href && allss[ i ].href.indexOf( svgcss ) > -1 ){
+				svgss = allss[ i ];
+				break;
+			}
+		}
+
+		if( !svgss ){ return icons; }
+
+		var rules = svgss.cssRules ? svgss.cssRules : svgss.rules;
+		for( i = 0; i < rules.length; i++ ){
+			var cssText = rules[ i ].cssText;
+			var iconSelector = cssText.split( "{" )[ 0 ].split( "," ).pop();
+			var iconClass = iconSelector.replace( ".", "" ).trim();
+			var iconSVGEncoded = cssText.split( ");" )[ 0 ].match( /US\-ASCII\,([^"']+)/ );
+			if( iconSVGEncoded && iconSVGEncoded[ 1 ] ){
+				var iconSVGRaw = decodeURIComponent( iconSVGEncoded[ 1 ] );
+				icons[ iconClass ] = iconSVGRaw;
+
+			}
+		}
+		return icons;
+	};
+	// embed an icon of a particular name ("icon-foo") in all elements with that icon class
+	// and remove its background image
+	var embedIcons = function(icons){
+
+		// attr to specify svg embedding
+		var embedAttr = "data-grunticon-embed";
+
+		for( var iconName in icons ){
+			var embedElems = document.querySelectorAll( "." + iconName + "[" + embedAttr + "]" );
+			if( embedElems.length ){
+				for( var i = 0; i < embedElems.length; i++ ){
+					embedElems[ i ].innerHTML = icons[ iconName ];
+					embedElems[ i ].style.backgroundImage = "none";
+					embedElems[ i ].removeAttribute( embedAttr );
+				}
+			}
+		}
+	};
+
 	var grunticon = function( css, foo ){
 		// expects a css array with 3 items representing CSS paths to datasvg, datapng, urlpng
 		if( !css || css.length !== 3 ){
 			return;
 		}
 
-		var icons = {},
-			// this function can rip the svg markup from the css so we can embed it anywhere
-			getIcons = function(){
-				// get grunticon stylesheet by its href
-				var allss = document.styleSheets;
-				var svgcss = css[ 0 ];
-				var svgss;
-				for( var i = 0; i < allss.length; i++ ){
-					if( allss[ i ].href && allss[ i ].href.indexOf( svgcss ) > -1 ){
-						svgss = allss[ i ];
-						break;
-					}
-				}
+		// Thanks Modernizr
+		var img = new Image();
 
-				if( svgss ){
-					var icons = {};
-					var rules = svgss.cssRules ? svgss.cssRules : svgss.rules;
-					for( i = 0; i < rules.length; i++ ){
-						var cssText = rules[ i ].cssText;
-						var iconSelector = cssText.split( "{" )[ 0 ].split( "," ).pop();
-						var iconClass = iconSelector.replace( ".", "" ).trim();
-						var iconSVGEncoded = cssText.split( ");" )[ 0 ].match( /US\-ASCII\,([^"']+)/ );
-						if( iconSVGEncoded && iconSVGEncoded[ 1 ] ){
-							var iconSVGRaw = decodeURIComponent( iconSVGEncoded[ 1 ] );
-							icons[ iconClass ] = iconSVGRaw;
+		img.onerror = function(){
+			loadCSS( css[2] );
+		};
 
-						}
-					}
-					return icons;
-				}
-			},
+		img.onload = function(){
+			var data = img.width === 1 && img.height === 1,
+				href = css[ data && svg ? 0 : data ? 1 : 2 ],
+				onload, icons;
 
-			// attr to specify svg embedding
-			embedAttr = "data-grunticon-embed",
+			if( data && svg ){
+				onload = function(){
+					icons = getIcons(href);
+					ready( function(){
+						embedIcons(icons);
+					} );
+					ready(function(){
+						useIcons(icons);
+					});
+				};
+			}
 
-			// embed an icon of a particular name ("icon-foo") in all elements with that icon class
-			// and remove its background image
-			embedIcons = function(){
-				for( var iconName in icons ){
-					var embedElems = document.querySelectorAll( "." + iconName + "[" + embedAttr + "]" );
-					if( embedElems.length ){
-						for( var i = 0; i < embedElems.length; i++ ){
-							embedElems[ i ].innerHTML = icons[ iconName ];
-							embedElems[ i ].style.backgroundImage = "none";
-							embedElems[ i ].removeAttribute( embedAttr );
-						}
-					}
-				}
-			},
+			loadCSS( href, onload );
+		};
 
-
-			// Thanks Modernizr
-			img = new Image();
-
-			img.onerror = function(){
-				loadCSS( css[2] );
-			};
-
-			img.onload = function(){
-				var data = img.width === 1 && img.height === 1,
-					href = css[ data && svg ? 0 : data ? 1 : 2 ],
-					onload;
-
-				if( data && svg ){
-					onload = function(){
-						icons = getIcons();
-						ready( embedIcons );
-						ready(function(){
-							useIcons(icons);
-						});
-					};
-				}
-
-				loadCSS( href, onload );
-			};
-
-			img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+		img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
 	};
 
 	grunticon.loadCSS = loadCSS;
