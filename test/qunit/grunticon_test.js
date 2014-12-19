@@ -35,4 +35,17 @@
 		ok( typeof window.grunticon.loadCSS === "function", "grunticon.loadCSS should be a function" );
 	});
 
+	asyncTest( 'loadCSS loads css file', function(){
+		expect(1);
+		window.grunticon.loadCSS( "./files/loadcss.css" );
+
+		setTimeout(function(){
+			ok( Array.prototype.some.call(document.styleSheets, function(ss){
+				return ss.href.match(/loadcss/);
+			}),"File should load");
+			start();
+		}, 200);
+
+	});
+
 }(window));
