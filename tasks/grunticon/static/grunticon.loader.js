@@ -1,5 +1,6 @@
 (function(window){
-	window.grunticon = function( css, foo ){
+
+	var grunticon = function( css, foo ){
 		// expects a css array with 3 items representing CSS paths to datasvg, datapng, urlpng
 		if( !css || css.length !== 3 ){
 			return;
@@ -151,5 +152,7 @@
 
 			img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
 	};
+
+	window.grunticon = grunticon;
 }(window));
 // Call grunticon() here to load CSS:
