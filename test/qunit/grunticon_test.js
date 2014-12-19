@@ -29,4 +29,10 @@
 		ok( typeof window.grunticon === "function", "grunticon should be a function" );
 	});
 
+	test( 'loadCSS function exists', function(){
+		expect(2);
+		ok( window.grunticon.loadCSS, "grunticon.loadCSS should exist on the window object" );
+		ok( typeof window.grunticon.loadCSS === "function", "grunticon.loadCSS should be a function" );
+	});
+
 }(window));

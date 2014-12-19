@@ -166,6 +166,7 @@
 			img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
 	};
 
+	grunticon.loadCSS = loadCSS;
 	window.grunticon = grunticon;
 }(window));
 // Call grunticon() here to load CSS:
