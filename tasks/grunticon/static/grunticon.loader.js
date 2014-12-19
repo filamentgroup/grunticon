@@ -10,6 +10,8 @@
 
 	/*! loadCSS: borrowed from https://github.com/filamentgroup/loadCSS */
 	var loadCSS = function( href, onload ){
+		onload = onload || function(){};
+
 		var link = document.createElement( "link" ),
 			ref = document.getElementsByTagName( "script" )[ 0 ];
 
@@ -150,7 +152,7 @@
 			img.onload = function(){
 				var data = img.width === 1 && img.height === 1,
 					href = css[ data && svg ? 0 : data ? 1 : 2 ],
-					onload = function(){};
+					onload;
 
 				if( data && svg ){
 					onload = function(){
