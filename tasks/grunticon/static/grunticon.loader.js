@@ -1,4 +1,5 @@
 (function(window){
+	"use strict";
 
 	var grunticon = function( css, foo ){
 		// expects a css array with 3 items representing CSS paths to datasvg, datapng, urlpng
