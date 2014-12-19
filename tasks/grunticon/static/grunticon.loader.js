@@ -8,6 +8,25 @@
 	// Thanks Modernizr & Erik Dahlstrom
 	var svg = !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect && !!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image", "1.1") && !(window.opera && navigator.userAgent.indexOf('Chrome') === -1) && navigator.userAgent.indexOf('Series40') === -1;
 
+	/*! loadCSS: borrowed from https://github.com/filamentgroup/loadCSS */
+	var loadCSS = function( href, onload ){
+		var link = document.createElement( "link" ),
+			ref = document.getElementsByTagName( "script" )[ 0 ];
+
+		link.rel = "stylesheet";
+		link.href = href;
+		// temporarily, set media to something non-matching to ensure it'll fetch without blocking render
+		link.media = "only x";
+		// NOTE: link onload approach will need to be cross-browser.  Check how onload lines up with svg support
+		link.onload = onload;
+
+		ref.parentNode.insertBefore( link, ref );
+		window.setTimeout(function(){
+			// set media back to `all` so that the styleshet applies once it loads
+			link.media = "all";
+		});
+	};
+
 	var grunticon = function( css, foo ){
 		// expects a css array with 3 items representing CSS paths to datasvg, datapng, urlpng
 		if( !css || css.length !== 3 ){
@@ -15,29 +34,6 @@
 		}
 
 		var icons = {},
-			/*! loadCSS: borrowed from https://github.com/filamentgroup/loadCSS */
-			loadCSS = function( data ){
-				var link = document.createElement( "link" ),
-					ref = document.getElementsByTagName( "script" )[ 0 ];
-				link.rel = "stylesheet";
-				link.href = css[ data && svg ? 0 : data ? 1 : 2 ];
-				// temporarily, set media to something non-matching to ensure it'll fetch without blocking render
-				link.media = "only x";
-				// NOTE: link onload approach will need to be cross-browser.  Check how onload lines up with svg support
-				if( data && svg ){
-					link.onload = function(){
-						icons = getIcons();
-						ready( embedIcons );
-						ready( useIcons );
-					};
-				}
-				ref.parentNode.insertBefore( link, ref );
-				// set media back to `all` so that the styleshet applies once it loads
-				setTimeout( function(){
-					link.media = "all";
-				} );
-			},
-
 			// this function can rip the svg markup from the css so we can embed it anywhere
 			getIcons = function(){
 				// get grunticon stylesheet by its href
@@ -148,11 +144,23 @@
 			img = new Image();
 
 			img.onerror = function(){
-				loadCSS( false );
+				loadCSS( css[2] );
 			};
 
 			img.onload = function(){
-				loadCSS( img.width === 1 && img.height === 1 );
+				var data = img.width === 1 && img.height === 1,
+					href = css[ data && svg ? 0 : data ? 1 : 2 ],
+					onload = function(){};
+
+				if( data && svg ){
+					onload = function(){
+						icons = getIcons();
+						ready( embedIcons );
+						ready( useIcons );
+					};
+				}
+
+				loadCSS( href, onload );
 			};
 
 			img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
