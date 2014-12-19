@@ -12,7 +12,10 @@ module.exports = function(grunt) {
 	// Project configuration.
 	grunt.initConfig({
 		nodeunit: {
-			files: ['test/**/*_test.js']
+			files: ['test/node/**/*_test.js']
+		},
+		qunit: {
+			files: ['test/qunit/**/*.html']
 		},
 		watch: {
 			files: '<config:lint.files>',
@@ -100,11 +103,13 @@ module.exports = function(grunt) {
 
 	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
 	grunt.loadNpmTasks( 'grunt-contrib-nodeunit' );
+	grunt.loadNpmTasks( 'grunt-contrib-qunit' );
+
 	grunt.loadNpmTasks( 'grunt-svgmin' );
 
 	// Default task.
 	grunt.registerTask('skip-tests', ['jshint', 'grunticon:foo']);
-	grunt.registerTask('travis', ['jshint', 'svgmin', 'grunticon:foo', 'nodeunit']);
+	grunt.registerTask('travis', ['jshint', 'svgmin', 'grunticon:foo', 'nodeunit', 'qunit']);
 	grunt.registerTask('default', ['travis']);
 	grunt.registerTask('stage', ['default']);
 
