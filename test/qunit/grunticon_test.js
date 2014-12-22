@@ -83,4 +83,11 @@
 		equal( document.querySelector( "." + name ).innerHTML, svg, "This div should have the bear svg inside of it" );
 	});
 
+	test( 'calling grunticon adds the grunticon class to the html element', function(){
+		expect(1);
+
+		window.grunticon("foo", "bar", "baz");
+		ok( document.documentElement.className.match( "grunticon" ) );
+	});
+
 }(window));
