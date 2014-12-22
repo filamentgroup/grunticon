@@ -106,6 +106,7 @@
 		var img = new Image();
 
 		img.onerror = function(){
+			grunticon.method = "png";
 			loadCSS( css[2] );
 		};
 
@@ -116,12 +117,17 @@
 
 
 			if( data && svg ){
+				grunticon.method = "svg";
 				onload = function(){
 					icons = getIcons(href);
 					ready( function(){
 						embedIcons(icons);
 					} );
 				};
+			} else if( data ){
+				grunticon.method = "datapng";
+			} else {
+				grunticon.method = "png";
 			}
 
 			loadCSS( href, onload );
