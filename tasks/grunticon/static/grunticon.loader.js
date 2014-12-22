@@ -65,6 +65,7 @@
 		for( i = 0; i < rules.length; i++ ){
 			var cssText = rules[ i ].cssText;
 			var iconSelector = cssText.split( "{" )[ 0 ].split( "," ).pop();
+// TODO: This makes it so our icon selector must be a class.
 			var iconClass = iconSelector.replace( ".", "" ).trim();
 			var iconSVGEncoded = cssText.split( ");" )[ 0 ].match( /US\-ASCII\,([^"']+)/ );
 			if( iconSVGEncoded && iconSVGEncoded[ 1 ] ){
