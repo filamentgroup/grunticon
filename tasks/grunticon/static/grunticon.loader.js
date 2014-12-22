@@ -78,20 +78,22 @@
 	// embed an icon of a particular name ("icon-foo") in all elements with that icon class
 	// and remove its background image
 	var embedIcons = function(icons){
+		var embedElems;
 
 		// attr to specify svg embedding
 		var embedAttr = "data-grunticon-embed";
 
 		for( var iconName in icons ){
-			var embedElems = document.querySelectorAll( "." + iconName + "[" + embedAttr + "]" );
-			if( embedElems.length ){
-				for( var i = 0; i < embedElems.length; i++ ){
-					embedElems[ i ].innerHTML = icons[ iconName ];
-					embedElems[ i ].style.backgroundImage = "none";
-					embedElems[ i ].removeAttribute( embedAttr );
-				}
+			embedElems = document.querySelectorAll( "." + iconName + "[" + embedAttr + "]" );
+			if( !embedElems.length ){ continue; }
+
+			for( var i = 0; i < embedElems.length; i++ ){
+				embedElems[ i ].innerHTML = icons[ iconName ];
+				embedElems[ i ].style.backgroundImage = "none";
+				embedElems[ i ].removeAttribute( embedAttr );
 			}
 		}
+		return embedElems;
 	};
 
 	var grunticon = function( css, foo ){
@@ -127,6 +129,7 @@
 		img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
 	};
 
+	grunticon.embedIcons = embedIcons;
 	grunticon.getIcons = getIcons;
 	grunticon.loadCSS = loadCSS;
 	window.grunticon = grunticon;
