@@ -4,6 +4,8 @@
 	var document = window.document,
 		navigator = window.navigator,
 		Image = window.Image;
+	
+	var selectorPlaceholder = "foo";
 
 	// Thanks Modernizr & Erik Dahlstrom
 	var svg = !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect && !!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image", "1.1") && !(window.opera && navigator.userAgent.indexOf('Chrome') === -1) && navigator.userAgent.indexOf('Series40') === -1;
@@ -64,8 +66,8 @@
 		var rules = svgss.cssRules ? svgss.cssRules : svgss.rules;
 		for( i = 0; i < rules.length; i++ ){
 			var cssText = rules[ i ].cssText;
-			var iconSelector = cssText.split( "{" )[ 0 ].split( "," ).pop();
-			var iconClass = iconSelector.replace( ".", "" ).trim();
+			var iconSelector = rules[ i ].selectorText;
+			var iconClass = selectorPlaceholder + iconSelector;
 			var iconSVGEncoded = cssText.split( ");" )[ 0 ].match( /US\-ASCII\,([^"']+)/ );
 			if( iconSVGEncoded && iconSVGEncoded[ 1 ] ){
 				var iconSVGRaw = decodeURIComponent( iconSVGEncoded[ 1 ] );
@@ -84,7 +86,8 @@
 		var embedAttr = "data-grunticon-embed";
 
 		for( var iconName in icons ){
-			embedElems = document.querySelectorAll( "." + iconName + "[" + embedAttr + "]" );
+			var selector = iconName.slice(selectorPlaceholder.length);
+			embedElems = document.querySelectorAll( selector + "[" + embedAttr + "]" );
 			if( !embedElems.length ){ continue; }
 
 			for( var i = 0; i < embedElems.length; i++ ){
