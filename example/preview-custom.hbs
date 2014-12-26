@@ -23,7 +23,7 @@
 		<h1>CUSTOM PREVIEW - you can change this in the previewTemplate option</h1>
 		{{#each icons}}
 			{{#with this}}
-			<pre><code>{{prefix}}{{name}}:</code></pre><div class="{{prefixClass}}{{name}}" style="width: {{width}}px; height: {{height}}px;" ></div><hr/>
+			<pre><code>{{prefix}}{{name}}:</code></pre><div {{selectorType}}="{{selectorString}}{{name}}" style="width: {{width}}px; height: {{height}}px;" ></div><hr/>
 			{{/with}}
 		{{/each}}
 

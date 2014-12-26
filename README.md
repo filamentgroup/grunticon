@@ -150,7 +150,8 @@ Will generate PNG fallbacks like:
 Type: `String`
 Default value: `".icon-"`
 
-a string to prefix all css classes with.
+a string to prefix all icon selectors with (currently only classes or
+ids are guaranteed to work with the preview)
 
 #### options.customselectors
 Type: `Object`
