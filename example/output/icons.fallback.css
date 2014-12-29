@@ -76,13 +76,6 @@
 
 
 
-.icon-bear-0 {
-	background-image: url('png/bear-0.png');
-	background-repeat: no-repeat;
-}
-
-
-
 .icon-bear-2 {
 	background-image: url('png/bear-2.png');
 	background-repeat: no-repeat;
@@ -104,8 +97,8 @@
 
 
 
-.icon-bear {
-	background-image: url('png/bear.png');
+.icon-bear-secondary {
+	background-image: url('png/bear-secondary.png');
 	background-repeat: no-repeat;
 }
 
