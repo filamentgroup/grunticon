@@ -18,7 +18,6 @@ module.exports = function( grunt , undefined ) {
 
 	var fs = require( 'fs-extra' );
 	var uglify = require( 'uglify-js' );
-	var RSVP = require( 'rsvp' );
 
 	var DirectoryColorfy = require( 'directory-colorfy' );
 	var DirectoryEncoder = require( 'directory-encoder' );
@@ -27,7 +26,6 @@ module.exports = function( grunt , undefined ) {
 	var helper = require( path.join( '..', 'lib', 'grunticon-helper' ) );
 
 	grunt.registerMultiTask( 'grunticon', 'A mystical CSS icon solution.', function() {
-		var self = this;
 		var done = this.async();
 
 		// get the config
