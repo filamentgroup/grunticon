@@ -1,13 +1,20 @@
 
-.icon-bear-0 {
-	background-image: url('png/bear-0.png');
+.icon-bear-2 {
+	background-image: url('png/bear-2.png');
 	background-repeat: no-repeat;
 }
 
 
 
-.icon-bear {
-	background-image: url('png/bear.png');
+.icon-bear-primary {
+	background-image: url('png/bear-primary.png');
+	background-repeat: no-repeat;
+}
+
+
+
+.icon-bear-secondary {
+	background-image: url('png/bear-secondary.png');
 	background-repeat: no-repeat;
 }
 
@@ -64,27 +71,6 @@
 
 .icon-flag {
 	background-image: url('png/flag.png');
-	background-repeat: no-repeat;
-}
-
-
-
-.icon-grunticontest-2 {
-	background-image: url('png/grunticontest-2.png');
-	background-repeat: no-repeat;
-}
-
-
-
-.icon-grunticontest-blue {
-	background-image: url('png/grunticontest-blue.png');
-	background-repeat: no-repeat;
-}
-
-
-
-.icon-grunticontest-primary {
-	background-image: url('png/grunticontest-primary.png');
 	background-repeat: no-repeat;
 }
 

@@ -132,14 +132,13 @@ module.exports = function( grunt , undefined ) {
 		dc.convert()
 		.then(function(){
 			//copy non color config files into temp directory
-			var transferFiles = self.files.filter( function( f ){
-				return !f.src[0].match( /\.colors/ );
+			var transferFiles = files.filter( function( f ){
+				return !f.match( /\.colors/ );
 			});
 
 			transferFiles.forEach( function( f ){
-				var filenameArr = f.src[0].split( "/" ),
-					filename = filenameArr[filenameArr.length - 1];
-				fs.copySync( f.src[0], path.join( tmp, filename ) );
+				var filename = path.basename(f);
+				fs.copySync( f, path.join( tmp, filename ) );
 			});
 
 			grunt.log.writeln("Converting SVG to PNG");
