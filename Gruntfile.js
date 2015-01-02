@@ -79,7 +79,9 @@ module.exports = function(grunt) {
 					},
 
 					template: "example/default-css.hbs",
-					previewTemplate: "example/preview-custom.hbs"
+					previewTemplate: "example/preview-custom.hbs",
+
+					compressPNG: true
 
 				}
 			}

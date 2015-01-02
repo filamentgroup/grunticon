@@ -73,8 +73,15 @@
 		return embedElems;
 	};
 
+	var svgLoadedCallback = function(){
+		ready(function(){
+			embedIcons(getIcons(grunticon.href));
+		});
+	};
+
 	grunticon.embedIcons = embedIcons;
 	grunticon.getIcons = getIcons;
 	grunticon.ready = ready;
+	grunticon.svgLoadedCallback = svgLoadedCallback;
 
 }(grunticon, this));

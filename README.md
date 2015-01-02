@@ -301,7 +301,7 @@ Example of .hbs file contents:
 }
 ```
 
-#### options.compress
+#### options.compressPNG
 Type: `Boolean`
 Default value: `false`
 
