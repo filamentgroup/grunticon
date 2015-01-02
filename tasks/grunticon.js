@@ -104,7 +104,7 @@ module.exports = function( grunt , undefined ) {
 			pngfolder: pngfolder,
 			pngpath: config.pngpath,
 			customselectors: config.customselectors,
-			template: path.resolve( config.template ),
+			template: config.template ? path.resolve( config.template ) : "",
 			previewTemplate: path.resolve( config.previewTemplate ),
 			noencodepng: false,
 			prefix: config.cssprefix
