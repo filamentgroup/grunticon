@@ -35,6 +35,7 @@ module.exports = function( grunt , undefined ) {
 			urlpngcss: "icons.fallback.css",
 			files: {
 				loader: path.join( __dirname, 'grunticon', 'static', 'grunticon.loader.js'),
+				embed: path.join( __dirname, 'grunticon', 'static', 'grunticon.embed.js'),
 				banner: path.join( __dirname, 'grunticon', 'static', 'grunticon.loader.banner.js')
 			},
 			previewhtml: "preview.html",
@@ -88,7 +89,7 @@ module.exports = function( grunt , undefined ) {
 		// minify the source of the grunticon loader and write that to the output
 		grunt.log.writeln( "grunticon now minifying the stylesheet loader source." );
 		var banner = fs.readFileSync( config.files.banner );
-		config.min = banner + "\n" + uglify.minify( config.files.loader ).code;
+		config.min = banner + "\n" + uglify.minify( config.files.loader ).code + uglify.minify( config.files.embed ).code;
 		fs.writeFileSync( path.join( config.dest, config.loadersnippet ), config.min );
 		grunt.log.writeln( "grunticon loader file created." );
 

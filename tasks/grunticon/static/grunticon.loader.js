@@ -4,27 +4,9 @@
 	var document = window.document,
 		navigator = window.navigator,
 		Image = window.Image;
-	
-	var selectorPlaceholder = "grunticon:";
 
 	// Thanks Modernizr & Erik Dahlstrom
 	var svg = !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect && !!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image", "1.1") && !(window.opera && navigator.userAgent.indexOf('Chrome') === -1) && navigator.userAgent.indexOf('Series40') === -1;
-
-	var ready = function( fn ){
-		// If DOM is already ready at exec time, depends on the browser.
-		// From: https://github.com/mobify/mobifyjs/blob/526841be5509e28fc949038021799e4223479f8d/src/capture.js#L128
-		if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
-			fn();
-		} else {
-			var created = false;
-			document.addEventListener("readystatechange", function() {
-				if (!created) {
-					created = true;
-					fn();
-				}
-			}, false);
-		}
-	};
 
 	/*! loadCSS: borrowed from https://github.com/filamentgroup/loadCSS */
 	var loadCSS = function( href, onload ){
@@ -47,59 +29,7 @@
 		});
 	};
 
-	// this function can rip the svg markup from the css so we can embed it anywhere
-	var getIcons = function(svgcss){
-		// get grunticon stylesheet by its href
-		var icons = {},
-			allss = document.styleSheets,
-			svgss, rules, cssText,
-			iconClass, iconSVGEncoded, iconSVGRaw;
-
-		for( var i = 0; i < allss.length; i++ ){
-			if( allss[ i ].href && allss[ i ].href.indexOf( svgcss ) > -1 ){
-				svgss = allss[ i ];
-				break;
-			}
-		}
-
-		if( !svgss ){ return icons; }
-
-		rules = svgss.cssRules ? svgss.cssRules : svgss.rules;
-		for( i = 0; i < rules.length; i++ ){
-			cssText = rules[ i ].cssText;
-			iconClass = selectorPlaceholder + rules[ i ].selectorText;
-			iconSVGEncoded = cssText.split( ");" )[ 0 ].match( /US\-ASCII\,([^"']+)/ );
-			if( iconSVGEncoded && iconSVGEncoded[ 1 ] ){
-				iconSVGRaw = decodeURIComponent( iconSVGEncoded[ 1 ] );
-				icons[ iconClass ] = iconSVGRaw;
-
-			}
-		}
-		return icons;
-	};
-	// embed an icon of a particular name ("icon-foo") in all elements with that icon class
-	// and remove its background image
-	var embedIcons = function(icons){
-		var embedElems, embedAttr, selector;
-
-		// attr to specify svg embedding
-		embedAttr = "data-grunticon-embed";
-
-		for( var iconName in icons ){
-			selector = iconName.slice(selectorPlaceholder.length);
-			embedElems = document.querySelectorAll( selector + "[" + embedAttr + "]" );
-			if( !embedElems.length ){ continue; }
-
-			for( var i = 0; i < embedElems.length; i++ ){
-				embedElems[ i ].innerHTML = icons[ iconName ];
-				embedElems[ i ].style.backgroundImage = "none";
-				embedElems[ i ].removeAttribute( embedAttr );
-			}
-		}
-		return embedElems;
-	};
-
-	var grunticon = function( css ){
+	var grunticon = function( css, onload ){
 		// expects a css array with 3 items representing CSS paths to datasvg, datapng, urlpng
 		if( !css || css.length !== 3 ){
 			return;
@@ -115,24 +45,17 @@
 
 		img.onload = function(){
 			var data = img.width === 1 && img.height === 1,
-				href = css[ data && svg ? 0 : data ? 1 : 2 ],
-				onload, icons;
-
+				href = css[ data && svg ? 0 : data ? 1 : 2 ];
 
 			if( data && svg ){
 				grunticon.method = "svg";
-				onload = function(){
-					icons = getIcons(href);
-					ready( function(){
-						embedIcons(icons);
-					} );
-				};
 			} else if( data ){
 				grunticon.method = "datapng";
 			} else {
 				grunticon.method = "png";
 			}
 
+			grunticon.href = href;
 			loadCSS( href, onload );
 		};
 
@@ -140,8 +63,6 @@
 		document.documentElement.className = document.documentElement.className + " grunticon";
 	};
 
-	grunticon.embedIcons = embedIcons;
-	grunticon.getIcons = getIcons;
 	grunticon.loadCSS = loadCSS;
 	window.grunticon = grunticon;
 }(this));

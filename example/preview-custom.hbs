@@ -12,8 +12,12 @@
 		</style>
 		<script>
 			{{{loaderText}}}
-{{#with cssFiles}}
-			grunticon(["{{svg}}", "{{png}}", "{{fallback}}"]);
+			{{#with cssFiles}}
+			grunticon(["{{svg}}", "{{png}}", "{{fallback}}"], function(){
+				grunticon.ready(function(){
+					grunticon.embedIcons(grunticon.getIcons(grunticon.href));
+				});
+			});
 		</script>
 		<noscript><link href="{{fallback}}" rel="stylesheet"></noscript>
 {{/with}}
