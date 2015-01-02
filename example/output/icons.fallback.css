@@ -125,6 +125,13 @@
 
 
 
+.icon-over-ie8-data-uri-limit {
+	background-image: url('png/over-ie8-data-uri-limit.png');
+	background-repeat: no-repeat;
+}
+
+
+
 .icon-piggy {
 	background-image: url('png/piggy.png');
 	background-repeat: no-repeat;
