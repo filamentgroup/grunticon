@@ -53,7 +53,9 @@ module.exports = function( grunt , undefined ) {
 			template: "",
 			tmpPath: os.tmpDir(),
 			tmpDir: "grunticon-tmp",
-			previewTemplate: path.join( __dirname, "..", "example", "preview.hbs" )
+			previewTemplate: path.join( __dirname, "..", "example", "preview.hbs" ),
+			compressPNG: false,
+			optimizationLevel: 3
 		});
 
 		// just a quick starting message
@@ -95,7 +97,9 @@ module.exports = function( grunt , undefined ) {
 		var svgToPngOpts = {
 			pngfolder: pngfolder,
 			defaultWidth: config.defaultWidth,
-			defaultHeight: config.defaultHeight
+			defaultHeight: config.defaultHeight,
+			compress: config.compressPNG,
+			optimizationLevel: config.optimizationLevel
 		};
 
 		var o = {
@@ -142,7 +146,25 @@ module.exports = function( grunt , undefined ) {
 			});
 
 			grunt.log.writeln("Converting SVG to PNG");
-			svgToPng.convert( tmp, config.dest, svgToPngOpts )
+
+			var tmpFiles = fs.readdirSync( tmp )
+				.map( function( file ){
+					return path.join( tmp, file );
+				});
+
+			var svgFiles = tmpFiles.filter( function( file ){
+				return path.extname( file ) === ".svg";
+			}),
+			pngFiles = tmpFiles.filter( function( file ){
+				return path.extname( file ) === ".png";
+			});
+
+			pngFiles.forEach(function( f ){
+				var filename = path.basename(f);
+				fs.copySync( f, path.join( config.dest, svgToPngOpts.pngfolder, filename ) );
+			});
+
+			svgToPng.convert( svgFiles, config.dest, svgToPngOpts )
 			.then( function( result , err ){
 				if( err ){
 					grunt.fatal( err );
