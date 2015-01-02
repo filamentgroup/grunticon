@@ -40,6 +40,7 @@ module.exports = function( grunt , undefined ) {
 			},
 			previewhtml: "preview.html",
 			loadersnippet: "grunticon.loader.js",
+			embedsnippet: "grunticon.embed.js",
 			cssbasepath: path.sep,
 			customselectors: {},
 			cssprefix: ".icon-",
@@ -89,8 +90,10 @@ module.exports = function( grunt , undefined ) {
 		// minify the source of the grunticon loader and write that to the output
 		grunt.log.writeln( "grunticon now minifying the stylesheet loader source." );
 		var banner = fs.readFileSync( config.files.banner );
-		config.min = banner + "\n" + uglify.minify( config.files.loader ).code + uglify.minify( config.files.embed ).code;
+		config.min = banner + "\n" + uglify.minify( config.files.loader ).code;
+		config.embed = banner + "\n" + uglify.minify( config.files.embed ).code;
 		fs.writeFileSync( path.join( config.dest, config.loadersnippet ), config.min );
+		fs.writeFileSync( path.join( config.dest, config.embedsnippet ), config.embed );
 		grunt.log.writeln( "grunticon loader file created." );
 
 		var svgToPngOpts = {

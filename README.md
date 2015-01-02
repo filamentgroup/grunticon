@@ -17,7 +17,7 @@
 
 ### A mystical CSS icon solution
 
-grunticon is a [Grunt.js](https://github.com/cowboy/grunt/) task that makes it easy to manage icons and background images for all devices, preferring HD (retina) SVG icons but also provides fallback support for standard definition browsers, and old browsers alike. From a CSS perspective, it's easy to use, as it generates a class referencing each icon, and doesn't use CSS sprites.
+grunticon is a [Grunt.js](https://github.com/gruntjs/grunt/) task that makes it easy to manage icons and background images for all devices, preferring HD (retina) SVG icons but also provides fallback support for standard definition browsers, and old browsers alike. From a CSS perspective, it's easy to use, as it generates a class referencing each icon, and doesn't use CSS sprites.
 
 grunticon takes a [folder of SVG/PNG files](https://github.com/filamentgroup/grunticon/tree/master/example/source) (typically, icons that you've drawn in an application like Adobe Illustrator), and [outputs them](https://github.com/filamentgroup/grunticon/tree/master/example/output) to CSS in 3 formats: [svg data urls](https://github.com/filamentgroup/grunticon/blob/master/example/output/icons.data.svg.css), [png data urls](https://github.com/filamentgroup/grunticon/blob/master/example/output/icons.data.png.css), and [a third fallback CSS file with references to regular png images](https://github.com/filamentgroup/grunticon/blob/master/example/output/icons.fallback.css), which are also automatically [generated and placed in a folder](https://github.com/filamentgroup/grunticon/tree/master/example/output/png).
 
@@ -115,7 +115,13 @@ The name of the generated HTML file containing PNG data uris.
 Type: `String`
 Default value: `"grunticon.loader.txt"`
 
- The name of the generated text file containing the grunticon loading snippet.
+The name of the generated text file containing the grunticon loading snippet.
+
+#### options.embedsnippet
+Type: `String`
+Default value: `"grunticon.embed.txt"`
+
+The name of the generated text file containing the grunticon embed svg snippet.
 
 #### options.pngfolder
 Type: `String`
