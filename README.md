@@ -117,9 +117,9 @@ Default value: `"grunticon.loader.txt"`
 
 The name of the generated text file containing the grunticon loading snippet.
 
-#### options.embedsnippet
-Type: `String`
-Default value: `"grunticon.embed.txt"`
+#### options.enhanceSVG
+Type: `Boolean`
+Default value: `False`
 
 The name of the generated text file containing the grunticon embed svg snippet.
 
