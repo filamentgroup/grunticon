@@ -165,6 +165,7 @@ module.exports = function( grunt , undefined ) {
 				fs.copySync( f, path.join( config.dest, svgToPngOpts.pngfolder, filename ) );
 			});
 
+
 			svgToPng.convert( svgFiles, config.dest, svgToPngOpts )
 			.then( function( result , err ){
 				if( err ){
@@ -172,9 +173,14 @@ module.exports = function( grunt , undefined ) {
 					done( false );
 				}
 
-				var svgde = new DirectoryEncoder(tmp, path.join( config.dest, config.datasvgcss ), o ),
-					pngde = new DirectoryEncoder( path.join( config.dest, pngfolder ) , path.join( config.dest, config.datapngcss ), o ),
-					pngdefall = new DirectoryEncoder( path.join( config.dest, pngfolder ) , path.join( config.dest, config.urlpngcss ), o2 );
+				var pngs = fs.readdirSync( path.join( config.dest, svgToPngOpts.pngfolder ) )
+				.map(function( file ){
+					return path.join( config.dest, svgToPngOpts.pngfolder, file );
+				});
+
+				var svgde = new DirectoryEncoder( svgFiles, path.join( config.dest, config.datasvgcss ), o ),
+					pngde = new DirectoryEncoder( pngs, path.join( config.dest, config.datapngcss ), o ),
+					pngdefall = new DirectoryEncoder( pngs, path.join( config.dest, config.urlpngcss ), o2 );
 
 				grunt.log.writeln("Writing CSS");
 				try {
