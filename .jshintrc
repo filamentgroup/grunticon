@@ -10,5 +10,11 @@
   "unused": true,
   "boss": true,
   "eqnull": true,
-  "node": true
+  "node": true,
+  "globals": {
+    "window": true,
+    "document": true,
+    "loadCSS": true,
+    "grunticon": true
+  }
 }
