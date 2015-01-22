@@ -96,7 +96,6 @@ module.exports = function( grunt , undefined ) {
 		grunt.log.writeln( "grunticon loader file created." );
 
 		var svgToPngOpts = {
-			pngfolder: pngfolder,
 			defaultWidth: config.defaultWidth,
 			defaultHeight: config.defaultHeight,
 			compress: config.compressPNG,
@@ -162,20 +161,20 @@ module.exports = function( grunt , undefined ) {
 
 			pngFiles.forEach(function( f ){
 				var filename = path.basename(f);
-				fs.copySync( f, path.join( config.dest, svgToPngOpts.pngfolder, filename ) );
+				fs.copySync( f, path.join( config.dest, pngfolder, filename ) );
 			});
 
 
-			svgToPng.convert( svgFiles, config.dest, svgToPngOpts )
+			svgToPng.convert( svgFiles, path.join( config.dest, pngfolder ), svgToPngOpts )
 			.then( function( result , err ){
 				if( err ){
 					grunt.fatal( err );
 					done( false );
 				}
 
-				var pngs = fs.readdirSync( path.join( config.dest, svgToPngOpts.pngfolder ) )
+				var pngs = fs.readdirSync( path.join( config.dest, pngfolder ) )
 				.map(function( file ){
-					return path.join( config.dest, svgToPngOpts.pngfolder, file );
+					return path.join( config.dest, pngfolder, file );
 				});
 
 				var svgde = new DirectoryEncoder( svgFiles, path.join( config.dest, config.datasvgcss ), o ),
