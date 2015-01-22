@@ -294,18 +294,18 @@ Example of .hbs file contents:
 }
 ```
 
-#### options.compress
+#### options.compressPNG
 Type: `Boolean`
 Default value: `false`
 
-Will compress the converted png files using optipng
+Will compressPNG the converted png files using optipng
 
 
 #### options.optimizationLevel
 Type: `Integer`
 Default value: `3`
 
-If compress is set to `true`, this will set the optimationLevel for optipng
+If compressPNG is set to `true`, this will set the optimationLevel for optipng
 
 #### options.colors
 
