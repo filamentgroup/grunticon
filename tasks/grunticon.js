@@ -177,7 +177,7 @@ module.exports = function( grunt , undefined ) {
 					return path.join( config.dest, pngfolder, file );
 				});
 
-				var svgde = new DirectoryEncoder( svgFiles, path.join( config.dest, config.datasvgcss ), o ),
+				var svgde = new DirectoryEncoder( tmpFiles, path.join( config.dest, config.datasvgcss ), o ),
 					pngde = new DirectoryEncoder( pngs, path.join( config.dest, config.datapngcss ), o ),
 					pngdefall = new DirectoryEncoder( pngs, path.join( config.dest, config.urlpngcss ), o2 );
 
