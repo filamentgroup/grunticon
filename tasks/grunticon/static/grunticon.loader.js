@@ -4,7 +4,7 @@ loadCSS: load a CSS file asynchronously.
 [c]2014 @scottjehl, Filament Group, Inc.
 Licensed MIT
 */
-function loadCSS( href, before, media ){
+function loadCSS( href, before, media, callback ){
 	"use strict";
 	// Arguments explained:
 	// `href` is the URL for your CSS file.
@@ -20,6 +20,7 @@ function loadCSS( href, before, media ){
 	ss.href = href;
 	// temporarily, set media to something non-matching to ensure it'll fetch without blocking render
 	ss.media = "only x";
+	ss.onload = callback || function() {};
 	// inject link
 	ref.parentNode.insertBefore( ss, ref );
 	// This function sets the link's media back to `all` so that the stylesheet applies once it loads
@@ -42,7 +43,7 @@ function loadCSS( href, before, media ){
 	return ss;
 }
 
-var grunticon = function( css ){
+var grunticon = function( css, onload ){
 	"use strict";
 	// expects a css array with 3 items representing CSS paths to datasvg, datapng, urlpng
 	if( !css || css.length !== 3 ){
@@ -75,7 +76,7 @@ var grunticon = function( css ){
 		}
 
 		grunticon.href = href;
-		loadCSS( href );
+		loadCSS( href, null, null, onload );
 	};
 
 	img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";

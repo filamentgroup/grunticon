@@ -39,7 +39,7 @@
 		"rsvp": "1.2.0",
 		"svg-to-png": "2.0.0",
 		"fs-extra": "0.8.1",
-		"fg-loadcss": "^0.1.2"
+		"fg-loadcss": "^0.1.4"
 	},
 	"devDependencies": {
 		"grunt": "~0.4.2",
