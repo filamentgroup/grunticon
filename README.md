@@ -25,6 +25,63 @@ grunticon also generates [a small bit of JavaScript](https://github.com/filament
 
 You can see [a demonstration of the output here](http://filamentgroup.github.com/grunticon/example/output/preview.html).
 
+## Version 2.0 is out - Here's What's New!
+
+With Grunticon version 2.0, the option `enhanceSVG` has been added. This option allows you to style your SVGs with CSS by embedding them on the page.
+
+To start - in your Gruntfile.js, set the value for `enhanceSVG` to `true`:
+
+```
+grunticon: {
+  foo: {
+    files: {
+      // Handle files here
+    },
+    options: {
+      // Handle your options as you normally would here
+      enhanceSVG: true
+    }
+  }
+}
+```
+
+Then, make sure you get the new loader that's produced for you when you run `grunt` (it should be in the [same place as before](https://github.com/filamentgroup/grunticon/blob/master/example/output/grunticon.loader.js)).
+
+After you've done this, you can have any icon embedded in the page and ready for styling just by adding a `data-grunticon-embed` attribute.
+
+```
+<div class="icon-burger alt" data-grunticon-embed></div>
+```
+
+Now, style appropriately:
+
+```
+<style>
+  .icon-burger {
+    width: 32px;
+    height: 30px;
+    display: inline-block;
+  }
+  .icon-burger.alt .cheese {
+    fill: red;
+  }
+  .icon-burger.alt .buns {
+    fill: orange;
+  }
+  .icon-burger.alt .burger {
+    fill: yellow;
+  }
+  .icon-burger.alt .lettuce {
+    fill: green;
+  }
+</style>
+```
+
+And voila! Styled SVG icons!
+
+Check out our example at http://master.origin.grunticon.fgtest.com/preview.html
+
+
 ## Before you get started!
 
 [Have you seen Grumpicon?](http://grumpicon.com)
