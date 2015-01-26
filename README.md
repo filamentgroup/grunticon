@@ -540,6 +540,7 @@ currently looking for another solution (suggestions welcome).
 
 
 ## Release History
+* Version 2.0.0: Add ability to enhance SVGs by embedding them inside of the element instead of using a background-image
 * Version 1.4.0: Add `tmpPath` option
 * Version 1.3.0: Add `dynamicColorOnly` support from directory-colorfy
 * Version 1.2.0: Update directory-encoder version, this allows the
