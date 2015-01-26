@@ -23,7 +23,7 @@ grunticon takes a [folder of SVG/PNG files](https://github.com/filamentgroup/gru
 
 grunticon also generates [a small bit of JavaScript](https://github.com/filamentgroup/grunticon/blob/master/tasks/grunticon/static/grunticon.loader.js) to drop into your site, which asynchronously loads the appropriate icon CSS depending on a browser's capabilities, and a preview HTML file with that loader script in place.
 
-You can see [a demonstration of the output here](http://filamentgroup.github.com/grunticon/example/output/preview.html).
+You can see [a demonstration of the output here](http://filamentgroup.github.com/grunticon/example/output/preview.html#embedded-svg-option).
 
 ## Version 2.0 is out - Here's What's New!
 
