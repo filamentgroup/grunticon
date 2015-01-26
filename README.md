@@ -79,7 +79,7 @@ Now, style appropriately:
 
 And voila! Styled SVG icons!
 
-Check out our example at http://master.origin.grunticon.fgtest.com/preview.html
+Check out our example at http://filamentgroup.github.io/grunticon/example/output/preview.html
 
 
 ## Before you get started!
