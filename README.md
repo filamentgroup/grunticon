@@ -27,9 +27,24 @@ You can see [a demonstration of the output here](http://filamentgroup.github.com
 
 ## Version 2.0 is out - Here's What's New!
 
-With Grunticon version 2.0, the option `enhanceSVG` has been added. This option allows you to style your SVGs with CSS by embedding them on the page.
+With Grunticon version 2.0, we've added the `enhanceSVG` option which allows you
+to easily  style and animate your SVGs with CSS or add interactivity with JavaScript.
+Standard Grunticons are static background images that can't be styled or scripted
+because SVG only supports this ability if the SVG data is in the HTML document.
+In 2.0, you can now choose which icons you want to "enhance" and the new loader
+script will copy the icon SVG paths from the cached Grunticon stylesheet and inject
+them as an embedded SVG element for you to script and style as needed. This allows
+us to offer the best of both worlds: the full power of embedded SVGs but with none
+the wasted bandwidth of including SVGs in your page markup. 
 
-To start - in your Gruntfile.js, set the value for `enhanceSVG` to `true`:
+Remember that only browsers that support SVGs will see these effects so use them
+only for "enhancements" that don't break the experience when not present. Embedding
+icons also has some degree of execution overhead so we recommend using this feature
+sparingly: only embed an icon if you need to apply style or scripting, otherwise
+use the classic background-image icon.
+
+To start - in your Gruntfile.js, set the value for `enhanceSVG` to `true` so the
+loader will parse the markup for icons that should be embedded at runtime:
 
 ```
 grunticon: {
@@ -51,6 +66,32 @@ After you've done this, you can have any icon embedded in the page and ready for
 
 ```
 <div class="icon-burger alt" data-grunticon-embed></div>
+```
+
+Once the loader runs, the SVG will be embedded:
+
+```
+<div style="background-image: none;" class="icon-burger alt">
+  <svg class="svg-source" xmlns="http://www.w3.org/2000/svg" width="32" height="30" viewBox="170.6 12.6 32 30" enable-background="new 170.6 12.6 32 30">
+    <g class="hamburger">
+      <path class="buns" fill="#DDAF6D" d="M188.6 12.6h-4c-5.5 0-13 4.5-13 10v1c0 .6.4 1 1 1h28c.6 0 1-.4 1-1v-1c0-5.5-7.5-10-13-10zm-17 28c0 1.1.9 2 2 2h26c1.1 0 2-.9 2-2v-2h-30v2z">
+      </path>
+      <path class="burger" fill="#BB6F39" d="M172.6 34.6h28c1.1 0 2 .9 2 2s-.9 2-2 2h-28c-1.1 0-2-.9-2-2s.9-2 2-2z">
+      </path>
+      <path class="cheese" fill="#EFC75E" d="M172.6 30.6h28v4h-2l-3 3-3-3h-20v-4z">
+      </path>
+      <path class="lettuce" fill="#3DB39E" d="M200.6 27.6l-28-.1v.1c-1.1.2-2 1.2-2 2.4 0 1.4 1.1 2.5 2.5 2.5 1.2 0 2.2-.9 2.4-2h4.1c0 1.1 1.1 2 2.5 2s2.5-.9 2.5-2h4c0 1.1 1.1 2 2.5 2s2.5-.9 2.5-2h4.1c.2 1.1 1.2 2 2.4 2 1.4 0 2.5-1.1 2.5-2.5 0-1.1-.9-2.1-2-2.4z">
+      </path>
+      <path class="tomato" fill="#BF392C" d="M172.6 24.6h28v3h-28v-3z"></path>
+      <path class="shadows" fill="#C69D63" d="M172.6 24.6h2c-.6 0-1-.4-1-1v-1c0-5.5 7.5-10 13-10h-2c-5.5 0-13 4.5-13 10v1c0 .5.4 1 1 1zm1 16v-2h-2v2c0 1.1.9 2 2 2h2c-1.1 0-2-.9-2-2z">
+      </path>
+      <path class="burger-shadow" fill="#A86433" d="M172.6 36.6c0-1.1.9-2 2-2h-2c-1.1 0-2 .9-2 2s.9 2 2 2h2c-1.1 0-2-.9-2-2z">
+      </path>
+      <path fill="#37A18E" d="M172.6 30.1c0-1.2.9-2.2 2-2.4v-.1h-2v.1c-1.1.2-2 1.2-2 2.4 0 1.4 1.1 2.5 2.5 2.5.4 0 .7-.1 1-.2-.9-.4-1.5-1.3-1.5-2.3zm9 .5h-2c0 1.1 1.1 2 2.5 2 .4 0 .7-.1 1-.2-.9-.3-1.5-1-1.5-1.8zm9 0h-2c0 1.1 1.1 2 2.5 2 .4 0 .7-.1 1-.2-.9-.3-1.5-1-1.5-1.8zm9 0h-2c.2 1.1 1.2 2 2.4 2 .4 0 .7-.1 1-.2-.7-.4-1.2-1-1.4-1.8z" class="lettuce-shadow">
+      </path>
+    </g>
+  </svg>
+</div>
 ```
 
 Now, style appropriately:
