@@ -46,7 +46,7 @@ use the classic background-image icon.
 To start - in your Gruntfile.js, set the value for `enhanceSVG` to `true` so the
 loader will parse the markup for icons that should be embedded at runtime:
 
-```
+```JavaScript
 grunticon: {
   foo: {
     files: {
@@ -64,13 +64,13 @@ Then, make sure you get the new loader that's produced for you when you run `gru
 
 After you've done this, you can have any icon embedded in the page and ready for styling just by adding a `data-grunticon-embed` attribute.
 
-```
+```html
 <div class="icon-burger alt" data-grunticon-embed></div>
 ```
 
 Once the loader runs, the SVG will be embedded:
 
-```
+```html
 <div style="background-image: none;" class="icon-burger alt">
   <svg class="svg-source" xmlns="http://www.w3.org/2000/svg" width="32" height="30" viewBox="170.6 12.6 32 30" enable-background="new 170.6 12.6 32 30">
     <g class="hamburger">
@@ -96,8 +96,7 @@ Once the loader runs, the SVG will be embedded:
 
 Now, style appropriately:
 
-```
-<style>
+```css
   .icon-burger {
     width: 32px;
     height: 30px;
@@ -115,7 +114,6 @@ Now, style appropriately:
   .icon-burger.alt .lettuce {
     fill: green;
   }
-</style>
 ```
 
 And voila! Styled SVG icons!
