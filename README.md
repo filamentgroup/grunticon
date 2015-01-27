@@ -157,7 +157,7 @@ better fit the pattern set by Grunt for this.
 
 These can be set in your Gruntfile.js config file. Grunticon is a multitask, making it easy to create as many export batches as you'd like. Just create one or more custom named objects within the `grunticon` object, and configure Grunticon `options` within it, like so:
 
-```
+```JavaScript
 grunticon: {
 	myIcons: {
 		files: [{
@@ -262,7 +262,7 @@ Allows you to specify custom selectors (in addition to the generated `cssprefix 
 
 Example:
 
-```
+```JavaScript
 {
 	"foo": [".icon-bar", ".baz"]
 }
@@ -270,7 +270,7 @@ Example:
 
 will produce:
 
-```
+```css
 .icon-bar,
 .bar,
 .icon-foo {
@@ -282,7 +282,7 @@ You can also use an asterisk in your custom selector!
 
 Examples:
 
-```
+```JavaScript
 customselectors: {
   "*": [".icon-$1:before", ".icon-$1-what", ".hey-$1"]
 },
@@ -290,7 +290,7 @@ cssprefix: ".icon-"
 ```
 
 Should give the file bear.svg the css
-```
+```css
 .icon-bear:before,
 .icon-bear-what,
 .hey-bear,
@@ -301,7 +301,7 @@ Should give the file bear.svg the css
 
 And if there are files bear.svg and cat.svg, the css should be like:
 
-```
+```css
 .icon-bear:before,
 .icon-bear-what,
 .hey-bear,
@@ -337,7 +337,7 @@ Default value: Goes to the example/preview.hbs file
 
 Takes a path to the template that will be used for the preview.html. Example of .hbs file contents:
 
-```
+```html
 <!doctype HTML>
 <html>
   <head>
@@ -389,7 +389,7 @@ more options will be available for you to tap into during templating.
 
 Example of .hbs file contents:
 
-```
+```css
 {{#each customselectors}}{{this}},{{/each}}
 {{prefix}}{{name}} {
 	background-image: url('{{datauri}}');
@@ -413,7 +413,7 @@ If compress is set to `true`, this will set the optimationLevel for optipng
 #### options.colors
 
 Allows you to predefine colors as variables that can be used in filename color configuration.
-```
+```js
 options: {
 	colors: {
 		myAwesomeRed: "#fc3d39",
@@ -436,7 +436,7 @@ bear.colors-white.svg
 
 And `dynamicColorOnly` is set to `true`:
 
-```
+```js
 {
 	dynamicColorOnly: true
 }
@@ -503,7 +503,7 @@ If run before running Grunticon, it can greatly reduce your filesizes!
 
 Here's an example:
 
-```
+```js
 svgmin: {
 	dist: {
 		files: [{
