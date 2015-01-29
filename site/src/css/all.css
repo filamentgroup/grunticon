@@ -4,6 +4,10 @@ body {
 	color: #444;
 }
 
+a {
+	color: #42b549;
+}
+
 .header.icon-top {
 	width: 100%;
 	height: 500px;
