@@ -109,6 +109,11 @@ h2 {
 	font-size: 1em;
 }
 
+.icon-browsers {
+	padding-bottom: 123px;
+	background-position: bottom left;
+}
+
 a.icon-plus {
 	display: block;
 	width: 76px;
