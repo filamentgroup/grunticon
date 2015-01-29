@@ -1,7 +1,18 @@
-.icon-plus.toggled,
+.icon-browsers { background-image: url('png/browsers.png'); background-repeat: no-repeat; }
+
 .icon-close { background-image: url('png/close.png'); background-repeat: no-repeat; }
+
+.icon-fg-logo { background-image: url('png/fg-logo.png'); background-repeat: no-repeat; }
 
 .icon-logo { background-image: url('png/logo.png'); background-repeat: no-repeat; }
 
+.icon-majestic { background-image: url('png/majestic.png'); background-repeat: no-repeat; }
+
+.icon-plane { background-image: url('png/plane.png'); background-repeat: no-repeat; }
+
 .icon-plus { background-image: url('png/plus.png'); background-repeat: no-repeat; }
+
+.icon-top { background-image: url('png/top.png'); background-repeat: no-repeat; }
+
+.icon-x { background-image: url('png/x.png'); background-repeat: no-repeat; }
 

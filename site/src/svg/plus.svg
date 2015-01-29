@@ -1,5 +1,1 @@
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="76.3px" height="76.3px" viewBox="0 0 76.3 76.3" enable-background="new 0 0 76.3 76.3" xml:space="preserve">
-	<rect x="28.5" y="0" width="19.2" height="76.3" class="v"/>
-	<rect x="0" y="28.5" width="76.3" height="19.2" class="h"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="76.3" height="76.3" viewBox="0 0 76.3 76.3"><path class="v" d="M28.5 0h19.2v76.3H28.5z"/><path class="h" d="M0 28.5h76.3v19.2H0z"/></svg>

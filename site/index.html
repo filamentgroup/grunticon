@@ -3,85 +3,9 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 		<title>Grunticon</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<style>
-			body {
-				font-family: sans-serif;
-				max-width: 40em;
-				margin: 0 auto;
-				padding: 2em 5%;
-			}
-
-			.fg {
-				text-align: center;
-			}
-			.fg em {
-				display: block;
-				font-style: italic;
-			}
-
-			h1.icon-logo {
-				width: 296px;
-				height: 230px;
-				overflow: hidden;
-				position: relative;
-				margin: 1em auto 2em;
-			}
-			.hide-a11y {
-				position: absolute;
-				left: -9999px;
-				top: -9999px;
-			}
-
-			a.icon-plus {
-				display: block;
-				width: 76px;
-				height: 76px;
-			}
-
-			.icon-plus svg rect {
-				fill: #42b549;
-
-				-webkit-transform: rotate(0deg);
-				-moz-transform: rotate(0deg);
-				-ms-transform: rotate(0deg);
-				-o-transform: rotate(0deg);
-				transform: rotate(0deg);
-
-				-webkit-transition: -webkit-transform 0.25s ease-in-out;
-				-ms-transition: -ms-transform 0.25s ease-in-out;
-				-o-transition: -o-transform 0.25s ease-in-out;
-				transition: transform 0.25s ease-in-out;
-			}
-			.icon-plus.toggled svg rect.v {
-				fill: #000;
-				-webkit-transform: rotate(315deg);
-				-moz-transform: rotate(315deg);
-				-ms-transform: rotate(315deg);
-				-o-transform: rotate(315deg);
-				transform: rotate(315deg);
-
-				-webkit-transition: -webkit-transform 0.25s ease-in-out, fill 0.5s ease-in-out;
-				-moz-transition: -moz-transform 0.25s ease-in-out, fill 0.5s ease-in-out;
-				-ms-transition: -ms-transform 0.25s ease-in-out, fill 0.5s ease-in-out;
-				-o-transition: -o-transform 0.25s ease-in-out, fill 0.5s ease-in-out;
-				transition: transform 0.25s ease-in-out, fill 0.5s ease-in-out;
-			}
-			.icon-plus.toggled svg rect.h {
-				fill: #000;
-				-webkit-transform: rotate(-225deg);
-				-moz-transform: rotate(-225deg);
-				-ms-transform: rotate(-225deg);
-				-o-transform: rotate(-225deg);
-				transform: rotate(-225deg);
-
-				-webkit-transition: -webkit-transform 0.25s ease-in-out, fill 0.5s ease-in-out;
-				-moz-transition: -moz-transform 0.25s ease-in-out, fill 0.5s ease-in-out;
-				-ms-transition: -ms-transform 0.25s ease-in-out, fill 0.5s ease-in-out;
-				-o-transition: -o-transform 0.25s ease-in-out, fill 0.5s ease-in-out;
-				transition: transform 0.25s ease-in-out, fill 0.5s ease-in-out;
-			}
-
-
+			<!--#include virtual="src/css/all.css" -->
 		</style>
 		<script>
 			/*! grunt-grunticon Stylesheet Loader - v2.0.0-beta.6 | https://github.com/filamentgroup/grunticon | (c) 2015 Scott Jehl, Filament Group, Inc. | MIT license. */
@@ -90,62 +14,71 @@
 			grunticon(["grunticon/icons.data.svg.css", "grunticon/icons.data.png.css", "grunticon/icons.fallback.css"], grunticon.svgLoadedCallback);
 		</script>
 	<noscript><link href="icons.fallback.css" rel="stylesheet"></noscript>
+	<link href='http://fonts.googleapis.com/css?family=Arvo|Pacifico' rel='stylesheet' type='text/css'>
 	</head>
 	<body>
 
+		<div class="header icon-top">
+			<div  class="head-inner">
+				<p class="fg"><a href="http://filamentgroup.com" class="icon-fg-logo">Filament Group</a> <em>very proudly presents</em><i class="icon-plane"></i></p>
 
-		<p class="fg">Filament Group <em>very proudly presents</em></p>
-
-		<h1 class="icon-logo"><span class="hide-a11y">Grunticon! <em>A Flexible SVG Workflow</em></span></h1>
-
-		<h2>What is Grunticon?</h2>
-
-		<p>Grunticon is a Grunt.js task that makes it easy to manage icons and background images for all devices, preferring HD (retina) SVG icons but also provides fallback support for standard definition browsers, and old browsers alike. From a CSS perspective, it's easy to use, as it generates a class referencing each icon; simple as that!</p>
-
-		<h2>Examples please!</h2>
-
-		<p>Sure thing! Here are some basic icons that use grunticon. Note how they’re sharp on any screen, regardless of resolution, and support multiple colors!</p>
-
-		<p>[examples here]</p>
-
-		<h2>Can I animate them?</h2>
-
-		<p><em>Is a uniconkey grumpy?!</em> As of version 2, Grunticon now gives you the option to embed an icon into your markup so you can write JavaScript or CSS directly against the SVG markup–the full power of SVG is now at your disposal!</p>
-
-		<p>Check out these icons with a little animation applied!</p>
-
-		<a href="#" class="icon-plus" data-grunticon-embed title="toggle appearance" ></a>
+				<h1 class="icon-logo"><span class="hide-a11y">Grunticon! <em>A Flexible SVG Workflow</em></span></h1>
+				<i class="icon-majestic"></i>
+			</div>
+		</div>
 
 
+		<div class="content">
+			<h2>What is Grunticon?</h2>
 
-		<script>
-			if( document.querySelector ){
-				var toggle = document.querySelector(".icon-plus");
-				var toggleClass = " toggled";
-				if( toggle ){
-					toggle.addEventListener( "click", function( e ){
-						if( this.className.indexOf( toggleClass ) > -1 ){
-							this.className = this.className.replace( toggleClass, "" );
-						}
-						else {
-							this.className += toggleClass;
-						}
-						e.preventDefault();
-					});
+			<p>Grunticon is a Grunt.js task that makes it easy to manage icons and background images for all devices, preferring HD (retina) SVG icons but also provides fallback support for standard definition browsers, and old browsers alike. From a CSS perspective, it's easy to use, as it generates a class referencing each icon; simple as that!</p>
+
+			<h2>Examples please!</h2>
+
+			<p>Sure thing! Here are some basic icons that use grunticon. Note how they’re sharp on any screen, regardless of resolution, and support multiple colors!</p>
+
+			<p>[examples here]</p>
+
+			<h2>Can I animate them?</h2>
+
+			<p><em>Is a uniconkey grumpy?!</em> As of version 2, Grunticon now gives you the option to embed an icon into your markup so you can write JavaScript or CSS directly against the SVG markup–the full power of SVG is now at your disposal!</p>
+
+			<p>Check out these icons with a little animation applied!</p>
+
+			<a href="#" class="icon-plus" data-grunticon-embed title="toggle appearance" ></a>
+
+
+
+			<script>
+				if( document.querySelector ){
+					var toggle = document.querySelector(".icon-plus");
+					var toggleClass = " icon-x";
+					if( toggle ){
+						toggle.addEventListener( "click", function( e ){
+							if( this.className.indexOf( toggleClass ) > -1 ){
+								this.className = this.className.replace( toggleClass, "" );
+							}
+							else {
+								this.className += toggleClass;
+							}
+							e.preventDefault();
+						});
+					}
 				}
-			}
-		</script>
+			</script>
 
-		<h2>Neat! So it only works in new browsers then, right?</h2>
+			<h2>Neat! So it only works in new browsers then, right?</h2>
 
-		<p><em>Wrong!</em> Grunticon generates fallback PNG images for you icons and makes sure those are used in any browser that doesn’t understand SVG. Go ahead, check out this page in IE6 if you’d like. You won’t see enhancements applied to the icons with CSS and JavaScript, but you’ll definitely get a static icon, and that’s often critical to the usability of your site. </p>
+			<p><em>Wrong!</em> Grunticon generates fallback PNG images for you icons and makes sure those are used in any browser that doesn’t understand SVG. Go ahead, check out this page in IE6 if you’d like. You won’t see enhancements applied to the icons with CSS and JavaScript, but you’ll definitely get a static icon, and that’s often critical to the usability of your site. </p>
 
-		<h2>Sold. How do I start using it?</h2>
+			<h2>Sold! How do I start using it?</h2>
 
-		<ol>
-			<li>First, you’re going to need Node.js installed. Go to nodejs.com and follow the instructions.</li>
-			<li>Next, you’re going to need Grunt. Go to gruntjs.com and follow the instructions.</li>
-		</ol>
+			<ol>
+				<li>First, you’re going to need Node.js installed. Go to nodejs.com and follow the instructions.</li>
+				<li>Next, you’re going to need Grunt. Go to gruntjs.com and follow the instructions.</li>
+			</ol>
+
+		</div>
 
 </body>
 </html>
