@@ -171,11 +171,11 @@ a.icon-plus {
 }
 .icon-plus.icon-x svg path.v {
 	fill: #000;
-	-webkit-transform: rotate(315deg);
-	-moz-transform: rotate(315deg);
-	-ms-transform: rotate(315deg);
-	-o-transform: rotate(315deg);
-	transform: rotate(315deg);
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	transform: rotate(45deg);
 
 	-webkit-transition: -webkit-transform 0.25s ease-in-out, fill 0.5s ease-in-out;
 	-moz-transition: -moz-transform 0.25s ease-in-out, fill 0.5s ease-in-out;
@@ -185,11 +185,11 @@ a.icon-plus {
 }
 .icon-plus.icon-x svg path.h {
 	fill: #000;
-	-webkit-transform: rotate(-225deg);
-	-moz-transform: rotate(-225deg);
-	-ms-transform: rotate(-225deg);
-	-o-transform: rotate(-225deg);
-	transform: rotate(-225deg);
+	-webkit-transform: rotate(-135deg);
+	-moz-transform: rotate(-135deg);
+	-ms-transform: rotate(-135deg);
+	-o-transform: rotate(-135deg);
+	transform: rotate(-135deg);
 
 	-webkit-transition: -webkit-transform 0.25s ease-in-out, fill 0.5s ease-in-out;
 	-moz-transition: -moz-transform 0.25s ease-in-out, fill 0.5s ease-in-out;
