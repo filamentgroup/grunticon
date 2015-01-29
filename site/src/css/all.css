@@ -108,7 +108,32 @@ h2 {
 .content p {
 	font-size: 1em;
 }
-
+pre,
+.icon-group {
+	margin: 1em 0;
+	padding: 1em;
+	border: 4px solid #a39c90;
+}
+pre {
+	background: #444;
+	color: #f3f2f0;
+	font-size: 1.2em;
+	font-family: consolata, monospace;
+}
+.icon-group {
+	background: #f3f2f0;
+	overflow: hidden;
+}
+.icon-group li {
+	float: left;
+	width: 33%;
+	list-style: none;
+	height: 100px;
+	background-position: 50% 50%;
+	min-width: 100px;
+	margin: 0;
+	padding: 0;
+}
 .icon-browsers {
 	padding-bottom: 123px;
 	background-position: bottom left;
