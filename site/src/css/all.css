@@ -238,10 +238,10 @@ pre {
 .icon-tower path.ring2,
 .icon-tower path.ring3,
 .icon-tower path.ring4 {
--webkit-animation: tower .2s infinite; /* Safari 4+ */
-  -moz-animation:    tower .2s infinite; /* Fx 5+ */
-  -o-animation:      tower .2s infinite; /* Opera 12+ */
-  animation:         tower .2s infinite; /* IE 10+, Fx 29+ */
+-webkit-animation: tower .4s infinite; /* Safari 4+ */
+  -moz-animation:    tower .4s infinite; /* Fx 5+ */
+  -o-animation:      tower .4s infinite; /* Opera 12+ */
+  animation:         tower .4s infinite; /* IE 10+, Fx 29+ */
 }
 .icon-tower path.ring2 {
 -webkit-animation-delay: .1s; /* Safari 4+ */
