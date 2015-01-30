@@ -60,7 +60,7 @@ grunticon: {
 }
 ```
 
-Then, make sure you get the new loader that's produced for you when you run `grunt` (it should be in the [same place as before](https://github.com/filamentgroup/grunticon/blob/master/example/output/grunticon.loader.js)).
+Then, make sure you get the new loader that's produced for you when you run `grunt` (it should be in the [same place as before](https://github.com/filamentgroup/grunticon/blob/master/example/output/grunticon.loader.js)) and inline that script in the `<head>`.
 
 After you've done this, you can have any icon embedded in the page and ready for styling just by adding a `data-grunticon-embed` attribute.
 
