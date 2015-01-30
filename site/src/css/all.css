@@ -51,10 +51,10 @@ background-repeat: repeat-x;
 	color: #fff;
 	position: relative;
 
- -webkit-animation: logo .5s ease-out 1; /* Safari 4+ */
-  -moz-animation:    logo .5s ease-out 1; /* Fx 5+ */
-  -o-animation:      logo .5s ease-out 1; /* Opera 12+ */
-  animation:         logo .5s ease-out 1; /* IE 10+, Fx 29+ */
+ -webkit-animation: logo 1s ease-out 1; /* Safari 4+ */
+  -moz-animation:    logo 1s ease-out 1; /* Fx 5+ */
+  -o-animation:      logo 1s ease-out 1; /* Opera 12+ */
+  animation:         logo 1s ease-out 1; /* IE 10+, Fx 29+ */
   transform: translateY(-10%);
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
@@ -67,6 +67,8 @@ background-repeat: repeat-x;
 	width: 200px;
 	height: 32px;
 	margin: 1.5em auto 0;
+	position: relative;
+	z-index: 200;
 }
 .fg em {
 	display: block;
@@ -140,39 +142,42 @@ animation-fill-mode: forwards;
 height: 35px;
 display: block;
 position: absolute;
-left: 85%;
+left: 81%;
 bottom: 0;
 background-position: 0 bottom;
 background-color: #1d8ac8;
 z-index: 100;
--webkit-transform: translateZ(0);
-transform: translateZ(0);
+
 }
 
 /* tower animation */
 @-webkit-keyframes skywriter {
-  0%   { left: 0; }
-  100%   { left: 83%; }
+  0%   {  transform: scaleY(5) translateX(-63%) translateY(10%); }
+ 40% { transform: scale(1) translateX(-34%) translateY(-2%); }
+  100%   {transform: scale(1) translateX(0); }
 }
 @-moz-keyframes skywriter {
-  0%   { left: 0; }
-  100%   { left: 83%; }
+  0%   {  transform: scaleY(5) translateX(-63%); }
+  40% { transform: scale(1) translateX(-34%) translateY(-2%); }
+  100%   {transform: scale(1) translateX(0); }
 }
 @-o-keyframes skywriter {
-  0%   { left: 0; }
-  100%   { left: 83%; }
+  0%   {  transform: scaleY(5) translateX(-63%); }
+  40% { transform: scale(1) translateX(-34%) translateY(-2%); }
+  100%   {transform: scale(1) translateX(0); }
 }
 @keyframes skywriter {
-  0%   { left: 0; }
-  100%   { left: 83%; }
+  0%   {  transform: scaleY(5) translateX(-63%); }
+   40% { transform: scale(1) translateX(-34%) translateY(-2%); }
+  100%   {transform: scale(1) translateX(0); }
 }
 
 
 .icon-plane {
--webkit-animation: skywriter 4s ease-in-out 1; /* Safari 4+ */
-  -moz-animation:    skywriter 4s ease-in-out 1; /* Fx 5+ */
-  -o-animation:      skywriter 4s ease-in-out 1; /* Opera 12+ */
-  animation:         skywriter 4s ease-in-out 1; /* IE 10+, Fx 29+ */
+-webkit-animation: skywriter 5.5s cubic-bezier(0.000, 0, 0.025, 1) 1; /* Safari 4+ */
+  -moz-animation:    skywriter 5.5s cubic-bezier(0.000, 0, 0.025, 1) 1; /* Fx 5+ */
+  -o-animation:      skywriter 5.5s cubic-bezier(0.000, 0, 0.025, 1) 1; /* Opera 12+ */
+  animation:         skywriter 5.5s cubic-bezier(0.000, 0, 0.025, 1) 1; /* IE 10+, Fx 29+ */
 }
 
 
