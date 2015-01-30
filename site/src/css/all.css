@@ -203,6 +203,25 @@ z-index: 20;
 	line-height: 1.4;
 	position: relative;
 }
+
+
+.footer {
+	max-width: 45em;
+	padding: .5em 5% ;
+	margin: 0 auto;
+	background-color: #1d8ac8;
+	color: #fff;
+	text-align: center;
+}
+
+.footer .icon-fg-logo {
+	display: block;
+	text-indent: -9999px;
+	overflow: hidden;
+	width: 200px;
+	height: 32px;
+	margin: .5em auto;
+}
 h2,
 h3 {
 	color: #1073B3;
