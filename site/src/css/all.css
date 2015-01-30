@@ -8,17 +8,24 @@ a {
 	color: #42b549;
 }
 
-.header.icon-top {
+
+
+.header {
 	width: 100%;
-	height: 500px;
+	height: 485px;
 	padding: 1px 0;
-	background-repeat: repeat-x;
-	background-position: center bottom;
 	background-color: #1d8ac8;
+	position: relative;
+	overflow: hidden;
 }
 .head-inner {
+background-repeat: repeat-x;
+	background-position: center bottom;
 
-
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 500px;
 }
 
 /* fade down animation */
@@ -96,27 +103,27 @@ h1.icon-logo {
 
 /* fade down animation */
 @-webkit-keyframes glogo {
-  0%   { opacity: 0; transform: translateY(10%); }
+  0%   { opacity: 0; transform: translateY(70%); }
   100%   { opacity: 1; transform: translateY(0); }
 }
 @-moz-keyframes glogo {
-  0%   { opacity: 0; transform: translateY(10%); }
+  0%   { opacity: 0; transform: translateY(70%); }
   100%   { opacity: 1; transform: translateY(0); }
 }
 @-o-keyframes glogo {
-  0%   { opacity: 0; transform: translateY(10%); }
+  0%   { opacity: 0; transform: translateY(70%); }
   100%   { opacity: 1; transform: translateY(0); }
 }
 @keyframes glogo {
-  0%   { opacity: 0; transform: translateY(10%); }
+  0%   { opacity: 0; transform: translateY(70%); }
   100%   { opacity: 1; transform: translateY(0); }
 }
 .icon-logo {
 
-  -webkit-animation: glogo 3s ease-out 1; /* Safari 4+ */
-  -moz-animation:    glogo 3s ease-out 1; /* Fx 5+ */
-  -o-animation:      glogo 3s ease-out 1; /* Opera 12+ */
-  animation:         glogo 3s ease-out 1; /* IE 10+, Fx 29+ */
+  -webkit-animation: glogo 2s ease-in-out 1; /* Safari 4+ */
+  -moz-animation:    glogo 2s ease-in-out 1; /* Fx 5+ */
+  -o-animation:      glogo 2s ease-in-out 1; /* Opera 12+ */
+  animation:         glogo 2s ease-in-out 1; /* IE 10+, Fx 29+ */
     -webkit-animation-delay: 3s; /* Safari 4+ */
   -moz-animation-delay: 3s; /* Fx 5+ */
   -o-animation-delay: 3s; /* Opera 12+ */
@@ -176,6 +183,7 @@ top: 15em;
 display: block;
 width: 86px;
 height: 85px;
+z-index: 20;
 }
 .hide-a11y {
 	position: absolute;
@@ -188,6 +196,7 @@ height: 85px;
 	padding: 0em 5% 2em;
 	margin: -6em auto 0;
 	line-height: 1.4;
+	position: relative;
 }
 h2,
 h3 {
