@@ -220,47 +220,51 @@ pre {
 /* tower animation */
 @-webkit-keyframes tower {
   0%   { opacity: 0; }
-  100%   { opacity: 1; }
+  80%   { opacity: 1; }
+  100%   { opacity: 0; }
 }
 @-moz-keyframes tower {
   0%   { opacity: 0; }
-  100%   { opacity: 1; }
+  80%   { opacity: 1; }
+  100%   { opacity: 0; }
 }
 @-o-keyframes tower {
   0%   { opacity: 0; }
-  100%   { opacity: 1; }
+  80%   { opacity: 1; }
+  100%   { opacity: 0; }
 }
 @keyframes tower {
   0%   { opacity: 0; }
-  100%   { opacity: 1; }
+  80%   { opacity: 1; }
+  100%   { opacity: 0; }
 }
 
 .icon-tower path.ring1,
 .icon-tower path.ring2,
 .icon-tower path.ring3,
 .icon-tower path.ring4 {
--webkit-animation: tower .4s infinite; /* Safari 4+ */
-  -moz-animation:    tower .4s infinite; /* Fx 5+ */
-  -o-animation:      tower .4s infinite; /* Opera 12+ */
-  animation:         tower .4s infinite; /* IE 10+, Fx 29+ */
+-webkit-animation: tower 1s infinite; /* Safari 4+ */
+  -moz-animation:    tower 1s infinite; /* Fx 5+ */
+  -o-animation:      tower 1s infinite; /* Opera 12+ */
+  animation:         tower 1s infinite; /* IE 10+, Fx 29+ */
 }
 .icon-tower path.ring2 {
--webkit-animation-delay: .1s; /* Safari 4+ */
-  -moz-animation-delay: .1s; /* Fx 5+ */
-  -o-animation-delay:.1s; /* Opera 12+ */
-  animation-delay:.1s; /* IE 10+, Fx 29+ */
-}
-.icon-tower path.ring3 {
 -webkit-animation-delay: .2s; /* Safari 4+ */
   -moz-animation-delay: .2s; /* Fx 5+ */
   -o-animation-delay:.2s; /* Opera 12+ */
   animation-delay:.2s; /* IE 10+, Fx 29+ */
 }
+.icon-tower path.ring3 {
+-webkit-animation-delay: .4s; /* Safari 4+ */
+  -moz-animation-delay: .4s; /* Fx 5+ */
+  -o-animation-delay:.4s; /* Opera 12+ */
+  animation-delay:.4s; /* IE 10+, Fx 29+ */
+}
 .icon-tower path.ring4 {
--webkit-animation-delay: .3s; /* Safari 4+ */
-  -moz-animation-delay: .3s; /* Fx 5+ */
-  -o-animation-delay:.3s; /* Opera 12+ */
-  animation-delay:.3s; /* IE 10+, Fx 29+ */
+-webkit-animation-delay: .6s; /* Safari 4+ */
+  -moz-animation-delay: .6s; /* Fx 5+ */
+  -o-animation-delay:.6s; /* Opera 12+ */
+  animation-delay:.6s; /* IE 10+, Fx 29+ */
 }
 
 /* conveyor animation */
