@@ -99,14 +99,19 @@ height: 85px;
 }
 h2,
 h3 {
-	font-family: pacifico, cursive;
 	color: #1073B3;
 	font-weight: normal;
 	line-height: 1.2;
 }
 h2 {
+	font-family: pacifico, cursive;
 	font-size: 1.4em;
 	margin: 1.5em 0 .1em;
+}
+h3 {
+	text-transform: uppercase;
+	font-size: 1em;
+	margin-bottom: 0;
 }
 
 .content p {
@@ -128,7 +133,7 @@ pre {
 	background: #f3f2f0;
 	overflow: hidden;
 }
-.icon-group li {
+.icon-group div {
 	float: left;
 	width: 33%;
 	list-style: none;
@@ -138,66 +143,72 @@ pre {
 	margin: 0;
 	padding: 0;
 }
+.icon-lamp-a path.lampshade { fill: brown; }
+.icon-lamp-b path.lampshade { fill: turquoise; }
+.icon-lamp-c path.lampshade { fill: papayawhip; }
+
 .icon-browsers {
 	padding-bottom: 123px;
 	background-position: bottom left;
 }
 
-a.icon-plus {
-	display: block;
-	width: 76px;
-	height: 76px;
+
+@-webkit-keyframes lightblink {
+  0%   { opacity: 0; }
+  18%   { opacity: 0; }
+  19%   { opacity: .4; }
+  20%   { opacity: 0; }
+  23%   { opacity: 0; }
+  24%   { opacity: .4; }
+  25%   { opacity: 0; }
+  40%   { opacity: 0; min-height: 0; }
+  90% { opacity: 1; min-height: 100px;  }
+  100%   { opacity: 0; min-height: 0; }
+}
+@-moz-keyframes lightblink {
+  0%   { opacity: 0; }
+  18%   { opacity: 0; }
+  19%   { opacity: .4; }
+  20%   { opacity: 0; }
+  23%   { opacity: 0; }
+  24%   { opacity: .4; }
+  25%   { opacity: 0; }
+  40%   { opacity: 0; min-height: 0; }
+  90% { opacity: 1; min-height: 100px;  }
+  100%   { opacity: 0; min-height: 0; }
+}
+@-o-keyframes lightblink {
+   0%   { opacity: 0; }
+  18%   { opacity: 0; }
+  19%   { opacity: .4; }
+  20%   { opacity: 0; }
+  23%   { opacity: 0; }
+  24%   { opacity: .4; }
+  25%   { opacity: 0; }
+  40%   { opacity: 0; min-height: 0; }
+  90% { opacity: 1; min-height: 100px;  }
+  100%   { opacity: 0; min-height: 0; }
+}
+@keyframes lightblink {
+  0%   { opacity: 0; }
+  18%   { opacity: 0; }
+  19%   { opacity: .4; }
+  20%   { opacity: 0; }
+  23%   { opacity: 0; }
+  24%   { opacity: .4; }
+  25%   { opacity: 0; }
+  40%   { opacity: 0; min-height: 0; }
+  90% { opacity: 1; min-height: 100px;  }
+  100%   { opacity: 0; min-height: 0; }
 }
 
-.icon-plus svg path {
-	fill: #42b549;
-
-	-webkit-transform: rotate(0deg);
-	-moz-transform: rotate(0deg);
-	-ms-transform: rotate(0deg);
-	-o-transform: rotate(0deg);
-	transform: rotate(0deg);
-
-	-webkit-transform-origin: 50% 50%;
-	-moz-transform-origin: 50% 50%;
-	-ms-transform-origin: 50% 50%;
-	-o-transform-origin: 50% 50%;
-	transform-origin: 50% 50%;
-
-	-webkit-transition: -webkit-transform 0.25s ease-in-out;
-	-ms-transition: -ms-transform 0.25s ease-in-out;
-	-o-transition: -o-transform 0.25s ease-in-out;
-	transition: transform 0.25s ease-in-out;
+.icon-lamp-blink path.beam {
+  -webkit-animation: lightblink 4s infinite; /* Safari 4+ */
+  -moz-animation:    lightblink 4s infinite; /* Fx 5+ */
+  -o-animation:      lightblink 4s infinite; /* Opera 12+ */
+  animation:         lightblink 4s infinite; /* IE 10+, Fx 29+ */
+  fill: rgba(255,255,255,.7);
 }
-.icon-plus.icon-x svg path.v {
-	fill: #000;
-	-webkit-transform: rotate(45deg);
-	-moz-transform: rotate(45deg);
-	-ms-transform: rotate(45deg);
-	-o-transform: rotate(45deg);
-	transform: rotate(45deg);
-
-	-webkit-transition: -webkit-transform 0.25s ease-in-out, fill 0.5s ease-in-out;
-	-moz-transition: -moz-transform 0.25s ease-in-out, fill 0.5s ease-in-out;
-	-ms-transition: -ms-transform 0.25s ease-in-out, fill 0.5s ease-in-out;
-	-o-transition: -o-transform 0.25s ease-in-out, fill 0.5s ease-in-out;
-	transition: transform 0.25s ease-in-out, fill 0.5s ease-in-out;
-}
-.icon-plus.icon-x svg path.h {
-	fill: #000;
-	-webkit-transform: rotate(-135deg);
-	-moz-transform: rotate(-135deg);
-	-ms-transform: rotate(-135deg);
-	-o-transform: rotate(-135deg);
-	transform: rotate(-135deg);
-
-	-webkit-transition: -webkit-transform 0.25s ease-in-out, fill 0.5s ease-in-out;
-	-moz-transition: -moz-transform 0.25s ease-in-out, fill 0.5s ease-in-out;
-	-ms-transition: -ms-transform 0.25s ease-in-out, fill 0.5s ease-in-out;
-	-o-transition: -o-transform 0.25s ease-in-out, fill 0.5s ease-in-out;
-	transition: transform 0.25s ease-in-out, fill 0.5s ease-in-out;
-}
-
 
 
 @media (min-width: 40em){

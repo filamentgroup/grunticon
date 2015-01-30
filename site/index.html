@@ -35,11 +35,11 @@
 
 			<p>Here are a few example icons from the <a href="http://tympanus.net/codrops/2014/10/27/freebie-ballicons-2-vol-2/">Balloonicons set</a> by <a href="http://pixelbuddha.net/">PixelBuddha</a>. Note how the SVGs are sharp on any screen, regardless of resolution, and support multiple colors!</p>
 
-			<ul class="icon-group">
-				<li class="icon-vespa"></li>
-				<li class="icon-converse"></li>
-				<li class="icon-skate"></li>
-			</ul>
+			<div class="icon-group">
+				<div class="icon-vespa"></div>
+				<div class="icon-converse"></div>
+				<div class="icon-skate"></div>
+			</div>
 
 			<p>All you need to do is drop SVG icons into a folder and configure Grunticon to process them, and you can reference them on your page just by adding a class, like this:</p>
 
@@ -48,14 +48,36 @@
 &lt;div class=&quot;icon-skate&quot;&gt;&lt;/div&gt;</code></pre>
 
 
+			<h2>Can I apply CSS to them?</h2>
+
+			<p>Absolutely. One of the many benefits to SVG is that it's designed specifically for the purpose of creating rich vector artwork for the web. As of Grunticon version 2, you can specify that some or all of your icons be embedded directly into your markup, so you can write CSS against the elements in your icon's SVG markup!</p>
+
+			<p>Here's an example of a single icon recolored with CSS alone.</p>
+
+			<div class="icon-group">
+				<div class="icon-lamp icon-lamp-a" data-grunticon-embed></div>
+				<div class="icon-lamp icon-lamp-b" data-grunticon-embed></div>
+				<div class="icon-lamp icon-lamp-c" data-grunticon-embed></div>
+			</div>
+
+<p>And here's what the code for that looks like:</p>
+
+<h3>HTML:</h3>
+<pre><code>&lt;div class=&quot;icon-lamp icon-lamp-a&quot; data-grunticon-embed&gt;&lt;/div&gt;
+&lt;div class=&quot;icon-lamp icon-lamp-b&quot; data-grunticon-embed&gt;&lt;/div&gt;
+&lt;div class=&quot;icon-lamp icon-lamp-c&quot; data-grunticon-embed&gt;&lt;/div&gt;</code></pre>
+
+<h3>CSS:</h3>
+<pre><code>.icon-lamp-a path.lampshade { fill: brown; }
+.icon-lamp-b path.lampshade { fill: red; }
+.icon-lamp-c path.lampshade { fill: papayawhip; }</code></pre>
+
 
 			<h2>Can I animate them?</h2>
 
-			<p><em>Is a uniconkey grumpy?!</em> As of version 2, Grunticon now gives you the option to embed an icon into your markup so you can write JavaScript or CSS directly against the SVG markup–the full power of SVG is now at your disposal!</p>
+			<p><em>Is a uniconkey grumpy?!</em> With the new embedding feature, you can write JavaScript to manipulate your SVGs as well.Check out these icons with a little animation applied!</p>
 
-			<p>Check out these icons with a little animation applied!</p>
-
-			<a href="#" class="icon-plus" data-grunticon-embed title="toggle appearance" ></a>
+			<a href="#" class="icon-lamp icon-lamp-blink" data-grunticon-embed title="toggle appearance" ></a>
 
 
 
