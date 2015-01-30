@@ -239,6 +239,7 @@ pre {
 .icon-group {
 	background: #f3f2f0;
 	overflow: hidden;
+	padding: 0;
 }
 .icon-group div,
 .icon-group a {
@@ -249,7 +250,7 @@ pre {
 	height: 100px;
 	background-position: 50% 50%;
 	min-width: 100px;
-	margin: 0;
+	margin: .5em;
 	padding: 0;
 }
 .icon-lamp-a path.lampshade { fill: brown; }
