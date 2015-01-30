@@ -153,7 +153,7 @@ pre {
 	background-position: bottom left;
 }
 
-
+/* lightbulb animation */
 @-webkit-keyframes lightblink {
   0%   { opacity: 0; }
   8%   { opacity: 0; }
@@ -216,6 +216,51 @@ pre {
   opacity: 1;
 }
 
+/* tower animation */
+@-webkit-keyframes tower {
+  0%   { opacity: 0; }
+  100%   { opacity: 1; }
+}
+@-moz-keyframes tower {
+  0%   { opacity: 0; }
+  100%   { opacity: 1; }
+}
+@-o-keyframes tower {
+  0%   { opacity: 0; }
+  100%   { opacity: 1; }
+}
+@keyframes tower {
+  0%   { opacity: 0; }
+  100%   { opacity: 1; }
+}
+
+.icon-tower path.ring1,
+.icon-tower path.ring2,
+.icon-tower path.ring3,
+.icon-tower path.ring4 {
+-webkit-animation: tower .2s infinite; /* Safari 4+ */
+  -moz-animation:    tower .2s infinite; /* Fx 5+ */
+  -o-animation:      tower .2s infinite; /* Opera 12+ */
+  animation:         tower .2s infinite; /* IE 10+, Fx 29+ */
+}
+.icon-tower path.ring2 {
+-webkit-animation-delay: .1s; /* Safari 4+ */
+  -moz-animation-delay: .1s; /* Fx 5+ */
+  -o-animation-delay:.1s; /* Opera 12+ */
+  animation-delay:.1s; /* IE 10+, Fx 29+ */
+}
+.icon-tower path.ring3 {
+-webkit-animation-delay: .2s; /* Safari 4+ */
+  -moz-animation-delay: .2s; /* Fx 5+ */
+  -o-animation-delay:.2s; /* Opera 12+ */
+  animation-delay:.2s; /* IE 10+, Fx 29+ */
+}
+.icon-tower path.ring4 {
+-webkit-animation-delay: .3s; /* Safari 4+ */
+  -moz-animation-delay: .3s; /* Fx 5+ */
+  -o-animation-delay:.3s; /* Opera 12+ */
+  animation-delay:.3s; /* IE 10+, Fx 29+ */
+}
 
 @media (min-width: 40em){
 	.content {
