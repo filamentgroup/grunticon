@@ -33,7 +33,8 @@
 		<div class="content">
 			<h2>What is Grunticon?</h2>
 
-			<p>Grunticon is a Grunt.js task that makes it easy to use SVGs (Scalable Vector Graphics) for crisp, resolution independent icons, logos, illustrations and background images. SVGs don't work on some older browsers so Grunticon handles it for you by auto-generating bitmap (PNG) fallback images and loading the right format compatibility with pretty much any browser. From a CSS perspective, it's easy to use, as it generates a class referencing each icon; simple as that!</p>
+			<p>Grunticon is a Grunt.js task that makes it easy to use SVGs (Scalable Vector Graphics) for crisp, resolution independent icons, logos, illustrations and background images. SVGs aren't supported everywhere so Grunticon auto-generates bitmap (PNG) fallback images and loads the right format for compatibility with pretty much any browser.</p>
+
 
 			<p>Here are a few example icons from the <a href="http://tympanus.net/codrops/2014/10/27/freebie-ballicons-2-vol-2/">Balloonicons set</a> by <a href="http://pixelbuddha.net/">PixelBuddha</a>. Note how the SVGs are sharp on any screen, regardless of resolution, and support multiple colors!</p>
 
@@ -43,7 +44,7 @@
 				<div class="icon-skate"></div>
 			</div>
 
-			<p>All you need to do is drop SVG icons into a folder and configure Grunticon to process them, and you can reference them on your page just by adding a class, like this:</p>
+			<p>Once you set up Grunticon, your workflow is quick and easy: export your SVG files into a folder, and once you run the task, Grunti generates a stylesheet with classes for each graphic with the SVG paths (or PNG fallback) as a background image that you can apply by adding a class to any element; simple as that!</p>
 
 <pre><code>&lt;div class=&quot;icon-vespa&quot;&gt;&lt;/div&gt;
 &lt;div class=&quot;icon-converse&quot;&gt;&lt;/div&gt;
