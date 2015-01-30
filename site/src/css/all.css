@@ -246,12 +246,11 @@ pre {
 .icon-group a {
 	float: left;
 	width: 30%;
-	margin: 1.5%;
 	list-style: none;
 	height: 100px;
 	background-position: 50% 50%;
 	min-width: 100px;
-	margin: 1em;
+	margin: 1em 1.5%;
 	padding: 0;
 }
 .icon-lamp-a path.lampshade { fill: brown; }
