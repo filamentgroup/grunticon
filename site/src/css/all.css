@@ -128,6 +128,7 @@ pre {
 	color: #f3f2f0;
 	font-size: 1.2em;
 	font-family: consolata, monospace;
+	overflow: auto;
 }
 .icon-group {
 	background: #f3f2f0;
@@ -155,59 +156,64 @@ pre {
 
 @-webkit-keyframes lightblink {
   0%   { opacity: 0; }
-  18%   { opacity: 0; }
-  19%   { opacity: .4; }
-  20%   { opacity: 0; }
-  23%   { opacity: 0; }
-  24%   { opacity: .4; }
-  25%   { opacity: 0; }
-  40%   { opacity: 0; min-height: 0; }
-  90% { opacity: 1; min-height: 100px;  }
-  100%   { opacity: 0; min-height: 0; }
+  8%   { opacity: 0; }
+  9%   { opacity: .4; }
+  10%   { opacity: 0; }
+  13%   { opacity: 0; }
+  14%   { opacity: .4; }
+  15%   { opacity: 0; }
+  30%   { opacity: 0; min-height: 0; }
+  100% { opacity: 1; min-height: 100px;  }
 }
 @-moz-keyframes lightblink {
   0%   { opacity: 0; }
-  18%   { opacity: 0; }
-  19%   { opacity: .4; }
-  20%   { opacity: 0; }
-  23%   { opacity: 0; }
-  24%   { opacity: .4; }
-  25%   { opacity: 0; }
-  40%   { opacity: 0; min-height: 0; }
-  90% { opacity: 1; min-height: 100px;  }
-  100%   { opacity: 0; min-height: 0; }
+  8%   { opacity: 0; }
+  9%   { opacity: .4; }
+  10%   { opacity: 0; }
+  13%   { opacity: 0; }
+  14%   { opacity: .4; }
+  15%   { opacity: 0; }
+  30%   { opacity: 0; min-height: 0; }
+  100% { opacity: 1; min-height: 100px;  }
 }
 @-o-keyframes lightblink {
-   0%   { opacity: 0; }
-  18%   { opacity: 0; }
-  19%   { opacity: .4; }
-  20%   { opacity: 0; }
-  23%   { opacity: 0; }
-  24%   { opacity: .4; }
-  25%   { opacity: 0; }
-  40%   { opacity: 0; min-height: 0; }
-  90% { opacity: 1; min-height: 100px;  }
-  100%   { opacity: 0; min-height: 0; }
+  0%   { opacity: 0; }
+  8%   { opacity: 0; }
+  9%   { opacity: .4; }
+  10%   { opacity: 0; }
+  13%   { opacity: 0; }
+  14%   { opacity: .4; }
+  15%   { opacity: 0; }
+  30%   { opacity: 0; min-height: 0; }
+  100% { opacity: 1; min-height: 100px;  }
 }
 @keyframes lightblink {
   0%   { opacity: 0; }
-  18%   { opacity: 0; }
-  19%   { opacity: .4; }
-  20%   { opacity: 0; }
-  23%   { opacity: 0; }
-  24%   { opacity: .4; }
-  25%   { opacity: 0; }
-  40%   { opacity: 0; min-height: 0; }
-  90% { opacity: 1; min-height: 100px;  }
-  100%   { opacity: 0; min-height: 0; }
+  8%   { opacity: 0; }
+  9%   { opacity: .4; }
+  10%   { opacity: 0; }
+  13%   { opacity: 0; }
+  14%   { opacity: .4; }
+  15%   { opacity: 0; }
+  30%   { opacity: 0; min-height: 0; }
+  100% { opacity: 1; min-height: 100px;  }
 }
-
+.icon-lamp-blink path.bulb-on,
+.icon-lamp-blink path.shade-inner,
 .icon-lamp-blink path.beam {
-  -webkit-animation: lightblink 4s infinite; /* Safari 4+ */
-  -moz-animation:    lightblink 4s infinite; /* Fx 5+ */
-  -o-animation:      lightblink 4s infinite; /* Opera 12+ */
-  animation:         lightblink 4s infinite; /* IE 10+, Fx 29+ */
+  opacity: 0;
+}
+.icon-lamp-blink path.beam {
   fill: rgba(255,255,255,.7);
+}
+.icon-lamp-blink.on path.bulb-on,
+.icon-lamp-blink.on path.shade-inner,
+.icon-lamp-blink.on path.beam {
+-webkit-animation: lightblink 3s 1; /* Safari 4+ */
+  -moz-animation:    lightblink 3s 1; /* Fx 5+ */
+  -o-animation:      lightblink 3s 1; /* Opera 12+ */
+  animation:         lightblink 3s 1; /* IE 10+, Fx 29+ */
+  opacity: 1;
 }
 
 
