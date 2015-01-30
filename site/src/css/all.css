@@ -269,20 +269,44 @@ pre {
 
 /* conveyor animation */
 @-webkit-keyframes conveyor {
-  0%   { transform: translateX(0px); }
-  100%   { transform: translateX(-30px);}
+  0%   {
+  	-webkit-transform: translateX(0px);
+  	transform: translateX(0px);
+  }
+  100%   {
+	-webkit-transform: translateX(-30px);
+  	transform: translateX(-30px);
+  }
 }
 @-moz-keyframes conveyor {
-  0%   { transform: translateX(0px); }
-  100%   { transform: translateX(-30px);}
+  0%   {
+  	-webkit-transform: translateX(0px);
+  	transform: translateX(0px);
+  }
+  100%   {
+	-webkit-transform: translateX(-30px);
+  	transform: translateX(-30px);
+  }
 }
 @-o-keyframes conveyor {
-  0%   { transform: translateX(0px); }
-  100%   { transform: translateX(-30px);}
+  0%   {
+  	-webkit-transform: translateX(0px);
+  	transform: translateX(0px);
+  }
+  100%   {
+	-webkit-transform: translateX(-30px);
+  	transform: translateX(-30px);
+  }
 }
 @keyframes conveyor {
-  0%   { transform: translateX(0px); }
-  100%   { transform: translateX(-30px);}
+  0%   {
+  	-webkit-transform: translateX(0px);
+  	transform: translateX(0px);
+  }
+  100%   {
+	-webkit-transform: translateX(-30px);
+  	transform: translateX(-30px);
+  }
 }
 
 .icon-conveyor g.products path {
