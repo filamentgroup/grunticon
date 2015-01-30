@@ -455,6 +455,64 @@ Grunticon allows you to output any icon in different colors simply by changing i
 
 *A note on filesize impact:* Adding color variations of an icon involves creating duplicates of that icon's SVG source in the CSS, so unfortunately, each color variation will cause an increase in filesize. However, transferring CSS with gzip compression can negate much of this filesize increase, and we highly recommend always transferring with gzip. In testing, we found that creating a color variation of every icon in our example set increased overall size by 25%, rather than 100% as a raw text duplicate would increase. That said, size increases for non-SVG-supporting browsers will be more dramatic, as the fallback PNGs will not have the heavy transfer compression as SVG enjoys. We advise using this feature on a case-by-case basis to ensure overhead is kept to a minimum.
 
+### Grunticon Loader Methods
+
+With `enhanceSVG` turned on, the Grunticon loader has a few exposed methods and attributes on the `grunticon` object that you can use:
+
+#### href
+Type: `String`
+
+The url that is being loaded by Grunticon.
+
+#### method
+Type: `String`
+
+Is `"svg"` if the page loaded the SVG-based css. Is `"datapng"` if the page loaded the png with datauri-based css.
+Is `"png"` if the page loaded the plain link to png-based css.
+
+#### loadCSS
+See: https://github.com/filamentgroup/loadcss
+
+#### getIcons
+Arguments: `String`
+Returns: `Object`
+
+Takes SVG href and returns all of the icon selectors and the svgs associated with them in an object formatted
+in this way:
+```
+{
+  grunticon:selector: "SVG Content in String"
+}
+```
+
+#### embedIcons
+Arguments: `Object`
+Returns: `NodeList`
+
+Takes icons in the object format outputted by `getIcons` and then queries the page for all icons with the
+`data-grunticon-embed` attribute. For each of these that it finds, it places the SVG contents associated with
+the relevant selector in the icons. It then returns the NodeList of all of the elements that had SVGs embedded
+in them.
+
+#### ready
+Arguments: `Function`
+Returns: None
+
+An alternative to listening for the `DOMContentLoaded` event. Takes a function as a callback and calls the function
+when the DOM is ready.
+
+#### svgLoadedCallback
+Arguments: None
+Returns: None
+
+Uses the above methods to call:
+```
+ready(function(){
+  embedIcons(getIcons(grunticon.href));
+});
+```
+
+
 ## Browser testing results for icon output
 
 The generated asynchronous CSS loader script delivers an appropriate icon stylesheet depending on a device/browser's capabilities. Grunticon is supported in cases where icon fonts fail.
