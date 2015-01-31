@@ -202,8 +202,7 @@ module.exports = function( grunt , undefined ) {
 				grunt.verbose.writeln( "Delete Temp Files" );
 				fs.removeSync( tmp );
 
-				var impressed = grunt.util.kindOf(result) === "array" ? result.length.toString() : "0";
-				grunt.log.ok( "Grunticon processed " + impressed + " files." );
+				grunt.log.ok( "Grunticon processed " + files.length + " files." );
 
 				done();
 			});
