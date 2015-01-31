@@ -59,7 +59,7 @@ module.exports = function( grunt , undefined ) {
 		});
 
 		// just a quick starting message
-		grunt.log.writeln( "Look, it's a grunticon!" );
+		grunt.verbose.writeln( "Look, it's a grunticon!" );
 
 		var files = this.files.filter( function( file ){
 			return file.src[0].match( /png|svg/ );
@@ -88,12 +88,12 @@ module.exports = function( grunt , undefined ) {
 		fs.mkdirpSync( config.dest );
 
 		// minify the source of the grunticon loader and write that to the output
-		grunt.log.writeln( "grunticon now minifying the stylesheet loader source." );
+		grunt.verbose.writeln( "grunticon now minifying the stylesheet loader source." );
 		var banner = fs.readFileSync( config.files.banner );
 		config.min = banner + "\n" + uglify.minify( config.files.loader ).code;
 		if( config.enhanceSVG ){ config.min += uglify.minify( config.files.embed ).code; }
 		fs.writeFileSync( path.join( config.dest, config.loadersnippet ), config.min );
-		grunt.log.writeln( "grunticon loader file created." );
+		grunt.verbose.writeln( "grunticon loader file created." );
 
 		var svgToPngOpts = {
 			defaultWidth: config.defaultWidth,
@@ -115,7 +115,7 @@ module.exports = function( grunt , undefined ) {
 		var o2 = JSON.parse(JSON.stringify(o)); /* clone object */
 		o2.noencodepng = true;
 
-		grunt.log.writeln("Coloring SVG files");
+		grunt.verbose.writeln("Coloring SVG files");
 		// create the tmp directory
 		var tmp = path.join( config.tmpPath, config.tmpDir );
 		if( fs.existsSync( tmp ) ){
@@ -145,7 +145,7 @@ module.exports = function( grunt , undefined ) {
 				fs.copySync( f, path.join( tmp, filename ) );
 			});
 
-			grunt.log.writeln("Converting SVG to PNG");
+			grunt.verbose.writeln("Converting SVG to PNG");
 
 			var tmpFiles = fs.readdirSync( tmp )
 				.map( function( file ){
@@ -181,7 +181,7 @@ module.exports = function( grunt , undefined ) {
 					pngde = new DirectoryEncoder( pngs, path.join( config.dest, config.datapngcss ), o ),
 					pngdefall = new DirectoryEncoder( pngs, path.join( config.dest, config.urlpngcss ), o2 );
 
-				grunt.log.writeln("Writing CSS");
+				grunt.verbose.writeln("Writing CSS");
 				try {
 					svgde.encode();
 					pngde.encode();
@@ -191,7 +191,7 @@ module.exports = function( grunt , undefined ) {
 					done( false );
 				}
 
-				grunt.log.writeln( "Grunticon now creating Preview File" );
+				grunt.verbose.writeln( "Grunticon now creating Preview File" );
 				try {
 					helper.createPreview( tmp, config );
 				} catch(er) {
@@ -199,8 +199,12 @@ module.exports = function( grunt , undefined ) {
 					done( false );
 				}
 
-				grunt.log.writeln( "Delete Temp Files" );
+				grunt.verbose.writeln( "Delete Temp Files" );
 				fs.removeSync( tmp );
+
+				var impressed = grunt.util.kindOf(result) === "array" ? result.length.toString() : "0";
+				grunt.log.ok( "Grunticon processed " + impressed + " files." );
+
 				done();
 			});
 		});
