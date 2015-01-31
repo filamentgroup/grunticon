@@ -30,8 +30,8 @@ background-repeat: repeat-x;
 
 /* fade down animation */
 @-webkit-keyframes logo {
-  0%   { opacity: 0; transform: translateY(-10%); }
-  100%   { opacity: 1; transform: translateY(0); }
+  0%   { opacity: 0; -webkit-transform: translateY(-10%);  transform: translateY(-10%); }
+  100%   { opacity: 1; -webkit- transform: translateY(0); transform: translateY(0); }
 }
 @-moz-keyframes logo {
   0%   { opacity: 0; transform: translateY(-10%); }
@@ -42,8 +42,8 @@ background-repeat: repeat-x;
   100%   { opacity: 1; transform: translateY(0); }
 }
 @keyframes logo {
-  0%   { opacity: 0; transform: translateY(-10%); }
-  100%   { opacity: 1; transform: translateY(0); }
+  0%   { opacity: 0; -webkit-transform: translateY(-10%);  transform: translateY(-10%); }
+  100%   { opacity: 1; -webkit- transform: translateY(0); transform: translateY(0); }
 }
 
 .fg {
@@ -105,8 +105,8 @@ h1.icon-logo {
 
 /* fade down animation */
 @-webkit-keyframes glogo {
-  0%   { opacity: 0; transform: translateY(70%); }
-  100%   { opacity: 1; transform: translateY(0); }
+  0%   { opacity: 0; -webkit-transform: translateY(70%); transform: translateY(70%); }
+  100%   { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }
 }
 @-moz-keyframes glogo {
   0%   { opacity: 0; transform: translateY(70%); }
@@ -117,8 +117,8 @@ h1.icon-logo {
   100%   { opacity: 1; transform: translateY(0); }
 }
 @keyframes glogo {
-  0%   { opacity: 0; transform: translateY(70%); }
-  100%   { opacity: 1; transform: translateY(0); }
+  0%   { opacity: 0; -webkit-transform: translateY(70%); transform: translateY(70%); }
+  100%   { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }
 }
 .icon-logo {
 
@@ -130,6 +130,7 @@ h1.icon-logo {
   -moz-animation-delay: 2s; /* Fx 5+ */
   -o-animation-delay: 2s; /* Opera 12+ */
   animation-delay: 2s; /* IE 10+, Fx 29+ */
+  -webkit-transform: translateY(0%);
   transform: translateY(0%);
   -webkit-animation-fill-mode: forwards;
 animation-fill-mode: forwards;
@@ -152,24 +153,24 @@ z-index: 100;
 
 /* tower animation */
 @-webkit-keyframes skywriter {
-  0%   {  transform: scaleY(5) translateX(-63%) translateY(10%); }
- 40% { transform: scale(1) translateX(-34%) translateY(-2%); }
-  100%   {transform: scale(1) translateX(0); }
+  0%   {  -webkit-transform: scaleY(5) translateX(-63%) translateY(10%); transform: scaleY(5) translateX(-63%) translateY(10%); }
+ 40% { -webkit-transform: scale(1) translateX(-34%) translateY(-2%); transform: scale(1) translateX(-34%) translateY(-2%); }
+  100%   { -webkit-transform: scale(1) translateX(0);  transform: scale(1) translateX(0); }
 }
 @-moz-keyframes skywriter {
-  0%   {  transform: scaleY(5) translateX(-63%); }
-  40% { transform: scale(1) translateX(-34%) translateY(-2%); }
-  100%   {transform: scale(1) translateX(0); }
+  0%   {  transform: scaleY(5) translateX(-63%) translateY(10%); }
+ 40% { transform: scale(1) translateX(-34%) translateY(-2%); }
+  100%   { transform: scale(1) translateX(0); }
 }
 @-o-keyframes skywriter {
-  0%   {  transform: scaleY(5) translateX(-63%); }
-  40% { transform: scale(1) translateX(-34%) translateY(-2%); }
-  100%   {transform: scale(1) translateX(0); }
+  0%   {  transform: scaleY(5) translateX(-63%) translateY(10%); }
+ 40% { transform: scale(1) translateX(-34%) translateY(-2%); }
+  100%   { transform: scale(1) translateX(0); }
 }
 @keyframes skywriter {
-  0%   {  transform: scaleY(5) translateX(-63%); }
-   40% { transform: scale(1) translateX(-34%) translateY(-2%); }
-  100%   {transform: scale(1) translateX(0); }
+  0%   {  -webkit-transform: scaleY(5) translateX(-63%) translateY(10%); transform: scaleY(5) translateX(-63%) translateY(10%); }
+ 40% { -webkit-transform: scale(1) translateX(-34%) translateY(-2%); transform: scale(1) translateX(-34%) translateY(-2%); }
+  100%   { -webkit-transform: scale(1) translateX(0);  transform: scale(1) translateX(0); }
 }
 
 
