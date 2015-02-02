@@ -205,6 +205,7 @@ body {
 	font-family: serif;
 	margin: 0;
 	color: #444;
+	overflow-x: hidden;
 }
 .font-arvo body {
 	font-family: Arvo, serif;
