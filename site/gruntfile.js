@@ -12,7 +12,7 @@ module.exports = function(grunt) {
 	// Project configuration.
 	grunt.initConfig({
 		watch: {
-			files: '<config:lint.files>',
+			files: 'src/svg/*',
 			tasks: 'default'
 		},
 		svgmin: {
@@ -61,12 +61,13 @@ module.exports = function(grunt) {
 	});
 
 	// Load local tasks.
-
+	grunt.loadNpmTasks( 'grunt-contrib-watch' );
 	grunt.loadNpmTasks( 'grunt-svgmin' );
 	grunt.loadNpmTasks( 'grunt-grunticon' );
 
 	// Default task.
 	grunt.registerTask('default', [ 'svgmin', 'grunticon']);
+
 
 };
 

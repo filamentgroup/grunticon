@@ -18,12 +18,14 @@
 	</head>
 	<body>
 
-		<div class="header icon-top">
-			<div  class="head-inner">
-				<p class="fg"><a href="http://filamentgroup.com" class="icon-fg-logo">Filament Group</a> <em>very proudly presents</em><i class="icon-plane"></i></p>
+		<div class="header">
 
+				<p class="fg"><a href="http://filamentgroup.com" class="icon-fg-logo">Filament Group</a> <em>very proudly presents</em><i class="icon-plane"></i></p>
 				<h1 class="icon-logo"><span class="hide-a11y">Grunticon! <em>A Flexible SVG Workflow</em></span></h1>
+
 				<i class="icon-majestic"></i>
+
+				<div  class="head-inner icon-top">
 			</div>
 		</div>
 
@@ -31,54 +33,89 @@
 		<div class="content">
 			<h2>What is Grunticon?</h2>
 
-			<p>Grunticon is a Grunt.js task that makes it easy to manage icons and background images for all devices, preferring HD (retina) SVG icons but also provides fallback support for standard definition browsers, and old browsers alike. From a CSS perspective, it's easy to use, as it generates a class referencing each icon; simple as that!</p>
+			<p>Grunticon is a Grunt.js task that makes it easy to use SVGs (Scalable Vector Graphics) for crisp, resolution independent icons, logos, illustrations and background images. SVGs aren't supported everywhere so Grunticon auto-generates bitmap (PNG) fallback images and loads the right format for compatibility with pretty much any browser.</p>
+
 
 			<p>Here are a few example icons from the <a href="http://tympanus.net/codrops/2014/10/27/freebie-ballicons-2-vol-2/">Balloonicons set</a> by <a href="http://pixelbuddha.net/">PixelBuddha</a>. Note how the SVGs are sharp on any screen, regardless of resolution, and support multiple colors!</p>
 
-			<ul class="icon-group">
-				<li class="icon-vespa"></li>
-				<li class="icon-converse"></li>
-				<li class="icon-skate"></li>
-			</ul>
+			<div class="icon-group">
+				<div class="icon-vespa"></div>
+				<div class="icon-converse"></div>
+				<div class="icon-skate"></div>
+			</div>
 
-			<p>All you need to do is drop SVG icons into a folder and configure Grunticon to process them, and you can reference them on your page just by adding a class, like this:</p>
+			<p>Once you set up Grunticon, your workflow is quick and easy: export your SVG files into a folder, and once you run the task, Grunti generates a stylesheet with classes for each graphic with the SVG paths (or PNG fallback) as a background image that you can apply by adding a class to any element; simple as that!</p>
 
 <pre><code>&lt;div class=&quot;icon-vespa&quot;&gt;&lt;/div&gt;
 &lt;div class=&quot;icon-converse&quot;&gt;&lt;/div&gt;
 &lt;div class=&quot;icon-skate&quot;&gt;&lt;/div&gt;</code></pre>
 
 
+			<h2>Can I apply CSS to them?</h2>
+
+			<p>Absolutely. One of the many benefits to SVG is that it's designed specifically for the purpose of creating rich vector artwork for the web. As of Grunticon version 2, you can specify that some or all of your icons be embedded directly into your markup, so you can write CSS against the elements in your icon's SVG markup!</p>
+
+			<p>Here's an example of a single icon recolored with CSS alone.</p>
+
+			<div class="icon-group">
+				<div class="icon-lamp icon-lamp-a" data-grunticon-embed></div>
+				<div class="icon-lamp icon-lamp-b" data-grunticon-embed></div>
+				<div class="icon-lamp icon-lamp-c" data-grunticon-embed></div>
+			</div>
+
+<p>And here's what the code for that looks like:</p>
+
+<h3>HTML:</h3>
+<pre><code>&lt;div class=&quot;icon-lamp icon-lamp-a&quot; data-grunticon-embed&gt;&lt;/div&gt;
+&lt;div class=&quot;icon-lamp icon-lamp-b&quot; data-grunticon-embed&gt;&lt;/div&gt;
+&lt;div class=&quot;icon-lamp icon-lamp-c&quot; data-grunticon-embed&gt;&lt;/div&gt;</code></pre>
+
+<h3>CSS:</h3>
+<pre><code>.icon-lamp-a path.lampshade { fill: brown; }
+.icon-lamp-b path.lampshade { fill: red; }
+.icon-lamp-c path.lampshade { fill: papayawhip; }</code></pre>
+
 
 			<h2>Can I animate them?</h2>
 
-			<p><em>Is a uniconkey grumpy?!</em> As of version 2, Grunticon now gives you the option to embed an icon into your markup so you can write JavaScript or CSS directly against the SVG markup–the full power of SVG is now at your disposal!</p>
-
-			<p>Check out these icons with a little animation applied!</p>
-
-			<a href="#" class="icon-plus" data-grunticon-embed title="toggle appearance" ></a>
+			<p><em>Is a uniconkey grumpy?!</em> With the new embedding feature, you can write JavaScript to manipulate your SVGs as well.Check out these icons with a little animation applied! (<em>Note: some require a tap to activate.</em>)</p>
 
 
+			<div class="icon-group">
+				<a href="#" class="icon-lamp icon-lamp-blink" data-grunticon-embed title="tap to turn on"></a>
+				<div class="icon-tower" data-grunticon-embed></div>
+				<div class="icon-conveyor" data-grunticon-embed></div>
+			</div>
 
 
 
-			<h2>Neat! So it only works in new browsers then, right?</h2>
 
-			<p class="icon-browsers"><em>Wrong!</em> Grunticon generates fallback PNG images for you icons and makes sure those are used in any browser that doesn’t understand SVG. Go ahead, check out this page in IE6 if you’d like. You won’t see enhancements applied to the icons with CSS and JavaScript, but you’ll definitely get a static icon, and that’s often critical to the usability of your site. </p>
+			<h2>Neat! So it only works in new browsers, right?</h2>
+
+			<p class="icon-browsers"><em>Wrong!</em> Grunticon generates fallback PNG images for you icons and makes sure those are used in any browser that doesn’t understand SVG. Go ahead, check out this page in IE7 if you’d like (even IE6 will get usable icons). You won’t see enhancements applied to the icons with CSS and JavaScript, but you’ll definitely get a static icon, and that’s often critical to the usability of your site. </p>
 
 			<h2>Sold! How do I start using it?</h2>
 
-			<ol>
-				<li>First, you’re going to need Node.js installed. Go to nodejs.com and follow the instructions.</li>
-				<li>Next, you’re going to need Grunt. Go to gruntjs.com and follow the instructions.</li>
-			</ol>
+			<p>If you're already familiar with Node.js and Grunt, you can find <a href="https://www.npmjs.com/package/grunt-grunticon">Grunticon on NPM</a>.</p>
 
+			<p>If you're new to Node.js or Grunt, you’re going to need to install and configure a few things. Go to <a href="https://github.com/filamentgroup/grunticon#before-you-get-started">this section of the Grunticon Readme</a> and follow the instructions.</p>
+
+			<p>Not a fan of command-line?</p>
+
+			<p>Fair enough. There's a web app version of Grunticon called Grumpicon, and it allows you to do the basic Grunticon workflow, though it doesn't yet support the new SVG embedding option. Keep an eye on this site and we'll try and get that updated on Grumpicon as soon as possible!</p>
+
+		</div>
+
+
+		<div class="footer">
+			<p>Grunticon is built and maintained by the folks at <a href="http://filamentgroup.com" class="icon-fg-logo">Filament Group</a> </p>
 		</div>
 
 		<script>
 				// animate the plus icon
 				if( document.querySelector ){
-					var toggle = document.querySelector(".icon-plus");
-					var toggleClass = " icon-x";
+					var toggle = document.querySelector(".icon-lamp-blink");
+					var toggleClass = " on";
 					if( toggle ){
 						toggle.addEventListener( "click", function( e ){
 							if( this.className.indexOf( toggleClass ) > -1 ){
