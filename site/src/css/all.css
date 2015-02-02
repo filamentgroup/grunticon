@@ -1,13 +1,53 @@
+@font-face {
+  font-family: 'Arvo';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Arvo'),
+  	url(src/css/arvo-regular-webfont.woff2) format('woff2'),
+  	url(src/css/arvo-regular-webfont.woff) format('woff'),
+  	url(src/css/arvo-regular-webfont.ttf) format('truetype');
+  	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+@font-face {
+  font-family: 'Pacifico';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Pacifico Regular'),
+  	url(src/css/pacifico-webfont.woff2) format('woff2'),
+  	url(src/css/pacifico-webfont.woff) format('woff'),
+  	url(src/css/pacifico-webfont.ttf) format('truetype');
+  	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
+/* fade down animation */
+@-webkit-keyframes logo {
+  0%   { opacity: 0; -webkit-transform: translateY(-10%);  transform: translateY(-10%); }
+  100%   { opacity: 1; -webkit- transform: translateY(0); transform: translateY(0); }
+}
+@-moz-keyframes logo {
+  0%   { opacity: 0; transform: translateY(-10%); }
+  100%   { opacity: 1; transform: translateY(0); }
+}
+@-o-keyframes logo {
+  0%   { opacity: 0; transform: translateY(-10%); }
+  100%   { opacity: 1; transform: translateY(0); }
+}
+@keyframes logo {
+  0%   { opacity: 0; -webkit-transform: translateY(-10%);  transform: translateY(-10%); }
+  100%   { opacity: 1; -webkit- transform: translateY(0); transform: translateY(0); }
+}
+
 body {
-	font-family: Arvo, serif;
+	font-family: serif;
 	margin: 0;
 	color: #444;
 }
-
+.font-arvo body {
+	font-family: Arvo, serif;
+}
 a {
 	color: #42b549;
 }
-
 
 
 .header {
@@ -28,23 +68,7 @@ background-repeat: repeat-x;
 	height: 500px;
 }
 
-/* fade down animation */
-@-webkit-keyframes logo {
-  0%   { opacity: 0; -webkit-transform: translateY(-10%);  transform: translateY(-10%); }
-  100%   { opacity: 1; -webkit- transform: translateY(0); transform: translateY(0); }
-}
-@-moz-keyframes logo {
-  0%   { opacity: 0; transform: translateY(-10%); }
-  100%   { opacity: 1; transform: translateY(0); }
-}
-@-o-keyframes logo {
-  0%   { opacity: 0; transform: translateY(-10%); }
-  100%   { opacity: 1; transform: translateY(0); }
-}
-@keyframes logo {
-  0%   { opacity: 0; -webkit-transform: translateY(-10%);  transform: translateY(-10%); }
-  100%   { opacity: 1; -webkit- transform: translateY(0); transform: translateY(0); }
-}
+
 
 .fg {
 	text-align: center;
@@ -75,7 +99,7 @@ background-repeat: repeat-x;
 	font-style: italic;
 	color: #fff;
 	color: rgba(255,255,255,.9);
-	font-family: pacifico, cursive;
+	font-family: cursive;
 	font-weight: normal;
 	font-style: normal;
 	font-size: 1.25em;
@@ -83,6 +107,9 @@ background-repeat: repeat-x;
 	position: relative;
 	z-index: 1;
 	display: inline-block;
+}
+.font-pacifico .fg em {
+	font-family: pacifico, cursive;
 }
 .fg:after {
 	content: "\20";
@@ -231,9 +258,12 @@ h3 {
 	clear: both;
 }
 h2 {
-	font-family: pacifico, cursive;
+	font-family: cursive;
 	font-size: 1.4em;
 	margin: 1.5em 0 .1em;
+}
+.font-pacifico h2 {
+	font-family: pacifico, cursive;
 }
 h3 {
 	text-transform: uppercase;
