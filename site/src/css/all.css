@@ -315,10 +315,6 @@ h1.icon-logo {
 	background-position: 0 bottom;
 	background-color: #1d8ac8;
 	z-index: 100;
-}
-
-
-.icon-plane {
 	-webkit-animation: skywriter 5.5s cubic-bezier(0.000, 0, 0.025, 1) 1;
 	-moz-animation: skywriter 5.5s cubic-bezier(0.000, 0, 0.025, 1) 1;
 	-o-animation: skywriter 5.5s cubic-bezier(0.000, 0, 0.025, 1) 1;
