@@ -227,6 +227,7 @@ a {
 	bottom: 0;
 	width: 100%;
 	height: 500px;
+	z-index: 1;
 }
 .fg {
 	text-align: center;
@@ -285,9 +286,6 @@ h1.icon-logo {
 	overflow: hidden;
 	position: relative;
 	margin: .5em auto;
-}
-
-.icon-logo {
 	-webkit-animation: glogo 2s ease-in-out 1;
 	-moz-animation: glogo 2s ease-in-out 1;
 	-o-animation: glogo 2s ease-in-out 1;
@@ -301,6 +299,10 @@ h1.icon-logo {
 	-webkit-animation-fill-mode: forwards;
 	animation-fill-mode: forwards;
 	opacity: 0;
+	z-index: 2;
+}
+.grunticon-svg h1.icon-logo  {
+	z-index: 0;
 }
 .icon-plane {
 	width: 1900px;
@@ -341,6 +343,7 @@ h1.icon-logo {
 	margin: -6em auto 0;
 	line-height: 1.4;
 	position: relative;
+	z-index: 10;
 }
 .footer {
 	max-width: 45em;
