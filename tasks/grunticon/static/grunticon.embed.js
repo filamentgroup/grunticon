@@ -20,25 +20,29 @@
 		}
 	};
 
+	// get the SVG link
+	var getSVGCSS = function(){
+		return window.document.querySelector( 'link[href$="'+ grunticon.href +'"]' );
+	};
+
 	// this function can rip the svg markup from the css so we can embed it anywhere
-	var getIcons = function(svgcss){
+	var getIcons = function(stylesheet){
 		// get grunticon stylesheet by its href
 		var icons = {},
-			allss = document.styleSheets,
-			svgss, rules, cssText,
+			svgss,
+			rules, cssText,
 			iconClass, iconSVGEncoded, iconSVGRaw;
 
-		for( var i = 0; i < allss.length; i++ ){
-			if( allss[ i ].href && allss[ i ].href.indexOf( svgcss ) > -1 ){
-				svgss = allss[ i ];
-				break;
-			}
+		if( !stylesheet ){
+			stylesheet = getSVGCSS();
 		}
+
+		svgss = stylesheet && stylesheet.sheet;
 
 		if( !svgss ){ return icons; }
 
 		rules = svgss.cssRules ? svgss.cssRules : svgss.rules;
-		for( i = 0; i < rules.length; i++ ){
+		for( var i = 0; i < rules.length; i++ ){
 			cssText = rules[ i ].cssText;
 			iconClass = selectorPlaceholder + rules[ i ].selectorText;
 			iconSVGEncoded = cssText.split( ");" )[ 0 ].match( /US\-ASCII\,([^"']+)/ );
@@ -75,11 +79,12 @@
 
 	var svgLoadedCallback = function(){
 		ready(function(){
-			embedIcons(getIcons(grunticon.href));
+			embedIcons(getIcons());
 		});
 	};
 
 	grunticon.embedIcons = embedIcons;
+	grunticon.getSVGCSS = getSVGCSS;
 	grunticon.getIcons = getIcons;
 	grunticon.ready = ready;
 	grunticon.svgLoadedCallback = svgLoadedCallback;
