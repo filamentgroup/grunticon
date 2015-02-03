@@ -134,7 +134,10 @@ If you're interested in trying out Grumpicon, you might be interested in this ha
 ## Getting Started
 This plugin requires Grunt `~0.4.2`
 
-If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
+If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. You might also check out Chris Coyier’s great article, [Grunt for People Who Think Things Like Grunt are Weird and Hard](http://24ways.org/2013/grunt-is-not-weird-and-hard/).
+
+
+Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
 npm install grunt-grunticon --save-dev
@@ -147,6 +150,9 @@ grunt.loadNpmTasks('grunt-grunticon');
 ```
 
 ## The "grunticon" task
+
+For a brief overview of the Grunticon workflow, particularly from a designer's perspective, you might check out Todd Parker's article, [A Designer’s Guide to Grumpicon](http://www.filamentgroup.com/lab/grumpicon-workflow.html), which covers basic SVG workflow tips for both Grunticon and Grumpicon.
+
 
 ### Required configuration properties
 
