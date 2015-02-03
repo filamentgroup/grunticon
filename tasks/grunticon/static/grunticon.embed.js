@@ -7,11 +7,11 @@
 	var ready = function( fn ){
 		// If DOM is already ready at exec time, depends on the browser.
 		// From: https://github.com/mobify/mobifyjs/blob/526841be5509e28fc949038021799e4223479f8d/src/capture.js#L128
-		if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+		if ( document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
 			fn();
 		} else {
 			var created = false;
-			document.addEventListener("readystatechange", function() {
+			document.addEventListener( "readystatechange", function() {
 				if (!created) {
 					created = true;
 					fn();
@@ -78,6 +78,9 @@
 	};
 
 	var svgLoadedCallback = function(){
+		if( grunticon.method !== "svg" ){
+			return;
+		}
 		ready(function(){
 			embedIcons(getIcons());
 		});
@@ -98,6 +101,9 @@
 	};
 
 	var svgLoadedCORSCallback = function(){
+		if( grunticon.method !== "svg" ){
+			return;
+		}
 		ready(function(){
 			var xhr = ajaxGet( grunticon.href );
 			if ( !xhr ){ return; }
