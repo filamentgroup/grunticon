@@ -60,6 +60,7 @@ var grunticon = function( css, onload ){
 
 	img.onerror = function(){
 		grunticon.method = "png";
+		grunticon.href = css[2];
 		loadCSS( css[2] );
 	};
 
