@@ -230,6 +230,10 @@ a {
 	height: 500px;
 	z-index: 1;
 }
+.head-inner.icon-top {
+	background-repeat: repeat-x;
+	background-position: center bottom;
+}
 .fg {
 	text-align: center;
 	color: #fff;
