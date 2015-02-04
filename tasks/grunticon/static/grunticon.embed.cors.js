@@ -39,6 +39,7 @@
 	};
 
 	grunticon.ajaxGet = ajaxGet;
-	grunticon.svgLoadedCORSCallback = svgLoadedCORSCallback;
+	grunticon.svgLoadedCORSCallback = svgLoadedCORSCallback; //TODO: Deprecated
+	grunticon.embedSVGCors = svgLoadedCORSCallback;
 
 }(grunticon, this));

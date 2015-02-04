@@ -154,23 +154,25 @@
 		equal( typeof xhr, "object", "ajaxGet returns an object" );
 	});
 
-	asyncTest( 'grunticon.embedComplete fires when svgLoadedCallback completes its embed', function(){
+	asyncTest( 'grunticon.embedComplete fires when embedSVG completes its embed', function(){
 		expect(1);
-		grunticon.embedComplete = function(){
+		var embedComplete = function(){
 			ok( true, "Embed complete" );
 			start();
 		};
-		grunticon.svgLoadedCallback();
+		grunticon.embedSVG( embedComplete );
 	});
 
-	asyncTest( 'grunticon.embedComplete fires when svgLoadedCORSCallback completes its embed', function(){
+	/**
+	asyncTest( 'grunticon.embedComplete fires when embedSVGCors completes its embed', function(){
 		expect(1);
-		grunticon.embedComplete = function(){
+		var embedComplete = function(){
 			ok( true, "CORS Embed complete" );
 			start();
 		};
-		grunticon.svgLoadedCORSCallback();
+		grunticon.embedSVGCors( embedComplete );
 	});
+ */
 
 
 }(window));

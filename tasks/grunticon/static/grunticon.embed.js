@@ -89,6 +89,7 @@
 	grunticon.getCSS = getCSS;
 	grunticon.getIcons = getIcons;
 	grunticon.ready = ready;
-	grunticon.svgLoadedCallback = svgLoadedCallback;
+	grunticon.svgLoadedCallback = svgLoadedCallback; //TODO DEPRECATED
+	grunticon.embedSVG = svgLoadedCallback;
 
 }(grunticon, this));
