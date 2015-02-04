@@ -1,18 +1,4 @@
-// css transform support
-function transformSupported() {
-	var prefs = "transform WebkitTransform MozTransform OTransform msTransform".split(" ");
-	for(var i = 0; i < prefs.length; i++) {
-		if( window.document.documentElement.style[ prefs[ i ] ] !== undefined ) {
-			return true;
-		}
-	}
-	return false;
-}
-
-if( transformSupported() ){
-	window.document.documentElement.className += " csstransform";
-}
-
+// call grunticon
 var cb = function(){
 	grunticon.svgLoadedCallback();
 	if( grunticon.method ){

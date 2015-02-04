@@ -242,7 +242,6 @@ a {
 	-moz-animation: logo 1s ease-out 1;
 	-o-animation: logo 1s ease-out 1;
 	animation: logo 1s ease-out 1;
-	transform: translateY(-10%);
 	-webkit-animation-fill-mode: forwards;
 	animation-fill-mode: forwards;
 	margin: 0 auto 1em;
@@ -299,11 +298,8 @@ h1.icon-logo {
 	-moz-animation-delay: 2s;
 	-o-animation-delay: 2s;
 	animation-delay: 2s;
-	-webkit-transform: translateY(0%);
-	transform: translateY(0%);
-	-webkit-animation-fill-mode: forwards;
-	animation-fill-mode: forwards;
-	opacity: 0;
+	-webkit-animation-fill-mode: backwards;
+	animation-fill-mode: backwards;
 	z-index: 2;
 }
 .grunticon-svg h1.icon-logo  {
