@@ -552,6 +552,14 @@ ready(function(){
 });
 ```
 
+#### embedComplete
+
+Arguments: None
+Returns: None
+
+If `grunticon.embedComplete` is defined, the loader will call it when SVG embedding is complete. This is true for both local and CORS embedding. So if you need to run logic after SVG markup is appended to the DOM, just define `grunticon.embedComplete` as a function that does whatever you need to do.
+
+
 ### Cross-domain SVG Embedding Methods
 
 With `enhanceSVG` and `corsEmbed` turned on, the Grunticon loader has a few exposed 2 more methods and attributes on the `grunticon` object that you can use:

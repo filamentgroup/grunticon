@@ -79,6 +79,9 @@
 		}
 		ready(function(){
 			embedIcons( getIcons( getCSS( grunticon.href ) ) );
+			if( grunticon.embedComplete ){
+				grunticon.embedComplete();
+			}
 		});
 	};
 

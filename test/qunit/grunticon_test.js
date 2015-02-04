@@ -154,5 +154,23 @@
 		equal( typeof xhr, "object", "ajaxGet returns an object" );
 	});
 
+	asyncTest( 'grunticon.embedComplete fires when svgLoadedCallback completes its embed', function(){
+		expect(1);
+		grunticon.embedComplete = function(){
+			ok( true, "Embed complete" );
+			start();
+		};
+		grunticon.svgLoadedCallback();
+	});
+
+	asyncTest( 'grunticon.embedComplete fires when svgLoadedCORSCallback completes its embed', function(){
+		expect(1);
+		grunticon.embedComplete = function(){
+			ok( true, "CORS Embed complete" );
+			start();
+		};
+		grunticon.svgLoadedCORSCallback();
+	});
+
 
 }(window));

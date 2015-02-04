@@ -31,6 +31,9 @@
 				ref.parentNode.insertBefore( style, ref );
 				ref.parentNode.removeChild( ref );
 				grunticon.embedIcons( grunticon.getIcons( style ) );
+				if( grunticon.embedComplete ){
+					grunticon.embedComplete();
+				}
 			} );
 		});
 	};
