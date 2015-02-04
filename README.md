@@ -507,7 +507,7 @@ Is `"png"` if the page loaded the plain link to png-based css.
 #### loadCSS
 See: https://github.com/filamentgroup/loadcss
 
-#### getSVGCSS
+#### getCSS
 Arguments: `String`
 Returns: `Object`
 

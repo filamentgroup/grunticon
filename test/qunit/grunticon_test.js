@@ -48,13 +48,13 @@
 
 	});
 
-	test( 'getSVGCSS function exists', function(){
+	test( 'getCSS function exists', function(){
 		expect(2);
-		ok( window.grunticon.getSVGCSS, "grunticon.getSVGCSS should exist on the window object" );
-		ok( typeof window.grunticon.getSVGCSS === "function", "grunticon.getSVGCSS should be a function" );
+		ok( window.grunticon.getCSS, "grunticon.getCSS should exist on the window object" );
+		ok( typeof window.grunticon.getCSS === "function", "grunticon.getCSS should be a function" );
 	});
 
-	test( 'getSVGCSS returns link node', function(){
+	test( 'getCSS returns link node', function(){
 		expect(2);
 
 		var stylesheet = document.createElement( "link" );
@@ -65,7 +65,7 @@
 
 		grunticon.href = href;
 
-		var link = window.grunticon.getSVGCSS( href );
+		var link = window.grunticon.getCSS( href );
 
 		equal( link.nodeName, "LINK", "Link object returned" );
 		ok( link.href.indexOf( href ) > -1, "Link object returned" );

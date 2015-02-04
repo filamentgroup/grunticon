@@ -21,7 +21,7 @@
 	};
 
 	// get the SVG link
-	var getSVGCSS = function( href ){
+	var getCSS = function( href ){
 		return window.document.querySelector( 'link[href$="'+ href +'"]' );
 	};
 
@@ -78,12 +78,12 @@
 			return;
 		}
 		ready(function(){
-			embedIcons( getIcons( getSVGCSS( grunticon.href ) ) );
+			embedIcons( getIcons( getCSS( grunticon.href ) ) );
 		});
 	};
 
 	grunticon.embedIcons = embedIcons;
-	grunticon.getSVGCSS = getSVGCSS;
+	grunticon.getCSS = getCSS;
 	grunticon.getIcons = getIcons;
 	grunticon.ready = ready;
 	grunticon.svgLoadedCallback = svgLoadedCallback;

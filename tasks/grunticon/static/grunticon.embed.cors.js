@@ -27,7 +27,7 @@
 			ajaxGet( grunticon.href, function() {
 				var style = document.createElement( "style" );
 				style.innerHTML = this.responseText;
-				var ref = grunticon.getSVGCSS( grunticon.href );
+				var ref = grunticon.getCSS( grunticon.href );
 				ref.parentNode.insertBefore( style, ref );
 				ref.parentNode.removeChild( ref );
 				grunticon.embedIcons( grunticon.getIcons( style ) );
