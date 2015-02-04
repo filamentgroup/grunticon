@@ -1,5 +1,7 @@
 # Grunticon [![Build Status](https://travis-ci.org/filamentgroup/grunticon.png?branch=master)](https://travis-ci.org/filamentgroup/grunticon)
 
+[![Join the chat at https://gitter.im/filamentgroup/grunticon](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/filamentgroup/grunticon?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ```
          /'
         //
