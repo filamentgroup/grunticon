@@ -53,8 +53,7 @@ module.exports = function(grunt) {
 					// css file path prefix - this defaults to "/" and will be placed before the "dest" path when stylesheets are loaded.
 					// This allows root-relative referencing of the CSS. If you don't want a prefix path, set to to ""
 					cssbasepath: "/",
-					enhanceSVG: true,
-					corsEmbed: true
+					enhanceSVG: true
 
 				}
 			}
