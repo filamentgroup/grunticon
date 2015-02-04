@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<title>Icons Preview!</title>
+		<meta charset="utf-8">
 		<style>
 			body {
 				background-image: linear-gradient(#eee 25%, transparent 25%, transparent), linear-gradient(#eee 25%, transparent 25%, transparent), linear-gradient(transparent 75%, #eee 75%), linear-gradient(transparent 75%, #eee 75%);
@@ -10,75 +11,78 @@
 			}
 		</style>
 		<script>
-			/*! grunt-grunticon Stylesheet Loader - v2.0.0-beta.6 | https://github.com/filamentgroup/grunticon | (c) 2015 Scott Jehl, Filament Group, Inc. | MIT license. */
+			/*! grunt-grunticon Stylesheet Loader - v2.0.2 | https://github.com/filamentgroup/grunticon | (c) 2015 Scott Jehl, Filament Group, Inc. | MIT license. */
 
-(function(e){function t(t,n,r,o){"use strict";function a(){for(var e,n=0;u.length>n;n++)u[n].href&&u[n].href.indexOf(t)>-1&&(e=!0);e?i.media=r||"all":setTimeout(a)}var i=e.document.createElement("link"),c=n||e.document.getElementsByTagName("script")[0],u=e.document.styleSheets;return i.rel="stylesheet",i.href=t,i.media="only x",i.onload=o||function(){},c.parentNode.insertBefore(i,c),a(),i}var n=function(r,o){"use strict";if(r&&3===r.length){var a=e.navigator,i=e.Image,c=!(!document.createElementNS||!document.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect||!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1")||e.opera&&-1===a.userAgent.indexOf("Chrome")||-1!==a.userAgent.indexOf("Series40")),u=new i;u.onerror=function(){n.method="png",t(r[2])},u.onload=function(){var e=1===u.width&&1===u.height,a=r[e&&c?0:e?1:2];n.method=e&&c?"svg":e?"datapng":"png",n.href=a,t(a,null,null,o)},u.src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",document.documentElement.className+=" grunticon"}};n.loadCSS=t,e.grunticon=n})(this);(function(e,t){"use strict";var n=t.document,r="grunticon:",o=function(e){if(n.attachEvent?"complete"===n.readyState:"loading"!==n.readyState)e();else{var t=!1;n.addEventListener("readystatechange",function(){t||(t=!0,e())},!1)}},a=function(e){for(var t,o,a,i,c,u,s={},l=n.styleSheets,d=0;l.length>d;d++)if(l[d].href&&l[d].href.indexOf(e)>-1){t=l[d];break}if(!t)return s;for(o=t.cssRules?t.cssRules:t.rules,d=0;o.length>d;d++)a=o[d].cssText,i=r+o[d].selectorText,c=a.split(");")[0].match(/US\-ASCII\,([^"']+)/),c&&c[1]&&(u=decodeURIComponent(c[1]),s[i]=u);return s},i=function(e){var t,o,a;o="data-grunticon-embed";for(var i in e)if(a=i.slice(r.length),t=n.querySelectorAll(a+"["+o+"]"),t.length)for(var c=0;t.length>c;c++)t[c].innerHTML=e[i],t[c].style.backgroundImage="none",t[c].removeAttribute(o);return t},c=function(){o(function(){i(a(e.href))})};e.embedIcons=i,e.getIcons=a,e.ready=o,e.svgLoadedCallback=c})(grunticon,this);
-
+(function(e){function t(t,n,r,o){"use strict";function a(){for(var e,n=0;u.length>n;n++)u[n].href&&u[n].href.indexOf(t)>-1&&(e=!0);e?i.media=r||"all":setTimeout(a)}var i=e.document.createElement("link"),c=n||e.document.getElementsByTagName("script")[0],u=e.document.styleSheets;return i.rel="stylesheet",i.href=t,i.media="only x",i.onload=o||function(){},c.parentNode.insertBefore(i,c),a(),i}var n=function(r,o){"use strict";if(r&&3===r.length){var a=e.navigator,i=e.Image,c=!(!document.createElementNS||!document.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect||!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1")||e.opera&&-1===a.userAgent.indexOf("Chrome")||-1!==a.userAgent.indexOf("Series40")),u=new i;u.onerror=function(){n.method="png",n.href=r[2],t(r[2])},u.onload=function(){var e=1===u.width&&1===u.height,a=r[e&&c?0:e?1:2];n.method=e&&c?"svg":e?"datapng":"png",n.href=a,t(a,null,null,o)},u.src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",document.documentElement.className+=" grunticon"}};n.loadCSS=t,e.grunticon=n})(this);(function(e,t){"use strict";var n=t.document,r="grunticon:",o=function(e){if(n.attachEvent?"complete"===n.readyState:"loading"!==n.readyState)e();else{var t=!1;n.addEventListener("readystatechange",function(){t||(t=!0,e())},!1)}},a=function(e){return t.document.querySelector('link[href$="'+e+'"]')},c=function(e){var t,n,o,a,c,i,u={};if(t=e.sheet,!t)return u;n=t.cssRules?t.cssRules:t.rules;for(var l=0;n.length>l;l++)o=n[l].cssText,a=r+n[l].selectorText,c=o.split(");")[0].match(/US\-ASCII\,([^"']+)/),c&&c[1]&&(i=decodeURIComponent(c[1]),u[a]=i);return u},i=function(e){var t,o,a;o="data-grunticon-embed";for(var c in e)if(a=c.slice(r.length),t=n.querySelectorAll(a+"["+o+"]"),t.length)for(var i=0;t.length>i;i++)t[i].innerHTML=e[c],t[i].style.backgroundImage="none",t[i].removeAttribute(o);return t},u=function(){"svg"===e.method&&o(function(){i(c(a(e.href))),e.embedComplete&&e.embedComplete()})};e.embedIcons=i,e.getCSS=a,e.getIcons=c,e.ready=o,e.svgLoadedCallback=u})(grunticon,this);(function(e,t){"use strict";var n=t.document,r=function(e,n){var r=new t.XMLHttpRequest;return"withCredentials"in r?r.open("GET",e,!0):t.XDomainRequest!==void 0&&(r=new t.XDomainRequest,r.open("GET",e)),n&&(r.onload=n),r.send(),r},o=function(){"svg"===e.method&&e.ready(function(){r(e.href,function(){var t=n.createElement("style");t.innerHTML=this.responseText;var r=e.getCSS(e.href);r.parentNode.insertBefore(t,r),r.parentNode.removeChild(r),e.embedIcons(e.getIcons(t)),e.embedComplete&&e.embedComplete()})})};e.ajaxGet=r,e.svgLoadedCORSCallback=o})(grunticon,this);
+			
+			
 			grunticon(["icons.data.svg.css", "icons.data.png.css", "icons.fallback.css"]);
 		</script>
 		<noscript><link href="icons.fallback.css" rel="stylesheet"></noscript>
 
 	</head>
 	<body>
+
+		<h1>PREVIEW - you can change this in the previewTemplate option</h1>
 		
 			
-			<pre><code>.icon-browsers:</code></pre><div class="browsers" style="width: 395.6px; height: 103.2px;" ></div><hr/>
-			
-		
-			
-			<pre><code>.icon-converse:</code></pre><div class="converse" style="width: 100px; height: 100px;" ></div><hr/>
-			
-		
-			
-			<pre><code>.icon-conveyor:</code></pre><div class="conveyor" style="width: 100px; height: 100px;" ></div><hr/>
+			<pre><code>.icon-browsers:</code></pre><div class="icon-browsers" style="width: 395.6px; height: 103.2px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-fg-logo:</code></pre><div class="fg-logo" style="width: 200.8px; height: 29.1px;" ></div><hr/>
+			<pre><code>.icon-converse:</code></pre><div class="icon-converse" style="width: 100px; height: 100px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-lamp:</code></pre><div class="lamp" style="width: 100px; height: 100px;" ></div><hr/>
+			<pre><code>.icon-conveyor:</code></pre><div class="icon-conveyor" style="width: 100px; height: 100px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-logo:</code></pre><div class="logo" style="width: 245.3px; height: 186.2px;" ></div><hr/>
+			<pre><code>.icon-fg-logo:</code></pre><div class="icon-fg-logo" style="width: 200.8px; height: 29.1px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-majestic:</code></pre><div class="majestic" style="width: 86.6px; height: 85.4px;" ></div><hr/>
+			<pre><code>.icon-lamp:</code></pre><div class="icon-lamp" style="width: 100px; height: 100px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-npm-logo:</code></pre><div class="npm-logo" style="width: 97.4px; height: 38px;" ></div><hr/>
+			<pre><code>.icon-logo:</code></pre><div class="icon-logo" style="width: 245.3px; height: 186.2px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-plane:</code></pre><div class="plane" style="width: 18.9px; height: 25.2px;" ></div><hr/>
+			<pre><code>.icon-majestic:</code></pre><div class="icon-majestic" style="width: 86.6px; height: 85.4px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-plus:</code></pre><div class="plus" style="width: 76.3px; height: 76.3px;" ></div><hr/>
+			<pre><code>.icon-npm-logo:</code></pre><div class="icon-npm-logo" style="width: 97.4px; height: 38px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-skate:</code></pre><div class="skate" style="width: 100px; height: 100px;" ></div><hr/>
+			<pre><code>.icon-plane:</code></pre><div class="icon-plane" style="width: 18.9px; height: 25.2px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-top:</code></pre><div class="top" style="width: 1610px; height: 375px;" ></div><hr/>
+			<pre><code>.icon-plus:</code></pre><div class="icon-plus" style="width: 76.3px; height: 76.3px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-tower :</code></pre><div class="tower " style="width: 100px; height: 100px;" ></div><hr/>
+			<pre><code>.icon-skate:</code></pre><div class="icon-skate" style="width: 100px; height: 100px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-vespa:</code></pre><div class="vespa" style="width: 100px; height: 100px;" ></div><hr/>
+			<pre><code>.icon-top:</code></pre><div class="icon-top" style="width: 1610px; height: 375px;" ></div><hr/>
 			
 		
 			
-			<pre><code>.icon-x:</code></pre><div class="x" style="width: 76.3px; height: 76.3px;" ></div><hr/>
+			<pre><code>.icon-tower :</code></pre><div class="icon-tower " style="width: 100px; height: 100px;" ></div><hr/>
+			
+		
+			
+			<pre><code>.icon-vespa:</code></pre><div class="icon-vespa" style="width: 100px; height: 100px;" ></div><hr/>
+			
+		
+			
+			<pre><code>.icon-x:</code></pre><div class="icon-x" style="width: 76.3px; height: 76.3px;" ></div><hr/>
 			
 		
 </body>
