@@ -407,6 +407,7 @@ pre {
 	min-width: 100px;
 	margin: 1em 1.5%;
 	padding: 0;
+	text-align: center;
 }
 .icon-lamp-a path.lampshade {
 	fill: darkolivegreen;
@@ -419,7 +420,7 @@ pre {
 }
 .icon-browsers {
 	padding-bottom: 123px;
-	background-position: bottom left;
+	background-position: bottom center;
 }
 
 .icon-lamp-blink path.bulb-on,
