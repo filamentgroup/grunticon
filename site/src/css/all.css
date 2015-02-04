@@ -294,10 +294,10 @@ h1.icon-logo {
 	-moz-animation: glogo 2s ease-in-out 1;
 	-o-animation: glogo 2s ease-in-out 1;
 	animation: glogo 2s ease-in-out 1;
-	-webkit-animation-delay: 2s;
-	-moz-animation-delay: 2s;
-	-o-animation-delay: 2s;
-	animation-delay: 2s;
+	-webkit-animation-delay: 1s;
+	-moz-animation-delay: 1s;
+	-o-animation-delay: 1s;
+	animation-delay: 1s;
 	-webkit-animation-fill-mode: backwards;
 	animation-fill-mode: backwards;
 	z-index: 2;
@@ -315,10 +315,10 @@ h1.icon-logo {
 	background-position: 0 bottom;
 	background-color: #1d8ac8;
 	z-index: 100;
-	-webkit-animation: skywriter 5.5s cubic-bezier(0.000, 0, 0.025, 1) 1;
-	-moz-animation: skywriter 5.5s cubic-bezier(0.000, 0, 0.025, 1) 1;
-	-o-animation: skywriter 5.5s cubic-bezier(0.000, 0, 0.025, 1) 1;
-	animation: skywriter 5.5s cubic-bezier(0.000, 0, 0.025, 1) 1;
+	-webkit-animation: skywriter 4.5s cubic-bezier(0.000, 0, 0.025, 1) 1;
+	-moz-animation: skywriter 4.5s cubic-bezier(0.000, 0, 0.025, 1) 1;
+	-o-animation: skywriter 4.5s cubic-bezier(0.000, 0, 0.025, 1) 1;
+	animation: skywriter 4.5s cubic-bezier(0.000, 0, 0.025, 1) 1;
 }
 .icon-majestic {
 	position: absolute;
