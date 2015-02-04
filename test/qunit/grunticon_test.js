@@ -147,8 +147,8 @@
 	asyncTest( 'ajaxGet makes an xhr request and returns callback', function(){
 		expect(2);
 
-		var xhr = window.grunticon.ajaxGet( window.location.href, function( response ){
-			ok( response, "xhr request loaded" );
+		var xhr = window.grunticon.ajaxGet( window.location.href, function(){
+			ok( this, "xhr request loaded" );
 			start();
 		} );
 		equal( typeof xhr, "object", "ajaxGet returns an object" );
