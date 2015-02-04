@@ -19,7 +19,7 @@
 		return xhr;
 	};
 
-	var svgLoadedCORSCallback = function(){
+	var svgLoadedCORSCallback = function(callback){
 		if( grunticon.method !== "svg" ){
 			return;
 		}
@@ -31,8 +31,8 @@
 				ref.parentNode.insertBefore( style, ref );
 				ref.parentNode.removeChild( ref );
 				grunticon.embedIcons( grunticon.getIcons( style ) );
-				if( grunticon.embedComplete ){
-					grunticon.embedComplete();
+				if( callback ){
+					callback();
 				}
 			} );
 		});
