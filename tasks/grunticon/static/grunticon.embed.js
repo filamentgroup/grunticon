@@ -82,44 +82,10 @@
 		});
 	};
 
-	// x-domain get (with cors if available)
-	var ajaxGet = function( url, cb ) {
-		var xhr = new window.XMLHttpRequest();
-		if ( "withCredentials" in xhr ) {
-			xhr.open( "GET", url, true );
-		} else if ( typeof window.XDomainRequest !== "undefined" ) { //IE
-			xhr = new window.XDomainRequest();
-			xhr.open( "GET", url );
-		}
-		if( cb ){
-			xhr.onload = cb;
-		}
-		xhr.send();
-		return xhr;
-	};
-
-	var svgLoadedCORSCallback = function(){
-		if( grunticon.method !== "svg" ){
-			return;
-		}
-		ready(function(){
-			ajaxGet( grunticon.href, function() {
-				var style = document.createElement( "style" );
-				style.innerHTML = xhr.responseText;
-				var ref = grunticon.getSVGCSS();
-				ref.parentNode.insertBefore( style, ref );
-				ref.parentNode.removeChild( ref );
-				embedIcons( getIcons( style ) );
-			} );
-		});
-	};
-
 	grunticon.embedIcons = embedIcons;
 	grunticon.getSVGCSS = getSVGCSS;
 	grunticon.getIcons = getIcons;
 	grunticon.ready = ready;
-	grunticon.ajaxGet = ajaxGet;
 	grunticon.svgLoadedCallback = svgLoadedCallback;
-	grunticon.svgLoadedCORSCallback = svgLoadedCORSCallback;
 
 }(grunticon, this));
