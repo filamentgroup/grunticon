@@ -83,16 +83,18 @@
 	};
 
 	// x-domain get (with cors if available)
-	var ajaxGet = function( url ) {
+	var ajaxGet = function( url, cb ) {
 		var xhr = new window.XMLHttpRequest();
 		if ( "withCredentials" in xhr ) {
 			xhr.open( "GET", url, true );
 		} else if ( typeof window.XDomainRequest !== "undefined" ) { //IE
 			xhr = new window.XDomainRequest();
 			xhr.open( "GET", url );
-		} else {
-			xhr = null;
 		}
+		if( cb ){
+			xhr.onload = cb;
+		}
+		xhr.send();
 		return xhr;
 	};
 
@@ -101,17 +103,14 @@
 			return;
 		}
 		ready(function(){
-			var xhr = ajaxGet( grunticon.href );
-			if ( !xhr ){ return; }
-			xhr.onload = function() {
+			ajaxGet( grunticon.href, function() {
 				var style = document.createElement( "style" );
 				style.innerHTML = xhr.responseText;
 				var ref = grunticon.getSVGCSS();
 				ref.parentNode.insertBefore( style, ref );
 				ref.parentNode.removeChild( ref );
 				embedIcons( getIcons( style ) );
-			};
-			xhr.send();
+			} );
 		});
 	};
 

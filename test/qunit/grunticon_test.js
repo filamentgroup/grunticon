@@ -138,4 +138,21 @@
 		ok( document.documentElement.className.match( "grunticon" ) );
 	});
 
+	test( 'ajaxGet function exists', function(){
+		expect(2);
+		ok( window.grunticon.ajaxGet, "grunticon.ajaxGet should exist on the window object" );
+		ok( typeof window.grunticon.ajaxGet === "function", "grunticon.ajaxGet should be a function" );
+	});
+
+	asyncTest( 'ajaxGet makes an xhr request and returns callback', function(){
+		expect(2);
+
+		var xhr = window.grunticon.ajaxGet( window.location.href, function( response ){
+			ok( response, "xhr request loaded" );
+			start();
+		} );
+		equal( typeof xhr, "object", "ajaxGet returns an object" );
+	});
+
+
 }(window));
