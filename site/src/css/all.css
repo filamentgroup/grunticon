@@ -206,6 +206,7 @@ body {
 	margin: 0;
 	color: #444;
 	overflow-x: hidden;
+	background: #fff;
 }
 .font-arvo body {
 	font-family: Arvo, serif;
@@ -323,7 +324,7 @@ h1.icon-logo {
 .icon-majestic {
 	position: absolute;
 	right: 2%;
-	top: 15em;
+	top: 17em;
 	display: block;
 	width: 86px;
 	height: 85px;
@@ -488,5 +489,8 @@ pre {
 	}
 	.content p {
 		font-size: 1.1em;
+	}
+	.icon-majestic {
+		top: 18em;
 	}
 }
