@@ -52,7 +52,12 @@ module.exports = function(grunt) {
 
 					// grunticon loader code snippet filename
 					loadersnippet: "grunticon.loader.js",
+
+					// Include loader code for SVG markup embedding
 					enhanceSVG: true,
+
+					// Make markup embedding work across domains (if CSS hosted externally)
+					corsEmbed: false,
 
 					// folder name (within dest) for png output
 					pngfolder: "png",

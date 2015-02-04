@@ -36,6 +36,7 @@ module.exports = function( grunt , undefined ) {
 			files: {
 				loader: path.join( __dirname, 'grunticon', 'static', 'grunticon.loader.js'),
 				embed: path.join( __dirname, 'grunticon', 'static', 'grunticon.embed.js'),
+				corsEmbed: path.join( __dirname, 'grunticon', 'static', 'grunticon.embed.cors.js'),
 				banner: path.join( __dirname, 'grunticon', 'static', 'grunticon.loader.banner.js')
 			},
 			previewhtml: "preview.html",
@@ -55,7 +56,8 @@ module.exports = function( grunt , undefined ) {
 			previewTemplate: path.join( __dirname, "..", "example", "preview.hbs" ),
 			compressPNG: false,
 			optimizationLevel: 3,
-			enhanceSVG: false
+			enhanceSVG: false,
+			corsEmbed: false
 		});
 
 		// just a quick starting message
@@ -91,7 +93,12 @@ module.exports = function( grunt , undefined ) {
 		grunt.verbose.writeln( "grunticon now minifying the stylesheet loader source." );
 		var banner = fs.readFileSync( config.files.banner );
 		config.min = banner + "\n" + uglify.minify( config.files.loader ).code;
-		if( config.enhanceSVG ){ config.min += uglify.minify( config.files.embed ).code; }
+		if( config.enhanceSVG ){
+			config.min += uglify.minify( config.files.embed ).code;
+			if( config.corsEmbed ){
+				config.min += uglify.minify( config.files.corsEmbed ).code;
+			}
+		}
 		fs.writeFileSync( path.join( config.dest, config.loadersnippet ), config.min );
 		grunt.verbose.writeln( "grunticon loader file created." );
 
