@@ -63,7 +63,9 @@ module.exports = function(grunt) {
 	// Load local tasks.
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
 	grunt.loadNpmTasks( 'grunt-svgmin' );
-	grunt.loadNpmTasks( 'grunt-grunticon' );
+
+	//load parent grunti
+	grunt.loadTasks('../tasks');
 
 	// Default task.
 	grunt.registerTask('default', [ 'svgmin', 'grunticon']);

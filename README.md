@@ -37,7 +37,7 @@ In 2.0, you can now choose which icons you want to "enhance" and the new loader
 script will copy the icon SVG paths from the cached Grunticon stylesheet and inject
 them as an embedded SVG element for you to script and style as needed. This allows
 us to offer the best of both worlds: the full power of embedded SVGs but with none
-the wasted bandwidth of including SVGs in your page markup. 
+the wasted bandwidth of including SVGs in your page markup.
 
 Remember that only browsers that support SVGs will see these effects so use them
 only for "enhancements" that don't break the experience when not present. Embedding
@@ -63,6 +63,12 @@ grunticon: {
 ```
 
 Then, make sure you get the new loader that's produced for you when you run `grunt` (it should be in the [same place as before](https://github.com/filamentgroup/grunticon/blob/master/example/output/grunticon.loader.js)) and inline that script in the `<head>`.
+
+Just after the loader, you'll need to call `grunticon` and pass your 3 CSS file paths to it as usual. Additionally though, you'll want to add a fourth argument to kick off the SVG embedding, which we've pre-defined for you as `grunticon.svgLoadedCallback`. In all, your call to `grunticon` will now look something like this:
+
+```JavaScript
+grunticon(["icons.data.svg.css", "icons.data.png.css", "icons.fallback.css"], grunticon.svgLoadedCallback );
+```
 
 After you've done this, you can have any icon embedded in the page and ready for styling just by adding a `data-grunticon-embed` attribute.
 
@@ -122,6 +128,21 @@ And voila! Styled SVG icons!
 
 Check out our example at http://filamentgroup.github.io/grunticon/example/output/preview.html
 
+### Also: How to use SVG Embedding across domains
+
+If you're hosting your grunticon CSS on a different domain than your HTML, you will need to do a little extra configuration to use SVG Embedding.
+
+1. Set the `corsEmbed` option to `true` in your gruntfile. This adds a little extra scripting to the grunticon loader so that it can make a cross-domai request.
+2. Once that's in, change the callback at the end of your grunticon call to reference `svgLoadedCORSCallback` instead of the one listed above.
+3. That might be enough, but if not, you'll need to enable cross-domain requests on the server where the CSS is hosted. Here's how that looks in Apache .htaccess for example:
+
+```
+<IfModule mod_headers.c>
+    Header add Access-Control-Allow-Origin "*"
+</IfModule>
+```
+
+(That "*" can be a particular domain if you want)
 
 ## Before you get started!
 
@@ -225,7 +246,13 @@ The name of the generated text file containing the grunticon loading snippet.
 Type: `Boolean`
 Default value: `False`
 
-The name of the generated text file containing the grunticon embed svg snippet.
+Include additional methods in the loader script to offer SVG embedding
+
+#### options.corsEmbed
+Type: `Boolean`
+Default value: `False`
+
+Include additional methods in the loader script to offer cross-domain SVG embedding. `options.enhanceSVG` must be `true` for this option to be respected.
 
 #### options.pngfolder
 Type: `String`
@@ -475,17 +502,24 @@ The url that is being loaded by Grunticon.
 #### method
 Type: `String`
 
-Is `"svg"` if the page loaded the SVG-based css. Is `"datapng"` if the page loaded the png with datauri-based css.
+Is `"svg"` if the page loaded the SVG-based css.
+Is `"datapng"` if the page loaded the png with datauri-based css.
 Is `"png"` if the page loaded the plain link to png-based css.
 
 #### loadCSS
 See: https://github.com/filamentgroup/loadcss
 
+#### getCSS
+Arguments: `String`
+Returns: `Object`
+
+Fetch a stylesheet `link` by its `href`.
+
 #### getIcons
 Arguments: `String`
 Returns: `Object`
 
-Takes SVG href and returns all of the icon selectors and the svgs associated with them in an object formatted
+Takes a stylesheet node (`link` or `style`) and returns all of the icon selectors and the svgs contained within it in an object formatted
 in this way:
 ```
 {
@@ -519,6 +553,33 @@ ready(function(){
   embedIcons(getIcons(grunticon.href));
 });
 ```
+
+#### embedComplete
+
+Arguments: None
+Returns: None
+
+If `grunticon.embedComplete` is defined, the loader will call it when SVG embedding is complete. This is true for both local and CORS embedding. So if you need to run logic after SVG markup is appended to the DOM, just define `grunticon.embedComplete` as a function that does whatever you need to do.
+
+
+### Cross-domain SVG Embedding Methods
+
+With `enhanceSVG` and `corsEmbed` turned on, the Grunticon loader has a few exposed 2 more methods and attributes on the `grunticon` object that you can use:
+
+#### ajaxGet
+Arguments: `String`, `Function`
+Returns: `Object`
+
+First argument is a string reference to a url to request via cross-domain Ajax. Second argument is an optional callback when the request finishes loading. (In the callback, `this` refers to the XHR object).
+
+
+#### svgLoadedCORSCallback
+Arguments: None
+Returns: None
+
+Uses the above methods to make SVG embedding work when CSS is hosted on another domain. (CORS must be allowed on the external domain.)
+
+
 
 
 ## Browser testing results for icon output
