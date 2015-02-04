@@ -21,8 +21,8 @@
 	};
 
 	// get the SVG link
-	var getSVGCSS = function(){
-		return window.document.querySelector( 'link[href$="'+ grunticon.href +'"]' );
+	var getSVGCSS = function( href ){
+		return window.document.querySelector( 'link[href$="'+ href +'"]' );
 	};
 
 	// this function can rip the svg markup from the css so we can embed it anywhere
@@ -33,11 +33,7 @@
 			rules, cssText,
 			iconClass, iconSVGEncoded, iconSVGRaw;
 
-		if( !stylesheet ){
-			stylesheet = getSVGCSS();
-		}
-
-		svgss = stylesheet && stylesheet.sheet;
+		svgss = stylesheet.sheet;
 
 		if( !svgss ){ return icons; }
 
@@ -82,7 +78,7 @@
 			return;
 		}
 		ready(function(){
-			embedIcons(getIcons());
+			embedIcons( getIcons( getSVGCSS( grunticon.href ) ) );
 		});
 	};
 
