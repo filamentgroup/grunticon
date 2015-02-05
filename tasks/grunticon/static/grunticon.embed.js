@@ -79,7 +79,7 @@
 		}
 		ready(function(){
 			embedIcons( getIcons( getCSS( grunticon.href ) ) );
-			if( callback ){
+			if( typeof callback === "function" ){
 				callback();
 			}
 		});
