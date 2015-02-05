@@ -572,11 +572,10 @@ First argument is a string reference to a url to request via cross-domain Ajax. 
 
 
 #### svgLoadedCORSCallback
-Arguments: None
+Arguments: `Function`
 Returns: None
 
 Uses the above methods to make SVG embedding work when CSS is hosted on another domain. (CORS must be allowed on the external domain.)
-
 
 
 
@@ -681,6 +680,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 
 ## Release History
+* Version 2.1.0: Add ability to embed SVGs with cross-domain requested CSS files via `corsEmbed` option
 * Version 2.0.0: Add ability to enhance SVGs by embedding them inside of the element instead of using a background-image
 * Version 1.4.0: Add `tmpPath` option
 * Version 1.3.0: Add `dynamicColorOnly` support from directory-colorfy
