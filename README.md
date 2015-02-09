@@ -238,7 +238,7 @@ The name of the generated HTML file containing PNG data uris.
 
 #### options.loadersnippet
 Type: `String`
-Default value: `"grunticon.loader.txt"`
+Default value: `"grunticon.loader.js"`
 
 The name of the generated text file containing the grunticon loading snippet.
 
