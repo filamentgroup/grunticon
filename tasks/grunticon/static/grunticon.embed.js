@@ -60,15 +60,20 @@
 		embedAttr = "data-grunticon-embed";
 
 		for( var iconName in icons ){
-			selector = iconName.slice(selectorPlaceholder.length);
-			embedElems = document.querySelectorAll( selector + "[" + embedAttr + "]" );
-			if( !embedElems.length ){ continue; }
+            try {
+                selector = iconName.slice(selectorPlaceholder.length);
+                embedElems = document.querySelectorAll( selector + "[" + embedAttr + "]" );
+                if( !embedElems.length ){ continue; }
 
-			for( var i = 0; i < embedElems.length; i++ ){
-				embedElems[ i ].innerHTML = icons[ iconName ];
-				embedElems[ i ].style.backgroundImage = "none";
-				embedElems[ i ].removeAttribute( embedAttr );
-			}
+                for( var i = 0; i < embedElems.length; i++ ){
+                    embedElems[ i ].innerHTML = icons[ iconName ];
+                    embedElems[ i ].style.backgroundImage = "none";
+                    embedElems[ i ].removeAttribute( embedAttr );
+                }
+            } catch (er) {
+                // continue further with embeds even though it failed for this icon
+                continue;
+            }
 		}
 		return embedElems;
 	};
