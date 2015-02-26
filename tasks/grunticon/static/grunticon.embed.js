@@ -61,7 +61,14 @@
 
 		for( var iconName in icons ){
 			selector = iconName.slice(selectorPlaceholder.length);
-			embedElems = document.querySelectorAll( selector + "[" + embedAttr + "]" );
+
+			try {
+				embedElems = document.querySelectorAll( selector + "[" + embedAttr + "]" );
+			} catch (er) {
+				// continue further with embeds even though it failed for this icon
+				continue;
+			}
+
 			if( !embedElems.length ){ continue; }
 
 			for( var i = 0; i < embedElems.length; i++ ){
