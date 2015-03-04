@@ -28,11 +28,13 @@
 				var style = document.createElement( "style" );
 				style.innerHTML = this.responseText;
 				var ref = grunticon.getCSS( grunticon.href );
-				ref.parentNode.insertBefore( style, ref );
-				ref.parentNode.removeChild( ref );
-				grunticon.embedIcons( grunticon.getIcons( style ) );
-				if( callback ){
-					callback();
+				if( ref ){
+					ref.parentNode.insertBefore( style, ref );
+					ref.parentNode.removeChild( ref );
+					grunticon.embedIcons( grunticon.getIcons( style ) );
+					if( typeof callback === "function" ){
+						callback();
+					}
 				}
 			} );
 		});
