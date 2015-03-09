@@ -5,8 +5,7 @@ var grunticon = function( css, onload ){
 		return;
 	}
 
-	var navigator = window.navigator,
-		Image = window.Image;
+	var Image = window.Image;
 
 	// Thanks Modernizr & Erik Dahlstrom
 	var svg = !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect && !!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image", "1.1") && !(window.opera && navigator.userAgent.indexOf('Chrome') === -1) && navigator.userAgent.indexOf('Series40') === -1;
@@ -32,7 +31,7 @@ var grunticon = function( css, onload ){
 		}
 
 		grunticon.href = href;
-		loadCSS( href, null, null, onload );
+		onloadCSS( loadCSS( href ), onload );
 	};
 
 	img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";

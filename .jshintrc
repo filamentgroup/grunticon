@@ -14,7 +14,9 @@
   "globals": {
     "window": true,
     "document": true,
+    "navigator": true,
     "loadCSS": true,
+    "onloadCSS": true,
     "grunticon": true
   }
 }
