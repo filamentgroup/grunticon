@@ -50,6 +50,31 @@ function loadCSS( href, before, media, callback ){
 	});
 	return ss;
 }
+/*!
+onloadCSS: adds onload support for asynchronous stylesheets loaded with loadCSS.
+[c]2014 @zachleat, Filament Group, Inc.
+Licensed MIT
+*/
+function onloadCSS( ss, callback ) {
+	ss.onload = function() {
+		ss.onload = null;
+		if( callback ) {
+			callback.call( ss );
+		}
+	};
+
+	// This code is for browsers that don’t support onload, any browser that
+	// supports onload should use that instead.
+	// No support for onload:
+	//	* Android 4.3 (Samsung Galaxy S4, Browserstack)
+	//	* Android 4.2 Browser (Samsung Galaxy SIII Mini GT-I8200L)
+	//	* Android 2.3 (Pantech Burst P9070)
+
+	// Weak inference targets Android < 4.4
+	if( "isApplicationInstalled" in navigator && "onloadcssdefined" in ss ) {
+		ss.onloadcssdefined( callback );
+	}
+}
 var grunticon = function( css, onload ){
 	"use strict";
 	// expects a css array with 3 items representing CSS paths to datasvg, datapng, urlpng
@@ -57,8 +82,7 @@ var grunticon = function( css, onload ){
 		return;
 	}
 
-	var navigator = window.navigator,
-		Image = window.Image;
+	var Image = window.Image;
 
 	// Thanks Modernizr & Erik Dahlstrom
 	var svg = !!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect && !!document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image", "1.1") && !(window.opera && navigator.userAgent.indexOf('Chrome') === -1) && navigator.userAgent.indexOf('Series40') === -1;
@@ -84,12 +108,13 @@ var grunticon = function( css, onload ){
 		}
 
 		grunticon.href = href;
-		loadCSS( href, null, null, onload );
+		onloadCSS( loadCSS( href ), onload );
 	};
 
 	img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
 	document.documentElement.className += " grunticon";
 };
 grunticon.loadCSS = loadCSS;
+grunticon.onloadCSS = onloadCSS;
 window.grunticon = grunticon;
 }(this));

@@ -115,7 +115,9 @@ module.exports = function(grunt) {
 					banner: ';(function(window){\n',
 					footer: '\n}(this));'
 				},
-				src: [ 'node_modules/fg-loadcss/loadCSS.js',
+				src: [ 
+					'node_modules/fg-loadcss/loadCSS.js',
+					'node_modules/fg-loadcss/onloadCSS.js',
 					'tasks/grunticon/loader.js',
 					'tasks/grunticon/globals.js' ],
 				dest: 'tasks/grunticon/static/grunticon.loader.js'
