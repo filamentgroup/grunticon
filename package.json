@@ -1,7 +1,7 @@
 {
 	"name": "grunt-grunticon",
 	"description": "A mystical CSS icon solution",
-	"version": "2.1.5",
+	"version": "2.1.6",
 	"homepage": "https://github.com/filamentgroup/grunticon",
 	"author": {
 		"name": "Scott Jehl",
@@ -29,7 +29,7 @@
 		"test": "grunt travis --verbose"
 	},
 	"dependencies": {
-		"directory-colorfy": "2.0.3",
+		"directory-colorfy": "2.0.1",
 		"directory-encoder": "0.6.1",
 		"fg-loadcss": "^0.1.5",
 		"fs-extra": "0.8.1",
