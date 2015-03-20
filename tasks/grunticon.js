@@ -16,7 +16,7 @@ module.exports = function( grunt , undefined ) {
 	var path = require( 'path' );
 	var os = require( 'os' );
 
-	var grunticon = require( '../lib/grunticon-lib' );
+	var Grunticon = require( '../lib/grunticon-lib' );
 
 	grunt.registerMultiTask( 'grunticon', 'A mystical CSS icon solution.', function() {
 		var done = this.async();
@@ -50,7 +50,12 @@ module.exports = function( grunt , undefined ) {
 			compressPNG: false,
 			optimizationLevel: 3,
 			enhanceSVG: false,
-			corsEmbed: false
+			corsEmbed: false,
+			logger: {
+				verbose: grunt.verbose.writeln,
+				fatal: grunt.fatal,
+				ok: grunt.log.ok
+			}
 		});
 
 		// just a quick starting message
@@ -76,12 +81,8 @@ module.exports = function( grunt , undefined ) {
 			done( false );
 		}
 
-		grunticon.process(files, config, grunt, function(status){
-			done(status);
-		});
+		var grunticon = new Grunticon( files, config.dest, config );
 
-
-
-
+		grunticon.process(done);
 	});
 };
