@@ -74,14 +74,14 @@ module.exports = function( grunt , undefined ) {
 			return file.src[0];
 		});
 
-		config.dest = this.files[0].orig.dest;
+		var output = this.files[0].orig.dest;
 
-		if( !config.dest || config.dest && config.dest === "" ){
+		if( !output || output && output === "" ){
 			grunt.fatal("The destination must be a directory");
 			done( false );
 		}
 
-		var grunticon = new Grunticon( files, config.dest, config );
+		var grunticon = new Grunticon( files, output, config );
 
 		grunticon.process(done);
 	});
