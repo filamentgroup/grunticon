@@ -6,15 +6,11 @@
  * Licensed under the MIT license.
  */
 
-/*global __dirname:true*/
 /*global require:true*/
 
 module.exports = function( grunt , undefined ) {
 
 	"use strict";
-
-	var path = require( 'path' );
-	var os = require( 'os' );
 
 	var Grunticon = require( '../lib/grunticon-lib' );
 
@@ -23,34 +19,6 @@ module.exports = function( grunt , undefined ) {
 
 		// get the config
 		var config = this.options({
-			datasvgcss: "icons.data.svg.css",
-			datapngcss: "icons.data.png.css",
-			urlpngcss: "icons.fallback.css",
-			files: {
-				loader: path.join( __dirname, 'grunticon', 'static', 'grunticon.loader.js'),
-				embed: path.join( __dirname, 'grunticon', 'static', 'grunticon.embed.js'),
-				corsEmbed: path.join( __dirname, 'grunticon', 'static', 'grunticon.embed.cors.js'),
-				banner: path.join( __dirname, 'grunticon', 'static', 'grunticon.loader.banner.js')
-			},
-			previewhtml: "preview.html",
-			loadersnippet: "grunticon.loader.js",
-			cssbasepath: path.sep,
-			customselectors: {},
-			cssprefix: ".icon-",
-			defaultWidth: "400px",
-			defaultHeight: "300px",
-			colors: {},
-			dynamicColorOnly: false,
-			pngfolder: "png",
-			pngpath: "",
-			template: "",
-			tmpPath: os.tmpDir(),
-			tmpDir: "grunticon-tmp",
-			previewTemplate: path.join( __dirname, "..", "example", "preview.hbs" ),
-			compressPNG: false,
-			optimizationLevel: 3,
-			enhanceSVG: false,
-			corsEmbed: false,
 			logger: {
 				verbose: grunt.verbose.writeln,
 				fatal: grunt.fatal,
