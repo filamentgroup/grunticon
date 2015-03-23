@@ -36,6 +36,7 @@
 		"grunt-svgmin": "0.3.0",
 		"handlebars": "1.1.2",
 		"lodash": "2.4.0",
+		"merge-defaults": "^0.2.1",
 		"rsvp": "1.2.0",
 		"svg-to-png": "2.0.0",
 		"uglify-js": "~2.2.5",

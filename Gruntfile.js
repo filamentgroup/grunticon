@@ -6,8 +6,12 @@
  * Licensed under the MIT license.
  */
 
+/*global __dirname:true*/
+/*global require:true*/
 module.exports = function(grunt) {
 	"use strict";
+
+	var path = require( "path" );
 
 	// Project configuration.
 	grunt.initConfig({
@@ -84,8 +88,8 @@ module.exports = function(grunt) {
 						"gummy-bears-2" : ["nav li a.deadly-bears:before"]
 					},
 
-					template: "example/default-css.hbs",
-					previewTemplate: "example/preview-custom.hbs",
+					template: path.join( __dirname, "example", "default-css.hbs" ),
+					previewTemplate: path.join( __dirname, "example", "preview-custom.hbs" ),
 
 					compressPNG: true
 
