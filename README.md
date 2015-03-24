@@ -432,6 +432,18 @@ Example of .hbs file contents:
 }
 ```
 
+#### options.templatePrepend
+Type: `String`
+Default value: `""`
+
+Let's you specify a String, which [directory-encoder](https://github.com/filamentgroup/directory-encoder) will prepend to the output (s)css-file. Usefull if you want to create documentation or use sass maps.
+
+#### options.templateAppend
+Type: `String`
+Default value: `""`
+
+Analogue to templatePrepend, just at the end of the file.
+
 #### options.compressPNG
 Type: `Boolean`
 Default value: `false`
