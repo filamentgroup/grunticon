@@ -46,7 +46,7 @@ module.exports = function( grunt , undefined ) {
 			cssprefix: ".icon-",
 			defaultWidth: "400px",
 			defaultHeight: "300px",
-			colors: {},	
+			colors: {},
 			dynamicColorOnly: false,
 			pngfolder: "png",
 			pngpath: "",
