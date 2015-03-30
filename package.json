@@ -29,18 +29,8 @@
 		"test": "grunt travis --verbose"
 	},
 	"dependencies": {
-		"directory-colorfy": "2.0.1",
-		"directory-encoder": "0.6.1",
 		"fg-loadcss": "^0.1.6",
-		"fs-extra": "0.8.1",
-		"grunt-svgmin": "0.3.0",
-		"handlebars": "1.1.2",
-		"lodash": "2.4.0",
-		"merge-defaults": "^0.2.1",
-		"rsvp": "1.2.0",
-		"svg-to-png": "2.0.0",
-		"uglify-js": "~2.2.5",
-		"xmldom": "0.1.16"
+		"grunticon-lib": "^1.0.0-beta.1"
 	},
 	"devDependencies": {
 		"grunt": "^0.4.5",
@@ -49,7 +39,8 @@
 		"grunt-contrib-concat": "^0.5.1",
 		"grunt-contrib-jshint": "^0.11.0",
 		"grunt-contrib-nodeunit": "^0.4.1",
-		"grunt-contrib-qunit": "^0.5.2"
+		"grunt-contrib-qunit": "^0.5.2",
+		"grunt-svgmin": "^0.3.0"
 	},
 	"peerDependencies": {
 		"grunt": "~0.4.2"

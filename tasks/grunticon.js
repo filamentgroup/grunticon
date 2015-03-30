@@ -12,7 +12,7 @@ module.exports = function( grunt , undefined ) {
 
 	"use strict";
 
-	var Grunticon = require( '../lib/grunticon-lib' );
+	var Grunticon = require( 'grunticon-lib' );
 
 	grunt.registerMultiTask( 'grunticon', 'A mystical CSS icon solution.', function() {
 		var done = this.async();
