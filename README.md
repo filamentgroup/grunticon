@@ -675,10 +675,6 @@ In the Save SVG dialog that opens up, there are lots of options. SVG has a ton o
 ## Warnings
 * If your files have `#`, `.`, `>`, or any other css selecting character in their names, they will likely be improperly processed.
 
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
-
-
 ## Release History
 * Version 2.1.0: Add ability to embed SVGs with cross-domain requested CSS files via `corsEmbed` option
 * Version 2.0.0: Add ability to enhance SVGs by embedding them inside of the element instead of using a background-image
