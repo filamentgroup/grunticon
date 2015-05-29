@@ -293,7 +293,7 @@ ids are guaranteed to work with the preview)
 #### options.customselectors
 Type: `Object`
 
-Allows you to specify custom selectors (in addition to the generated `cssprefix + filename - extension` class) for individual files.
+Allows you to specify custom selectors for individual files. This is in addition to the selectors generated using `cssprefix + filename - extension`.
 
 Example:
 
@@ -307,7 +307,7 @@ will produce:
 
 ```css
 .icon-bar,
-.bar,
+.baz,
 .icon-foo {
 	//css
 }
