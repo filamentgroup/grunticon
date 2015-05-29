@@ -313,15 +313,17 @@ will produce:
 }
 ```
 
-You can also use an asterisk in your custom selector!
+You can also use an asterisk in your custom selector. The filename can be referenced with `$1`.
 
 Examples:
 
 ```JavaScript
+...
 customselectors: {
   "*": [".icon-$1:before", ".icon-$1-what", ".hey-$1"]
 },
 cssprefix: ".icon-"
+...
 ```
 
 Should give the file bear.svg the css
