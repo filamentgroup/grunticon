@@ -54,7 +54,7 @@
 	// embed an icon of a particular name ("icon-foo") in all elements with that icon class
 	// and remove its background image
 	var embedIcons = function(icons){
-		var embedElems, embedAttr, selector;
+		var selectedElems, filteredElems, embedAttr, selector;
 
 		// attr to specify svg embedding
 		embedAttr = "data-grunticon-embed";
@@ -63,21 +63,36 @@
 			selector = iconName.slice(selectorPlaceholder.length);
 
 			try {
-				embedElems = document.querySelectorAll( selector + "[" + embedAttr + "]" );
+				// get ALL of the elements matching the selector
+				selectedElems = document.querySelectorAll( selector );
 			} catch (er) {
 				// continue further with embeds even though it failed for this icon
 				continue;
 			}
 
-			if( !embedElems.length ){ continue; }
 
-			for( var i = 0; i < embedElems.length; i++ ){
-				embedElems[ i ].innerHTML = icons[ iconName ];
-				embedElems[ i ].style.backgroundImage = "none";
-				embedElems[ i ].removeAttribute( embedAttr );
+			filteredElems = [];
+
+			// keep only those elements with the embed attribute
+			for( var i = 0; i < selectedElems.length; i++ ){
+				if( selectedElems[i].getAttribute( embedAttr ) !== null ){
+					filteredElems.push(selectedElems[i]);
+				}
+			}
+
+			// continue if there are no elements left after filtering
+			if( !filteredElems.length ){ continue; }
+
+			// for all the elements matching the selector with the embed attribute
+			// take the svg markup and embed it into the selected elements
+			for( i = 0; i < filteredElems.length; i++ ){
+				filteredElems[ i ].innerHTML = icons[ iconName ];
+				filteredElems[ i ].style.backgroundImage = "none";
+				filteredElems[ i ].removeAttribute( embedAttr );
 			}
 		}
-		return embedElems;
+
+		return filteredElems;
 	};
 
 	var svgLoadedCallback = function(callback){
