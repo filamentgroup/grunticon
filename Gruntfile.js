@@ -85,6 +85,8 @@ module.exports = function(grunt) {
 					},
 
 					template: "example/default-css.hbs",
+					templatePrepend: "",
+					templateAppend: "",
 					previewTemplate: "example/preview-custom.hbs",
 
 					compressPNG: true

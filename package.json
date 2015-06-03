@@ -30,7 +30,7 @@
 	},
 	"dependencies": {
 		"directory-colorfy": "2.0.1",
-		"directory-encoder": "0.6.1",
+		"directory-encoder": "0.7.0",
 		"fg-loadcss": "^0.1.6",
 		"fs-extra": "0.8.1",
 		"grunt-svgmin": "0.3.0",

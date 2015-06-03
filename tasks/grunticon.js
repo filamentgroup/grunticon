@@ -51,6 +51,8 @@ module.exports = function( grunt , undefined ) {
 			pngfolder: "png",
 			pngpath: "",
 			template: "",
+			templatePrepend: "",
+			templateAppend: "",
 			tmpPath: os.tmpDir(),
 			tmpDir: "grunticon-tmp",
 			previewTemplate: path.join( __dirname, "..", "example", "preview.hbs" ),
@@ -114,6 +116,8 @@ module.exports = function( grunt , undefined ) {
 			pngpath: config.pngpath,
 			customselectors: config.customselectors,
 			template: config.template ? path.resolve( config.template ) : "",
+			templatePrepend: config.templatePrepend,
+			templateAppend: config.templateAppend,
 			previewTemplate: path.resolve( config.previewTemplate ),
 			noencodepng: false,
 			prefix: config.cssprefix
