@@ -39,7 +39,8 @@
 		"rsvp": "1.2.0",
 		"svg-to-png": "2.0.0",
 		"uglify-js": "~2.2.5",
-		"xmldom": "0.1.16"
+		"xmldom": "0.1.16",
+		"grunticon-lib": "1.0.1"
 	},
 	"devDependencies": {
 		"grunt": "^0.4.5",
@@ -48,8 +49,7 @@
 		"grunt-contrib-concat": "^0.5.1",
 		"grunt-contrib-jshint": "^0.11.0",
 		"grunt-contrib-nodeunit": "^0.4.1",
-		"grunt-contrib-qunit": "^0.5.2",
-		"grunticon-lib": "git://github.com/filamentgroup/grunticon-lib.git#loadcss-passing"
+		"grunt-contrib-qunit": "^0.5.2"
 	},
 	"peerDependencies": {
 		"grunt": "~0.4.2"
