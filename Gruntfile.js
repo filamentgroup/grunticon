@@ -16,12 +16,6 @@ module.exports = function(grunt) {
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		nodeunit: {
-			files: ['test/node/**/*_test.js']
-		},
-		qunit: {
-			files: ['test/qunit/**/*.html']
-		},
 		watch: {
 			files: '<config:lint.files>',
 			tasks: 'default'
@@ -99,36 +93,14 @@ module.exports = function(grunt) {
 		jshint: {
 			all: [
 				'Gruntfile.js',
-				'tasks/**/*.js',
-				'lib/*.js'
+				'tasks/**/*.js'
 			],
 			options: {
 				jshintrc: '.jshintrc'
 			}
 		},
-		concat: {
-			banner: {
-				options: {
-					banner: '/*! <%= pkg.name %> Stylesheet Loader - v<%= pkg.version %> | https://github.com/filamentgroup/grunticon | (c) <%= grunt.template.today("yyyy") %> Scott Jehl, Filament Group, Inc. | MIT license. */\n'
-				},
-				src: [],
-				dest: path.join( "static", "grunticon.loader.banner.js" )
-			},
-			loader: {
-				options: {
-					banner: ';(function(window){\n',
-					footer: '\n}(this));'
-				},
-				src: [ 
-					'node_modules/fg-loadcss/loadCSS.js',
-					'node_modules/fg-loadcss/onloadCSS.js',
-					'tasks/grunticon/loader.js',
-					'tasks/grunticon/globals.js' ],
-				dest: path.join( "static", "grunticon.loader.js" )
-			}
-		},
 
-// Before generating any new files, remove any previously-created files.
+    // Before generating any new files, remove any previously-created files.
 		clean: {
 			tests: ['tmp']
 		}
@@ -138,17 +110,12 @@ module.exports = function(grunt) {
 	grunt.loadTasks('tasks');
 
 	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
-	grunt.loadNpmTasks( 'grunt-contrib-nodeunit' );
-	grunt.loadNpmTasks( 'grunt-contrib-qunit' );
-	grunt.loadNpmTasks( 'grunt-contrib-concat' );
-
 	grunt.loadNpmTasks( 'grunt-svgmin' );
 
 	// Default task.
 	grunt.registerTask('skip-tests', ['jshint', 'grunticon:foo']);
-	grunt.registerTask('travis', ['concat', 'jshint', 'svgmin', 'grunticon:foo', 'nodeunit', 'qunit']);
+	grunt.registerTask('travis', ['jshint', 'svgmin', 'grunticon:foo']);
 	grunt.registerTask('default', ['travis']);
 	grunt.registerTask('stage', ['default']);
 
 };
-
