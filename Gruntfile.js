@@ -6,8 +6,12 @@
  * Licensed under the MIT license.
  */
 
+/*global __dirname:true*/
+/*global require:true*/
 module.exports = function(grunt) {
 	"use strict";
+
+	var path = require( "path" );
 
 	// Project configuration.
 	grunt.initConfig({
@@ -84,8 +88,8 @@ module.exports = function(grunt) {
 						"gummy-bears-2" : ["nav li a.deadly-bears:before"]
 					},
 
-					template: "example/default-css.hbs",
-					previewTemplate: "example/preview-custom.hbs",
+					template: path.join( __dirname, "example", "default-css.hbs" ),
+					previewTemplate: path.join( __dirname, "example", "preview-custom.hbs" ),
 
 					compressPNG: true
 
@@ -108,7 +112,7 @@ module.exports = function(grunt) {
 					banner: '/*! <%= pkg.name %> Stylesheet Loader - v<%= pkg.version %> | https://github.com/filamentgroup/grunticon | (c) <%= grunt.template.today("yyyy") %> Scott Jehl, Filament Group, Inc. | MIT license. */\n'
 				},
 				src: [],
-				dest: 'tasks/grunticon/static/grunticon.loader.banner.js'
+				dest: path.join( "static", "grunticon.loader.banner.js" )
 			},
 			loader: {
 				options: {
@@ -120,7 +124,7 @@ module.exports = function(grunt) {
 					'node_modules/fg-loadcss/onloadCSS.js',
 					'tasks/grunticon/loader.js',
 					'tasks/grunticon/globals.js' ],
-				dest: 'tasks/grunticon/static/grunticon.loader.js'
+				dest: path.join( "static", "grunticon.loader.js" )
 			}
 		},
 
