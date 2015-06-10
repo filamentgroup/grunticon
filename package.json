@@ -1,49 +1,51 @@
 {
-  "name": "grunt-grunticon",
-  "description": "A mystical CSS icon solution",
-  "version": "2.2.0-beta.4",
-  "homepage": "https://github.com/filamentgroup/grunticon",
-  "author": {
-    "name": "Scott Jehl",
-    "email": "scott@filamentgroup.com",
-    "url": "http://filamentgroup.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/filamentgroup/grunticon"
-  },
-  "bugs": {
-    "url": "https://github.com/filamentgroup/grunticon/issues"
-  },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/filamentgroup/grunticon/blob/master/LICENSE-MIT"
-    }
-  ],
-  "main": "Gruntfile.js",
-  "engines": {
-    "node": ">= 0.10.0"
-  },
-  "scripts": {
-    "test": "grunt travis --verbose"
-  },
-  "dependencies": {
-    "grunticon-lib": "1.0.2"
-  },
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-cli": "^0.1.13",
-    "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-jshint": "^0.11.0",
-    "grunt-contrib-nodeunit": "^0.4.1",
-    "grunt-contrib-qunit": "^0.5.2",
-    "grunt-svgmin": "^2.0.1"
-  },
-  "peerDependencies": {
-    "grunt": "~0.4.2"
-  },
-  "keywords": [
-    "gruntplugin"
-  ]
+	"name": "grunt-grunticon",
+	"description": "A mystical CSS icon solution",
+	"version": "2.2.0-beta.4",
+	"homepage": "https://github.com/filamentgroup/grunticon",
+	"author": {
+		"name": "Scott Jehl",
+		"email": "scott@filamentgroup.com",
+		"url": "http://filamentgroup.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/filamentgroup/grunticon"
+	},
+	"bugs": {
+		"url": "https://github.com/filamentgroup/grunticon/issues"
+	},
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "https://github.com/filamentgroup/grunticon/blob/master/LICENSE-MIT"
+		}
+	],
+	"main": "Gruntfile.js",
+	"engines": {
+		"node": ">= 0.10.0",
+		"npm": "^2.11.0"
+	},
+	"scripts": {
+		"test": "grunt travis --verbose"
+	},
+	"dependencies": {
+		"grunticon-lib": "1.0.2"
+	},
+	"devDependencies": {
+		"grunt": "^0.4.5",
+		"grunt-cli": "^0.1.13",
+		"grunt-contrib-clean": "^0.6.0",
+		"grunt-contrib-jshint": "^0.11.0",
+		"grunt-contrib-nodeunit": "^0.4.1",
+		"grunt-contrib-qunit": "^0.5.2",
+		"grunt-svgmin": "^2.0.1"
+	},
+	"peerDependencies": {
+		"grunt": "~0.4.2"
+	},
+	"keywords": [
+		"gruntplugin"
+	]
+>>>>>>> Test travis with upgraded npm
 }
