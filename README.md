@@ -132,7 +132,7 @@ Check out our example at http://filamentgroup.github.io/grunticon/example/output
 
 If you're hosting your grunticon CSS on a different domain than your HTML, you will need to do a little extra configuration to use SVG Embedding.
 
-1. Set the `corsEmbed` option to `true` in your gruntfile. This adds a little extra scripting to the grunticon loader so that it can make a cross-domai request.
+1. Set the `corsEmbed` option to `true` in your gruntfile. This adds a little extra scripting to the grunticon loader so that it can make a cross-domain request.
 2. Once that's in, change the callback at the end of your grunticon call to reference `svgLoadedCORSCallback` instead of the one listed above.
 3. That might be enough, but if not, you'll need to enable cross-domain requests on the server where the CSS is hosted. Here's how that looks in Apache .htaccess for example:
 
