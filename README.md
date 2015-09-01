@@ -447,8 +447,14 @@ Default value: `3`
 
 If compress is set to `true`, this will set the optimationLevel for optipng
 
-#### options.colors
 
+#### Automating color variations
+
+Grunticon allows you to output any icon in different colors simply by changing its filename to the following syntax: `myfilename.colors-red-aa0000-gray.svg`. In this example, any color names or hexidecimal values that follow `colors-` and are separated by a dash will be used to generate additional icons of that color. By default, each icon will be assigned a numbered class name for CSS use. You can improve the class naming conventions by defining color variables in your Gruntfile's `colors` option shown below. When defined, you can reference a color variable in place of a color in your file names, and the generated classes will use that variable name as well. See the `Gruntfile.js`'s `colors` and `dynamicColorOnly` options for an example of how color automation.
+
+*A note on filesize impact:* Adding color variations of an icon involves creating duplicates of that icon's SVG source in the CSS, so unfortunately, each color variation will cause an increase in filesize. However, transferring CSS with gzip compression can negate much of this filesize increase, and we highly recommend always transferring with gzip. In testing, we found that creating a color variation of every icon in our example set increased overall size by 25%, rather than 100% as a raw text duplicate would increase. That said, size increases for non-SVG-supporting browsers will be more dramatic, as the fallback PNGs will not have the heavy transfer compression as SVG enjoys. We advise using this feature on a case-by-case basis to ensure overhead is kept to a minimum.
+
+#### options.colors
 Allows you to predefine colors as variables that can be used in filename color configuration.
 ```js
 options: {
@@ -479,18 +485,8 @@ And `dynamicColorOnly` is set to `true`:
 }
 ```
 
-Only a single file will be generated:
+Then only a single file: `bear-white.svg`, will be generated, rather than two: `bear.svg` with the original colors and `bear-white.svg` with white colors.
 
-```
-bear-white.svg
-```
-
-
-#### Automating color variations
-
-Grunticon allows you to output any icon in different colors simply by changing its filename to the following syntax: `myfilename.colors-red-aa0000-gray.svg`. In this example, any color names or hexidecimal values that follow `colors-` and are separated by a dash will be used to generate additional icons of that color. By default, each icon will be assigned a numbered class name for CSS use. You can improve the class naming conventions by defining color variables in your Gruntfile's `colors` option shown above. When defined, you can reference a color variable in place of a color in your file names, and the generated classes will use that variable name as well. See the `Gruntfile.js`'s `colors` option and the sample bear svg for an example of color automation.
-
-*A note on filesize impact:* Adding color variations of an icon involves creating duplicates of that icon's SVG source in the CSS, so unfortunately, each color variation will cause an increase in filesize. However, transferring CSS with gzip compression can negate much of this filesize increase, and we highly recommend always transferring with gzip. In testing, we found that creating a color variation of every icon in our example set increased overall size by 25%, rather than 100% as a raw text duplicate would increase. That said, size increases for non-SVG-supporting browsers will be more dramatic, as the fallback PNGs will not have the heavy transfer compression as SVG enjoys. We advise using this feature on a case-by-case basis to ensure overhead is kept to a minimum.
 
 ### Grunticon Loader Methods
 
