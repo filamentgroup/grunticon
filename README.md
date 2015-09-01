@@ -632,6 +632,12 @@ Here's an example:
 ```js
 svgmin: {
 	dist: {
+		options: {
+			plugins: [
+				// Don't remove XML declaration (needed to avoid errors creating PNG on Win 7)
+				{ removeXMLProcInst: false }
+			]
+		},
 		files: [{
 			expand: true,
 			cwd: 'example/svgs',
@@ -649,13 +655,12 @@ grunticon: {
 			dest: "example/output"
 		}],
 		options: {
-    }
-  }
+		}
+	}
 }
 ```
 
-For a more extensive example, check out our Gruntfile and example
-project.
+The svgmin options section is only needed to avoid errors under windows and can be omitted for smaller svg files on other platforms. For a more extensive example, check out our Gruntfile example project.
 
 ### Serving compressed CSS
 One of the great benefits to data uris is the ability to compress the images heavily via gzip compression. Be sure to enable gzip of CSS on your server, as it'll cut your icon transfer size greatly.
