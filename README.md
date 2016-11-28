@@ -146,6 +146,8 @@ If you're hosting your grunticon CSS on a different domain than your HTML, you w
 
 ## Before you get started!
 
+[You are using Windows ?](?#windows) 
+
 [Have you seen Grumpicon?](http://grumpicon.com)
 
 [<img src="http://filamentgroup.com/images/grunticon_workflow_grumpicon.jpg" width="400">](http://grumpicon.com)
@@ -677,6 +679,29 @@ In the Save SVG dialog that opens up, there are lots of options. SVG has a ton o
 
 ## Warnings
 * If your files have `#`, `.`, `>`, or any other css selecting character in their names, they will likely be improperly processed.
+
+
+## Windows
+- Make sure the svg files starts and includes `<?xml version="1.0" encoding="utf-8"?>`
+- Make sure to properly configure  `svgmin` by keeping `XML` instructions with `removeXMLProcInst` option
+ 
+```js
+...
+    svgmin: {
+      dist: {
+        options: {
+          plugins: [
+            { removeXMLProcInst: false }// this option matter.
+          ]
+        },
+        files: ...
+      }
+    },
+...
+````
+
+For more in depth information please refer to tracked issues like #285 #292
+
 
 ## Release History
 * Version 2.1.0: Add ability to embed SVGs with cross-domain requested CSS files via `corsEmbed` option
