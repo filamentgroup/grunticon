@@ -674,6 +674,7 @@ View [the enhancement backlog here](https://github.com/filamentgroup/grunticon/i
 * [`gulpicon`](https://github.com/filamentgroup/gulpicon/) and [Roadmap](https://github.com/filamentgroup/gulpicon/issues?utf8=%E2%9C%93&q=label%3Aneeds-votes+sort%3Areactions-%2B1-desc+)
 * [`grunticon-lib`](https://github.com/filamentgroup/grunticon-lib/) and [Roadmap](https://github.com/filamentgroup/grunticon-lib/issues?utf8=%E2%9C%93&q=label%3Aneeds-votes+sort%3Areactions-%2B1-desc+)
 * [`svg-to-png`](https://github.com/filamentgroup/svg-to-png/) and [Roadmap](https://github.com/filamentgroup/svg-to-png/issues?utf8=%E2%9C%93&q=label%3Aneeds-votes+sort%3Areactions-%2B1-desc+)
+* [`Grumpicon`](https://github.com/filamentgroup/grumpicon)
 
 ## Release History
 * Version 2.1.0: Add ability to embed SVGs with cross-domain requested CSS files via `corsEmbed` option
