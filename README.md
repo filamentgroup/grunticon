@@ -1,7 +1,5 @@
 # Grunticon [![Build Status](https://travis-ci.org/filamentgroup/grunticon.png?branch=master)](https://travis-ci.org/filamentgroup/grunticon)
 
-[![Join the chat at https://gitter.im/filamentgroup/grunticon](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/filamentgroup/grunticon?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 ```
          /'
         //
@@ -29,24 +27,11 @@ You can see [a demonstration of the output here](http://filamentgroup.github.com
 
 ## Version 2.0 is out - Here's What's New!
 
-With Grunticon version 2.0, we've added the `enhanceSVG` option which allows you
-to easily  style and animate your SVGs with CSS or add interactivity with JavaScript.
-Standard Grunticons are static background images that can't be styled or scripted
-because SVG only supports this ability if the SVG data is in the HTML document.
-In 2.0, you can now choose which icons you want to "enhance" and the new loader
-script will copy the icon SVG paths from the cached Grunticon stylesheet and inject
-them as an embedded SVG element for you to script and style as needed. This allows
-us to offer the best of both worlds: the full power of embedded SVGs but with none
-the wasted bandwidth of including SVGs in your page markup.
+With Grunticon version 2.0, we've added the `enhanceSVG` option which allows you to easily  style and animate your SVGs with CSS or add interactivity with JavaScript. Standard Grunticons are static background images that can't be styled or scripted because SVG only supports this ability if the SVG data is in the HTML document. In 2.0, you can now choose which icons you want to "enhance" and the new loader script will copy the icon SVG paths from the cached Grunticon stylesheet and inject them as an embedded SVG element for you to script and style as needed. This allows us to offer the best of both worlds: the full power of embedded SVGs but with none the wasted bandwidth of including SVGs in your page markup.
 
-Remember that only browsers that support SVGs will see these effects so use them
-only for "enhancements" that don't break the experience when not present. Embedding
-icons also has some degree of execution overhead so we recommend using this feature
-sparingly: only embed an icon if you need to apply style or scripting, otherwise
-use the classic background-image icon.
+Remember that only browsers that support SVGs will see these effects so use them only for "enhancements" that don't break the experience when not present. Embedding icons also has some degree of execution overhead so we recommend using this feature sparingly: only embed an icon if you need to apply style or scripting, otherwise use the classic background-image icon.
 
-To start - in your Gruntfile.js, set the value for `enhanceSVG` to `true` so the
-loader will parse the markup for icons that should be embedded at runtime:
+To start - in your Gruntfile.js, set the value for `enhanceSVG` to `true` so the loader will parse the markup for icons that should be embedded at runtime:
 
 ```JavaScript
 grunticon: {
@@ -677,6 +662,18 @@ In the Save SVG dialog that opens up, there are lots of options. SVG has a ton o
 
 ## Warnings
 * If your files have `#`, `.`, `>`, or any other css selecting character in their names, they will likely be improperly processed.
+
+## Roadmap
+
+This repository is now using [lodash style issue management](https://twitter.com/samselikoff/status/991395669016436736) for enhancements. This means enhancement issues will now be closed instead of leaving them open.
+
+View [the enhancement backlog here](https://github.com/filamentgroup/grunticon/issues?utf8=%E2%9C%93&q=label%3Aneeds-votes+sort%3Areactions-%2B1-desc+). Don’t forget to upvote the top comment with 👍!
+
+### Related Projects
+
+* [`gulpicon`](https://github.com/filamentgroup/gulpicon/) and [Roadmap](https://github.com/filamentgroup/gulpicon/issues?utf8=%E2%9C%93&q=label%3Aneeds-votes+sort%3Areactions-%2B1-desc+)
+* [`grunticon-lib`](https://github.com/filamentgroup/grunticon-lib/) and [Roadmap](https://github.com/filamentgroup/grunticon-lib/issues?utf8=%E2%9C%93&q=label%3Aneeds-votes+sort%3Areactions-%2B1-desc+)
+* [`svg-to-png`](https://github.com/filamentgroup/svg-to-png/) and [Roadmap](https://github.com/filamentgroup/svg-to-png/issues?utf8=%E2%9C%93&q=label%3Aneeds-votes+sort%3Areactions-%2B1-desc+)
 
 ## Release History
 * Version 2.1.0: Add ability to embed SVGs with cross-domain requested CSS files via `corsEmbed` option
