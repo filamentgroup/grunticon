@@ -674,6 +674,8 @@ View [the enhancement backlog here](https://github.com/filamentgroup/grunticon/i
 * [`gulpicon`](https://github.com/filamentgroup/gulpicon/) and [Roadmap](https://github.com/filamentgroup/gulpicon/issues?utf8=%E2%9C%93&q=label%3Aneeds-votes+sort%3Areactions-%2B1-desc+)
 * [`grunticon-lib`](https://github.com/filamentgroup/grunticon-lib/) and [Roadmap](https://github.com/filamentgroup/grunticon-lib/issues?utf8=%E2%9C%93&q=label%3Aneeds-votes+sort%3Areactions-%2B1-desc+)
 * [`svg-to-png`](https://github.com/filamentgroup/svg-to-png/) and [Roadmap](https://github.com/filamentgroup/svg-to-png/issues?utf8=%E2%9C%93&q=label%3Aneeds-votes+sort%3Areactions-%2B1-desc+)
+* [`directory-colorfy`](https://github.com/filamentgroup/directory-colorfy/) and [Roadmap](https://github.com/filamentgroup/directory-colorfy/issues?utf8=%E2%9C%93&q=label%3Aneeds-votes+sort%3Areactions-%2B1-desc+)
+* [`directory-encoder`](https://github.com/filamentgroup/directory-encoder/) and [Roadmap](https://github.com/filamentgroup/directory-encoder/issues?utf8=%E2%9C%93&q=label%3Aneeds-votes+sort%3Areactions-%2B1-desc+)
 * [`Grumpicon`](https://github.com/filamentgroup/grumpicon)
 
 ## Release History
