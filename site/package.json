@@ -8,6 +8,6 @@
     "grunt": "0.4.4",
 	"grunt-contrib-watch": "0.3.1",
 	"grunt-svgmin": "0.3.0",
-	  "grunticon-lib": "latest"
+	  "grunticon-lib": "1.2.3"
   }
 }
