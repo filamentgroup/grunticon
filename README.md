@@ -1,3 +1,5 @@
+:warning: This project is archived and the repository is no longer maintained. 
+
 # Grunticon [![Build Status](https://travis-ci.org/filamentgroup/grunticon.png?branch=master)](https://travis-ci.org/filamentgroup/grunticon)
 
 ```
@@ -25,7 +27,7 @@ grunticon also generates [a small bit of JavaScript](https://github.com/filament
 
 You can see [a demonstration of the output here](http://filamentgroup.github.com/grunticon/example/output/preview.html#embedded-svg-option).
 
-## Version 2.0 is out - Here's What's New!
+## Version 2.0 updates
 
 With Grunticon version 2.0, we've added the `enhanceSVG` option which allows you to easily  style and animate your SVGs with CSS or add interactivity with JavaScript. Standard Grunticons are static background images that can't be styled or scripted because SVG only supports this ability if the SVG data is in the HTML document. In 2.0, you can now choose which icons you want to "enhance" and the new loader script will copy the icon SVG paths from the cached Grunticon stylesheet and inject them as an embedded SVG element for you to script and style as needed. This allows us to offer the best of both worlds: the full power of embedded SVGs but with none the wasted bandwidth of including SVGs in your page markup.
 
@@ -128,16 +130,6 @@ If you're hosting your grunticon CSS on a different domain than your HTML, you w
 ```
 
 (That "*" can be a particular domain if you want)
-
-## Before you get started!
-
-[Have you seen Grumpicon?](http://grumpicon.com)
-
-[<img src="http://filamentgroup.com/images/grunticon_workflow_grumpicon.jpg" width="400">](http://grumpicon.com)
-
-[Grumpicon](http://grumpicon.com) is a browser-based app that performs much of the functionality of Grunticon through a simple drag and drop interface. It's much easier to set up than Grunticon, and sometimes, it's all you need (though it won't always be!)
-
-If you're interested in trying out Grumpicon, you might be interested in this handy guide as well: [Grumpicon Workflow](http://filamentgroup.com/lab/grumpicon_workflow/)
 
 ## Getting Started
 This plugin requires Grunt `~0.4.2`
